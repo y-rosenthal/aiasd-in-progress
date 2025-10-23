@@ -1,0 +1,2051 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; 7.  Supabase, NextJS - full product tutorial – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./001010-tutorial-supabase-nextjs-intro-v001.html" rel="next">
+<link href="./000230-v1-introToGit-v001.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000020-introToAi-v001.html">Chapters</a></li><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> Supabase, NextJS - full product tutorial</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Chapters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000020-introToAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> Overview of AI today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000030-introToAiasd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> Intro to Coding with an LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000100-howToInstallCursor-v002.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> How to install Cursor on your computer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000210-introToBashAndCli-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> Intro to Bash (and CLIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000240-v2-introToGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Intro to Git &amp; GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000230-v1-introToGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> alternate chapter - Intro to Git &amp; GitHub (hands-on, Bash-first)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> Supabase, NextJS - full product tutorial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001010-tutorial-supabase-nextjs-intro-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Supabase/NextJS Tutorial - step by step</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Practice Questions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./someFile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">This is a placeholder</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./someFile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">This is a placeholder</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./someFile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">This is a placeholder</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./someFile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">This is a placeholder</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./someFile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">This is a placeholder</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#step-1---download-code" id="toc-step-1---download-code" class="nav-link active" data-scroll-target="#step-1---download-code"><span class="header-section-number">7.1</span> Step 1 - download code</a></li>
+  <li><a href="#step-2---create-new-supabase-project" id="toc-step-2---create-new-supabase-project" class="nav-link" data-scroll-target="#step-2---create-new-supabase-project"><span class="header-section-number">7.2</span> Step 2 - Create new supabase project</a></li>
+  <li><a href="#step-4---setup-database-and-storage" id="toc-step-4---setup-database-and-storage" class="nav-link" data-scroll-target="#step-4---setup-database-and-storage"><span class="header-section-number">7.3</span> Step 4 - Setup Database and Storage</a></li>
+  <li><a href="#step-5---setup-edge-functions" id="toc-step-5---setup-edge-functions" class="nav-link" data-scroll-target="#step-5---setup-edge-functions"><span class="header-section-number">7.4</span> Step 5 - Setup Edge Functions</a></li>
+  <li><a href="#video-transcript" id="toc-video-transcript" class="nav-link" data-scroll-target="#video-transcript"><span class="header-section-number">7.5</span> Video Transcript</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000020-introToAi-v001.html">Chapters</a></li><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> Supabase, NextJS - full product tutorial</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> Supabase, NextJS - full product tutorial</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="https://www.youtube.com/watch?v=Q4rXmxQ1AUM&amp;t=576s">YouTube - Supabase Full Product Tutorial (Jan 27, 2025)</a></p>
+<p>Deploy a fully functioning SaaS application with Supabase and NextJS!</p>
+<p>This video shows you how Supabase works, walk you through how to apply its awesome features (databases, auth, storage) to a SaaS project. The code is free for you to download and clone from GitHub.</p>
+<p>👉 Links 🔗 Project Code: https://github.com/pixegami/task-app 🔗 Supabase: https://supabase.com 🔗 Google Cloud: https://console.cloud.google.com 🔗 OpenAI: https://platform.openai.com 🔗 Stripe: https://stripe.com</p>
+<p>📚 Chapters 00:00 Introduction and Demo 02:19 Supabase Project Overview 05:11 Setting Up 08:03 Create Supabase Project 10:10 Supabase CLI 11:54 Google OAuth 14:38 OpenAI API Key 15:32 Stripe Integration 22:12 Add Database 27:28 Add Storage 28:49 Deploy Edge Functions 32:15 Run the Project 34:03 Run Integration Tests 35:02 Wrapping Up</p>
+<section id="step-1---download-code" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="step-1---download-code"><span class="header-section-number">7.1</span> Step 1 - download code</h2>
+<ul>
+<li>Go to <a href="https://github.com/pixegami/task-app" class="uri">https://github.com/pixegami/task-app</a></li>
+<li>Click the “fork” button to create your own copy of the repo.</li>
+<li>Then go to your own github repo and copy YOUR copy’s URL.</li>
+<li>Open your Terminal and type <code>git clone URL_FOR_YOUR_REPO</code> to create a new folder with your own copy of the repo.</li>
+</ul>
+</section>
+<section id="step-2---create-new-supabase-project" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="step-2---create-new-supabase-project"><span class="header-section-number">7.2</span> Step 2 - Create new supabase project</h2>
+<ul>
+<li><p>goto supabase.com</p></li>
+<li><p>click <code>create new project</code> (create a new organization if necessary)</p></li>
+<li><p>choose a name for your project</p></li>
+<li><p>choose a password for your databse</p></li>
+<li><p>choose a region</p></li>
+<li><p>toolbar on left click on project settings ## Step 3 - Setup Dependencies</p></li>
+</ul>
+</section>
+<section id="step-4---setup-database-and-storage" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="step-4---setup-database-and-storage"><span class="header-section-number">7.3</span> Step 4 - Setup Database and Storage</h2>
+</section>
+<section id="step-5---setup-edge-functions" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="step-5---setup-edge-functions"><span class="header-section-number">7.4</span> Step 5 - Setup Edge Functions</h2>
+</section>
+<section id="video-transcript" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="video-transcript"><span class="header-section-number">7.5</span> Video Transcript</h2>
+<div data-tbl-colwidths="[15,85]">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Timestamp</th>
+<th style="text-align: left;">Quote</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0:00</td>
+<td style="text-align: left;">In this video, I’m going to walk you through how to set up a full stack SaaS application using NextJS and Supabase.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0:07</td>
+<td style="text-align: left;">I designed this project to be a complete overview of Supabase and an ideal starting point</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0:13</td>
+<td style="text-align: left;">for anyone who wants to build and launch a SaaS application as quickly as possible.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0:19</td>
+<td style="text-align: left;">Here’s a quick demo of the finished product. It’s going to be a task management application. First, you’ll have to log in.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0:27</td>
+<td style="text-align: left;">And then on the dashboard, you can see all the tasks you’ve</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0:32</td>
+<td style="text-align: left;">created. And you can click here to create a new task. It also has a special AI feature to assign a label</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0:40</td>
+<td style="text-align: left;">automatically, depending on the task description. Once you’ve created a task, you can also click to go in</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0:48</td>
+<td style="text-align: left;">and edit it. You can change the label, change any of the fields, and you can also upload an image to it.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0:57</td>
+<td style="text-align: left;">The app also has authentication, so when you log in, you can only see your own task. And you can go to your profile</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1:04</td>
+<td style="text-align: left;">and you can see how many tasks you’ve created. There’s also a monthly subscription that you</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1:09</td>
+<td style="text-align: left;">can use to upgrade your account. And the payments are implemented with Stripe, so if a user</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1:15</td>
+<td style="text-align: left;">is signed up, they can click on this page to update or to cancel their subscription. As you can see, it’s quite a simple project, but it</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1:23</td>
+<td style="text-align: left;">uses all the fundamental building blocks that nearly every single SaaS application will need to have.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1:29</td>
+<td style="text-align: left;">Things like authentication, compute, and data storage. We will need to use a tech stack that will let us do all of those things.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1:36</td>
+<td style="text-align: left;">There’s actually quite a few viable options here. I ended up going with NextJS and Supabase. I like the feature</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1:42</td>
+<td style="text-align: left;">set that it offers, and I think that it strikes a good balance between simplicity and capability.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1:49</td>
+<td style="text-align: left;">The GitHub link for this entire project will be available in the video description. You can go there</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1:54</td>
+<td style="text-align: left;">to browse the code or to clone the entire project. Now, this video isn’t exactly a coding tutorial, because each</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2:00</td>
+<td style="text-align: left;">of the features here could probably be its own video. Instead, I’m going to focus on helping you understand</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2:06</td>
+<td style="text-align: left;">how all of the pieces fit together, and I’m going to show you how to set up this project on your own machine, so that you can</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2:13</td>
+<td style="text-align: left;">start building things with it right away. By the end of this video, you’ll have a good understanding</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2:19</td>
+<td style="text-align: left;">of how Supabase works, you’ll learn four of its core features, and you’ll also have the</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2:25</td>
+<td style="text-align: left;">actual project up and running on your machine. I’ve prepared this video assuming that you’re at</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2:31</td>
+<td style="text-align: left;">least a mid-level developer, and here are some of the technologies we’ll be working with. If you aren’t familiar with them, then I’ll still</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2:38</td>
+<td style="text-align: left;">try to make it as accessible as I can, but it just might be a little bit hard to follow. First, let’s start with a high-level overview of the whole project.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2:46</td>
+<td style="text-align: left;">These are the features that we want our app to have. They include task management, image attachments, automatic</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2:53</td>
+<td style="text-align: left;">AI labeling for our tasks, and the ability to sell premium subscription plans to our users.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2:59</td>
+<td style="text-align: left;">It’s a pretty standard set of features for an app, but the reason I chose these is that behind</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3:04</td>
+<td style="text-align: left;">each of these features, there’s a really important concept that I want to show you. So, having them all in one project is a great way</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3:12</td>
+<td style="text-align: left;">to learn how to apply all of them at once. Now, let’s take a quick look at the architecture</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3:18</td>
+<td style="text-align: left;">for this project. Here is a simplified diagram. For the backend, we’ll be using Supabase. Supabase describes itself as an open-source Firebase alternative,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3:27</td>
+<td style="text-align: left;">and if you don’t know what that is, you can sort of think of it as a lightweight cloud platform.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3:33</td>
+<td style="text-align: left;">It gives us almost everything we need for this app right out of the box and in one place. The database is going to be a PostgreSQL database,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3:41</td>
+<td style="text-align: left;">and the storage system is pretty similar to something like Amazon S3 or Firestore.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3:47</td>
+<td style="text-align: left;">For our backend compute, we can also create edge functions using TypeScript. And there’s also an inbuilt authentication system that</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3:54</td>
+<td style="text-align: left;">integrates really well with all of these features, but also with third-party providers like Google, OAuth.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4:00</td>
+<td style="text-align: left;">The front end is going to be a fully static NextJS app. You’ll have a client library that will talk to Supabase directly.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4:07</td>
+<td style="text-align: left;">On top of that, we will also need a couple of third-party services to round out our feature set.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4:13</td>
+<td style="text-align: left;">We will need a Google Cloud account if we want users to be able to sign in with Google. For our backend feature, we can actually use any LLM here.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4:21</td>
+<td style="text-align: left;">And I’m just going to use OpenAI. And finally, we’ll use Stripe for our payments system. Now, how does this all get hosted, and how much will it cost?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4:30</td>
+<td style="text-align: left;">Well, you basically have a few different options with Supabase. The easiest option is to use their cloud service.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4:37</td>
+<td style="text-align: left;">This is really simple to set up, and it’s probably the best option if you want to get started as soon as possible. It comes with a free tier, which works perfectly fine for this project.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4:46</td>
+<td style="text-align: left;">And in fact, that is what we’ll be using. The next tier up is $25 a month, and it gives you a lot more of everything.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4:53</td>
+<td style="text-align: left;">That being said, Supabase is also completely open source. So another option is that you can host it yourself</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5:00</td>
+<td style="text-align: left;">or deploy it to a cloud provider like AWS or GCP. But I think that’s going to be quite complex to manage,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5:06</td>
+<td style="text-align: left;">and I don’t really recommend doing that. It’s just good to know that it is an option. Okay, so now that we’ve gone over all the high-level stuff, let’s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5:14</td>
+<td style="text-align: left;">look at our plan for how we’re going to set up the project. We will need to set up five separate things to get this all working.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5:20</td>
+<td style="text-align: left;">We’ll start by just downloading the code from GitHub and then creating a project on the Supabase cloud.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5:26</td>
+<td style="text-align: left;">Then we’ll go and set up the rest of the dependencies first. Google OAuth, OpenAI, and Stripe.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5:32</td>
+<td style="text-align: left;">And then we’ll have all the API keys we need to go back to our project and actually finish setting it up.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5:38</td>
+<td style="text-align: left;">Here’s a checklist of the steps that we are going to take. And throughout this video, we’ll go down the</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5:43</td>
+<td style="text-align: left;">list and we’ll tick them off one by one. Let’s start off by cloning the project. By the way, all the links you need for this video</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5:49</td>
+<td style="text-align: left;">are going to be in the video description. Once you’ve cloned the project, open the project in your terminal and run npm install.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5:56</td>
+<td style="text-align: left;">This should finish successfully, but there might be a few</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6:01</td>
+<td style="text-align: left;">warnings because things are always getting deprecated. We will also need to create two local .env</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6:09</td>
+<td style="text-align: left;">files to store our environment variables. I’ve actually created an example.env file for you here.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6:16</td>
+<td style="text-align: left;">So if you’re on a Unix system, you can just run this command to create copies from that. And if you open the project in VSCode, you’ll be able to see them here.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6:29</td>
+<td style="text-align: left;">So here is the example file, and here are the two files I’ve just created. And they have to be named exactly this way because that’s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6:37</td>
+<td style="text-align: left;">where our project is going to be looking for them. Now here are some of the environment variables that we’ll need to fill in.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6:43</td>
+<td style="text-align: left;">We’ll come back to this later once we actually have them. That’s all the setup we have to do for our project code at the moment.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6:50</td>
+<td style="text-align: left;">But if you try to run it now, it won’t work because we haven’t set up any of the backend yet. But if you do want to see the front end of the project</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6:58</td>
+<td style="text-align: left;">on its own and play around with it, then I actually have an earlier commit where it’s just</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7:04</td>
+<td style="text-align: left;">using placeholders for all of the backend logic. So if you go to the GitHub repo and click on the commits</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7:10</td>
+<td style="text-align: left;">tab, you can scroll down all the way to the bottom. And there’s this commit here that says front end boilerplate.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7:18</td>
+<td style="text-align: left;">So you can copy this commit hash, and then you can run this command in your project folder to check out that specific commit.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7:27</td>
+<td style="text-align: left;">So if you use that command to roll it back to that commit, you should be able to run npm run dev,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7:33</td>
+<td style="text-align: left;">and it’ll start a local version of the site. And this will run a version of the site where you just have the</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7:39</td>
+<td style="text-align: left;">front end and all of the backend integration is stripped out. You can still click around and play around with the UI, but it won’t do anything.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7:47</td>
+<td style="text-align: left;">And you’ll find that any of the buttons or the interactions will basically just console log a to-do statement for it to be implemented.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7:54</td>
+<td style="text-align: left;">But now, back to this project, we will want to use the latest commit. So if you did check out the older commit, then</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8:00</td>
+<td style="text-align: left;">please use this command to revert it back. Let’s move on to the next step, which is to create an actual Supabase project.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8:06</td>
+<td style="text-align: left;">Go to Supabase.com and create or log in with your account. In your dashboard, click create new project.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8:15</td>
+<td style="text-align: left;">You might also have to create an organization first, but I already have one here.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8:21</td>
+<td style="text-align: left;">Fill in your project name and generate a secure password for your database. You’ll also want to copy the database password</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8:28</td>
+<td style="text-align: left;">as well, because you’re going to need it later when we set up the Supabase CLI.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8:34</td>
+<td style="text-align: left;">And finally, choose a region that’s close to you or your customers. Then go ahead and create the project.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8:42</td>
+<td style="text-align: left;">This will take a few minutes to set up, but while you wait, it does show you your API keys and some important</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8:48</td>
+<td style="text-align: left;">information that we will need in the next step. Or if your project already finished setting</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8:53</td>
+<td style="text-align: left;">up, then it will look something like this. On the toolbar on the left, go over to project settings.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">9:00</td>
+<td style="text-align: left;">You’ll find some really useful things on this page. For example, you can look at what compute your project is configured to use.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9:07</td>
+<td style="text-align: left;">You can also check out how much storage disk you’re using up already. And also extra options like adding custom domain names.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">9:16</td>
+<td style="text-align: left;">But for now, what we need is under this API configuration tab. Here you’ll find the project URL and two API keys.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9:26</td>
+<td style="text-align: left;">One is a public key, so this is for the Supabase client. This one is okay to be revealed, because this is the one that’s</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">9:33</td>
+<td style="text-align: left;">usually embedded with the front end client anyways. It’s going to be what your website uses to call the Supabase backend.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9:41</td>
+<td style="text-align: left;">The other one is a secret key. This is useful for doing backend server-side operations. This one you definitely do not want to reveal.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">9:49</td>
+<td style="text-align: left;">So now we’re going to copy the URL and the public key back to our project. And then back in your project, go to your .env.local</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9:57</td>
+<td style="text-align: left;">file, or create one if you didn’t do it already. And we’ll only need these two things, we actually don’t</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10:02</td>
+<td style="text-align: left;">need these other keys, so we can delete those. And go ahead and paste your project URL and your public key.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10:10</td>
+<td style="text-align: left;">Now to work with Supabase from our local environment, we’re going to want to use the Supabase CLI.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10:16</td>
+<td style="text-align: left;">So just search for Supabase CLI on Google, and you should see the official documentation pop up.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10:22</td>
+<td style="text-align: left;">Then scroll down and follow the instructions for your specific platform to install the CLI.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10:29</td>
+<td style="text-align: left;">Then you can verify the installation using this command. For this video I’m using Supabase version 2, so if you’re</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10:35</td>
+<td style="text-align: left;">using a different major version, then keep in mind that some of the CLI commands may be different.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10:41</td>
+<td style="text-align: left;">Now back in our development environment, you’d normally have to run this command to initialize Supabase</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10:46</td>
+<td style="text-align: left;">to add it to a project that doesn’t have it yet. But for our project, I actually initialized Supabase</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10:51</td>
+<td style="text-align: left;">earlier, and you can tell because there’s a Supabase folder with a config file. So we don’t have to run the command again for this one.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10:59</td>
+<td style="text-align: left;">We will need to run this command to link your local project with the remote Supabase project.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">11:05</td>
+<td style="text-align: left;">Don’t forget to replace the PROJECT REF variable with your own one. Your project reference is basically the random ID part of your URL.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11:14</td>
+<td style="text-align: left;">When you run this command, it’s going to ask you to enter</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">11:19</td>
+<td style="text-align: left;">your database password from when you created the project. So go ahead and do that as well.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11:27</td>
+<td style="text-align: left;">Now that should work successfully, but it might throw a warning about the local config being different from the linked project.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">11:34</td>
+<td style="text-align: left;">But I wouldn’t worry about that for now. Then to test if everything is set up correctly, you can run this command.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11:40</td>
+<td style="text-align: left;">You should see a list of projects, and you should also see a dot next to the one that is linked.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">11:47</td>
+<td style="text-align: left;">Alright, so at this point we’ve downloaded the project code, and we’ve set up the Supabase project itself. Let’s move on to the next step.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11:54</td>
+<td style="text-align: left;">Next, we’re going to set up Google Cloud so that we can let our users log in with a Google account. Supabase actually has a lot of different options</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12:01</td>
+<td style="text-align: left;">for signing in, but I prefer to just use a third party integration like Google, because it’s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">12:07</td>
+<td style="text-align: left;">both easier for us to maintain, and it’s also easier for our customers as well, because they</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12:12</td>
+<td style="text-align: left;">don’t have to sign up for a separate account. First, head over to the Google Cloud console, and then either</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">12:18</td>
+<td style="text-align: left;">log in or create an account if you don’t already have one. And if this is your first time using Google Cloud,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12:25</td>
+<td style="text-align: left;">you will also have to create a new project. So I’ve created a project here for this SaaS application.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">12:32</td>
+<td style="text-align: left;">Now you might also need to attach a credit card to this account, but the OAuth pricing</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12:37</td>
+<td style="text-align: left;">is free for up to 50,000 monthly active users, so you probably won’t get charged.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">12:43</td>
+<td style="text-align: left;">So once you’re on this page, go to the search bar at the top and type in “Credentials”, and</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12:48</td>
+<td style="text-align: left;">select “Credentials” from “API and Services”. Now on this page, click here to create credentials, and select “OAuth client ID”.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">12:58</td>
+<td style="text-align: left;">For the application type, choose “web application”, and then type in a name for it here.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">13:05</td>
+<td style="text-align: left;">Now we also have to add the authorized JavaScript origins and the authorized redirect URIs.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">13:13</td>
+<td style="text-align: left;">For the authorized origin, put your Supabase project URL, and you can also put localhost so that</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">13:18</td>
+<td style="text-align: left;">we can test it from our development environment. And for the redirect, put in this URL.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">13:24</td>
+<td style="text-align: left;">This is actually provided to us by Supabase. If you go to authentication, then to providers,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">13:30</td>
+<td style="text-align: left;">and then expand the Google tab, you will see the callback URL here for us to copy.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">13:36</td>
+<td style="text-align: left;">So let’s go back to the project and put that in. So now your settings should look something like this,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">13:42</td>
+<td style="text-align: left;">and then you can go ahead and click “create”. And when that’s done, you should see this little pop-up</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">13:48</td>
+<td style="text-align: left;">with your client ID and your client secret. So go back to your Supabase dashboard, go to authentication,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">13:56</td>
+<td style="text-align: left;">and then providers, and then open the Google tab, and enable “sign in for Google”.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">14:03</td>
+<td style="text-align: left;">And then just paste the client ID and the secret from the previous step, and click “save”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">14:09</td>
+<td style="text-align: left;">While we’re here, you can also check out all the other authentication providers available, in case you want to use them.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">14:16</td>
+<td style="text-align: left;">And just an interesting note, I’ve also enabled email as a provider, and I think that’s the default for a new Supabase project anyways.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">14:23</td>
+<td style="text-align: left;">But for testing purposes, I actually disabled this “confirm email” feature, because it</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">14:28</td>
+<td style="text-align: left;">makes it easier for me to create test users. Okay, so now you’re done with auth, and your Supabase project</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">14:34</td>
+<td style="text-align: left;">should be wired up to let users log in with Google. Next, we’re also going to need an OpenAI API key.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">14:41</td>
+<td style="text-align: left;">We’re going to be using this for our back-end feature, where we automatically assign</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">14:46</td>
+<td style="text-align: left;">labels to a task, based on its description. Now, this API is pay-per-use, but the pricing is quite</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">14:53</td>
+<td style="text-align: left;">cheap, and our usage is going to be very low. If you don’t have an OpenAI account, then go to platform.OpenAI.com to create it.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">15:02</td>
+<td style="text-align: left;">Log into your account, and then open the search bar, and search for “API keys”.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">15:08</td>
+<td style="text-align: left;">And then you can click up here to create a new API key for your project. So go ahead and create that, and then copy the secret key.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">15:15</td>
+<td style="text-align: left;">Then, back in your project terminal, run the Supabase-cli command to set the OpenAI key as a back-end secret.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">15:23</td>
+<td style="text-align: left;">The project will be using this later on in our server-side edge functions. The final dependency we need for this project is Stripe, and we’re</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">15:33</td>
+<td style="text-align: left;">going to use this to process payments for our customers. So, back in our app, we limit users to only creating 100 tasks per month.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">15:43</td>
+<td style="text-align: left;">And when they upgrade to Premium, the limit gets raised to 10,000. Now, this is probably not the best business model</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">15:50</td>
+<td style="text-align: left;">for this app, but the point is just to show you how to implement this at a technical level. Compared to our other dependencies, Stripe is a little bit more complex to set up.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">16:00</td>
+<td style="text-align: left;">But I’m going to try to keep this as simple as possible. There are three main steps we need to go through.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16:06</td>
+<td style="text-align: left;">First, we want to create an account and set up the Stripe CLI. And then we’ll have to create a product, which</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">16:11</td>
+<td style="text-align: left;">is basically the subscription for our app. And finally, we’ll need to set up webhooks so that</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16:17</td>
+<td style="text-align: left;">Stripe can tell our Supabase server whenever there’s an update with our customers’ payments.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">16:23</td>
+<td style="text-align: left;">If you don’t have a Stripe account yet, then go to stripe.com and create one. Once you’re signed in, you should be on this dashboard.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16:31</td>
+<td style="text-align: left;">Just go to the top and make sure that you enable test mode. This will basically let us test the whole integration</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">16:38</td>
+<td style="text-align: left;">without using real money or credit cards. Our Stripe account will also have a secret API key.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16:45</td>
+<td style="text-align: left;">So to find it, just go into the search box and type in “API key” and then go to “developers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">16:50</td>
+<td style="text-align: left;">API key.” And take note of the secret key here, because we’re going to need this for later.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16:56</td>
+<td style="text-align: left;">Next, we’ll need to install the Stripe CLI. So just search for Stripe CLI on Google and it</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">17:01</td>
+<td style="text-align: left;">should link you to the official documentation. And if you scroll down, you’ll see different tabs depending</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">17:07</td>
+<td style="text-align: left;">on which platform you want to see the command for. Once you’ve installed it, then run this command in</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">17:12</td>
+<td style="text-align: left;">your terminal to log in with your Stripe account. Next, let’s use the Stripe CLI to create a new product and a price.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">17:20</td>
+<td style="text-align: left;">In Stripe, products and prices are two distinct object types. And a product can have multiple different prices, but</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">17:28</td>
+<td style="text-align: left;">every price must be associated with a product. Now, to create the products and the prices, we can go to our Stripe</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">17:35</td>
+<td style="text-align: left;">dashboard and then click to create them through there. But we can also do it with a command in the CLI, which is a little bit faster.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">17:45</td>
+<td style="text-align: left;">So that’s what I’m going to do for this project. So if you go back to the project and then you open the README file, scroll all the way down until</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">17:51</td>
+<td style="text-align: left;">you see the part that says Stripe setup. And there’s a couple of commands that you can just copy and paste into your terminal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">17:59</td>
+<td style="text-align: left;">to create the product via the CLI directly. This command will create both a price and a product for us together.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">18:06</td>
+<td style="text-align: left;">It creates a $10 monthly subscription for a new product called Taskmaster Premium with a 14-day trial.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">18:14</td>
+<td style="text-align: left;">So go ahead and run that in your project terminal. And when it’s done, you should see an output object like this.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">18:22</td>
+<td style="text-align: left;">And we’re going to want to take note of the price ID because we will need that for later. Next, we’ll also need to run another command to set up the customer portal.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">18:32</td>
+<td style="text-align: left;">This is going to set up a page that customers can go to to either update or cancel their subscriptions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">18:39</td>
+<td style="text-align: left;">Just make sure that before you run this command to replace the URLs with your own Supabase URLs.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">18:45</td>
+<td style="text-align: left;">And in this project, I actually haven’t created the privacy or the terms of service pages. So these links will probably just bounce back to the homepage.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">18:54</td>
+<td style="text-align: left;">So that’s something you can add if you want. And to finish our Stripe setup, we will need to add a webhook.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">19:03</td>
+<td style="text-align: left;">A webhook is a URL endpoint that we provide that Stripe can send events and notifications to.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">19:09</td>
+<td style="text-align: left;">And it will use this to tell us about things like successful checkouts and subscription cancellations.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">19:15</td>
+<td style="text-align: left;">And then we’ll use that information to update our database. So go back to your Stripe dashboard and then search for webhooks.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">19:23</td>
+<td style="text-align: left;">And then go to Developers / Webhooks. And here, click add endpoint.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">19:29</td>
+<td style="text-align: left;">Our webhook endpoint is going to look something like this. We will implement this later as an edge function.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">19:35</td>
+<td style="text-align: left;">Just make sure to update the project ID to your actual Supabase project URL.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">19:41</td>
+<td style="text-align: left;">And then enter it here as your endpoint.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">19:47</td>
+<td style="text-align: left;">Next, you have to select which events for it to listen to.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">19:53</td>
+<td style="text-align: left;">These are the four events that you need to select. These events will give us everything we need to build the</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20:04</td>
+<td style="text-align: left;">subscription functionality that we want for our app.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">20:12</td>
+<td style="text-align: left;">Once you’ve filled in the endpoint and the events, then click add endpoint. And now your webhook will be set up and you can</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20:20</td>
+<td style="text-align: left;">click here to get your webhook secret key. So now we should have all the keys we need to integrate Stripe with our project.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">20:28</td>
+<td style="text-align: left;">If you missed one of them, then just rewind this chapter. And again, here’s the Supabase CLI command you need to</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20:34</td>
+<td style="text-align: left;">run to set up the secrets in the Supabase project. So go ahead and run these for each of the keys.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">20:41</td>
+<td style="text-align: left;">We’re going to need the Stripe API secret key, the price ID and the webhook secret.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20:47</td>
+<td style="text-align: left;">So back in my terminal, I’ve set up all three keys. And to confirm that I can run Supabase secrets list.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">20:56</td>
+<td style="text-align: left;">And that will show me all the different secrets that I’ve registered with my Supabase project. So at this point, you should see four of them.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">21:04</td>
+<td style="text-align: left;">Now there’s actually one more place where we need to set up our Stripe secret key. And that’s going to be in our vault table in the database.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">21:12</td>
+<td style="text-align: left;">And this is an inbuilt Supabase table where we can store secret keys that our database can use as part of automatic triggers.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">21:20</td>
+<td style="text-align: left;">In this project specifically, I’m using it so that I can make Stripe create a user for</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">21:26</td>
+<td style="text-align: left;">us whenever we create a user in Supabase. Because there are different user systems, but we want them to be associated.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">21:33</td>
+<td style="text-align: left;">We’re going to implement that using a database trigger. But to do that, it will need to have the stripe secret</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">21:38</td>
+<td style="text-align: left;">key so that it has the authority to create new users. To add this, go back to your Supabase dashboard and then go to SQL editor.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">21:46</td>
+<td style="text-align: left;">And that in this window, we’re going to run this command.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">21:52</td>
+<td style="text-align: left;">Just remember to replace this with your actual secret key from Stripe. And then click run and then you should see that it should</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">22:00</td>
+<td style="text-align: left;">create this key for you and return a key ID. And if you’ve accidentally added the wrong</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">22:06</td>
+<td style="text-align: left;">secret or you just want to update it, then you’ll need to use this command instead. So now that we’re done setting up our dependencies, let’s go</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">22:14</td>
+<td style="text-align: left;">back to our Supabase project and set up our database next. Our database is going to be a Postgres SQL database</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">22:21</td>
+<td style="text-align: left;">and we’re going to create three tables. We’ll have a profile table for each user.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">22:28</td>
+<td style="text-align: left;">There we will store information about their account status. Now this is going to be read only for the user.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">22:35</td>
+<td style="text-align: left;">It’s also going to be linked to an auth table, which comes out of the box with Supabase. This means that our user ID primary key in</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">22:43</td>
+<td style="text-align: left;">this profile table is going to map directly to a user ID in the auth table as well.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">22:50</td>
+<td style="text-align: left;">And you’re going to see this pattern where we use a primary key for the user as a foreign key in each of our tables.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">22:58</td>
+<td style="text-align: left;">Now our most important table is going to be this task table here. We will store each task as a row and it will have a user ID as part of its key.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">23:09</td>
+<td style="text-align: left;">And finally, we’ll also have a separate table to track the usage of each user per month.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">23:15</td>
+<td style="text-align: left;">And the reason I decided to use a separate table to track the usage is that I think it will</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">23:21</td>
+<td style="text-align: left;">be easier to scale that way, rather than tracking it in the user profile table directly.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">23:27</td>
+<td style="text-align: left;">So this is going to be the schema for the database. But on top of this, we will also have security policies and triggers.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">23:35</td>
+<td style="text-align: left;">We’re going to use something called row level security. That basically means that to be able to read or update a</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">23:42</td>
+<td style="text-align: left;">row of a database, certain conditions have to be met. For example, we can check if the user ID of a request matches</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">23:50</td>
+<td style="text-align: left;">the user ID value of the row that we want to access. And then we use row level security to enforce these roles for our app.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">24:00</td>
+<td style="text-align: left;">And we’re also going to have something called triggers. Triggers are functions that we can execute when</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">24:05</td>
+<td style="text-align: left;">something happens inside our database. And these functions are run by our dedicated PostgreSQL server.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">24:12</td>
+<td style="text-align: left;">In this project, we will use them quite a lot. We’ll use triggers to update task limits for each user whenever they create a task.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">24:20</td>
+<td style="text-align: left;">We can also stop them from creating new tasks once they’ve reached their limit. We’ll also use it to automatically create a Stripe</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">24:28</td>
+<td style="text-align: left;">user whenever a new user is created in our system. That’s because, as I mentioned before, Stripe has its own user system.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">24:36</td>
+<td style="text-align: left;">So we need some automation to link them together. And finally, we can also use it to automatically clean up our</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">24:42</td>
+<td style="text-align: left;">users and our storage when things are deleted as well. Now, that’s a lot of stuff I just went through.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">24:48</td>
+<td style="text-align: left;">So how are we going to implement all of that very quickly? Well, with Supabase, we can write instructions</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">24:54</td>
+<td style="text-align: left;">for all of those things using SQL files. And if we go back to our project and then we</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">24:59</td>
+<td style="text-align: left;">go to the Supabase migrations folder, you’ll see that we have a bunch of SQL files for each of these things that we want to add.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25:06</td>
+<td style="text-align: left;">And if you click through them, you could see the statements used to create the tables. So here’s the table schema.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">25:13</td>
+<td style="text-align: left;">And you can also see triggers being created and security policies being created. And the reason I’ve separated each of these statements</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25:21</td>
+<td style="text-align: left;">into separate files is just to make it easier for you to understand each new thing that we’re setting up.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">25:28</td>
+<td style="text-align: left;">It’s exactly the same as if I had all of these statements in one giant file, but that’s just going</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25:33</td>
+<td style="text-align: left;">to be a little bit more difficult to read. To apply these files to a project, you can run this command.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">25:40</td>
+<td style="text-align: left;">This is called apply a migration. It will execute all of the SQL statements in each file in lexical order.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25:48</td>
+<td style="text-align: left;">And so if you go back to our project, you’ll see that each of our SQL files has a number in front of it. And so basically that’s the order that I want to run the files in.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">25:56</td>
+<td style="text-align: left;">But in a real world situation, I think that people would typically use a timestamp for this number.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">26:02</td>
+<td style="text-align: left;">So I’m going to go ahead and run this now in my terminal. And once the command is done, Supabase will have</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">26:08</td>
+<td style="text-align: left;">created all the databases, triggers, and security policies that we told it to in those SQL files.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">26:16</td>
+<td style="text-align: left;">Now notice if I try to run the command again, it doesn’t actually</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">26:21</td>
+<td style="text-align: left;">do anything, even if I change the contents of these files. That’s because these commands, once they apply a migration file,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">26:30</td>
+<td style="text-align: left;">it kind of remembers that it’s already done that file. So if you want to create new migrations, you actually</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">26:37</td>
+<td style="text-align: left;">have to create a new file and just make that number in front of it keep increasing.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">26:43</td>
+<td style="text-align: left;">But if the project is still in development like this one here, and you wanted to do a full reset, you can run this command instead.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">26:50</td>
+<td style="text-align: left;">This will clear your entire database and then run every SQL file from the beginning. And once you finish running your migration, you can</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">26:56</td>
+<td style="text-align: left;">go to your Supabase project to check it out. So go to database and then go to schema visualizer, and you should</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">27:02</td>
+<td style="text-align: left;">see the schema for the database that you just created. And something very cool that I want to mention about Supabase</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">27:09</td>
+<td style="text-align: left;">is that it automatically creates an API for your database. So you can do CRUD operations from your front end really</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">27:16</td>
+<td style="text-align: left;">easily without having to implement the API yourself. You can read more about that feature inside the REST API</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">27:23</td>
+<td style="text-align: left;">or the Data API documentation on the Supabase website. Now back to the app, one of my favorite features here</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">27:30</td>
+<td style="text-align: left;">is that users can upload images to their tasks. To implement this, we’re going to use Supabase’s storage feature.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">27:37</td>
+<td style="text-align: left;">And I have some good news for you. If you ran the previous command, then you’ve already set this up.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">27:43</td>
+<td style="text-align: left;">One of our SQL files from the previous step actually creates something called a storage bucket. It did that by creating an entry in this built-in storage buckets table.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">27:53</td>
+<td style="text-align: left;">And behind the scenes, that actually causes Supabase to set up a storage bucket for us.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">27:59</td>
+<td style="text-align: left;">So if you go back to your Supabase dashboard and then you go down and click storage, you’ll see that it’s created a bucket for us here.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">28:06</td>
+<td style="text-align: left;">And the bucket doesn’t have anything in it right now. But if you go here and click edit bucket and click on</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">28:12</td>
+<td style="text-align: left;">additional configuration, you’ll see that we’ve actually configured the bucket already from our SQL schema.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">28:18</td>
+<td style="text-align: left;">We’ve configured it to restrict the upload size to one megabyte, and we’ve also configured it to only accept images.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">28:25</td>
+<td style="text-align: left;">Now I do want to mention that I did make this bucket public, which means that if people have the URL to an</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">28:31</td>
+<td style="text-align: left;">image, they can actually just go ahead and see it. And I did that because it’s more simple to set it up with the front end.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">28:39</td>
+<td style="text-align: left;">But if you were doing this for real, then I probably recommend making this private. It’s just that it’s a little bit more complex to set up.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">28:46</td>
+<td style="text-align: left;">So it’s a little bit out of scope for this video. So now we’ve set up the database and the storage,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">28:51</td>
+<td style="text-align: left;">and we’re moving on to the final setup step, which is deploying our edge functions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">28:57</td>
+<td style="text-align: left;">Edge functions are custom functions that run on demand in response to HTTP requests.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">29:03</td>
+<td style="text-align: left;">Think of them as a way to run any code that you’d normally need a server for. In our project, you’ll find them in the Supabase/functions folder.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">29:11</td>
+<td style="text-align: left;">Each subfolder is an edge function. The code is implemented as a TypeScript function,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">29:16</td>
+<td style="text-align: left;">and it will be run in a Deno environment. So here, I’m just going to go back to the project to show you where they are.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">29:23</td>
+<td style="text-align: left;">Go to your Supabase folder, and then go to your functions folder. And then each of the functions is going to be its own separate subfolder.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">29:30</td>
+<td style="text-align: left;">If you open that up, you’ll see this index.ts file, and that is the code for one of our functions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">29:37</td>
+<td style="text-align: left;">Now, we will be able to build and deploy these functions directly from our project using the Supabase CLI.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">29:45</td>
+<td style="text-align: left;">They also support environment variables, which is where we can go and fetch those secrets that we</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">29:51</td>
+<td style="text-align: left;">stored earlier when we set up our dependencies. Here’s a short snippet from one of our functions,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">29:57</td>
+<td style="text-align: left;">and it’s the function called createTaskWithAI. This function will create the task and then put it into the table.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">30:04</td>
+<td style="text-align: left;">And after that, it will use AI to determine automatic tag or a label for the task based on the task title,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">30:11</td>
+<td style="text-align: left;">and then it will update the task with that tag. The second function is called createStripeSession,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">30:18</td>
+<td style="text-align: left;">and we’ll be using this in the profile page. So this is here, and when users click this to</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">30:24</td>
+<td style="text-align: left;">manage their subscription, this function will generate a URL for them, and this URL will</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">30:30</td>
+<td style="text-align: left;">either be a checkout session or customer portal depending on the user’s account status.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">30:36</td>
+<td style="text-align: left;">Finally, the third and the last function is our webhook endpoint for Stripe. So if you recall from the Stripe chapter, this</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">30:43</td>
+<td style="text-align: left;">is an endpoint that Stripe will use to send us event notifications when something happens.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">30:49</td>
+<td style="text-align: left;">We will use this to detect when the user should be upgraded to premium or when the subscription ends and</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">30:54</td>
+<td style="text-align: left;">they should be downgraded back to the free tier. And as I mentioned before, these functions will all have</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">31:00</td>
+<td style="text-align: left;">access to the Supabase secrets that we stored earlier. So that’s how they can access services like Stripe and OpenAI on our behalf.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">31:09</td>
+<td style="text-align: left;">From our project root, you can use these commands to deploy each of the functions to our Supabase project.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">31:16</td>
+<td style="text-align: left;">Once that’s finished, you can go back to your Supabase dashboard</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">31:23</td>
+<td style="text-align: left;">and then check them out by clicking edge functions.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">31:29</td>
+<td style="text-align: left;">And if everything worked correctly, you should see three separate edge functions being created for us.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">31:35</td>
+<td style="text-align: left;">If you click on one of them, you’ll also be able to see links to metrics and logs. So this is where you can go to debug them.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">31:43</td>
+<td style="text-align: left;">Now there’s one more thing we need to do. Click on your Stripe webhook function and then</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">31:48</td>
+<td style="text-align: left;">go to details and then scroll all the way down to function configuration and then click to disable</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">31:55</td>
+<td style="text-align: left;">enforce JWT verification and click save. This verification is there to check that whoever calls</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">32:01</td>
+<td style="text-align: left;">this function is one of our authenticated users. And that’s what we want in most cases.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">32:08</td>
+<td style="text-align: left;">But in this particular case, we’re expecting Stripe to call this function. And with that, we finally finished all of our setup</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">32:16</td>
+<td style="text-align: left;">process and we’re ready to run the project. Go back to your project terminal and run this command</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">32:21</td>
+<td style="text-align: left;">to start the local development server. Once you’ve run it, you should see this local URL pop</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">32:29</td>
+<td style="text-align: left;">up and you can click that to open your project. And if it doesn’t load right away, you might need</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">32:35</td>
+<td style="text-align: left;">to refresh it, but you can probably now test that each of the features work as intended.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">32:41</td>
+<td style="text-align: left;">So we can log in with Google. We can create a new task.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">32:52</td>
+<td style="text-align: left;">And when we create a task, we should see that it automatically assigns a label for us that is appropriate for the task.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">32:59</td>
+<td style="text-align: left;">We should also be able to edit a task and add images to it. And then if you go to your profile page, you should</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">33:08</td>
+<td style="text-align: left;">see that your task created is tracked properly here and that if you click manage subscription,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">33:16</td>
+<td style="text-align: left;">you get taken to a Stripe checkout page. And then finally go back to our project and just make sure that you can sign out.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">33:24</td>
+<td style="text-align: left;">Now if you wanted to deploy something like this, then the easiest way to do this is probably with Vercel,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">33:30</td>
+<td style="text-align: left;">but this is basically just a static NextJS website. So you can use any other process that works for static websites in general.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">33:37</td>
+<td style="text-align: left;">If you wanted to add new functionality or extend the project to do something specific, then here’s</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">33:43</td>
+<td style="text-align: left;">a rough overview of the project structure. The UI elements are in the apps and the components folder.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">33:49</td>
+<td style="text-align: left;">The front-end logic is in the hooks folder, so that’s the client that will connect to Supabase.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">33:55</td>
+<td style="text-align: left;">And the backend logic is in the Supabase functions folder. And the database and configurations are in the migrations folder.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">34:03</td>
+<td style="text-align: left;">As I was working on this project, I also actually created an integration test suite so that I can quickly</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">34:09</td>
+<td style="text-align: left;">and more easily test the project’s functionality. You’ll find all the test code in the project under</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">34:15</td>
+<td style="text-align: left;">the test/integration directory, and these tests will actually connect to your real project.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">34:21</td>
+<td style="text-align: left;">If you want to run them, then create a file like this to store all of your environment variables</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">34:26</td>
+<td style="text-align: left;">that are going to be used in the task, and then update them with your version of these API keys.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">34:32</td>
+<td style="text-align: left;">Then go to your terminal and run this command in your project root to run the entire test suite.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">34:38</td>
+<td style="text-align: left;">You can also use this command if you want to run just a specific file.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">34:45</td>
+<td style="text-align: left;">Now all the tests should pass, but they might fail the first time due to timeouts because I think</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">34:50</td>
+<td style="text-align: left;">that some of these code paths have a cold start. So if you just run them for the first time, they might take a little bit slower than usual.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">34:57</td>
+<td style="text-align: left;">So if they fail, then I recommend to try running it again and seeing if it works. So we’re now at the end of the video.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">35:04</td>
+<td style="text-align: left;">That was quite a large project, and I hope you managed to get everything to work. But if you got stuck or if you have any questions,</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">35:10</td>
+<td style="text-align: left;">then feel free to leave a comment either here or on my GitHub page for the project.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">35:16</td>
+<td style="text-align: left;">Now as I said at the start, this was a very high-level overview of using Supabase.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">35:22</td>
+<td style="text-align: left;">We went through a lot of stuff very quickly, and there’s a lot of details that I simplified along the way.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">35:28</td>
+<td style="text-align: left;">Now if you are interested in diving a little bit deeper, then go to the project repository and check</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">35:34</td>
+<td style="text-align: left;">out this tutorials folder where I’ve actually created a bunch of different documents for each major</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">35:40</td>
+<td style="text-align: left;">functionality that we introduced to the project. If you did enjoy this and would like to see a tutorial</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">35:45</td>
+<td style="text-align: left;">series covering each of these features in more detail, or you want to see an end-to-end tutorial for a different type of project entirely,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">35:52</td>
+<td style="text-align: left;">then please let me know in the comments. Otherwise, I hope this was useful, and I’ll see you in the next one.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./000230-v1-introToGit-v001.html" class="pagination-link" aria-label="<yrChapterNumber>6. </yrChapterNumber> alternate chapter - Intro to Git &amp; GitHub (hands-on, Bash-first)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> alternate chapter - Intro to Git &amp; GitHub (hands-on, Bash-first)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./001010-tutorial-supabase-nextjs-intro-v001.html" class="pagination-link" aria-label="<yrChapterNumber>8. </yrChapterNumber> Supabase/NextJS Tutorial - step by step">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Supabase/NextJS Tutorial - step by step</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>
