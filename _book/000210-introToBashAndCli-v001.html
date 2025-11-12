@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; 4.  Intro to Bash (and CLIs) – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./000240-v2-introToGit-v001.html" rel="next">
+<link href="./000100-howToInstallCursor-v002.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000210-introToBashAndCli-v001.html">Intro to the command line (Bash)</a></li><li class="breadcrumb-item"><a href="./000210-introToBashAndCli-v001.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> Intro to Bash (and CLIs)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Intro</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000020-introToAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> Overview of AI today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000030-introToAiasd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> Intro to Coding with an LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000100-howToInstallCursor-v002.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> How to install Cursor on your computer</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Intro to the command line (Bash)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000210-introToBashAndCli-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> Intro to Bash (and CLIs)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Intro to git and github</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000240-v2-introToGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Intro to Git &amp; GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000230-v1-introToGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> alternate chapter - Intro to Git &amp; GitHub (hands-on, Bash-first)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Basic Internet Architecture</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000900-internetArchitecture-browsersAndWebservers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> Browsers (HTML,CSS,Javascript) and Web Servers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000940-internetArchitecture-domainNamesEtc-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Domain Names, IP Addresses, ping, etc</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000950-internetArchitecture-webFrameworks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Client side web frameworks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Building with Next and Supabase</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> Tutorial - intro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001007-tutorial-supabase-projectArchitecture-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> Project Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001100-tutorial-installNodeNpm-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> Step 0: Install Node.js and npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001110-tutorial-cloneRepo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>13. </yrchapternumber> Step 1: Fork the repo and clone it</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001120-tutorial-installThePackages-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>14. </yrchapternumber> Step 2: Installing the Node.js packages with npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Create env files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001140-tutorial-previewFrontEnd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> Step 4 - Optional: Preview the Frontend</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Create a Supabase Project</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001160-tutorial-googleOauth-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Step 6: setup authentication (Google OAuth)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./009999-tutorial-restOfTheSteps-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> rest of the steps ...</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Practice Questions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./someFile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">This is a placeholder</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./someFile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">This is a placeholder</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./someFile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">This is a placeholder</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./990010-references-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./someFile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">This is a placeholder</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-are-the-benefits-of-using-a-cli-command-line-interpreter" id="toc-what-are-the-benefits-of-using-a-cli-command-line-interpreter" class="nav-link active" data-scroll-target="#what-are-the-benefits-of-using-a-cli-command-line-interpreter"><span class="header-section-number">4.1</span> What are the benefits of using a CLI (Command Line Interpreter)?</a></li>
+  <li><a href="#how-to-install-git-and-bash" id="toc-how-to-install-git-and-bash" class="nav-link" data-scroll-target="#how-to-install-git-and-bash"><span class="header-section-number">4.2</span> How to install Git and Bash</a>
+  <ul class="collapse">
+  <li><a href="#mac" id="toc-mac" class="nav-link" data-scroll-target="#mac"><span class="header-section-number">4.2.1</span> Mac</a></li>
+  <li><a href="#windows" id="toc-windows" class="nav-link" data-scroll-target="#windows"><span class="header-section-number">4.2.2</span> Windows</a></li>
+  </ul></li>
+  <li><a href="#what-is-a-graphical-user-interface-gui" id="toc-what-is-a-graphical-user-interface-gui" class="nav-link" data-scroll-target="#what-is-a-graphical-user-interface-gui"><span class="header-section-number">4.3</span> What is a Graphical User Interface (GUI)?</a></li>
+  <li><a href="#what-is-a-cli-and-why-should-you-care" id="toc-what-is-a-cli-and-why-should-you-care" class="nav-link" data-scroll-target="#what-is-a-cli-and-why-should-you-care"><span class="header-section-number">4.4</span> What is a CLI and Why Should You Care?</a>
+  <ul class="collapse">
+  <li><a href="#what-is-bash" id="toc-what-is-bash" class="nav-link" data-scroll-target="#what-is-bash"><span class="header-section-number">4.4.1</span> What is Bash?</a></li>
+  <li><a href="#how-to-access-bash-on-different-systems" id="toc-how-to-access-bash-on-different-systems" class="nav-link" data-scroll-target="#how-to-access-bash-on-different-systems"><span class="header-section-number">4.4.2</span> How to Access Bash on Different Systems</a></li>
+  </ul></li>
+  <li><a href="#our-sample-file-structure" id="toc-our-sample-file-structure" class="nav-link" data-scroll-target="#our-sample-file-structure"><span class="header-section-number">4.5</span> Our Sample File Structure</a>
+  <ul class="collapse">
+  <li><a href="#how-to-read-this-tree-structure" id="toc-how-to-read-this-tree-structure" class="nav-link" data-scroll-target="#how-to-read-this-tree-structure"><span class="header-section-number">4.5.1</span> How to Read This Tree Structure</a></li>
+  <li><a href="#download-the-practice-files" id="toc-download-the-practice-files" class="nav-link" data-scroll-target="#download-the-practice-files"><span class="header-section-number">4.5.2</span> Download the Practice Files</a></li>
+  </ul></li>
+  <li><a href="#understanding-files-and-folders" id="toc-understanding-files-and-folders" class="nav-link" data-scroll-target="#understanding-files-and-folders"><span class="header-section-number">4.6</span> Understanding Files and Folders</a></li>
+  <li><a href="#your-home-directory" id="toc-your-home-directory" class="nav-link" data-scroll-target="#your-home-directory"><span class="header-section-number">4.7</span> Your Home Directory</a></li>
+  <li><a href="#the-bash-prompt" id="toc-the-bash-prompt" class="nav-link" data-scroll-target="#the-bash-prompt"><span class="header-section-number">4.8</span> The Bash Prompt</a></li>
+  <li><a href="#your-first-commands-where-am-i" id="toc-your-first-commands-where-am-i" class="nav-link" data-scroll-target="#your-first-commands-where-am-i"><span class="header-section-number">4.9</span> Your First Commands: Where Am I?</a>
+  <ul class="collapse">
+  <li><a href="#the-pwd-command-print-working-directory" id="toc-the-pwd-command-print-working-directory" class="nav-link" data-scroll-target="#the-pwd-command-print-working-directory"><span class="header-section-number">4.9.1</span> The <code>pwd</code> Command (Print Working Directory)</a></li>
+  </ul></li>
+  <li><a href="#looking-around-the-ls-command" id="toc-looking-around-the-ls-command" class="nav-link" data-scroll-target="#looking-around-the-ls-command"><span class="header-section-number">4.10</span> Looking Around: The <code>ls</code> Command</a>
+  <ul class="collapse">
+  <li><a href="#command-options-making-ls-more-useful" id="toc-command-options-making-ls-more-useful" class="nav-link" data-scroll-target="#command-options-making-ls-more-useful"><span class="header-section-number">4.10.1</span> Command Options: Making <code>ls</code> More Useful</a></li>
+  <li><a href="#options-can-be-combined-and-reordered" id="toc-options-can-be-combined-and-reordered" class="nav-link" data-scroll-target="#options-can-be-combined-and-reordered"><span class="header-section-number">4.10.2</span> Options Can Be Combined and Reordered!</a></li>
+  </ul></li>
+  <li><a href="#creating-new-folders-the-mkdir-command" id="toc-creating-new-folders-the-mkdir-command" class="nav-link" data-scroll-target="#creating-new-folders-the-mkdir-command"><span class="header-section-number">4.11</span> Creating New Folders: The <code>mkdir</code> Command</a></li>
+  <li><a href="#moving-around-the-cd-command" id="toc-moving-around-the-cd-command" class="nav-link" data-scroll-target="#moving-around-the-cd-command"><span class="header-section-number">4.12</span> Moving Around: The <code>cd</code> Command</a>
+  <ul class="collapse">
+  <li><a href="#using-full-paths-with-cd" id="toc-using-full-paths-with-cd" class="nav-link" data-scroll-target="#using-full-paths-with-cd"><span class="header-section-number">4.12.1</span> Using Full Paths with <code>cd</code></a></li>
+  <li><a href="#going-up-one-level-the-..-shortcut" id="toc-going-up-one-level-the-..-shortcut" class="nav-link" data-scroll-target="#going-up-one-level-the-..-shortcut"><span class="header-section-number">4.12.2</span> Going Up One Level: The <code>..</code> Shortcut</a></li>
+  <li><a href="#going-home" id="toc-going-home" class="nav-link" data-scroll-target="#going-home"><span class="header-section-number">4.12.3</span> Going Home</a></li>
+  </ul></li>
+  <li><a href="#getting-help-how-to-learn-more-about-commands" id="toc-getting-help-how-to-learn-more-about-commands" class="nav-link" data-scroll-target="#getting-help-how-to-learn-more-about-commands"><span class="header-section-number">4.13</span> Getting Help: How to Learn More About Commands</a>
+  <ul class="collapse">
+  <li><a href="#the---help-option" id="toc-the---help-option" class="nav-link" data-scroll-target="#the---help-option"><span class="header-section-number">4.13.1</span> The <code>--help</code> Option</a></li>
+  <li><a href="#understanding-help-output" id="toc-understanding-help-output" class="nav-link" data-scroll-target="#understanding-help-output"><span class="header-section-number">4.13.2</span> Understanding Help Output</a></li>
+  <li><a href="#man-pages-the-full-manual" id="toc-man-pages-the-full-manual" class="nav-link" data-scroll-target="#man-pages-the-full-manual"><span class="header-section-number">4.13.3</span> Man Pages: The Full Manual</a></li>
+  </ul></li>
+  <li><a href="#working-with-files-and-folders" id="toc-working-with-files-and-folders" class="nav-link" data-scroll-target="#working-with-files-and-folders"><span class="header-section-number">4.14</span> Working with Files and Folders</a>
+  <ul class="collapse">
+  <li><a href="#creating-empty-files-the-touch-command" id="toc-creating-empty-files-the-touch-command" class="nav-link" data-scroll-target="#creating-empty-files-the-touch-command"><span class="header-section-number">4.14.1</span> Creating Empty Files: The <code>touch</code> Command</a></li>
+  <li><a href="#copying-files-the-cp-command" id="toc-copying-files-the-cp-command" class="nav-link" data-scroll-target="#copying-files-the-cp-command"><span class="header-section-number">4.14.2</span> Copying Files: The <code>cp</code> Command</a></li>
+  <li><a href="#moving-and-renaming-the-mv-command" id="toc-moving-and-renaming-the-mv-command" class="nav-link" data-scroll-target="#moving-and-renaming-the-mv-command"><span class="header-section-number">4.14.3</span> Moving and Renaming: The <code>mv</code> Command</a></li>
+  <li><a href="#removing-files-the-rm-command" id="toc-removing-files-the-rm-command" class="nav-link" data-scroll-target="#removing-files-the-rm-command"><span class="header-section-number">4.14.4</span> Removing Files: The <code>rm</code> Command</a></li>
+  <li><a href="#removing-empty-folders-the-rmdir-command" id="toc-removing-empty-folders-the-rmdir-command" class="nav-link" data-scroll-target="#removing-empty-folders-the-rmdir-command"><span class="header-section-number">4.14.5</span> Removing Empty Folders: The <code>rmdir</code> Command</a></li>
+  </ul></li>
+  <li><a href="#reading-files-cat-less-and-more" id="toc-reading-files-cat-less-and-more" class="nav-link" data-scroll-target="#reading-files-cat-less-and-more"><span class="header-section-number">4.15</span> Reading Files: <code>cat</code>, <code>less</code>, and <code>more</code></a>
+  <ul class="collapse">
+  <li><a href="#the-cat-command" id="toc-the-cat-command" class="nav-link" data-scroll-target="#the-cat-command"><span class="header-section-number">4.15.1</span> The <code>cat</code> Command</a></li>
+  <li><a href="#the-less-command" id="toc-the-less-command" class="nav-link" data-scroll-target="#the-less-command"><span class="header-section-number">4.15.2</span> The <code>less</code> Command</a></li>
+  <li><a href="#the-more-command" id="toc-the-more-command" class="nav-link" data-scroll-target="#the-more-command"><span class="header-section-number">4.15.3</span> The <code>more</code> Command</a></li>
+  </ul></li>
+  <li><a href="#quick-reference-summary-of-commands" id="toc-quick-reference-summary-of-commands" class="nav-link" data-scroll-target="#quick-reference-summary-of-commands"><span class="header-section-number">4.16</span> Quick Reference: Summary of Commands</a></li>
+  <li><a href="#tips-for-learning" id="toc-tips-for-learning" class="nav-link" data-scroll-target="#tips-for-learning"><span class="header-section-number">4.17</span> Tips for Learning</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">4.18</span> Next Steps</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000210-introToBashAndCli-v001.html">Intro to the command line (Bash)</a></li><li class="breadcrumb-item"><a href="./000210-introToBashAndCli-v001.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> Intro to Bash (and CLIs)</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> Intro to Bash (and CLIs)</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The “user interface” on a computer is the mechanism with which users instruct the computer to do specific things. Non-technical users interact with computers by using the mouse to click and drag items on the screen. These users are using the “Graphical User Interface” (GUI) of the computer (see below for more info). Most people are not even aware that there is a way to do just about everything on a computer without even touching a mouse.</p>
+<p>Technical users (e.g.&nbsp;programmers, computer system administrators, etc) often use a totally different mechanism to interact with the computer. They use a special program (known as a CLI or “command line interpreter”) to type special “commands” to do different things on the computer. For example, a technically inclined user, might type the command <code>mkdir progressReports</code> to create a new folder named <code>progressReports</code>. By contrast, non-technical users might right-click in the <code>FileExplorer (Windows)</code> or <code>Finder (Mac)</code> programs and choose “new file” from the menu that is displayed.</p>
+<p>There many, many (hundreds?) of different commands that can be typed in the CLI program. Each command is used to accomplish something specific on the computer. Using a CLI is a skill, similar to programming, that takes some time to master. It is obviously much easier for a typical computer user to use the GUI on the computer. Most people aren’t even aware there is another way. Why then would technical users use a Comamnd Line Interface at all?</p>
+<section id="what-are-the-benefits-of-using-a-cli-command-line-interpreter" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="what-are-the-benefits-of-using-a-cli-command-line-interpreter"><span class="header-section-number">4.1</span> What are the benefits of using a CLI (Command Line Interpreter)?</h2>
+<p>It takes time and practice to master how to control a computer by using a CLI (command line interface). However, for technical users, the time spent learning how to use a CLI is time well spent. For the following reasons:</p>
+<ul>
+<li><p>Many tools that are used in software development only have a CLI commands with no equivalent GUI program.</p></li>
+<li><p>Once you have learned and mastered the numerous CLI commands, it can become trivial to accomplish very sophisticated results with much less effort than would be required if only using a GUI. A technical user might type the command <code>mv project1/*2025* project2</code> to move all files with <code>2025</code> in their name from the project1 folder to the project2 folder. If there are 100 files in the project1 folder and 50 of those files have 2025 somewhere in their name, a typical non-technical user might take several minutes or longer to find each of the desired files and drag them to the correct folder. By contrast, typing the above command in the CLI and pressing ENTER takes a few seconds. This is a simple example. The general rule though is that for people who have mastered the CLI commands are able to control the computer in a much quicker and more efficient way.</p></li>
+<li><p>It is relatively easy to “automate” the CLI commands. You can collect numerous CLI commands in a single file, known as a “script file”. Then you can direct the CLI to run all of the commands that are saved in the script file at once. This opens the door to writing script files that can be reused at different times or on different computers to accomplish a repetitive task.</p></li>
+</ul>
+</section>
+<section id="how-to-install-git-and-bash" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="how-to-install-git-and-bash"><span class="header-section-number">4.2</span> How to install Git and Bash</h2>
+<p><strong><em>YRTODO -fix this</em></strong></p>
+<section id="mac" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="mac"><span class="header-section-number">4.2.1</span> Mac</h3>
+<p>Start the Terminal program to get into Bash. Newer macs run the zsh shell in Terminal - you’ll see % instead of $. To get bash just type bash and hit return</p>
+<p>Type git –version if it prompts you to install git say yes.</p>
+</section>
+<section id="windows" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="windows"><span class="header-section-number">4.2.2</span> Windows</h3>
+<p>Download bash and git tools from here: <a href="https://git-scm.com/downloads" class="uri">https://git-scm.com/downloads</a></p>
+</section>
+</section>
+<section id="what-is-a-graphical-user-interface-gui" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="what-is-a-graphical-user-interface-gui"><span class="header-section-number">4.3</span> What is a Graphical User Interface (GUI)?</h2>
+<p>The “user interface” on a computer is the mechanism with which the computer user instructs the computer to do specific things. Non-technical users interact with a computer via the “Graphical User Interface” of the computer. For example, all of the following are parts of the GUI (Graphical User Interface) on Mac and Windows</p>
+<ul>
+<li>double clicking on icons to open a program or to open a file in the appropriate program</li>
+<li>clicking/dragging on a titlebar to move a window to a different location</li>
+<li>clicking on a filename in Windows Explorer or Mac Finder and dragging the file to different folder to either move or copy the file to the other folder</li>
+<li>clicking on the “File” menu in Excel to get to the menu choices for opening/creating/etc files</li>
+<li>clicking on different pictures and text to get something to happen</li>
+<li>etc.</li>
+</ul>
+<p>All of the above features rely heavily on using the mouse to interact with “pictures” or text that appear on the computer screen.</p>
+<!-- start of c content -->
+</section>
+<section id="what-is-a-cli-and-why-should-you-care" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="what-is-a-cli-and-why-should-you-care"><span class="header-section-number">4.4</span> What is a CLI and Why Should You Care?</h2>
+<p>A <strong>CLI</strong> (Command Line Interface) is a way to interact with your computer using text commands instead of clicking on icons and buttons. Think of it like texting your computer instructions instead of pointing at things.</p>
+<p>When people talk about “the command line” or “the terminal,” they’re usually referring to a CLI. It might look intimidating at first—just a black or white screen with text—but once you learn a few commands, it becomes a powerful way to work with files and folders on your computer.</p>
+<section id="what-is-bash" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="what-is-bash"><span class="header-section-number">4.4.1</span> What is Bash?</h3>
+<p><strong>Bash</strong> (which stands for “Bourne Again Shell”) is one of the most popular CLIs. It’s the standard on most Linux systems and Mac computers. When you type commands in Bash, you’re essentially having a conversation with your computer in a special language it understands.</p>
+</section>
+<section id="how-to-access-bash-on-different-systems" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="how-to-access-bash-on-different-systems"><span class="header-section-number">4.4.2</span> How to Access Bash on Different Systems</h3>
+<p><strong>On Mac:</strong> Open the <strong>Terminal</strong> application. You can find it by pressing <code>Cmd + Space</code> and typing “Terminal”, or by going to Applications → Utilities → Terminal.</p>
+<p><strong>On Windows:</strong> Windows doesn’t come with Bash by default. You have a few options:</p>
+<ol type="1">
+<li><strong>Git Bash</strong> - A lightweight option that comes with Git. It’s perfect for basic Bash commands and is what we recommend for getting started.</li>
+<li><strong>WSL2 (Windows Subsystem for Linux)</strong> - A full Linux environment inside Windows. This is more advanced and beyond the scope of this guide.</li>
+</ol>
+<p><strong>Important Note for Windows Users:</strong> Windows has its own native CLIs called <strong>CMD</strong> (Command Prompt) and <strong>PowerShell</strong>. These are conceptually similar to Bash—they let you type commands to control your computer—but the actual commands are different. For example, in Bash you use <code>ls</code> to list files, but in PowerShell you use <code>Get-ChildItem</code> or <code>dir</code>. This guide focuses on Bash commands.</p>
+</section>
+</section>
+<section id="our-sample-file-structure" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="our-sample-file-structure"><span class="header-section-number">4.5</span> Our Sample File Structure</h2>
+<p>Throughout this guide, we’ll use the same example file structure. Here’s what it looks like.</p>
+<p>You can download a zip file that contains these files here.<br>
+<a href="c-bash-tutorial-files.zip" download="">Download the practice files</a></p>
+<pre><code>bash-tutorial-files/
+├── README.txt
+├── documents/
+│   ├── notes/
+│   │   ├── ideas.txt
+│   │   └── meeting-notes.txt
+│   └── reports/
+│       ├── annual-summary.txt
+│       └── quarterly-report.txt
+├── music/
+│   ├── song1.mp3
+│   └── song2.mp3
+├── pictures/
+│   ├── family.jpg
+│   └── vacation.jpg
+└── projects/
+    ├── data-analysis/
+    │   ├── analysis.py
+    │   └── data.csv
+    └── website/
+        ├── index.html
+        └── styles.css</code></pre>
+<section id="how-to-read-this-tree-structure" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="how-to-read-this-tree-structure"><span class="header-section-number">4.5.1</span> How to Read This Tree Structure</h3>
+<ul>
+<li><strong>Lines with <code>/</code> at the end</strong> are directories (folders)</li>
+<li><strong>Lines without <code>/</code></strong> are files</li>
+<li>The <strong>indentation</strong> shows which items are inside which folders</li>
+<li>For example, <code>ideas.txt</code> is inside the <code>notes/</code> folder, which is inside the <code>documents/</code> folder</li>
+</ul>
+<p><strong>Note:</strong> A <strong>directory</strong> is just another word for a <strong>folder</strong>. Computer people often use “directory” instead of “folder,” but they mean the same thing!</p>
+</section>
+<section id="download-the-practice-files" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="download-the-practice-files"><span class="header-section-number">4.5.2</span> Download the Practice Files</h3>
+<p>We’ve prepared a zip file with all these folders and files so you can follow along. Download and extract <code>bash-tutorial-files.zip</code> to a location on your computer (like your Desktop or Documents folder).</p>
+</section>
+</section>
+<section id="understanding-files-and-folders" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="understanding-files-and-folders"><span class="header-section-number">4.6</span> Understanding Files and Folders</h2>
+<p>One important thing to understand: files can be arranged in different folders, which means <strong>two different files can have the same name as long as they’re in different folders</strong>.</p>
+<p>For example, you could have: - <code>projects/website/README.txt</code> - <code>projects/data-analysis/README.txt</code></p>
+<p>These are two completely different files, even though they’re both named <code>README.txt</code>. They’re in different locations (different folders), so there’s no conflict.</p>
+</section>
+<section id="your-home-directory" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="your-home-directory"><span class="header-section-number">4.7</span> Your Home Directory</h2>
+<p>Every user account on a computer has a special folder called the <strong>home directory</strong>. This is your personal space where you keep your files and folders.</p>
+<ul>
+<li><strong>On Mac/Linux:</strong> Your home directory is usually <code>/Users/yourusername</code> or <code>/home/yourusername</code></li>
+<li><strong>On Windows (with Git Bash):</strong> It’s usually <code>C:\Users\yourusername</code></li>
+</ul>
+<p>When you open a new terminal, you usually start in your home directory automatically. Think of it as your “home base” in the file system.</p>
+</section>
+<section id="the-bash-prompt" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="the-bash-prompt"><span class="header-section-number">4.8</span> The Bash Prompt</h2>
+<p>When you open your terminal, you’ll see something called the <strong>prompt</strong>. It might look like:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@computer:~$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">MacBook-Pro:~</span> username$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or just</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Don’t panic if yours looks different!</strong> The prompt varies depending on your system settings, but it all works the same way. The prompt is just Bash’s way of saying “I’m ready for your next command!”</p>
+<p>The <code>$</code> symbol at the end is the most important part—it signals that you can type a command. When you see example commands in this guide or online, you’ll often see them written with a <code>$</code> at the start. <strong>Don’t type the <code>$</code></strong>—it’s just showing you where the prompt is.</p>
+</section>
+<section id="your-first-commands-where-am-i" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="your-first-commands-where-am-i"><span class="header-section-number">4.9</span> Your First Commands: Where Am I?</h2>
+<section id="the-pwd-command-print-working-directory" class="level3" data-number="4.9.1">
+<h3 data-number="4.9.1" class="anchored" data-anchor-id="the-pwd-command-print-working-directory"><span class="header-section-number">4.9.1</span> The <code>pwd</code> Command (Print Working Directory)</h3>
+<p>The first thing you usually want to know is: where am I in the file system right now? That’s what <code>pwd</code> does—it shows you your current location.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>/home/username/Desktop/bash-tutorial-files</code></pre>
+<p>This output is called a <strong>full path</strong> (or “absolute path”). Let’s break it down:</p>
+<ul>
+<li>It starts with <code>/</code> which represents the very top (root) of your entire file system</li>
+<li>Each <code>/</code> separates folder names</li>
+<li>Reading left to right shows the path from the root to where you are now</li>
+<li>This path says: “Start at the root, go into <code>home</code>, then <code>username</code>, then <code>Desktop</code>, then <code>bash-tutorial-files</code>”</li>
+</ul>
+<p>Think of a full path like a complete street address: “123 Main Street, Springfield, IL, USA” gives you everything you need to find a location. Similarly, <code>/home/username/Desktop/bash-tutorial-files</code> gives you everything you need to find this folder.</p>
+</section>
+</section>
+<section id="looking-around-the-ls-command" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="looking-around-the-ls-command"><span class="header-section-number">4.10</span> Looking Around: The <code>ls</code> Command</h2>
+<p>Now that you know where you are, let’s see what’s in this location! The <code>ls</code> command <strong>lists</strong> the files and folders in your current directory.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>README.txt  documents  music  pictures  projects</code></pre>
+<p>Great! We can see there’s a <code>README.txt</code> file and four folders: <code>documents</code>, <code>music</code>, <code>pictures</code>, and <code>projects</code>.</p>
+<section id="command-options-making-ls-more-useful" class="level3" data-number="4.10.1">
+<h3 data-number="4.10.1" class="anchored" data-anchor-id="command-options-making-ls-more-useful"><span class="header-section-number">4.10.1</span> Command Options: Making <code>ls</code> More Useful</h3>
+<p>Most Bash commands have <strong>options</strong> (also called “flags”) that modify their behavior. Options usually start with a dash <code>-</code>.</p>
+<p>Let’s try <code>ls</code> with the <code>-l</code> option, which shows the “long” format with more details:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>total 4
+-rw-r--r-- 1 username username    0 Oct 22 12:00 README.txt
+drwxr-xr-x 4 username username 4096 Oct 22 12:00 documents
+drwxr-xr-x 2 username username 4096 Oct 22 12:00 music
+drwxr-xr-x 2 username username 4096 Oct 22 12:00 pictures
+drwxr-xr-x 4 username username 4096 Oct 22 12:00 projects</code></pre>
+<p>Now we see much more information! The first column shows permissions, the numbers are file sizes in bytes, and we see dates and times. Lines starting with <code>d</code> are directories (folders), while lines starting with <code>-</code> are regular files.</p>
+<p>Let’s add the <code>-t</code> option, which sorts by time (newest first):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-l</span> <span class="at">-t</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>total 4
+drwxr-xr-x 4 username username 4096 Oct 22 12:00 projects
+drwxr-xr-x 2 username username 4096 Oct 22 12:00 pictures
+drwxr-xr-x 2 username username 4096 Oct 22 12:00 music
+drwxr-xr-x 4 username username 4096 Oct 22 12:00 documents
+-rw-r--r-- 1 username username    0 Oct 22 12:00 README.txt</code></pre>
+<p>Now add <code>-r</code> to reverse the sort order (oldest first):</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-l</span> <span class="at">-t</span> <span class="at">-r</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>total 4
+-rw-r--r-- 1 username username    0 Oct 22 12:00 README.txt
+drwxr-xr-x 4 username username 4096 Oct 22 12:00 documents
+drwxr-xr-x 2 username username 4096 Oct 22 12:00 music
+drwxr-xr-x 2 username username 4096 Oct 22 12:00 pictures
+drwxr-xr-x 4 username username 4096 Oct 22 12:00 projects</code></pre>
+</section>
+<section id="options-can-be-combined-and-reordered" class="level3" data-number="4.10.2">
+<h3 data-number="4.10.2" class="anchored" data-anchor-id="options-can-be-combined-and-reordered"><span class="header-section-number">4.10.2</span> Options Can Be Combined and Reordered!</h3>
+<p>Here’s something cool: <strong>the order of options doesn’t matter</strong>. These all do the same thing:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-l</span> <span class="at">-t</span> <span class="at">-r</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-r</span> <span class="at">-t</span> <span class="at">-l</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-t</span> <span class="at">-r</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Even better, you can <strong>combine single-letter options</strong> into one:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-ltr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is exactly the same as <code>ls -l -t -r</code>! It’s just shorter to type. So <code>-ltr</code> means “long format, sorted by time, reversed order.”</p>
+</section>
+</section>
+<section id="creating-new-folders-the-mkdir-command" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="creating-new-folders-the-mkdir-command"><span class="header-section-number">4.11</span> Creating New Folders: The <code>mkdir</code> Command</h2>
+<p>The <code>mkdir</code> command lets you <strong>make a directory</strong> (create a new folder). Let’s create a new folder called <code>temp</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>(no output - success is silent!)</code></pre>
+<p>In Bash, many commands don’t print anything when they succeed. No news is good news! Let’s verify it worked:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>README.txt  documents  music  pictures  projects  temp</code></pre>
+<p>There’s our new <code>temp</code> folder!</p>
+</section>
+<section id="moving-around-the-cd-command" class="level2" data-number="4.12">
+<h2 data-number="4.12" class="anchored" data-anchor-id="moving-around-the-cd-command"><span class="header-section-number">4.12</span> Moving Around: The <code>cd</code> Command</h2>
+<p>The <code>cd</code> command lets you <strong>change directory</strong>—that is, move to a different folder. Let’s go into the <code>documents</code> folder:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd documents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>(no output)</code></pre>
+<p>Again, no output means success. Let’s verify where we are now:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>/home/username/Desktop/bash-tutorial-files/documents</code></pre>
+<p>Perfect! We’re now inside the <code>documents</code> folder. Let’s see what’s in here:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>notes  reports</code></pre>
+<p>We can see the <code>notes</code> and <code>reports</code> folders.</p>
+<section id="using-full-paths-with-cd" class="level3" data-number="4.12.1">
+<h3 data-number="4.12.1" class="anchored" data-anchor-id="using-full-paths-with-cd"><span class="header-section-number">4.12.1</span> Using Full Paths with <code>cd</code></h3>
+<p>You can jump directly to any location using a full path. Let’s go to the <code>website</code> folder:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd /home/username/Desktop/bash-tutorial-files/projects/website</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>/home/username/Desktop/bash-tutorial-files/projects/website</code></pre>
+</section>
+<section id="going-up-one-level-the-..-shortcut" class="level3" data-number="4.12.2">
+<h3 data-number="4.12.2" class="anchored" data-anchor-id="going-up-one-level-the-..-shortcut"><span class="header-section-number">4.12.2</span> Going Up One Level: The <code>..</code> Shortcut</h3>
+<p>What if we want to go back up to the parent folder? The parent folder is the one that contains your current folder. For example, if you’re in <code>website</code>, the parent is <code>projects</code>.</p>
+<p>Bash has a special shortcut: <code>..</code> (two periods) means “the parent directory.” Let’s try it:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ..</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>/home/username/Desktop/bash-tutorial-files/projects</code></pre>
+<p>We moved up one level from <code>website</code> to <code>projects</code>! Let’s go up again:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ..</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>/home/username/Desktop/bash-tutorial-files</code></pre>
+<p>Now we’re back at the top of our tutorial files. You can even chain <code>..</code> together. To go up two levels at once:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd documents/reports</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>/home/username/Desktop/bash-tutorial-files/documents/reports</code></pre>
+<p>Now let’s go up two levels:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ../..</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>/home/username/Desktop/bash-tutorial-files</code></pre>
+<p>The path <code>../..</code> means “go up one level, then go up another level.”</p>
+</section>
+<section id="going-home" class="level3" data-number="4.12.3">
+<h3 data-number="4.12.3" class="anchored" data-anchor-id="going-home"><span class="header-section-number">4.12.3</span> Going Home</h3>
+<p>There are quick shortcuts to jump to your home directory:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or just</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Both take you straight to your home directory, no matter where you are!</p>
+</section>
+</section>
+<section id="getting-help-how-to-learn-more-about-commands" class="level2" data-number="4.13">
+<h2 data-number="4.13" class="anchored" data-anchor-id="getting-help-how-to-learn-more-about-commands"><span class="header-section-number">4.13</span> Getting Help: How to Learn More About Commands</h2>
+<p>You don’t need to memorize everything! Bash has built-in help for most commands.</p>
+<section id="the---help-option" class="level3" data-number="4.13.1">
+<h3 data-number="4.13.1" class="anchored" data-anchor-id="the---help-option"><span class="header-section-number">4.13.1</span> The <code>--help</code> Option</h3>
+<p>Many commands support a <code>--help</code> option that shows you how to use them:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>Usage: ls [OPTION]... [FILE]...
+List information about the FILEs (the current directory by default).
+Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --all                  do not ignore entries starting with .
+  -A, --almost-all           do not list implied . and ..
+  -l                         use a long listing format
+  -r, --reverse              reverse order while sorting
+  -t                         sort by time, newest first
+  -S                         sort by file size, largest first
+  -h, --human-readable       with -l, print sizes in human readable format
+  ...</code></pre>
+</section>
+<section id="understanding-help-output" class="level3" data-number="4.13.2">
+<h3 data-number="4.13.2" class="anchored" data-anchor-id="understanding-help-output"><span class="header-section-number">4.13.2</span> Understanding Help Output</h3>
+<p>Let’s break down what this help text means:</p>
+<ul>
+<li><strong>Short options:</strong> Single letters with one dash, like <code>-l</code>, <code>-t</code>, <code>-r</code>
+<ul>
+<li>These can be combined: <code>-ltr</code> is the same as <code>-l -t -r</code></li>
+</ul></li>
+<li><strong>Long options:</strong> Full words with two dashes, like <code>--all</code>, <code>--help</code>, <code>--human-readable</code>
+<ul>
+<li>These usually can’t be combined</li>
+<li>They’re more readable but take longer to type</li>
+</ul></li>
+</ul>
+<p>For example, these do the same thing:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-a</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">--all</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="man-pages-the-full-manual" class="level3" data-number="4.13.3">
+<h3 data-number="4.13.3" class="anchored" data-anchor-id="man-pages-the-full-manual"><span class="header-section-number">4.13.3</span> Man Pages: The Full Manual</h3>
+<p>If a command doesn’t have <code>--help</code>, or if you want even more detailed information, you can look up <strong>man pages</strong> (manual pages).</p>
+<p>In a full Bash environment (like on Mac or Linux), you can type:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> man ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This opens a detailed manual page for the <code>ls</code> command. You can navigate with arrow keys and press <code>q</code> to quit.</p>
+<p><strong>Note:</strong> Some lightweight Bash environments (like Git Bash on Windows) might not have man pages installed. If <code>man</code> doesn’t work, you can search online for “bash ls man page” or “man ls” and find the documentation online.</p>
+</section>
+</section>
+<section id="working-with-files-and-folders" class="level2" data-number="4.14">
+<h2 data-number="4.14" class="anchored" data-anchor-id="working-with-files-and-folders"><span class="header-section-number">4.14</span> Working with Files and Folders</h2>
+<p>Now let’s learn how to create, copy, move, and delete files and folders.</p>
+<section id="creating-empty-files-the-touch-command" class="level3" data-number="4.14.1">
+<h3 data-number="4.14.1" class="anchored" data-anchor-id="creating-empty-files-the-touch-command"><span class="header-section-number">4.14.1</span> Creating Empty Files: The <code>touch</code> Command</h3>
+<p>The <code>touch</code> command creates an empty file or updates the timestamp of an existing file:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> touch test.txt</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>README.txt  documents  music  pictures  projects  temp  test.txt</code></pre>
+<p>We created a new empty file called <code>test.txt</code>!</p>
+</section>
+<section id="copying-files-the-cp-command" class="level3" data-number="4.14.2">
+<h3 data-number="4.14.2" class="anchored" data-anchor-id="copying-files-the-cp-command"><span class="header-section-number">4.14.2</span> Copying Files: The <code>cp</code> Command</h3>
+<p>The <code>cp</code> command <strong>copies</strong> files or folders. The syntax is: <code>cp source destination</code></p>
+<p>Let’s copy our test file:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cp test.txt test-copy.txt</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>README.txt  documents  music  pictures  projects  temp  test-copy.txt  test.txt</code></pre>
+<p>Now we have both the original <code>test.txt</code> and a copy called <code>test-copy.txt</code>.</p>
+<p>To copy a file into a folder:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cp test.txt documents/</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls documents/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>notes  reports  test.txt</code></pre>
+<p>The <code>test.txt</code> file has been copied into the <code>documents</code> folder!</p>
+<p>To copy an entire folder (directory) and all its contents, use the <code>-r</code> option (which stands for “recursive”):</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cp <span class="at">-r</span> documents documents-backup</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>README.txt  documents  documents-backup  music  pictures  projects  temp  test-copy.txt  test.txt</code></pre>
+</section>
+<section id="moving-and-renaming-the-mv-command" class="level3" data-number="4.14.3">
+<h3 data-number="4.14.3" class="anchored" data-anchor-id="moving-and-renaming-the-mv-command"><span class="header-section-number">4.14.3</span> Moving and Renaming: The <code>mv</code> Command</h3>
+<p>The <code>mv</code> command <strong>moves</strong> files or folders to a new location. It’s also used to rename things!</p>
+<p>To rename a file:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mv test-copy.txt renamed-file.txt</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>README.txt  documents  documents-backup  music  pictures  projects  renamed-file.txt  temp  test.txt</code></pre>
+<p>The file <code>test-copy.txt</code> has been renamed to <code>renamed-file.txt</code>.</p>
+<p>To move a file into a folder:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mv renamed-file.txt temp/</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls temp/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>renamed-file.txt</code></pre>
+<p>The file has moved into the <code>temp</code> folder. Notice it’s no longer in our current directory.</p>
+<p>You can move and rename at the same time:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mv test.txt documents/my-test-file.txt</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls documents/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>my-test-file.txt  notes  reports  test.txt</code></pre>
+</section>
+<section id="removing-files-the-rm-command" class="level3" data-number="4.14.4">
+<h3 data-number="4.14.4" class="anchored" data-anchor-id="removing-files-the-rm-command"><span class="header-section-number">4.14.4</span> Removing Files: The <code>rm</code> Command</h3>
+<p>The <code>rm</code> command <strong>removes</strong> (deletes) files. <strong>Be careful!</strong> There’s no “undo” or trash bin—deleted files are gone forever!</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rm documents/my-test-file.txt</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls documents/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>notes  reports  test.txt</code></pre>
+<p>To remove multiple files at once:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd temp/</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> touch file1.txt file2.txt file3.txt</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>file1.txt  file2.txt  file3.txt  renamed-file.txt</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rm file1.txt file2.txt file3.txt</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>renamed-file.txt</code></pre>
+<p>To remove a folder and everything inside it, use <code>-r</code> (recursive) and usually <code>-f</code> (force, to avoid confirmation prompts):</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ..</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rm <span class="at">-rf</span> documents-backup</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>README.txt  documents  music  pictures  projects  temp</code></pre>
+<p><strong>Warning:</strong> <code>rm -rf</code> is very powerful and very dangerous! Always double-check what you’re deleting. There’s a famous joke: “To understand what <code>rm -rf /</code> does, try it!” <strong>Don’t actually try it</strong>—it would attempt to delete everything on your computer!</p>
+</section>
+<section id="removing-empty-folders-the-rmdir-command" class="level3" data-number="4.14.5">
+<h3 data-number="4.14.5" class="anchored" data-anchor-id="removing-empty-folders-the-rmdir-command"><span class="header-section-number">4.14.5</span> Removing Empty Folders: The <code>rmdir</code> Command</h3>
+<p>The <code>rmdir</code> command removes directories, but only if they’re empty:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd temp/</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rm renamed-file.txt</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ..</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rmdir temp</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>README.txt  documents  music  pictures  projects</code></pre>
+<p>If you try to use <code>rmdir</code> on a folder that has files in it, you’ll get an error:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rmdir documents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>rmdir: failed to remove 'documents': Directory not empty</code></pre>
+<p>For non-empty folders, use <code>rm -rf</code> instead.</p>
+</section>
+</section>
+<section id="reading-files-cat-less-and-more" class="level2" data-number="4.15">
+<h2 data-number="4.15" class="anchored" data-anchor-id="reading-files-cat-less-and-more"><span class="header-section-number">4.15</span> Reading Files: <code>cat</code>, <code>less</code>, and <code>more</code></h2>
+<section id="the-cat-command" class="level3" data-number="4.15.1">
+<h3 data-number="4.15.1" class="anchored" data-anchor-id="the-cat-command"><span class="header-section-number">4.15.1</span> The <code>cat</code> Command</h3>
+<p>The <code>cat</code> command displays the contents of a file. It’s short for “concatenate,” but most people use it to quickly view file contents:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd documents/notes/</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat ideas.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>(displays the contents of ideas.txt)</code></pre>
+<p>If the file is empty (like ours), you won’t see anything! Let’s add some content first using a different method:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">"My brilliant idea: automated coffee maker"</span> <span class="op">&gt;</span> ideas.txt</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat ideas.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>My brilliant idea: automated coffee maker</code></pre>
+<p>You can also use <code>cat</code> to view multiple files:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">"More ideas here!"</span> <span class="op">&gt;</span> ideas2.txt</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat ideas.txt ideas2.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>My brilliant idea: automated coffee maker
+More ideas here!</code></pre>
+<p><strong>Limitation of <code>cat</code>:</strong> If the file is very long, <code>cat</code> dumps everything to the screen at once, and you’ll need to scroll back up to see the beginning. For long files, use <code>less</code> or <code>more</code>.</p>
+</section>
+<section id="the-less-command" class="level3" data-number="4.15.2">
+<h3 data-number="4.15.2" class="anchored" data-anchor-id="the-less-command"><span class="header-section-number">4.15.2</span> The <code>less</code> Command</h3>
+<p>The <code>less</code> command shows file contents one page at a time, letting you scroll through:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> less ideas.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When using <code>less</code>: - <strong>Arrow keys</strong> or <strong>spacebar</strong> to scroll down - <strong>b</strong> to scroll back up - <strong>/</strong> followed by text to search - <strong>q</strong> to quit</p>
+<p><code>less</code> is great for long files because you have full control over navigation.</p>
+</section>
+<section id="the-more-command" class="level3" data-number="4.15.3">
+<h3 data-number="4.15.3" class="anchored" data-anchor-id="the-more-command"><span class="header-section-number">4.15.3</span> The <code>more</code> Command</h3>
+<p>The <code>more</code> command is similar to <code>less</code> but older and simpler:</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> more ideas.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With <code>more</code>: - <strong>Spacebar</strong> to go to the next page - <strong>Enter</strong> to go down one line - <strong>q</strong> to quit</p>
+<p><strong>Difference between <code>less</code> and <code>more</code>:</strong> - <code>less</code> lets you scroll backward; <code>more</code> only goes forward - <code>less</code> has more features (searching, better navigation) - The joke: “less is more, and more is less!” (meaning <code>less</code> is actually more capable than <code>more</code>)</p>
+<p>In practice, most people use <code>less</code> because it’s more flexible. But both do the job for viewing files!</p>
+</section>
+</section>
+<section id="quick-reference-summary-of-commands" class="level2" data-number="4.16">
+<h2 data-number="4.16" class="anchored" data-anchor-id="quick-reference-summary-of-commands"><span class="header-section-number">4.16</span> Quick Reference: Summary of Commands</h2>
+<p>Here’s a handy table of all the commands we covered:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What It Does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pwd</code></td>
+<td>Print working directory (show where you are)</td>
+<td><code>pwd</code></td>
+</tr>
+<tr class="even">
+<td><code>ls</code></td>
+<td>List files and folders</td>
+<td><code>ls -ltr</code></td>
+</tr>
+<tr class="odd">
+<td><code>cd</code></td>
+<td>Change directory (move to another folder)</td>
+<td><code>cd documents</code></td>
+</tr>
+<tr class="even">
+<td><code>cd ..</code></td>
+<td>Go up one directory level</td>
+<td><code>cd ..</code></td>
+</tr>
+<tr class="odd">
+<td><code>cd ~</code> or <code>cd</code></td>
+<td>Go to home directory</td>
+<td><code>cd</code></td>
+</tr>
+<tr class="even">
+<td><code>mkdir</code></td>
+<td>Make a new directory</td>
+<td><code>mkdir new-folder</code></td>
+</tr>
+<tr class="odd">
+<td><code>rmdir</code></td>
+<td>Remove an empty directory</td>
+<td><code>rmdir old-folder</code></td>
+</tr>
+<tr class="even">
+<td><code>touch</code></td>
+<td>Create an empty file</td>
+<td><code>touch file.txt</code></td>
+</tr>
+<tr class="odd">
+<td><code>cp</code></td>
+<td>Copy files or folders</td>
+<td><code>cp file.txt copy.txt</code></td>
+</tr>
+<tr class="even">
+<td><code>cp -r</code></td>
+<td>Copy a folder and all contents</td>
+<td><code>cp -r folder/ backup/</code></td>
+</tr>
+<tr class="odd">
+<td><code>mv</code></td>
+<td>Move or rename files/folders</td>
+<td><code>mv old.txt new.txt</code></td>
+</tr>
+<tr class="even">
+<td><code>rm</code></td>
+<td>Remove files</td>
+<td><code>rm file.txt</code></td>
+</tr>
+<tr class="odd">
+<td><code>rm -rf</code></td>
+<td>Remove folders and contents</td>
+<td><code>rm -rf folder/</code></td>
+</tr>
+<tr class="even">
+<td><code>cat</code></td>
+<td>Display file contents</td>
+<td><code>cat file.txt</code></td>
+</tr>
+<tr class="odd">
+<td><code>less</code></td>
+<td>View file with scrolling</td>
+<td><code>less file.txt</code></td>
+</tr>
+<tr class="even">
+<td><code>more</code></td>
+<td>View file page by page</td>
+<td><code>more file.txt</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tips-for-learning" class="level2" data-number="4.17">
+<h2 data-number="4.17" class="anchored" data-anchor-id="tips-for-learning"><span class="header-section-number">4.17</span> Tips for Learning</h2>
+<ol type="1">
+<li><p><strong>Practice, practice, practice!</strong> The best way to learn Bash is to use it. Try the commands in the sample directory we provided.</p></li>
+<li><p><strong>Don’t be afraid to experiment</strong> in test folders. Just be careful with <code>rm</code> commands!</p></li>
+<li><p><strong>Use Tab completion</strong>: Start typing a file or folder name and press Tab. Bash will complete it for you! This saves time and prevents typos.</p></li>
+<li><p><strong>Use the up arrow</strong> to cycle through previous commands. This is super handy when you need to run the same command again.</p></li>
+<li><p><strong>Google is your friend</strong>: When you’re stuck, search for “bash how to [what you want to do]” and you’ll find lots of help.</p></li>
+</ol>
+</section>
+<section id="next-steps" class="level2" data-number="4.18">
+<h2 data-number="4.18" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">4.18</span> Next Steps</h2>
+<p>Once you’re comfortable with these basic commands, you might want to explore:</p>
+<ul>
+<li>Redirecting output (<code>&gt;</code> and <code>&gt;&gt;</code>)</li>
+<li>Piping commands together (<code>|</code>)</li>
+<li>Finding files (<code>find</code> command)</li>
+<li>Searching within files (<code>grep</code> command)</li>
+<li>Using wildcards (<code>*</code> and <code>?</code>)</li>
+<li>Running scripts (<code>.sh</code> files)</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./000100-howToInstallCursor-v002.html" class="pagination-link" aria-label="<yrChapterNumber>3. </yrChapterNumber> How to install Cursor on your computer">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> How to install Cursor on your computer</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./000240-v2-introToGit-v001.html" class="pagination-link" aria-label="<yrChapterNumber>5. </yrChapterNumber> Intro to Git &amp; GitHub">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Intro to Git &amp; GitHub</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>

@@ -1,0 +1,128 @@
+# This _quarto.yml file uses several extra files (listed below) that
+# aren't part of the standard _quarto.yml file.
+# My other quarto projects also use the same files. 
+# Therefore I used a -v001 extension on the filenames so that 
+# if I modify these files, I should also modify the extension. 
+# That gives me a quick and easy way to make sure that I also 
+# update other book projects that I have with the latest versions
+# of these files.
+#
+#   yrBuildQuarto-v001.sh
+#   yrChapterNumber-v001.sh 
+#   yrNocacheHeaders-v001.html
+#   yrstuff-v001.js
+#   yrStyles-main-v001.css
+
+project:
+  type: book
+  output-dir: _book
+  pre-render: copy_quartoYml_to_bookFolder-v001.R
+  resources:
+    - _quarto.yml
+    - yrNocacheHeaders-v001.html
+    - yrstuff-v001.js
+    - .nojekyll
+
+book:
+  title: "AI Assisted Software Development"
+  author: "Y. Rosenthal"
+#  navbar:
+#    left:
+#      - text: "(click here for fall24 version of this website)"
+#        href: https://y-rosenthal.github.io/rnotes-fall24/
+#  sidebar:
+#    collapse-level: 1 # show only parts; chapters start collapsed
+  search: 
+    location: sidebar
+  #  date: "10/31/2023"
+  chapters:
+    - index.qmd
+    - part: "Intro"
+      chapters:
+        - 000020-introToAi-v001.qmd # yrChapterNumber 1
+        - 000030-introToAiasd-v001.qmd # yrChapterNumber 2
+        - 000100-howToInstallCursor-v002.qmd # yrChapterNumber 3
+    - part: "Intro to the command line (Bash)"
+      chapters:
+        - 000210-introToBashAndCli-v001.qmd # yrChapterNumber 4
+    - part: "Intro to git and github"
+      chapters:
+        - 000240-v2-introToGit-v001.qmd # yrChapterNumber 5
+        - 000230-v1-introToGit-v001.qmd # yrChapterNumber 6
+    - part: "Basic Internet Architecture"
+      chapters:
+        - 000900-internetArchitecture-browsersAndWebservers-v001.qmd # yrChapterNumber 7
+        #- 001003-tutorial-supabase-basicInternetArchitecture-v001.qmd # yrChapterNumber 8
+        - 000940-internetArchitecture-domainNamesEtc-v001.qmd  # yrChapterNumber 8
+        - 000950-internetArchitecture-webFrameworks-v001.qmd # yrChapterNumber 9
+        #- 001005-tutorial-supabase-frameworks-v001.qmd # yrChapterNumber 9
+    - part: "Building with Next and Supabase"
+      chapters:
+        - 001000-tutorial-supabase-nextjs-v001.qmd # yrChapterNumber 10
+        - 001007-tutorial-supabase-projectArchitecture-v001.qmd # yrChapterNumber 11
+        - 001100-tutorial-installNodeNpm-v001.qmd # yrChapterNumber 12
+        - 001110-tutorial-cloneRepo-v001.qmd # yrChapterNumber 13
+        - 001120-tutorial-installThePackages-v001.qmd # yrChapterNumber 14
+        - 001130-tutorial-envFiles-v001.qmd # yrChapterNumber 15
+        - 001140-tutorial-previewFrontEnd-v001.qmd # yrChapterNumber 16
+        - 001150-tutorial-createSupabaseProject-v001.qmd # yrChapterNumber 17
+        - 001160-tutorial-googleOauth-v001.qmd # yrChapterNumber 18
+#        - 001170-tutorial--v001.qmd # yrChapterNumber 1
+#        - 001180-tutorial--v001.qmd # yrChapterNumber 1
+#        - 001190-tutorial--v001.qmd # yrChapterNumber 1
+#        - 001200-tutorial--v001.qmd # yrChapterNumber 1
+#        - 001210-tutorial--v001.qmd # yrChapterNumber 1
+       # - 001130-tutorial-restOfTheSteps-v001.qmd # yrChapterNumber 15
+        - 009999-tutorial-restOfTheSteps-v001.qmd # yrChapterNumber 15
+    - part: "Practice Questions"
+      chapters:
+        - someFile.qmd
+        - someFile.qmd
+        - someFile.qmd
+    - part: "Ignore this - in progress work"
+      chapters:
+        - 000010-topics-v001.qmd # yrChapterNumber 16
+        - 000500-htmlCssJavascript-v001.qmd # yrChapterNumber 17
+        - 099999-llmsForDataAnalytics.qmd # yrChapterNumber 18
+        - 900010-codeMetrics-v001.qmd # yrChapterNumber 19
+  appendices:
+    - 990010-references-v001.qmd
+    - someFile.qmd
+execute:
+  error: true
+  warning: true
+format:
+  html:
+    lang: en
+    encoding: UTF-8
+    theme: cosmo
+    toc-expand: true
+    fontsize: 80%
+    number-depth: 3
+    include-in-header:
+      - file: yrNocacheHeaders-v001.html
+      - text: |
+          <script src="yrstuff-v001.js"></script>
+    css: yrStyles-main-v001.css
+    include-after-body:
+      text: |
+        <div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+          <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+        </div>
+        <script>
+        const titles = document.querySelectorAll('.title');
+
+        titles.forEach(title => {
+          if (title.textContent.trim().startsWith('Appendix')) {
+            const chapterNumber = title.querySelector('yrChapterNumber');
+            if (chapterNumber) {
+              chapterNumber.classList.add('yrAppendixChapterNumber');
+            }
+          }
+        });
+        </script>
+  #  pdf:
+  #    documentclass: scrreprt
+  #    fontsize: 9px
+  docx: default
+editor: source
