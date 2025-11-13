@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; 8.  Domain Names, IP Addresses, ping, etc – AI Assisted Software Development</title>
+<title>12&nbsp; 9c. Supabase MCP Server – AI Assisted Software Development</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./000950-internetArchitecture-webFrameworks-v001.html" rel="next">
-<link href="./000900-internetArchitecture-browsersAndWebservers-v001.html" rel="prev">
+<link href="./001000-tutorial-supabase-nextjs-v001.html" rel="next">
+<link href="./000970-playwrightMcpServer-v001.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000900-internetArchitecture-browsersAndWebservers-v001.html">Basic Internet Architecture</a></li><li class="breadcrumb-item"><a href="./000940-internetArchitecture-domainNamesEtc-v001.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Domain Names, IP Addresses, ping, etc</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000960-introToMcpServers-v001.html">MCP Servers</a></li><li class="breadcrumb-item"><a href="./000980-supabaseMcpServer-v001.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>9c.</yrchapternumber> Supabase MCP Server</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -238,7 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./000940-internetArchitecture-domainNamesEtc-v001.html" class="sidebar-item-text sidebar-link active">
+  <a href="./000940-internetArchitecture-domainNamesEtc-v001.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Domain Names, IP Addresses, ping, etc</span></span></a>
   </div>
 </li>
@@ -273,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./000980-supabaseMcpServer-v001.html" class="sidebar-item-text sidebar-link">
+  <a href="./000980-supabaseMcpServer-v001.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>9c.</yrchapternumber> Supabase MCP Server</span></span></a>
   </div>
 </li>
@@ -489,16 +489,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ip-addresses" id="toc-ip-addresses" class="nav-link active" data-scroll-target="#ip-addresses"><span class="header-section-number">8.0.1</span> IP addresses</a></li>
+  <li><a href="#key-features" id="toc-key-features" class="nav-link active" data-scroll-target="#key-features"><span class="header-section-number">12.0.1</span> Key features</a></li>
+  <li><a href="#how-to-install-set-up-the-mcp-server-using-the-supabase-website" id="toc-how-to-install-set-up-the-mcp-server-using-the-supabase-website" class="nav-link" data-scroll-target="#how-to-install-set-up-the-mcp-server-using-the-supabase-website"><span class="header-section-number">12.1</span> How to install / set up the MCP Server using the Supabase website</a></li>
+  <li><a href="#configuration-steps-for-cursor-supabase-mcp" id="toc-configuration-steps-for-cursor-supabase-mcp" class="nav-link" data-scroll-target="#configuration-steps-for-cursor-supabase-mcp"><span class="header-section-number">12.2</span> Configuration steps for Cursor + Supabase MCP</a>
+  <ul class="collapse">
+  <li><a href="#open-cursor-settings" id="toc-open-cursor-settings" class="nav-link" data-scroll-target="#open-cursor-settings"><span class="header-section-number">12.2.1</span> 1. Open Cursor settings</a></li>
+  <li><a href="#add-the-supabase-mcp-server" id="toc-add-the-supabase-mcp-server" class="nav-link" data-scroll-target="#add-the-supabase-mcp-server"><span class="header-section-number">12.2.2</span> 2. Add the Supabase MCP server</a></li>
+  <li><a href="#optional-scope-read-only-flags" id="toc-optional-scope-read-only-flags" class="nav-link" data-scroll-target="#optional-scope-read-only-flags"><span class="header-section-number">12.2.3</span> 3. (Optional) Scope &amp; read-only flags</a></li>
+  <li><a href="#authenticate" id="toc-authenticate" class="nav-link" data-scroll-target="#authenticate"><span class="header-section-number">12.2.4</span> 4. Authenticate</a></li>
+  <li><a href="#test-the-connection" id="toc-test-the-connection" class="nav-link" data-scroll-target="#test-the-connection"><span class="header-section-number">12.2.5</span> 5. Test the connection</a></li>
+  <li><a href="#security-usage-notes" id="toc-security-usage-notes" class="nav-link" data-scroll-target="#security-usage-notes"><span class="header-section-number">12.2.6</span> 6. Security &amp; usage notes</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000900-internetArchitecture-browsersAndWebservers-v001.html">Basic Internet Architecture</a></li><li class="breadcrumb-item"><a href="./000940-internetArchitecture-domainNamesEtc-v001.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Domain Names, IP Addresses, ping, etc</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000960-introToMcpServers-v001.html">MCP Servers</a></li><li class="breadcrumb-item"><a href="./000980-supabaseMcpServer-v001.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>9c.</yrchapternumber> Supabase MCP Server</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Domain Names, IP Addresses, ping, etc</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>9c.</yrchapternumber> Supabase MCP Server</span></h1>
 </div>
 
 
@@ -515,30 +525,144 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Every web server computer on the Internet has a distinct “name”. When the browser sends a message to the web server program it does so by specifying it’s name. You can think of the “domain name” of a website (e.g.&nbsp;google.com, amazon.com, etc) as the “name” of the web server computer that is running the website.</p>
-<blockquote class="blockquote">
-<p>REMEMBER that we said that even though large websites such as google are actually running on multiple computers - however, we can conceptually understand how everything works by imagining that they actually run on just a single computer.</p>
-</blockquote>
-<p>The domain name in a URL simply identifies which computer on the Internet, the browser need to contact to get the desired webpage. For example, the follwing URL goes to a page on amazon’s website for toys: <a href="https://www.amazon.com/toys/b?ie=UTF8&amp;node=165793011" class="uri">https://www.amazon.com/toys/b?ie=UTF8&amp;node=165793011</a> This URL has a lot in it. The part that says <code>www.amazon.com</code> is the “name” of the computer that runs amazon’s website. The rest of the URL has other significance that we will not discuss now (maybe later …)</p>
-<section id="ip-addresses" class="level3" data-number="8.0.1">
-<h3 data-number="8.0.1" class="anchored" data-anchor-id="ip-addresses"><span class="header-section-number">8.0.1</span> IP addresses</h3>
-<p>In reality the “domain name” of the computer is converted into the computer version of a telephone number - called an IP address. An IP address looks like a few numbers separated by periods (see below). The browser actually looks up the IP address for the domain name and uses that to contact the web server computer. (For now let’s ignore “how” the browser looks up the IP address for a particular domain name - just know that it does and uses the IP address to “call up” the server computer).</p>
-<p>You can see the ip address for www.amazon.com by using the <code>ping</code> program on your Bash “command line”. The ping program sends a message to the computer asking it to respond. The computer simply responds with a very short message to indicate that it is “alive” and not “down”. The ping program simply reports that the computer responded. The ping program also reports the IP address of the computer that responded.</p>
-<p>Simply type the following command</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> www.amazon.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The response will look similar to this (your response might look a little different). On some computers the output stops after a few lines of this. On other computers you can press <code>ctrl-c</code> to stop the output if it keeps going.</p>
-<pre><code>PING d3ag4hukkh62yn.cloudfront.net (54.192.52.164) 56(84) bytes of data.
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=1 ttl=245 time=307 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=2 ttl=245 time=20.1 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=3 ttl=245 time=14.7 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=4 ttl=245 time=15.8 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=5 ttl=245 time=13.6 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=6 ttl=245 time=21.6 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=7 ttl=245 time=12.2 ms
-... etc</code></pre>
-<p>The response above, simply means that the server computer is up and running and responding. This whole thing is similar to the ping program calling out to the server computer asking <code>hey are you alive?</code> and the server computer responding <code>yes, yes, yes, yes ... etc</code>. The IP address for the server computer in the above example is <code>54.192.52.164</code>.</p>
+<p>The Supabase MCP Server is a service by Supabase that implements the Model Context Protocol (MCP). :contentReference<span data-index="3">oaicite:3</span> With this server you can link AI tools (LLMs) to your Supabase project so the AI can perform tasks like querying the database, managing schemas, retrieving config, etc. :contentReference<span data-index="4">oaicite:4</span></p>
+<section id="key-features" class="level3" data-number="12.0.1">
+<h3 data-number="12.0.1" class="anchored" data-anchor-id="key-features"><span class="header-section-number">12.0.1</span> Key features</h3>
+<ul>
+<li><p>Enables AI tools to <strong>manage</strong> Supabase resources (tables, branches, functions) through natural-language commands. :contentReference<span data-index="5">oaicite:5</span></p></li>
+<li><p>Supports scoping (you can restrict the server to a single project) and read-only mode for safer usage. :contentReference<span data-index="6">oaicite:6</span></p></li>
+<li><p>Works with both Supabase hosted projects and with self-hosted Supabase instances (though self-hosted has more restrictions). :contentReference<span data-index="7">oaicite:7</span></p></li>
+</ul>
+</section>
+<section id="how-to-install-set-up-the-mcp-server-using-the-supabase-website" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="how-to-install-set-up-the-mcp-server-using-the-supabase-website"><span class="header-section-number">12.1</span> How to install / set up the MCP Server using the Supabase website</h2>
+<ol type="1">
+<li><p>In your Supabase dashboard, find the <strong>MCP</strong> section and select the hosted server URL (typically <code>https://mcp.supabase.com/mcp</code>). :contentReference<span data-index="8">oaicite:8</span></p></li>
+<li><p>Configure your AI tool (for example a client like Cursor) to point to that URL. For example in <code>.cursor/mcp.json</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"mcpServers"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"supabase"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"url"</span><span class="fu">:</span> <span class="st">"https://mcp.supabase.com/mcp"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Optionally pass query parameters:</p>
+<ul>
+<li><p>project_ref=<your-project> to limit access to one project.</your-project></p></li>
+<li><p>read_only=true to disable write operations.</p></li>
+</ul></li>
+<li><p>Authenticate: For most clients the hosted server handles login automatically.</p></li>
+</ol>
+<!--
+4. Authenticate: For most clients the hosted server handles login automatically. 
+   Manual tokens may be needed for CI environments. 
+-->
+<!--
+Summary
+
+The Supabase MCP Server bridges your Supabase backend and AI/LLM tools by
+exposing a set of operations under the MCP protocol. You can use the hosted
+version for quick setup, or enable a self-hosted version for private
+infrastructure (with more caution around network/security).
+-->
+<!--
+
+Option B: Self-hosted Supabase MCP Server
+
+If you are running Supabase yourself (via Docker/CLI), you can enable the MCP route:
+
+Ensure you are running a Supabase self-hosted stack.
+
+In your Supabase kong.yml (API gateway) configuration, allow access to the /mcp endpoint from your trusted local network only. 
+Supabase
+
+Restart the relevant container (e.g., kong). 
+Supabase
+
+From your local machine, create an SSH tunnel (or VPN) so you access the MCP endpoint securely. Example:
+
+ssh -L localhost:8080:localhost:8000 you@your-supabase-host
 
 
+Supabase
+
+In your client config, point to the local tunnel URL:
+
+{
+  "mcpServers": {
+    "supabase-self": {
+      "url": "http://localhost:8080/mcp"
+    }
+  }
+}
+
+
+Note: Self-hosted mode currently does not support full OAuth 2.1 flows and is intended for internal/dev use only. 
+Supabase
+
+-->
+</section>
+<section id="configuration-steps-for-cursor-supabase-mcp" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="configuration-steps-for-cursor-supabase-mcp"><span class="header-section-number">12.2</span> Configuration steps for Cursor + Supabase MCP</h2>
+<section id="open-cursor-settings" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="open-cursor-settings"><span class="header-section-number">12.2.1</span> 1. Open Cursor settings</h3>
+<ul>
+<li>Launch Cursor.<br>
+</li>
+<li>Go to <strong>Settings → Features</strong>. :contentReference<span data-index="2">oaicite:2</span><br>
+</li>
+<li>Scroll down to the <strong>MCP Servers</strong> section. :contentReference<span data-index="3">oaicite:3</span></li>
+</ul>
+</section>
+<section id="add-the-supabase-mcp-server" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="add-the-supabase-mcp-server"><span class="header-section-number">12.2.2</span> 2. Add the Supabase MCP server</h3>
+<p>Add a new MCP server entry. You can either use the hosted URL or your self-hosted endpoint.<br>
+- For hosted: Use <code>https://mcp.supabase.com/mcp</code>. :contentReference<span data-index="4">oaicite:4</span><br>
+- In the <code>.cursor/mcp.json</code> file you can add:<br>
+<code>json   {     "mcpServers": {       "supabase": {         "url": "https://mcp.supabase.com/mcp"       }     }   }</code> :contentReference<span data-index="5">oaicite:5</span></p>
+</section>
+<section id="optional-scope-read-only-flags" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="optional-scope-read-only-flags"><span class="header-section-number">12.2.3</span> 3. (Optional) Scope &amp; read-only flags</h3>
+<ul>
+<li>To restrict to a specific project, append <code>?project_ref=&lt;your_project_ref&gt;</code>. :contentReference<span data-index="6">oaicite:6</span><br>
+</li>
+<li>To enforce read-only mode: use <code>&amp;read_only=true</code>. :contentReference<span data-index="7">oaicite:7</span><br>
+</li>
+<li>Note: The official hosted Supabase MCP is <strong>read-only</strong> by default. :contentReference<span data-index="8">oaicite:8</span></li>
+</ul>
+</section>
+<section id="authenticate" class="level3" data-number="12.2.4">
+<h3 data-number="12.2.4" class="anchored" data-anchor-id="authenticate"><span class="header-section-number">12.2.4</span> 4. Authenticate</h3>
+<ul>
+<li>The hosted server supports a browser-based OAuth flow (dynamic client registration) so you often don’t need to generate a PAT (personal access token). :contentReference<span data-index="9">oaicite:9</span><br>
+</li>
+<li>For CI or other non-interactive use cases:<br>
+<code>json   {     "url": "https://mcp.supabase.com/mcp?project_ref=${SUPABASE_PROJECT_REF}",     "headers": {       "Authorization": "Bearer ${SUPABASE_ACCESS_TOKEN}"     }   }</code> :contentReference<span data-index="10">oaicite:10</span></li>
+</ul>
+</section>
+<section id="test-the-connection" class="level3" data-number="12.2.5">
+<h3 data-number="12.2.5" class="anchored" data-anchor-id="test-the-connection"><span class="header-section-number">12.2.5</span> 5. Test the connection</h3>
+<ul>
+<li>In Cursor, after the MCP server is added, try issuing a natural-language command like:<br>
+&gt; “List all tables in the database.”<br>
+</li>
+<li>Check the <em>Output</em> or <em>MCP</em> log in Cursor to verify the server is responding. :contentReference<span data-index="11">oaicite:11</span></li>
+</ul>
+</section>
+<section id="security-usage-notes" class="level3" data-number="12.2.6">
+<h3 data-number="12.2.6" class="anchored" data-anchor-id="security-usage-notes"><span class="header-section-number">12.2.6</span> 6. Security &amp; usage notes</h3>
+<ul>
+<li>Use this setup <strong>only</strong> for development or non-production data. The MCP endpoint gives powerful access. :contentReference<span data-index="12">oaicite:12</span><br>
+</li>
+<li>Always keep manual approval of tool calls enabled in Cursor. That way you review any SQL or action before it executes. :contentReference<span data-index="13">oaicite:13</span></li>
+</ul>
+<!--
+If you like, I can **generate a full `.cursor/mcp.json` sample** with both hosted and self-hosted versions included (you can copy and adapt). Would that be helpful?
+::contentReference[oaicite:14]{index=14}
+-->
+
+
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -943,13 +1067,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./000900-internetArchitecture-browsersAndWebservers-v001.html" class="pagination-link" aria-label="<yrChapterNumber>7. </yrChapterNumber> Browsers (HTML,CSS,Javascript) and Web Servers">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> Browsers (HTML,CSS,Javascript) and Web Servers</span></span>
+      <a href="./000970-playwrightMcpServer-v001.html" class="pagination-link" aria-label="<yrChapterNumber>9b.</yrChapterNumber> Playwright MCP server">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>9b.</yrchapternumber> Playwright MCP server</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./000950-internetArchitecture-webFrameworks-v001.html" class="pagination-link" aria-label="<yrChapterNumber>9. </yrChapterNumber> Client side web frameworks">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Client side web frameworks</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./001000-tutorial-supabase-nextjs-v001.html" class="pagination-link" aria-label="<yrChapterNumber>10. </yrChapterNumber> Tutorial - intro">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> Tutorial - intro</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

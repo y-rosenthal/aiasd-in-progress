@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; 8.  Domain Names, IP Addresses, ping, etc – AI Assisted Software Development</title>
+<title>11&nbsp; 9b. Playwright MCP server – AI Assisted Software Development</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./000950-internetArchitecture-webFrameworks-v001.html" rel="next">
-<link href="./000900-internetArchitecture-browsersAndWebservers-v001.html" rel="prev">
+<link href="./000980-supabaseMcpServer-v001.html" rel="next">
+<link href="./000960-introToMcpServers-v001.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000900-internetArchitecture-browsersAndWebservers-v001.html">Basic Internet Architecture</a></li><li class="breadcrumb-item"><a href="./000940-internetArchitecture-domainNamesEtc-v001.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Domain Names, IP Addresses, ping, etc</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000960-introToMcpServers-v001.html">MCP Servers</a></li><li class="breadcrumb-item"><a href="./000970-playwrightMcpServer-v001.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>9b.</yrchapternumber> Playwright MCP server</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -238,7 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./000940-internetArchitecture-domainNamesEtc-v001.html" class="sidebar-item-text sidebar-link active">
+  <a href="./000940-internetArchitecture-domainNamesEtc-v001.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Domain Names, IP Addresses, ping, etc</span></span></a>
   </div>
 </li>
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./000970-playwrightMcpServer-v001.html" class="sidebar-item-text sidebar-link">
+  <a href="./000970-playwrightMcpServer-v001.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>9b.</yrchapternumber> Playwright MCP server</span></span></a>
   </div>
 </li>
@@ -489,16 +489,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ip-addresses" id="toc-ip-addresses" class="nav-link active" data-scroll-target="#ip-addresses"><span class="header-section-number">8.0.1</span> IP addresses</a></li>
+  <li><a href="#configure-cursor-to-use-it" id="toc-configure-cursor-to-use-it" class="nav-link active" data-scroll-target="#configure-cursor-to-use-it"><span class="header-section-number">11.1</span> Configure Cursor to use it</a></li>
+  <li><a href="#how-to-use-it-in-cursor" id="toc-how-to-use-it-in-cursor" class="nav-link" data-scroll-target="#how-to-use-it-in-cursor"><span class="header-section-number">11.2</span> How to use it (in Cursor)</a>
+  <ul class="collapse">
+  <li><a href="#example-prompt-you-might-use" id="toc-example-prompt-you-might-use" class="nav-link" data-scroll-target="#example-prompt-you-might-use"><span class="header-section-number">11.2.1</span> Example prompt you might use</a></li>
+  <li><a href="#another-example" id="toc-another-example" class="nav-link" data-scroll-target="#another-example"><span class="header-section-number">11.2.2</span> Another example</a></li>
+  </ul></li>
+  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips"><span class="header-section-number">11.3</span> Tips</a></li>
+  <li><a href="#important-caveats-risks" id="toc-important-caveats-risks" class="nav-link" data-scroll-target="#important-caveats-risks"><span class="header-section-number">11.4</span> Important caveats &amp; risks</a></li>
+  <li><a href="#danger---enabling-playwright" id="toc-danger---enabling-playwright" class="nav-link" data-scroll-target="#danger---enabling-playwright"><span class="header-section-number">11.5</span> Danger - enabling Playwright</a></li>
+  <li><a href="#how-to-enable-automatic-approval" id="toc-how-to-enable-automatic-approval" class="nav-link" data-scroll-target="#how-to-enable-automatic-approval"><span class="header-section-number">11.6</span> How to enable automatic approval</a>
+  <ul class="collapse">
+  <li><a href="#why-its-risky" id="toc-why-its-risky" class="nav-link" data-scroll-target="#why-its-risky"><span class="header-section-number">11.6.1</span> Why it’s risky</a></li>
+  </ul></li>
+  <li><a href="#workaround-idea" id="toc-workaround-idea" class="nav-link" data-scroll-target="#workaround-idea"><span class="header-section-number">11.7</span> Workaround idea</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000900-internetArchitecture-browsersAndWebservers-v001.html">Basic Internet Architecture</a></li><li class="breadcrumb-item"><a href="./000940-internetArchitecture-domainNamesEtc-v001.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Domain Names, IP Addresses, ping, etc</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000960-introToMcpServers-v001.html">MCP Servers</a></li><li class="breadcrumb-item"><a href="./000970-playwrightMcpServer-v001.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>9b.</yrchapternumber> Playwright MCP server</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> Domain Names, IP Addresses, ping, etc</span></h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>9b.</yrchapternumber> Playwright MCP server</span></h1>
 </div>
 
 
@@ -515,28 +528,298 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Every web server computer on the Internet has a distinct “name”. When the browser sends a message to the web server program it does so by specifying it’s name. You can think of the “domain name” of a website (e.g.&nbsp;google.com, amazon.com, etc) as the “name” of the web server computer that is running the website.</p>
+<p>The <strong>Playwright MCP server</strong> lets an MCP-capable client (e.g., Cursor) drive a real browser via Playwright tools. It exposes actions like navigate, click, type, evaluate JS, and more, using structured page snapshots (accessibility tree) rather than screenshots. :contentReference<span data-index="0">oaicite:0</span></p>
+<section id="configure-cursor-to-use-it" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="configure-cursor-to-use-it"><span class="header-section-number">11.1</span> Configure Cursor to use it</h2>
+<ol type="1">
+<li><p>Open <strong>Cursor → Settings → MCP → Add new MCP Server</strong>. Choose <strong>command</strong> (STDIO). :contentReference<span data-index="1">oaicite:1</span></p></li>
+<li><p>Set:</p>
+<ul>
+<li><strong>Name:</strong> <code>playwright</code></li>
+<li><strong>Command:</strong> <code>npx</code></li>
+<li><strong>Args:</strong> <code>@playwright/mcp@latest</code> (You can also add it from the Playwright MCP README’s Cursor instructions.) :contentReference<span data-index="2">oaicite:2</span></li>
+</ul></li>
+</ol>
+<p><strong>Alternative (JSON style shown in some clients):</strong> <code>json   {     "mcpServers": {       "playwright": {         "command": "npx",         "args": ["@playwright/mcp@latest"]       }     }   }</code></p>
+</section>
+<section id="how-to-use-it-in-cursor" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="how-to-use-it-in-cursor"><span class="header-section-number">11.2</span> How to use it (in Cursor)</h2>
+<p>In a Composer chat, ask the agent to use playwright tools. Cursor will request approval before executing.</p>
+<ul>
+<li>Example prompts:
+<ul>
+<li>“Use playwright to navigate to https://example.com.”</li>
+<li>“Click the Sign in button, then type a test email.”</li>
+<li>“Run browser_evaluate to read document.title.”</li>
+</ul></li>
+<li>Common tools exposed by the server:
+<ul>
+<li>browser_navigate(url)</li>
+<li>browser_click(element, ref)</li>
+<li>browser_type(element, ref, text)</li>
+<li>browser_hover(…)</li>
+<li>browser_evaluate(function, [element|ref])</li>
+<li>(and more, including drag, select option, screenshots)</li>
+</ul></li>
+</ul>
+<p><strong>Tip</strong>: If the tool list doesn’t show up, refresh the MCP servers list in Cursor and retry the prompt.</p>
+<section id="example-prompt-you-might-use" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="example-prompt-you-might-use"><span class="header-section-number">11.2.1</span> Example prompt you might use</h3>
+<p>You can try this prompt in Cursor:</p>
 <blockquote class="blockquote">
-<p>REMEMBER that we said that even though large websites such as google are actually running on multiple computers - however, we can conceptually understand how everything works by imagining that they actually run on just a single computer.</p>
+<p>Use the Playwright MCP server to navigate to https://example.com and log in with username “user” and password “pass123”. Then take a screenshot of the webpage.</p>
+<p>You may call the following tools:</p>
+<ul>
+<li>browser_navigate(url)</li>
+<li>browser_click(element, ref)</li>
+<li>browser_type(element, ref, text)</li>
+</ul>
+<p>Use them when appropriate.</p>
 </blockquote>
-<p>The domain name in a URL simply identifies which computer on the Internet, the browser need to contact to get the desired webpage. For example, the follwing URL goes to a page on amazon’s website for toys: <a href="https://www.amazon.com/toys/b?ie=UTF8&amp;node=165793011" class="uri">https://www.amazon.com/toys/b?ie=UTF8&amp;node=165793011</a> This URL has a lot in it. The part that says <code>www.amazon.com</code> is the “name” of the computer that runs amazon’s website. The rest of the URL has other significance that we will not discuss now (maybe later …)</p>
-<section id="ip-addresses" class="level3" data-number="8.0.1">
-<h3 data-number="8.0.1" class="anchored" data-anchor-id="ip-addresses"><span class="header-section-number">8.0.1</span> IP addresses</h3>
-<p>In reality the “domain name” of the computer is converted into the computer version of a telephone number - called an IP address. An IP address looks like a few numbers separated by periods (see below). The browser actually looks up the IP address for the domain name and uses that to contact the web server computer. (For now let’s ignore “how” the browser looks up the IP address for a particular domain name - just know that it does and uses the IP address to “call up” the server computer).</p>
-<p>You can see the ip address for www.amazon.com by using the <code>ping</code> program on your Bash “command line”. The ping program sends a message to the computer asking it to respond. The computer simply responds with a very short message to indicate that it is “alive” and not “down”. The ping program simply reports that the computer responded. The ping program also reports the IP address of the computer that responded.</p>
-<p>Simply type the following command</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> www.amazon.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The response will look similar to this (your response might look a little different). On some computers the output stops after a few lines of this. On other computers you can press <code>ctrl-c</code> to stop the output if it keeps going.</p>
-<pre><code>PING d3ag4hukkh62yn.cloudfront.net (54.192.52.164) 56(84) bytes of data.
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=1 ttl=245 time=307 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=2 ttl=245 time=20.1 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=3 ttl=245 time=14.7 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=4 ttl=245 time=15.8 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=5 ttl=245 time=13.6 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=6 ttl=245 time=21.6 ms
-64 bytes from server-54-192-52-164.ord53.r.cloudfront.net (54.192.52.164): icmp_seq=7 ttl=245 time=12.2 ms
-... etc</code></pre>
-<p>The response above, simply means that the server computer is up and running and responding. This whole thing is similar to the ping program calling out to the server computer asking <code>hey are you alive?</code> and the server computer responding <code>yes, yes, yes, yes ... etc</code>. The IP address for the server computer in the above example is <code>54.192.52.164</code>.</p>
+<p>The agent then uses the “playwright” server tools to carry out those steps. You may need to press “OK” (or similar) to allow the agent to carry out each of the steps. You can alternatively add the action to the “whitelist”.</p>
+</section>
+<section id="another-example" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="another-example"><span class="header-section-number">11.2.2</span> Another example</h3>
+<p>Type something like:</p>
+<blockquote class="blockquote">
+<p>“Open Wikipedia, search for <em>Model Context Protocol</em>,<br>
+click the first result, and tell me the title and first paragraph of the article.”</p>
+</blockquote>
+</section>
+</section>
+<section id="tips" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="tips"><span class="header-section-number">11.3</span> Tips</h2>
+<ul>
+<li>First try with simple pages (Wikipedia, example.com).<br>
+</li>
+<li>Keep one task per sentence.<br>
+</li>
+<li>Watch the tool calls Cursor proposes before approving them.</li>
+</ul>
+</section>
+<section id="important-caveats-risks" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="important-caveats-risks"><span class="header-section-number">11.4</span> Important caveats &amp; risks</h2>
+<p>Because this gives the model real browser control, you must thoroughly restrict allowed domains, audit tool calls, and use headless/isolated environments for safety. The MCP protocol has documented security risks.</p>
+<!--
+Public ChatGPT likely cannot be configured to use external MCP servers unless OpenAI introduces that feature.
+
+The full experience is best in local/custom clients that support MCP tool invocation (e.g., code editors, custom agent wrappers).
+-->
+</section>
+<section id="danger---enabling-playwright" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="danger---enabling-playwright"><span class="header-section-number">11.5</span> Danger - enabling Playwright</h2>
+<p>Cursor can approve Playwright MCP tool calls automatically, but <strong>it’s not recommended</strong> outside of controlled demo or test setups.</p>
+<p>You can disable the approval prompts in your MCP configuration, though doing so removes an important safety layer.</p>
+</section>
+<section id="how-to-enable-automatic-approval" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="how-to-enable-automatic-approval"><span class="header-section-number">11.6</span> How to enable automatic approval</h2>
+<p>In your project’s <code>.cursor/mcp.json</code> (or global MCP settings file), find the Playwright entry and add <code>"require_approval": "never"</code> like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"mcpServers"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"playwright"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"npx"</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"args"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"@playwright/mcp@latest"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"require_approval"</span><span class="fu">:</span> <span class="st">"never"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then restart Cursor. Future Playwright tool calls will execute automatically without asking you each time.</p>
+<section id="why-its-risky" class="level3" data-number="11.6.1">
+<h3 data-number="11.6.1" class="anchored" data-anchor-id="why-its-risky"><span class="header-section-number">11.6.1</span> Why it’s risky</h3>
+<p>A misinterpreted prompt could make the AI click or type on unintended elements.</p>
+<p>Pages with ads, pop-ups, or login dialogs could trigger unexpected behavior.</p>
+<p>Without manual review, it’s easier for the model to loop or send too many requests.</p>
+<p>Safer compromise</p>
+<p>If Cursor supports it, you can set:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="er">"require_approval":</span> <span class="er">"once"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That means approval happens only at the start of a session, not for every single tool call.</p>
+<p><strong>Best practice</strong></p>
+<p>Use “never” only with public, read-only sites (like Wikipedia or recipe pages).</p>
+<p>Keep it on “always” for anything that could involve credentials, forms, or dynamic content.</p>
+<p><strong>Tips</strong></p>
+<p>Try grouping short actions into one natural-language request:</p>
+<p>“Go to AllRecipes, open the first pasta salad recipe, and summarize the ingredients.”</p>
+<p>Cursor will often batch that into a single execution sequence, reducing approvals while keeping you safe.</p>
+</section>
+</section>
+<section id="workaround-idea" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="workaround-idea"><span class="header-section-number">11.7</span> Workaround idea</h2>
+<p>If you’re comfortable with advanced setup, you could define two MCP entries — one “safe” and one “interactive” — and use the one you need:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"mcpServers"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"playwright-dangerous"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"npx"</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"args"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"@playwright/mcp@latest"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"require_approval"</span><span class="fu">:</span> <span class="st">"never"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"playwright-safe"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"npx"</span><span class="fu">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"args"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"@playwright/mcp@latest"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"require_approval"</span><span class="fu">:</span> <span class="st">"always"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then choose which server to use in your prompt:</p>
+<p>“Use the playwright-safe server to open Wikipedia and summarize the first paragraph.”</p>
+<p>Unfortunately, per-website approval rules are not supported.</p>
+<p>Only per-server setting in mcp.json is supported.</p>
+<p>Changing it via chat is not possible yet.</p>
+<!--
+# THE FOLLWOING WAS NOT EDITED YET
+
+## Other MCP Servers
+
+Here are some safe, easy-to-understand MCP server ideas you can use for demos with Cursor (or any other MCP-aware client). These are less risky than full browser automation and help illustrate the power of tool-integration.
+All responses are in Quarto-markdown format.
+
+1. «Fetch Web Content» MCP Server
+
+Purpose: Let the model fetch the content of a web page (URL) and return the main text or headings.
+
+Demo scenario: “Go to example.com and pull out the first paragraph.”
+
+Why safe: It’s read-only; no clicking/typing.
+
+Underlying tool: A server that exposes tools like fetch_url(url: string) → {title: string, body: string}.
+
+Implementation note: The official list of example servers includes a “Fetch” server. 
+Model Context Protocol
++1
+
+Prompt for demo:
+
+Please fetch the page at https://example.com, tell me the title and
+the first two sentences of the body.
+
+2. «File System / Document Reader» MCP Server
+
+Purpose: Let the model read content from a document (e.g., a text file or PDF) and summarise or answer questions about it.
+
+Demo scenario: “Here’s a PDF of a cookbook recipe. Read it and summarise the steps.”
+
+Why safe: Document access is constrained; fewer external actions.
+
+Implementation note: Example servers list includes “Filesystem” server. 
+Model Context Protocol
++1
+
+Prompt for demo:
+
+Read the file “Introduction_to_Cooking.pdf” and give me
+a bulleted list of the main steps described.
+
+3. «Calculator / Math Tools» MCP Server
+
+Purpose: Let the model perform numeric or symbolic calculations via a dedicated tool.
+
+Demo scenario: “Calculate the monthly payment for a loan of $10,000 at 5% interest for 3 years.”
+
+Why safe: No external web navigation, low risk.
+
+Tools: calculate_loan(principal, rate, term) etc.
+
+Implementation note: The MCP spec supports arbitrary tools via the “tools” schema. 
+MCP Protocol
++1
+
+Prompt for demo:
+
+Use the calculator tool to compute the monthly payment
+for a $10,000 loan at 5% annual interest for 3 years.
+
+4. «Git / Code Repository Reader» MCP Server
+
+Purpose: Let the model access a git repository (read only) and summarise code files or show changes.
+
+Demo scenario: “Open the repo at github.com/user/demo and tell me how many files were added in the last commit.”
+
+Why safe: Read-only, but more advanced context for demos.
+
+Implementation note: Example servers list includes “Git” server. 
+Model Context Protocol
+
+Access the repository at https://github.com/user/demo,
+list the files changed in the latest commit and summarise
+the purpose of the change.
+
+
+
+## Example `.cursor/mcp.json`  
+Here’s a simple configuration file that defines four
+safe, easy-to-demo MCP servers for Cursor.
+
+Each one uses clear naming and safe defaults.
+
+```json
+{
+  "mcpServers": {
+    "playwright-auto": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"],
+      "require_approval": "never"
+    },
+
+    "fetch-web": {
+      "command": "npx",
+      "args": ["@mcp/fetch@latest"],
+      "require_approval": "once"
+    },
+
+    "file-reader": {
+      "command": "npx",
+      "args": ["@mcp/filesystem@latest"],
+      "require_approval": "once"
+    },
+
+    "calculator": {
+      "command": "npx",
+      "args": ["@mcp/calculator@latest"],
+      "require_approval": "once"
+    },
+
+    "git-reader": {
+      "command": "npx",
+      "args": ["@mcp/git@latest"],
+      "require_approval": "always"
+    }
+  }
+}
+```
+
+How this setup works
+
+playwright-auto — demos browser automation on
+public, read-only pages (Wikipedia, NASA, etc.).
+
+fetch-web — retrieves web page text safely,
+no clicking or typing.
+
+file-reader — opens and reads files in your
+workspace for summarization.
+
+calculator — handles numeric or formula
+calculations.
+
+git-reader — reads repositories or commit logs
+(read-only).
+
+🧭 Tips
+
+You can remove or comment out any server you don’t
+plan to demo.
+
+Restart Cursor after saving the file.
+
+For each demo, mention the server name explicitly:
+
+“Use the fetch-web server to open example.com
+and summarize the first paragraph.”
+
+Would you like me to now list ready-to-use GitHub
+repos or npm packages for each of these servers so
+you can install them quickly?
+
+-->
 
 
 </section>
@@ -943,13 +1226,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./000900-internetArchitecture-browsersAndWebservers-v001.html" class="pagination-link" aria-label="<yrChapterNumber>7. </yrChapterNumber> Browsers (HTML,CSS,Javascript) and Web Servers">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> Browsers (HTML,CSS,Javascript) and Web Servers</span></span>
+      <a href="./000960-introToMcpServers-v001.html" class="pagination-link" aria-label="<yrChapterNumber>9a.</yrChapterNumber> Intro to MCP Servers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>9a.</yrchapternumber> Intro to MCP Servers</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./000950-internetArchitecture-webFrameworks-v001.html" class="pagination-link" aria-label="<yrChapterNumber>9. </yrChapterNumber> Client side web frameworks">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Client side web frameworks</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./000980-supabaseMcpServer-v001.html" class="pagination-link" aria-label="<yrChapterNumber>9c.</yrChapterNumber> Supabase MCP Server">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>9c.</yrchapternumber> Supabase MCP Server</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
