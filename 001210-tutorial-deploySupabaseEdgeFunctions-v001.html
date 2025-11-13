@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>32&nbsp; 17.  Overview of HTML, CSS, JavaScript – AI Assisted Software Development</title>
+<title>23&nbsp; 23.  Step 11: Deploy Supabase Edge Functions – AI Assisted Software Development</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./099999-llmsForDataAnalytics.html" rel="next">
-<link href="./000010-topics-v001.html" rel="prev">
+<link href="./001220-tutorial-runTheApplication-v001.html" rel="next">
+<link href="./001200-tutorial-setupSupabaseStorage-v001.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -86,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000010-topics-v001.html">Ignore this - in progress work</a></li><li class="breadcrumb-item"><a href="./000500-htmlCssJavascript-v001.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building with Next and Supabase</a></li><li class="breadcrumb-item"><a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -304,7 +339,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></span></a>
   </div>
 </li>
@@ -380,7 +415,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link active">
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
   </div>
 </li>
@@ -425,16 +460,20 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#intro-to-developer-tools-in-the-browser" id="toc-intro-to-developer-tools-in-the-browser" class="nav-link active" data-scroll-target="#intro-to-developer-tools-in-the-browser"><span class="header-section-number">32.1</span> Intro to “Developer Tools” in the Browser</a></li>
+  <li><a href="#the-three-functions" id="toc-the-three-functions" class="nav-link active" data-scroll-target="#the-three-functions"><span class="header-section-number">23.0.1</span> The Three Functions</a></li>
+  <li><a href="#deploy-the-functions" id="toc-deploy-the-functions" class="nav-link" data-scroll-target="#deploy-the-functions"><span class="header-section-number">23.0.2</span> Deploy the Functions</a></li>
+  <li><a href="#verify-deployment" id="toc-verify-deployment" class="nav-link" data-scroll-target="#verify-deployment"><span class="header-section-number">23.0.3</span> Verify Deployment</a></li>
+  <li><a href="#configure-stripe-webhook" id="toc-configure-stripe-webhook" class="nav-link" data-scroll-target="#configure-stripe-webhook"><span class="header-section-number">23.0.4</span> Configure Stripe Webhook</a></li>
+  <li><a href="#update-stripe-webhook-url" id="toc-update-stripe-webhook-url" class="nav-link" data-scroll-target="#update-stripe-webhook-url"><span class="header-section-number">23.0.5</span> Update Stripe Webhook URL</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./000010-topics-v001.html">Ignore this - in progress work</a></li><li class="breadcrumb-item"><a href="./000500-htmlCssJavascript-v001.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building with Next and Supabase</a></li><li class="breadcrumb-item"><a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></h1>
+<h1 class="title"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></h1>
 </div>
 
 
@@ -451,14 +490,103 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="intro-to-developer-tools-in-the-browser" class="level2" data-number="32.1">
-<h2 data-number="32.1" class="anchored" data-anchor-id="intro-to-developer-tools-in-the-browser"><span class="header-section-number">32.1</span> Intro to “Developer Tools” in the Browser</h2>
-<p>Modern browsers (Chrome, Edge, Firefox) include powerful developer consoles: - <strong>Elements:</strong> Inspect and edit HTML/CSS.<br>
-- <strong>Console:</strong> Execute JavaScript commands interactively.<br>
-- <strong>Network:</strong> Monitor API calls and performance.<br>
-- <strong>Sources:</strong> Debug scripts and set breakpoints.<br>
-- <strong>Application:</strong> View storage, cookies, and local data.</p>
-<p>Understanding these tools is essential for integrating and debugging AI-powered web applications.</p>
+<p>Edge Functions are serverless handlers for AI, billing, and webhooks.</p>
+<p><strong>Location in project:</strong> <code>supabase/functions/</code></p>
+<section id="the-three-functions" class="level3" data-number="23.0.1">
+<h3 data-number="23.0.1" class="anchored" data-anchor-id="the-three-functions"><span class="header-section-number">23.0.1</span> The Three Functions</h3>
+<section id="createtaskwithai" class="level4">
+<h4 class="anchored" data-anchor-id="createtaskwithai">1. <code>createTaskWithAI</code></h4>
+<p>Used to:</p>
+<ul>
+<li>Accept task input (e.g., title, description).</li>
+<li>Call OpenAI using <code>OPENAI_API_KEY</code>.</li>
+<li>Generate or refine a label.</li>
+<li>Insert/update the task row in the <code>tasks</code> table.</li>
+</ul>
+<p>This function typically: - Validates the user (via JWT). - Checks subscription status if needed (e.g., premium-only features).</p>
+</section>
+<section id="createstripesession" class="level4">
+<h4 class="anchored" data-anchor-id="createstripesession">2. <code>createStripeSession</code></h4>
+<p>Used to:</p>
+<ul>
+<li>Create Stripe Checkout sessions for new subscriptions.</li>
+<li>Return a customer portal link if the user already has a subscription.</li>
+<li>Redirect users to Stripe when they click “Manage Subscription”.</li>
+</ul>
+<p>It uses <code>STRIPE_SECRET_KEY</code> and price IDs to build sessions.</p>
+</section>
+<section id="stripe-webhook" class="level4">
+<h4 class="anchored" data-anchor-id="stripe-webhook">3. <code>stripe-webhook</code></h4>
+<p>Used to:</p>
+<ul>
+<li>Receive event notifications from Stripe.</li>
+<li>Verify the webhook signature using <code>STRIPE_WEBHOOK_SECRET</code>.</li>
+<li>Sync subscription status (e.g., set <code>user_subscriptions.status = 'active'</code>).</li>
+<li>Handle cancellations, renewals, and trial endings.</li>
+</ul>
+<p>This function is called directly by Stripe, so it doesn’t use user JWTs.</p>
+</section>
+</section>
+<section id="deploy-the-functions" class="level3" data-number="23.0.2">
+<h3 data-number="23.0.2" class="anchored" data-anchor-id="deploy-the-functions"><span class="header-section-number">23.0.2</span> Deploy the Functions</h3>
+<p>From your project root, deploy each function with the Supabase CLI:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Deploy the AI task creation function</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> functions deploy createTaskWithAI</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Deploy the Stripe session function</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> functions deploy createStripeSession</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Deploy the webhook function</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> functions deploy stripe-webhook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After deploying, the CLI will output function URLs like:</p>
+<pre class="text"><code>https://[your-project-ref].supabase.co/functions/v1/createTaskWithAI</code></pre>
+<p>Keep these handy for testing or local development.</p>
+</section>
+<section id="verify-deployment" class="level3" data-number="23.0.3">
+<h3 data-number="23.0.3" class="anchored" data-anchor-id="verify-deployment"><span class="header-section-number">23.0.3</span> Verify Deployment</h3>
+<ol type="1">
+<li>In Supabase dashboard, open <strong>Edge Functions</strong>.</li>
+<li>Confirm you see:
+<ul>
+<li><code>createTaskWithAI</code></li>
+<li><code>createStripeSession</code></li>
+<li><code>stripe-webhook</code></li>
+</ul></li>
+<li>Click each function:
+<ul>
+<li>Check the <strong>Logs</strong> tab for any runtime errors.</li>
+<li>Trigger test requests (e.g., via <code>curl</code> or a REST client) if needed.</li>
+</ul></li>
+</ol>
+</section>
+<section id="configure-stripe-webhook" class="level3" data-number="23.0.4">
+<h3 data-number="23.0.4" class="anchored" data-anchor-id="configure-stripe-webhook"><span class="header-section-number">23.0.4</span> Configure Stripe Webhook</h3>
+<p><code>stripe-webhook</code> must accept unauthenticated calls from Stripe.</p>
+<ol type="1">
+<li>In Supabase dashboard, click the <code>stripe-webhook</code> function.</li>
+<li>Go to the <strong>Details</strong> tab.</li>
+<li>Find <strong>Function configuration</strong> (or <strong>Settings</strong>).</li>
+<li>Disable <strong>Enforce JWT verification</strong> for this function.</li>
+<li>Save the changes.</li>
+</ol>
+<p><strong>Why?</strong> Stripe does not send JWTs; the function instead authenticates via <code>STRIPE_WEBHOOK_SECRET</code>.</p>
+</section>
+<section id="update-stripe-webhook-url" class="level3" data-number="23.0.5">
+<h3 data-number="23.0.5" class="anchored" data-anchor-id="update-stripe-webhook-url"><span class="header-section-number">23.0.5</span> Update Stripe Webhook URL</h3>
+<p>Now point Stripe to your deployed function.</p>
+<ol type="1">
+<li><p>In Stripe Dashboard, go to <strong>Developers → Webhooks</strong>.</p></li>
+<li><p>Click your webhook endpoint.</p></li>
+<li><p>Update the <strong>Endpoint URL</strong> to:</p>
+<pre class="text"><code>https://[your-project-ref].supabase.co/functions/v1/stripe-webhook</code></pre></li>
+<li><p>Save the endpoint.</p></li>
+<li><p>Use the <strong>Send test event</strong> button in Stripe to verify that your function:</p>
+<ul>
+<li>Receives the event.</li>
+<li>Validates the signature.</li>
+<li>Updates your database correctly.</li>
+</ul></li>
+</ol>
 
 
 </section>
@@ -865,13 +993,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./000010-topics-v001.html" class="pagination-link" aria-label="<yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span>
+      <a href="./001200-tutorial-setupSupabaseStorage-v001.html" class="pagination-link" aria-label="<yrChapterNumber>22. </yrChapterNumber> Step 10: Set Up Supabase Storage Bucket">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title"><yrchapternumber>22. </yrchapternumber> Step 10: Set Up Supabase Storage Bucket</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./099999-llmsForDataAnalytics.html" class="pagination-link" aria-label="<yrChapterNumber>18. </yrChapterNumber> Using LLMs to Help With Data Analytics">
-        <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./001220-tutorial-runTheApplication-v001.html" class="pagination-link" aria-label="<yrChapterNumber>24. </yrChapterNumber> Step 12: Run the Application">
+        <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Step 12: Run the Application</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

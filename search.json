@@ -1235,18 +1235,40 @@
     "href": "001007-tutorial-supabase-projectArchitecture-v001.html#project-architecture",
     "title": "11  11.  Project Architecture",
     "section": "11.2 Project Architecture",
-    "text": "11.2 Project Architecture\n\n11.2.1 Frontend: Code that runs in the Browser\n\nNext.js (fully static app)\nClient library for Supabase integration\n\n\n\n11.2.2 Backend: Web Server\n\nVercel\nNext.js server side components\n\n\n\n11.2.3 Backend: Supabase\n\nPostgreSQL database\nStorage system (similar to Amazon S3)\nEdge functions (TypeScript in Deno environment)\nBuilt-in authentication system\n\n\n\n11.2.4 Backend: Third-Party Services\n\nGoogle Cloud (for OAuth)\nOpenAI (for AI labeling)\nStripe (for payment processing)",
+    "text": "11.2 Project Architecture\n\n11.2.1 Frontend: Code that runs in the Browser\n\nNext.js\nClient library for Supabase integration\n\n\n\n11.2.2 Backend: Web Server\n\nVercel\nNext.js server side components\n\n\n\n11.2.3 Backend: Supabase\n\nPostgreSQL database\nStorage system for storing the image files (similar to Amazon S3 storage)\nEdge functions:\nThe edge functions are written in TypeScript and run on Supabase’s servers. Supabase uses the Deno Javascript runtime environment instead of the Node.js Theoretically, Supabase could have used Node.js for this but Deno is often chosen as a runtime environment for Typescript. The reasons for that are beyond the scope of this tutorial.\nBuilt-in authentication system\n\n\n\n11.2.4 Backend: Third-Party Services\n\nGoogle Cloud (for OAuth)\nOpenAI API (for asking AI to pick an appropriate “tag” for each task)\nStripe (for payment processing)",
     "crumbs": [
       "Building with Next and Supabase",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'><yrChapterNumber>11. </yrChapterNumber> Project Architecture</span>"
     ]
   },
   {
-    "objectID": "001007-tutorial-supabase-projectArchitecture-v001.html#summary---setup-checklist",
-    "href": "001007-tutorial-supabase-projectArchitecture-v001.html#summary---setup-checklist",
+    "objectID": "001007-tutorial-supabase-projectArchitecture-v001.html#setup-checklist",
+    "href": "001007-tutorial-supabase-projectArchitecture-v001.html#setup-checklist",
     "title": "11  11.  Project Architecture",
-    "section": "11.3 Summary - Setup Checklist",
-    "text": "11.3 Summary - Setup Checklist\n\nClone the project from GitHub\nCreate Supabase project\nSet up Google OAuth\nConfigure OpenAI API\nSet up Stripe\nDeploy edge functions\nTest the application",
+    "section": "11.3 Setup Checklist",
+    "text": "11.3 Setup Checklist\nOver the course of this tutorial we will have to address all of the following in order to setup this project to work. The following sections will go into more detail about each of these topics:\n\nClone the project from GitHub\nCreate Supabase project\nSet up Google OAuth\nConfigure OpenAI API\nSet up Stripe\nDeploy edge functions\nTest the application",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'><yrChapterNumber>11. </yrChapterNumber> Project Architecture</span>"
+    ]
+  },
+  {
+    "objectID": "001007-tutorial-supabase-projectArchitecture-v001.html#further-learning---tutorials-folder",
+    "href": "001007-tutorial-supabase-projectArchitecture-v001.html#further-learning---tutorials-folder",
+    "title": "11  11.  Project Architecture",
+    "section": "11.4 Further Learning - tutorials folder",
+    "text": "11.4 Further Learning - tutorials folder\nTo learn more about the technologies listed above you can look at your project’s tutorials/ folder. This info was prepared by the original developer of this tutorial project and includes:\n\nDetailed auth guides.\nDatabase and RLS walkthroughs.\nEdge Function examples.\nStorage and Stripe integration deep dives.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'><yrChapterNumber>11. </yrChapterNumber> Project Architecture</span>"
+    ]
+  },
+  {
+    "objectID": "001007-tutorial-supabase-projectArchitecture-v001.html#further-learning---official-documentation",
+    "href": "001007-tutorial-supabase-projectArchitecture-v001.html#further-learning---official-documentation",
+    "title": "11  11.  Project Architecture",
+    "section": "11.5 Further Learning - official documentation",
+    "text": "11.5 Further Learning - official documentation\nYou can also refer to official docs:\n\nSupabase: https://supabase.com/docs\nNext.js: https://nextjs.org/docs\nStripe: https://stripe.com/docs\nOpenAI: https://platform.openai.com/docs",
     "crumbs": [
       "Building with Next and Supabase",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'><yrChapterNumber>11. </yrChapterNumber> Project Architecture</span>"
@@ -1301,7 +1323,7 @@
     "href": "001100-tutorial-installNodeNpm-v001.html#ok-so-how-do-i-use-npm",
     "title": "12  12.  Step 0: Install Node.js and npm",
     "section": "12.5 OK, so how do I use npm?",
-    "text": "12.5 OK, so how do I use npm?\nLater in the project when we need to use npm we will explain more.",
+    "text": "12.5 OK, so how do I use npm?\nWe’ll cover this a little later …",
     "crumbs": [
       "Building with Next and Supabase",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'><yrChapterNumber>12. </yrChapterNumber> Step 0: Install Node.js and npm</span>"
@@ -1312,7 +1334,7 @@
     "href": "001110-tutorial-cloneRepo-v001.html",
     "title": "13  13.  Step 1: Fork the repo and clone it",
     "section": "",
-    "text": "13.1 Fork the repo\n“cloning” a public github repo means taking a copy of that repo The bulk of the code for this project is provided in a github repo. We will now “clone” that repo that we have our own copy of the repo.\nThis section assumes that you have already created your own account on github. If you haven’t please do so now.",
+    "text": "13.1 Fork the repo\n“cloning” a public github repo means taking a copy of that repo The bulk of the code for this project is provided in a github repo. We will now “clone” that repo that we have our own copy of the repo.\nThis section assumes that you have already created your own account on github. If you haven’t please do so now.\nOpen Software allows for a developer to take someone else’s software and modify it in their own way. Often developers take a github repository from another developer and continue to develop in their own way. The original developer has their version of the software and the new developer has their own (different) version of the software. This is known as “forking” a repo. The word fork comes from “a fork in the road” - i.e. the two repos started out the same but will continue in different directions.\nWe need to take our own copy of the repo for the original developer. To do so,",
     "crumbs": [
       "Building with Next and Supabase",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
@@ -1323,172 +1345,18 @@
     "href": "001110-tutorial-cloneRepo-v001.html#fork-the-repo",
     "title": "13  13.  Step 1: Fork the repo and clone it",
     "section": "",
-    "text": "Go to https://github.com/pixegami/task-app\nclick the “clone” button to get a copy of this repo on your own github account.\n\n\n13.1.1 Clone your repo to get a copy on your computer\n\nClone the repository to your local machine\n\nGo to https://github.com/pixegami/task-app\nClick the “fork” button to create your own copy of the repo.\nThen go to your own github repo and copy YOUR copy’s URL.\nOpen your Terminal and type git clone URL_FOR_YOUR_REPO to create a new folder with your own copy of the repo.\n\nOpen the project in your terminal\nThe file package.json contains a list of “node packages” (AKA modules) that need to be installed for this project. You need to run the following command to do so. This command will create a new folder named “node_modules” and download the code for each package (AKA module) into that folder. Run the following command now. Note: You may see some deprecation warnings, which are normal.\n\nnpm install\n\n\n13.1.2 Create Environment Files\nYou need to create two local .env files for environment variables. These files will contain API keys and configuration that you’ll add throughout this tutorial. Note that the File names must be exact:\n\n.env.local - for the Next.js application. Run the following command to create that file:\ncp .env.example .env.local\nsupabase/.env - for Supabase functions\n\nRun the following code to create those files from the included .env.example file.\n\n# Copy from the example file\ncp .env.example .env.local\ncp .env.example supabase/.env\n\n\n13.1.3 Optional: Preview the Frontend\nIf you want to see the frontend before connecting the backend:\n\nGo to the GitHub repository commits tab\nScroll to the bottom and find the commit labeled “front end boilerplate”\nCopy the commit hash\nCheck out that specific commit:\n\ntype git -v to see your git version\nrun ONE of the following command depending on your git version\n\ngit 2.23 and later: git switch --detach [commit-hash]\nolder versions of git: git checkout [commit-hash]\n\n\nRun the development server:\n\nnpm run dev\nThis version has placeholder backend logic, allowing you to explore the UI without full functionality.\n\nTo get back to the latest version of the code run the following:\n\nrun ONE of the following command depending on your git version\n\ngit 2.23 and later:\n\ngit switch - or\ngit switch BRANCH_NAME (where BRANCH_NAME is the name of your branch such as master or main)\n\nolder versions of git:\n\ngit checkout - or\ngit checkout BRANCH_NAME (where BRANCH_NAME is the name of your branch such as master or main)",
+    "text": "Go to https://github.com/pixegami/task-app\nclick the “fork” button to get a copy of this repo on your own github account.",
     "crumbs": [
       "Building with Next and Supabase",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
     ]
   },
   {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#step-2-create-a-supabase-project",
-    "href": "001110-tutorial-cloneRepo-v001.html#step-2-create-a-supabase-project",
+    "objectID": "001110-tutorial-cloneRepo-v001.html#clone-your-repo-to-get-a-copy-on-your-computer",
+    "href": "001110-tutorial-cloneRepo-v001.html#clone-your-repo-to-get-a-copy-on-your-computer",
     "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.2 Step 2: Create a Supabase Project",
-    "text": "13.2 Step 2: Create a Supabase Project\n\n13.2.1 Sign Up for Supabase\n\nGo to the Supabase website\nSign up for a free account\nCreate a new project\n\n\n\n13.2.2 Project Configuration\nWhen creating your project, you’ll need to:\n\nChoose a project name\nSet a database password (save this securely)\nSelect a region (choose the closest to your users)\n\nImportant: Save your database password - you’ll need it later.\n\n\n13.2.3 Get Your API Keys\nOnce your project is created:\n\nEdit the .env.local file. It currently looks like this:\n\n# You will need a .env.local file for local dev server (localhost)\n# You will need a .env.test.local file for running the integration tests.\n\n# Create the those files, and add the following variables.\n# The local files are ignored by default.\n\n# In .env.local and .env.test.local:\nNEXT_PUBLIC_SUPABASE_URL=\"https://XXXX.supabase.co\"\nNEXT_PUBLIC_SUPABASE_ANON_KEY=\"XXXX\"\n\n# In addition to that, you also need .env.test.local with these variables:\nSUPABASE_SERVICE_KEY=\"XXXX\"\nSTRIPE_SECRET_KEY=\"sk_test_XXX\"\nSTRIPE_PRICE_ID=\"price_XXX\"\nSTRIPE_WEBHOOK_SECRET=\"whsec_XXX\"```\n\nDelete the bottom few lines and top few lines so that the file now looks like this:\n# In .env.local and .env.test.local:\nNEXT_PUBLIC_SUPABASE_URL=\"https://XXXX.supabase.co\"\nNEXT_PUBLIC_SUPABASE_ANON_KEY=\"XXXX\"\nGo to Project Settings (Gear button at bottom left of screen) → Data API\nCopy the URL.\nModify the following line in the .env.local file to reflect the URL that you copied.\nNEXT_PUBLIC_SUPABASE_URL=\"https://XXXX.supabase.co\"\nClick on the API Keys section.\nCopy the anon public key. Modify the following line in the .env.local file to reflect the URL that you copied.\nNEXT_PUBLIC_SUPABASE_ANON_KEY=\"XXXX\"\nAdd these to your .env.local file:\n\nNEXT_PUBLIC_SUPABASE_URL=your-project-url\nNEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#step-3-set-up-google-oauth",
-    "href": "001110-tutorial-cloneRepo-v001.html#step-3-set-up-google-oauth",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.3 Step 3: Set Up Google OAuth",
-    "text": "13.3 Step 3: Set Up Google OAuth\n\n13.3.1 Create Google Cloud Project\n\nGo to Google Cloud Console\nCreate a new project\nNavigate to APIs & Services → Credentials\nCreate OAuth 2.0 credentials\n\n\n\n13.3.2 Configure OAuth Consent Screen\n\nSet up the OAuth consent screen\nAdd your application details\nAdd authorized domains\n\n\n\n13.3.3 Get OAuth Credentials\n\nCreate OAuth 2.0 Client ID\nSet application type to “Web application”\nAdd authorized redirect URIs:\n\nAdd your Supabase project callback URL\nFormat: https://[your-project-ref].supabase.co/auth/v1/callback\n\nCopy your Client ID and Client Secret\n\n\n\n13.3.4 Configure in Supabase\n\nGo to your Supabase dashboard\nNavigate to Authentication → Providers\nEnable Google provider\nEnter your Client ID and Client Secret\nSave the configuration",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#step-4-set-up-openai-api",
-    "href": "001110-tutorial-cloneRepo-v001.html#step-4-set-up-openai-api",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.4 Step 4: Set Up OpenAI API",
-    "text": "13.4 Step 4: Set Up OpenAI API\n\n13.4.1 Create OpenAI Account\n\nGo to OpenAI Platform\nSign up or log in to your account\nNavigate to API Keys section\n\n\n\n13.4.2 Generate API Key\n\nCreate a new API key\nCopy the key immediately (you won’t be able to see it again)\nStore it securely\n\n\n\n13.4.3 Store as Supabase Secret\nThe OpenAI API key needs to be stored as a Supabase secret for use in edge functions:\n\nInstall Supabase CLI if you haven’t already\nLink your project:\n\nsupabase link --project-ref [your-project-ref]\n\nSet the secret:\n\nsupabase secrets set OPENAI_API_KEY=your-openai-key",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#step-5-set-up-stripe",
-    "href": "001110-tutorial-cloneRepo-v001.html#step-5-set-up-stripe",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.5 Step 5: Set Up Stripe",
-    "text": "13.5 Step 5: Set Up Stripe\n\n13.5.1 Create Stripe Account\n\nGo to Stripe’s website\nSign up for an account\nSwitch to Test Mode (top right toggle)\n\n\n\n13.5.2 Get API Keys\n\nNavigate to Developers → API Keys\nCopy both:\n\nPublishable key (starts with pk_test_)\nSecret key (starts with sk_test_)\n\nAdd to your .env.local:\n\nNEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-publishable-key\n\nStore the secret key in Supabase:\n\nsupabase secrets set STRIPE_SECRET_KEY=your-secret-key\n\n\n13.5.3 Create a Product\n\nGo to Stripe Dashboard → Products\nCreate a new product for your subscription\nSet up pricing:\n\nMonthly recurring payment\nSet your price (e.g., $10/month)\n\nCopy the Price ID (starts with price_)\n\n\n\n13.5.4 Get Webhook Signing Secret\n\nGo to Developers → Webhooks\nAdd an endpoint (you’ll update this URL later)\nSelect events to listen to:\n\ncheckout.session.completed\ncustomer.subscription.updated\ncustomer.subscription.deleted\n\nCopy the Webhook Signing Secret\nStore it in Supabase:\n\nsupabase secrets set STRIPE_WEBHOOK_SECRET=your-webhook-secret",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#step-6-set-up-supabase-database",
-    "href": "001110-tutorial-cloneRepo-v001.html#step-6-set-up-supabase-database",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.6 Step 6: Set Up Supabase Database",
-    "text": "13.6 Step 6: Set Up Supabase Database\n\n13.6.1 Run Database Migrations\nThe project includes migration files that will set up your database schema.\n\nMake sure you’re in the project root directory\nRun the migrations:\n\nsupabase db push\nThis will create all necessary tables and configurations.\n\n\n13.6.2 Database Structure\nThe migrations create the following main tables:\n\nusers - Stores user account information\ntasks - Stores task data with fields for title, description, label, and image\nuser_subscriptions - Tracks subscription status\n\n\n\n13.6.3 Enable Row Level Security (RLS)\nThe migrations automatically set up Row Level Security policies to ensure:\n\nUsers can only see their own tasks\nUsers can only modify their own data\nProper authentication is enforced",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#step-7-set-up-storage",
-    "href": "001110-tutorial-cloneRepo-v001.html#step-7-set-up-storage",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.7 Step 7: Set Up Storage",
-    "text": "13.7 Step 7: Set Up Storage\n\n13.7.1 Create Storage Bucket\n\nGo to your Supabase dashboard\nNavigate to Storage\nCreate a new bucket named “task-images”\n\n\n\n13.7.2 Configure Bucket Settings\nFile size limit:\n\nSet maximum file size to 1 MB\n\nAllowed file types:\n\nConfigure to accept only images (JPEG, PNG, GIF, WebP)\n\nAccess settings:\n\nFor this tutorial, the bucket is set to public\nPublic means anyone with the URL can view the image\nFor production, consider making it private for better security\n\n\n\n13.7.3 Set Storage Policies\nThe storage policies should allow:\n\nAuthenticated users to upload images\nAnyone to read images (if public)\nUsers to delete their own images",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#step-8-deploy-edge-functions",
-    "href": "001110-tutorial-cloneRepo-v001.html#step-8-deploy-edge-functions",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.8 Step 8: Deploy Edge Functions",
-    "text": "13.8 Step 8: Deploy Edge Functions\n\n13.8.1 Understanding Edge Functions\nEdge functions are custom serverless functions that run on demand in response to HTTP requests. They allow you to run backend code without managing servers.\nLocation in project: supabase/functions/\n\n\n13.8.2 The Three Functions\n1. createTaskWithAI\n\nCreates a new task in the database\nUses OpenAI to automatically assign a label based on the task title\nUpdates the task with the AI-generated label\n\n2. createStripeSession\n\nGenerates Stripe checkout URLs\nReturns either a checkout session (for new subscriptions) or customer portal (for existing customers)\nUsed when users click “Manage Subscription”\n\n3. stripe-webhook\n\nReceives event notifications from Stripe\nHandles subscription status changes\nUpdates user premium status in the database\n\n\n\n13.8.3 Deploy the Functions\nFrom your project root, deploy each function:\n# Deploy the AI task creation function\nsupabase functions deploy createTaskWithAI\n\n# Deploy the Stripe session function\nsupabase functions deploy createStripeSession\n\n# Deploy the webhook function\nsupabase functions deploy stripe-webhook\n\n\n13.8.4 Verify Deployment\n\nGo to your Supabase dashboard\nClick on “Edge Functions”\nConfirm all three functions are listed\nClick on each function to access metrics and logs for debugging\n\n\n\n13.8.5 Configure Stripe Webhook\nImportant: The Stripe webhook function needs special configuration:\n\nClick on the stripe-webhook function\nGo to “Details”\nScroll to “Function Configuration”\nDisable “Enforce JWT verification”\nClick “Save”\n\nWhy? This function is called by Stripe (not authenticated users), so JWT verification must be disabled.\n\n\n13.8.6 Update Stripe Webhook URL\nNow that your function is deployed, update Stripe with the actual endpoint:\n\nGo to Stripe Dashboard → Developers → Webhooks\nClick on your webhook endpoint\nUpdate the URL to:\nhttps://[your-project-ref].supabase.co/functions/v1/stripe-webhook",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#step-9-run-the-application",
-    "href": "001110-tutorial-cloneRepo-v001.html#step-9-run-the-application",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.9 Step 9: Run the Application",
-    "text": "13.9 Step 9: Run the Application\n\n13.9.1 Start the Development Server\nFrom your project root:\nnpm run dev\nThe application should start and display a local URL (usually http://localhost:3000).\n\n\n13.9.2 Test Core Functionality\n1. Authentication\n\nClick to log in with Google\nVerify successful authentication\nCheck that you’re redirected to the dashboard\n\n2. Task Management\n\nCreate a new task with a title and description\nConfirm that an appropriate label is automatically assigned by AI\nVerify the task appears in your dashboard\n\n3. Image Uploads\n\nClick to edit a task\nUpload an image attachment\nVerify the image is displayed correctly\n\n4. User Profile\n\nNavigate to your profile page\nConfirm your task count is tracked correctly\n\n5. Subscription Management\n\nClick “Manage Subscription”\nVerify you’re taken to a Stripe checkout page\nTest the checkout flow (use Stripe test card: 4242 4242 4242 4242)\n\n6. Sign Out\n\nTest the sign out functionality\nConfirm you’re redirected to the login page",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#deployment-to-production",
-    "href": "001110-tutorial-cloneRepo-v001.html#deployment-to-production",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.10 Deployment to Production",
-    "text": "13.10 Deployment to Production\n\n13.10.1 Deploying the Frontend\nRecommended: Vercel\nThis is a static Next.js website, making it easy to deploy:\n\nPush your code to GitHub\nImport the project in Vercel\nAdd your environment variables\nDeploy\n\nAlternative Options:\n\nNetlify\nAWS Amplify\nAny static hosting service\n\n\n\n13.10.2 Update Environment Variables\nFor production, you’ll need to:\n\nUpdate Supabase project URL and keys\nSwitch Stripe from test mode to live mode\nUpdate OAuth redirect URIs\nConfigure production domains",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#project-structure",
-    "href": "001110-tutorial-cloneRepo-v001.html#project-structure",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.11 Project Structure",
-    "text": "13.11 Project Structure\nUnderstanding where to make changes:\n├── app/                    # Next.js pages and routes\n├── components/            # React UI components\n├── hooks/                 # Client logic and Supabase integration\n├── supabase/\n│   ├── functions/        # Edge functions (backend logic)\n│   └── migrations/       # Database schema and configurations\n└── tests/\n    └── integration/      # Integration test suite\nTo extend functionality:\n\nUI changes: Edit files in app/ and components/\nClient logic: Modify hooks in hooks/\nBackend logic: Update functions in supabase/functions/\nDatabase changes: Create new migrations in supabase/migrations/",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#testing",
-    "href": "001110-tutorial-cloneRepo-v001.html#testing",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.12 Testing",
-    "text": "13.12 Testing\n\n13.12.1 Integration Tests\nThe project includes a comprehensive integration test suite that connects to your real Supabase project.\n\n\n13.12.2 Set Up Test Environment\n\nCreate a test environment file:\n\ncp example.env tests/.env.test\n\nUpdate with your API keys and credentials\n\n\n\n13.12.3 Run Tests\nRun all tests:\nnpm test\nRun a specific test file:\nnpm test -- tests/integration/specific-test.spec.ts\nImportant: Tests may fail on the first run due to cold starts. If this happens, simply run them again.",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#troubleshooting",
-    "href": "001110-tutorial-cloneRepo-v001.html#troubleshooting",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.13 Troubleshooting",
-    "text": "13.13 Troubleshooting\n\n13.13.1 Common Issues\nEnvironment variables not loading:\n\nEnsure file names are exactly .env.local and supabase/.env\nRestart the development server after changes\nCheck for typos in variable names\n\nAuthentication errors:\n\nVerify Google OAuth redirect URIs match exactly\nCheck that the Supabase callback URL is correct\nEnsure OAuth credentials are properly configured\n\nEdge functions failing:\n\nCheck Supabase secrets are set correctly\nReview function logs in the Supabase dashboard\nVerify all dependencies are installed\n\nStripe webhook not working:\n\nConfirm JWT verification is disabled for the webhook function\nCheck that the webhook URL is correct\nVerify webhook signing secret matches\n\nDatabase errors:\n\nEnsure migrations ran successfully\nCheck Row Level Security policies\nVerify user authentication is working",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#next-steps",
-    "href": "001110-tutorial-cloneRepo-v001.html#next-steps",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.14 Next Steps",
-    "text": "13.14 Next Steps\n\n13.14.1 Further Learning\nFor more detailed tutorials on specific features, check the tutorials/ folder in the project repository, which includes in-depth documentation on:\n\nAuthentication implementation\nDatabase design and RLS policies\nEdge functions in detail\nStorage configuration\nStripe integration patterns\n\n\n\n13.14.2 Extending the Project\nConsider adding:\n\nEmail notifications\nTask categories and filters\nTeam collaboration features\nAdvanced reporting and analytics\nMobile application\nAdditional payment plans",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#additional-resources",
-    "href": "001110-tutorial-cloneRepo-v001.html#additional-resources",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.15 Additional Resources",
-    "text": "13.15 Additional Resources\n\nSupabase Documentation: https://supabase.com/docs\nNext.js Documentation: https://nextjs.org/docs\nStripe Documentation: https://stripe.com/docs\nOpenAI API Documentation: https://platform.openai.com/docs",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
-    ]
-  },
-  {
-    "objectID": "001110-tutorial-cloneRepo-v001.html#conclusion",
-    "href": "001110-tutorial-cloneRepo-v001.html#conclusion",
-    "title": "13  13.  Step 1: Fork the repo and clone it",
-    "section": "13.16 Conclusion",
-    "text": "13.16 Conclusion\nYou now have a fully functional SaaS application with authentication, database management, file storage, AI integration, and payment processing. This foundation can be extended and customized for virtually any SaaS product idea.\nIf you encounter any issues or have questions, refer to the project’s GitHub repository or leave a comment on the original tutorial video.\nHappy building!",
+    "section": "13.2 Clone your repo to get a copy on your computer",
+    "text": "13.2 Clone your repo to get a copy on your computer\nOnce you have a copy of the repo on your github account, you can then “pull down” a copy of that repo to your local computer that you will be developing on. This is known as “cloning” a repo from github. This allows you to work on your local git repo and then eventually “push” the changes that you’ve made back to your personal github’s account copy of the repo.\nTo clone the repo to your local computer - do the following:\n\nGo to https://github.com/pixegami/task-app\nClick the “fork” button to create your own copy of the repo.\nThen go to your own github repo and copy YOUR copy’s URL.\nOpen your Terminal and type git clone URL_FOR_YOUR_REPO to create a new folder with your own copy of the repo.\n\nYou can now open the folder for your project in your Cursor AI editor (or any other editor of your choice).",
     "crumbs": [
       "Building with Next and Supabase",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'><yrChapterNumber>13. </yrChapterNumber> Step 1: Fork the repo and clone it</span>"
@@ -1497,474 +1365,452 @@
   {
     "objectID": "001120-tutorial-installThePackages-v001.html",
     "href": "001120-tutorial-installThePackages-v001.html",
-    "title": "14  14.  Step 3: install the packages (with npm)",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
     "section": "",
-    "text": "14.1 Rules for package.json version numbers for packages\nThe file package.json contains information about which node packages are needed for this project as well as a few other things. The contents of the package.json file for this repo appears below. We will discuss the contents below. We are interested no in the sections “dependencies” and “devDependencies”.\nEach line in those sections highlight a specific Node.js package that needs to be installed. The “dependencies” section is for packages that are necessary for running the working project. The “devDependencies” section is for packages that are necessary for developing (i.e. coding) the project but are not needed for running the working final version of the project.\nTo install these packages, run the following command:\nThis command creates a new folder named “node_modules” and downloads the code for each package (AKA module) into that folder.\nThe package.json files contains version numbers for the packages you are installing (see more about this below).\nWhen a package-lock.json file is present, npm install resolves to the locked versions; the specifiers described below control resolution when updating/adding and how ranges are interpreted.\nNote: You may see warnings when you run this command saying that some of the packages that you are trying to install have been deprecated. This is because the packages in the package-lock.json file are out of date.\ntitle: “Specifying dependency versions in package.json” format: gfm ———–",
+    "text": "14.1 How to use a npm package in my Node.js project?\nThere are many “packages” of JavaScript code that have been developed by organizations or individual developers which are then shared with the Node.js community. These packages offer developers of new software to get a running start and avoid needing to write generally useful code from scratch.\nNode.js includes a tool, npm. Which stands for the “Node Package Manager” tool. This tool is used to install and manage these packages (as we’ll see below). Therefore technically these packages are known as npm packages (and not Node.js packages).\nThe code for all npm packages can be found online at https://www.npmjs.com/. To see the Javascript code for a package. Search for the package, then click on the name of the package and click the “code” button.\nTo use a package in your project, you must do both of the following:",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "001120-tutorial-installThePackages-v001.html#exact-version",
-    "href": "001120-tutorial-installThePackages-v001.html#exact-version",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.1 1) Exact version",
-    "text": "15.1 1) Exact version\n\n1.2.3\n\n{ \"dependencies\": { \"lodash\": \"1.2.3\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#caret-range-allow-non-breaking-updates-same-major",
-    "href": "001120-tutorial-installThePackages-v001.html#caret-range-allow-non-breaking-updates-same-major",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.2 2) Caret range (^) — allow non-breaking updates (same major)",
-    "text": "15.2 2) Caret range (^) — allow non-breaking updates (same major)\n\n^1.2.3 → &gt;=1.2.3 &lt;2.0.0\n^0.2.3 → &gt;=0.2.3 &lt;0.3.0 (major=0 is special)\n\n{ \"dependencies\": { \"lodash\": \"^4.17.21\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#tilde-range-allow-patch-updates-same-minor",
-    "href": "001120-tutorial-installThePackages-v001.html#tilde-range-allow-patch-updates-same-minor",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.3 3) Tilde range (~) — allow patch updates (same minor)",
-    "text": "15.3 3) Tilde range (~) — allow patch updates (same minor)\n\n~1.2.3 → &gt;=1.2.3 &lt;1.3.0\n\n{ \"dependencies\": { \"lodash\": \"~4.17.0\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#x-range-wildcard",
-    "href": "001120-tutorial-installThePackages-v001.html#x-range-wildcard",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.4 4) X-range / wildcard",
-    "text": "15.4 4) X-range / wildcard\n\n1.2.x, 1.x, *\n\n{ \"dependencies\": { \"lodash\": \"1.2.x\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#hyphen-range",
-    "href": "001120-tutorial-installThePackages-v001.html#hyphen-range",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.5 5) Hyphen range",
-    "text": "15.5 5) Hyphen range\n\n1.2.3 - 1.4.0 → &gt;=1.2.3 &lt;=1.4.0\n\n{ \"dependencies\": { \"lodash\": \"4.17.0 - 4.17.21\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#comparator-sets",
-    "href": "001120-tutorial-installThePackages-v001.html#comparator-sets",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.6 6) Comparator sets",
-    "text": "15.6 6) Comparator sets\n\nUse &gt;, &gt;=, &lt;, &lt;= and combine with spaces (AND) or || (OR):\n\n&gt;=1.2.3 &lt;2.0.0\n^1.2 || ^2.0\n\n\n{ \"dependencies\": { \"lodash\": \"&gt;=4.17.0 &lt;5\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#pre-releases",
-    "href": "001120-tutorial-installThePackages-v001.html#pre-releases",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.7 7) Pre-releases",
-    "text": "15.7 7) Pre-releases\n\nAppend identifiers like -alpha.1, -beta, etc.\nMust match explicitly (e.g., ^2.0.0-beta.1 won’t include 2.0.0 unless allowed by the range).\n\n{ \"dependencies\": { \"react\": \"^19.0.0-rc.0\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#tags-dist-tags",
-    "href": "001120-tutorial-installThePackages-v001.html#tags-dist-tags",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.8 8) Tags (dist-tags)",
-    "text": "15.8 8) Tags (dist-tags)\n\nNamed pointers published to the registry: latest, next, beta, etc.\n\n{ \"dependencies\": { \"typescript\": \"next\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#aliases-npm",
-    "href": "001120-tutorial-installThePackages-v001.html#aliases-npm",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.9 9) Aliases (npm:)",
-    "text": "15.9 9) Aliases (npm:)\n\nInstall one package as another name.\n\n{ \"dependencies\": { \"lodash\": \"npm:lodash-es@^4.17.21\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#local-paths",
-    "href": "001120-tutorial-installThePackages-v001.html#local-paths",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.10 10) Local paths",
-    "text": "15.10 10) Local paths\n\nfile: to a directory or tarball on disk.\n\n{ \"dependencies\": { \"my-lib\": \"file:../my-lib\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#workspace-references-workspace",
-    "href": "001120-tutorial-installThePackages-v001.html#workspace-references-workspace",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.11 11) Workspace references (workspace:)",
-    "text": "15.11 11) Workspace references (workspace:)\n\nFor npm workspaces; pin to a workspace package.\n\n{ \"dependencies\": { \"ui\": \"workspace:*\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#local-links-link",
-    "href": "001120-tutorial-installThePackages-v001.html#local-links-link",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.12 12) Local links (link:)",
-    "text": "15.12 12) Local links (link:)\n\nSymlink to a local folder (similar to npm link).\n\n{ \"dependencies\": { \"tooling\": \"link:../tooling\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#tarball-urls",
-    "href": "001120-tutorial-installThePackages-v001.html#tarball-urls",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.13 13) Tarball URLs",
-    "text": "15.13 13) Tarball URLs\n\nRemote .tgz URL.\n\n{ \"dependencies\": { \"mypkg\": \"https://example.com/mypkg-1.2.3.tgz\" } }",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#git-references",
-    "href": "001120-tutorial-installThePackages-v001.html#git-references",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.14 14) Git references",
-    "text": "15.14 14) Git references\n\nFull or shorthand; may include #branch, #tag, or #commit.\n\n{\n  \"dependencies\": {\n    \"lib-ssh\": \"git+ssh://git@github.com/user/repo.git#main\",\n    \"lib-https\": \"git+https://github.com/user/repo.git#v1.2.3\",\n    \"gh-short\": \"github:user/repo#abc1234\",\n    \"gl-short\": \"gitlab:user/repo#v1.0.0\",\n    \"bb-short\": \"bitbucket:user/repo#develop\"\n  }\n}",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "001120-tutorial-installThePackages-v001.html#quick-reference-table",
-    "href": "001120-tutorial-installThePackages-v001.html#quick-reference-table",
-    "title": "14  14.  Step 3: install the packages (with npm)",
-    "section": "15.15 Quick reference table",
-    "text": "15.15 Quick reference table\n\n\n\n\n\n\n\n\n\n\nForm\nExample\nMeaning\n\n\n\n\n\n\nExact\n1.2.3\nOnly that version\n\n\n\n\nCaret\n^1.2.3\nNon-breaking updates (same major)\n\n\n\n\nTilde\n~1.2.3\nPatch updates (same minor)\n\n\n\n\nX-range\n1.2.x, *\nWildcards\n\n\n\n\nHyphen\n1.2.3 - 1.4.0\nInclusive range\n\n\n\n\nComparators\n&gt;=1.2.3 &lt;2\nLogical AND/OR with |   |\n\n\n\n\nPre-release\n^2.0.0-rc.1\nIncludes matching prereleases\n\n\n\n\nTag\n\"latest\", \"next\"\nRegistry dist-tag\n\n\n\n\nAlias\nnpm:pkg@^1\nInstall another package under this name\n\n\n\n\nLocal file\nfile:../dir\nFrom local disk\n\n\n\n\nWorkspace\nworkspace:*\nWorkspace package reference\n\n\n\n\nLink\nlink:../dir\nSymlink to local dir\n\n\n\n\nTarball URL\nhttps://…/pkg.tgz\nInstall from remote tarball\n\n\n\n\nGit\ngithub:user/repo#tag\nFrom VCS (branch/tag/commit)",
-    "crumbs": [
-      "Building with Next and Supabase",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 3: install the packages (with npm)</span>"
-    ]
-  },
-  {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html",
-    "href": "009999-tutorial-restOfTheSteps-v001.html",
-    "title": "15  15.  rest of the steps …",
+    "objectID": "001120-tutorial-installThePackages-v001.html#how-to-use-a-npm-package-in-my-node.js-project",
+    "href": "001120-tutorial-installThePackages-v001.html#how-to-use-a-npm-package-in-my-node.js-project",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
     "section": "",
-    "text": "15.1 THIS IS UNDER DEVELOPMENT\nThis section is under development - proceed with caution …",
+    "text": "List the name of the package in the package.json file.\nThis file should be in the top folder (i.e. “root folder”) for the project.\n(See more about the exact format of the package.json file below).\nRun the npm install command in the terminal from the root folder for the project.\nThe npm install command downloads the packages that are used by this project into a folder named node_packages. (We’ll discuss this command more below).",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#what-is-package.json",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#what-is-package.json",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.2 What is package.json?",
-    "text": "15.2 What is package.json?\nThe file package.json contains a list of “node packages” (AKA modules) that need to be installed for this project. You need to run the following command to do so. This command will create a new folder named “node_modules” and download the code for each package (AKA module) into that folder. Run the following command now. Note: You may see some deprecation warnings, which are normal.\nnpm install\n\n15.2.1 Create Environment Files\nYou need to create two local .env files for environment variables. These files will contain API keys and configuration that you’ll add throughout this tutorial. Note that the File names must be exact:\n\n.env.local - for the Next.js application. Run the following command to create that file:\ncp .env.example .env.local\nsupabase/.env - for Supabase functions\n\nRun the following code to create those files from the included .env.example file.\n\n# Copy from the example file\ncp .env.example .env.local\ncp .env.example supabase/.env\n\n\n15.2.2 Optional: Preview the Frontend\nIf you want to see the frontend before connecting the backend:\n\nGo to the GitHub repository commits tab\nScroll to the bottom and find the commit labeled “front end boilerplate”\nCopy the commit hash\nCheck out that specific commit:\n\ntype git -v to see your git version\nrun ONE of the following command depending on your git version\n\ngit 2.23 and later: git switch --detach [commit-hash]\nolder versions of git: git checkout [commit-hash]\n\n\nRun the development server:\n\nnpm run dev\nThis version has placeholder backend logic, allowing you to explore the UI without full functionality.\n\nTo get back to the latest version of the code run the following:\n\nrun ONE of the following command depending on your git version\n\ngit 2.23 and later:\n\ngit switch - or\ngit switch BRANCH_NAME (where BRANCH_NAME is the name of your branch such as master or main)\n\nolder versions of git:\n\ngit checkout - or\ngit checkout BRANCH_NAME (where BRANCH_NAME is the name of your branch such as master or main)",
+    "objectID": "001120-tutorial-installThePackages-v001.html#more-about-the-package.json-file",
+    "href": "001120-tutorial-installThePackages-v001.html#more-about-the-package.json-file",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
+    "section": "14.2 More about the package.json file",
+    "text": "14.2 More about the package.json file\nEvery project that uses Node.js and npm\n\nshould contain a file named package.json in the top (i.e. root) folder for the project\nmight also contain a file named package-lock.json\n\nFor now, let’s focus on the package.json file (we’ll explain the package-lock.json file later). Click on the link below to see the full package.json file for our task-app project is shown below. The file is in JSON format. We won’t give a full tutorial on JSON format here but it is relatively easy to see that the information in the file is structured and is laid out in sections. We’ll explain the different sections below.\n\n\n\n\n\n\nclick here to see the full package.json file for this project\n\n\n\n\n\n{\n  \"name\": \"task-app-project\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"next lint\",\n    \"test\": \"jest\"\n  },\n  \"dependencies\": {\n    \"@radix-ui/react-checkbox\": \"^1.1.2\",\n    \"@radix-ui/react-dialog\": \"^1.1.2\",\n    \"@radix-ui/react-label\": \"^2.1.0\",\n    \"@radix-ui/react-popover\": \"^1.1.2\",\n    \"@radix-ui/react-select\": \"^2.1.2\",\n    \"@radix-ui/react-slot\": \"^1.1.0\",\n    \"@radix-ui/react-toast\": \"^1.2.2\",\n    \"@supabase/ssr\": \"^0.5.2\",\n    \"@supabase/supabase-js\": \"^2.47.10\",\n    \"class-variance-authority\": \"^0.7.1\",\n    \"clsx\": \"^2.1.1\",\n    \"date-fns\": \"^3.6.0\",\n    \"lucide-react\": \"^0.462.0\",\n    \"next\": \"14.2.16\",\n    \"react\": \"^18\",\n    \"react-day-picker\": \"^8.10.1\",\n    \"react-dom\": \"^18\",\n    \"react-dropzone\": \"^14.3.5\",\n    \"tailwind-merge\": \"^2.5.5\",\n    \"tailwindcss-animate\": \"^1.0.7\"\n  },\n  \"devDependencies\": {\n    \"@types/dotenv\": \"^6.1.1\",\n    \"@types/jest\": \"^29.5.14\",\n    \"@types/node\": \"^20\",\n    \"@types/react\": \"^18\",\n    \"@types/react-dom\": \"^18\",\n    \"autoprefixer\": \"^10.4.20\",\n    \"dotenv\": \"^16.4.7\",\n    \"eslint\": \"^8\",\n    \"eslint-config-next\": \"14.2.16\",\n    \"jest\": \"^29.7.0\",\n    \"postcss\": \"^8.4.49\",\n    \"stripe\": \"^17.5.0\",\n    \"supabase\": \"^2.1.1\",\n    \"tailwindcss\": \"^3.4.16\",\n    \"ts-jest\": \"^29.2.5\",\n    \"typescript\": \"^5\"\n  }\n}\n\n\n\n\n14.2.1 package.json - the dependencies section\nThe following is the contents of the dependencies section for our task-app project. The dependencies section lists the npm packages that are needed to run the project. We’ll explain the exact format of the lines you see below.\n{\n  \"dependencies\": {\n    \"@radix-ui/react-checkbox\": \"^1.1.2\",\n    \"@radix-ui/react-dialog\": \"^1.1.2\",\n    \"@radix-ui/react-label\": \"^2.1.0\",\n    \"@radix-ui/react-popover\": \"^1.1.2\",\n    \"@radix-ui/react-select\": \"^2.1.2\",\n    \"@radix-ui/react-slot\": \"^1.1.0\",\n    \"@radix-ui/react-toast\": \"^1.2.2\",\n    \"@supabase/ssr\": \"^0.5.2\",\n    \"@supabase/supabase-js\": \"^2.47.10\",\n    \"class-variance-authority\": \"^0.7.1\",\n    \"clsx\": \"^2.1.1\",\n    \"date-fns\": \"^3.6.0\",\n    \"lucide-react\": \"^0.462.0\",\n    \"next\": \"14.2.16\",\n    \"react\": \"^18\",\n    \"react-day-picker\": \"^8.10.1\",\n    \"react-dom\": \"^18\",\n    \"react-dropzone\": \"^14.3.5\",\n    \"tailwind-merge\": \"^2.5.5\",\n    \"tailwindcss-animate\": \"^1.0.7\"\n  },\n}\nThe following is the first line in the dependencies section:\n\n\n    \"@radix-ui/react-checkbox\": \"^1.1.2\",`\n\nLet’s explain this piece by piece:\n\n@radix-ui is the name of the organization that developed the package.\nOrganizations that create many different npm packages may choose to use register their organization name with the npm package registry, https://www.npmjs.com/, to make it easier to find and identify their packages.\nreact-checkbox is the name of the package\n^1.1.2 refers to the version number of the package that should be used. (see more about package version numbers below)\nThe ^ before the version number has special meaning which is described below.\n\nSome packages do not list an organization name. For example the following entry in our file is for a package named “class-variance-authority” but the entry in packages.json doesn’t list an organization:\n\n    \"class-variance-authority\": \"^0.7.1\",\n\nPackages that don’t have an organization name are often packages that were developed by individual developers and aren’t necessarily associated with any organization.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#step-2-create-a-supabase-project",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#step-2-create-a-supabase-project",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.3 Step 2: Create a Supabase Project",
-    "text": "15.3 Step 2: Create a Supabase Project\n\n15.3.1 Sign Up for Supabase\n\nGo to the Supabase website\nSign up for a free account\nCreate a new project\n\n\n\n15.3.2 Project Configuration\nWhen creating your project, you’ll need to:\n\nChoose a project name\nSet a database password (save this securely)\nSelect a region (choose the closest to your users)\n\nImportant: Save your database password - you’ll need it later.\n\n\n15.3.3 Get Your API Keys\nOnce your project is created:\n\nEdit the .env.local file. It currently looks like this:\n\n# You will need a .env.local file for local dev server (localhost)\n# You will need a .env.test.local file for running the integration tests.\n\n# Create the those files, and add the following variables.\n# The local files are ignored by default.\n\n# In .env.local and .env.test.local:\nNEXT_PUBLIC_SUPABASE_URL=\"https://XXXX.supabase.co\"\nNEXT_PUBLIC_SUPABASE_ANON_KEY=\"XXXX\"\n\n# In addition to that, you also need .env.test.local with these variables:\nSUPABASE_SERVICE_KEY=\"XXXX\"\nSTRIPE_SECRET_KEY=\"sk_test_XXX\"\nSTRIPE_PRICE_ID=\"price_XXX\"\nSTRIPE_WEBHOOK_SECRET=\"whsec_XXX\"```\n\nDelete the bottom few lines and top few lines so that the file now looks like this:\n# In .env.local and .env.test.local:\nNEXT_PUBLIC_SUPABASE_URL=\"https://XXXX.supabase.co\"\nNEXT_PUBLIC_SUPABASE_ANON_KEY=\"XXXX\"\nGo to Project Settings (Gear button at bottom left of screen) → Data API\nCopy the URL.\nModify the following line in the .env.local file to reflect the URL that you copied.\nNEXT_PUBLIC_SUPABASE_URL=\"https://XXXX.supabase.co\"\nClick on the API Keys section.\nCopy the anon public key. Modify the following line in the .env.local file to reflect the URL that you copied.\nNEXT_PUBLIC_SUPABASE_ANON_KEY=\"XXXX\"\nAdd these to your .env.local file:\n\nNEXT_PUBLIC_SUPABASE_URL=your-project-url\nNEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key",
+    "objectID": "001120-tutorial-installThePackages-v001.html#run-npm-install-to-in-stall-the-packages",
+    "href": "001120-tutorial-installThePackages-v001.html#run-npm-install-to-in-stall-the-packages",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
+    "section": "14.3 run npm install to in stall the packages",
+    "text": "14.3 run npm install to in stall the packages\nTo install these packages, run the following command from the top level folder (i.e. the “root” folder) in the project. This command creates a new folder named “node_modules” and downloads the code for each package into that folder.\nnpm install\nNote: You may see warnings when you run this command saying that some of the packages that you are trying to install have been deprecated. This is not a problem for us now. This usually happens because the packages listed in the package-lock.json files (which we discuss below) file are out of date. Keep reading …",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#step-3-set-up-google-oauth",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#step-3-set-up-google-oauth",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.4 Step 3: Set Up Google OAuth",
-    "text": "15.4 Step 3: Set Up Google OAuth\n\n15.4.1 Create Google Cloud Project\n\nGo to Google Cloud Console\nCreate a new project\nNavigate to APIs & Services → Credentials\nCreate OAuth 2.0 credentials\n\n\n\n15.4.2 Configure OAuth Consent Screen\n\nSet up the OAuth consent screen\nAdd your application details\nAdd authorized domains\n\n\n\n15.4.3 Get OAuth Credentials\n\nCreate OAuth 2.0 Client ID\nSet application type to “Web application”\nAdd authorized redirect URIs:\n\nAdd your Supabase project callback URL\nFormat: https://[your-project-ref].supabase.co/auth/v1/callback\n\nCopy your Client ID and Client Secret\n\n\n\n15.4.4 Configure in Supabase\n\nGo to your Supabase dashboard\nNavigate to Authentication → Providers\nEnable Google provider\nEnter your Client ID and Client Secret\nSave the configuration",
+    "objectID": "001120-tutorial-installThePackages-v001.html#npm-package-version-numbers",
+    "href": "001120-tutorial-installThePackages-v001.html#npm-package-version-numbers",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
+    "section": "14.4 npm package version numbers",
+    "text": "14.4 npm package version numbers\nEvery time an npm package is updated by the developers of the package a new “version number” is created for that new version of the package. When someone uses a package to write their software, they should record the version number of of the package that was used. This is important because sometimes later versions of the package might not work with the software that was written to use an older version of the package.\nPackage updates (and hence version numbers) fall into one of the following categories:\n\nMAJOR updates: new features that are not necessarily totally compatible with existing software that used older versions of this package.\nMINOR updates: new features that are intended to be backward-compatible with older versions\nPATCH fixes: ie. bug fixes that are intended to be backward-compatible with older versions\n\nThe npm package version numbers reflect the type of changes that were made to the package since the last version. THe version numbers in the form: MAJOR_NUMBER.MINOR_NUMBER.PATCH_NUMBER\nFor example the version number 0.7.1 has\n\nMAJOR_NUMBER 0\nMINOR_NUMBER 7\n\nPATCH_NUMBER 1\n\nWhen a new version of a package is released, the major, minor and patch numbers in the version number are updated accordingly.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#step-4-set-up-openai-api",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#step-4-set-up-openai-api",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.5 Step 4: Set Up OpenAI API",
-    "text": "15.5 Step 4: Set Up OpenAI API\n\n15.5.1 Create OpenAI Account\n\nGo to OpenAI Platform\nSign up or log in to your account\nNavigate to API Keys section\n\n\n\n15.5.2 Generate API Key\n\nCreate a new API key\nCopy the key immediately (you won’t be able to see it again)\nStore it securely\n\n\n\n15.5.3 Store as Supabase Secret\nThe OpenAI API key needs to be stored as a Supabase secret for use in edge functions:\n\nInstall Supabase CLI if you haven’t already\nLink your project:\n\nsupabase link --project-ref [your-project-ref]\n\nSet the secret:\n\nsupabase secrets set OPENAI_API_KEY=your-openai-key",
+    "objectID": "001120-tutorial-installThePackages-v001.html#using-a-before-a-version-number-e.g.-1.1.2",
+    "href": "001120-tutorial-installThePackages-v001.html#using-a-before-a-version-number-e.g.-1.1.2",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
+    "section": "14.5 using a “^” before a version number (e.g. “^1.1.2”)",
+    "text": "14.5 using a “^” before a version number (e.g. “^1.1.2”)\nIt is common for version numbers to be listed with “special characters” that direct npm to install possibly later versions of the package than the specified version.\nFor example, a caret, i.e. ^, before a version number, e.g. ^1.1.2 , directs npm to install “this version or a later version that has the same MAJOR number”. This is often desired since versions of a package that have the same MAJOR version number should be compatible with each other.\nFor example the following line:\n    \"@radix-ui/react-checkbox\": \"^1.1.2\",`\nindicates that this project requires version 1.1.2 or later of the package. However, this will only install the latest 1.X.X version. It will NOT install any version from 2.0.0 or later.\nThe logic for this is that the original developer of our project probably developed the code for the project using version 1.1.2 of the package. If in the future a new improved version 1.1.3 would be released to fix some bugs in the package then that version should be used instead of 1.1.2. The same would be true if even later versions of the package would be release such as 1.1.4 or 1.1.5 or even 1.2.0 - the latest of any 1.X.X version would be used.\nHowever, if a new MAJOR version is released, e.g. 2.0.0 then that would NOT be used when doing npm install for this project. The reason is that a new MAJOR version is not guaranteed to work with code that was written for a prior MAJOR version number of the package.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#step-5-set-up-stripe",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#step-5-set-up-stripe",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.6 Step 5: Set Up Stripe",
-    "text": "15.6 Step 5: Set Up Stripe\n\n15.6.1 Create Stripe Account\n\nGo to Stripe’s website\nSign up for an account\nSwitch to Test Mode (top right toggle)\n\n\n\n15.6.2 Get API Keys\n\nNavigate to Developers → API Keys\nCopy both:\n\nPublishable key (starts with pk_test_)\nSecret key (starts with sk_test_)\n\nAdd to your .env.local:\n\nNEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-publishable-key\n\nStore the secret key in Supabase:\n\nsupabase secrets set STRIPE_SECRET_KEY=your-secret-key\n\n\n15.6.3 Create a Product\n\nGo to Stripe Dashboard → Products\nCreate a new product for your subscription\nSet up pricing:\n\nMonthly recurring payment\nSet your price (e.g., $10/month)\n\nCopy the Price ID (starts with price_)\n\n\n\n15.6.4 Get Webhook Signing Secret\n\nGo to Developers → Webhooks\nAdd an endpoint (you’ll update this URL later)\nSelect events to listen to:\n\ncheckout.session.completed\ncustomer.subscription.updated\ncustomer.subscription.deleted\n\nCopy the Webhook Signing Secret\nStore it in Supabase:\n\nsupabase secrets set STRIPE_WEBHOOK_SECRET=your-webhook-secret",
+    "objectID": "001120-tutorial-installThePackages-v001.html#package-lock.json-records-the-exact-version-numbers-that-were-used",
+    "href": "001120-tutorial-installThePackages-v001.html#package-lock.json-records-the-exact-version-numbers-that-were-used",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
+    "section": "14.6 package-lock.json records the exact version numbers that were used",
+    "text": "14.6 package-lock.json records the exact version numbers that were used\nAs mentioned earlier, in theory, PATCH and MINOR updates to a package shouldn’t break code built and tested with an earlier version that shares the same MAJOR number. In practice, though, that’s not always true. To minimize potential issues, it’s best to install the project using the exact same package versions as those used by the original developer. Doing so ensures you’re working in the same environment and helps you avoid unexpected differences in behavior.\nFor this reason, when npm installs a package into the project, it records the EXACT version number that was installed into a file named package-lock.json. If the package-lock.json file exists then npm will install whatever version is registered in the package-lock.json file. However, if there is no package-lock.json file in a project then the rules stated above regarding which package is installed are followed. To be clear:\nnpm install will do the following:\n\nIf a package-lock.json file exists then the versions recorded in that file are downloaded to the node_modules folder.\nIf there is no package-lock.json file in the project then the versions of the packages as indicated in the package.json file are downloaded to the node_modules folder. Note that these could be later versions than the actual numbers listed in the file. For example if the package.json file lists version ^1.7.3 then the latest version number that still has a 1 in the first position will be installed. (see above for more info about version numbers in the package.json file)",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#step-6-set-up-supabase-database",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#step-6-set-up-supabase-database",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.7 Step 6: Set Up Supabase Database",
-    "text": "15.7 Step 6: Set Up Supabase Database\n\n15.7.1 Run Database Migrations\nThe project includes migration files that will set up your database schema.\n\nMake sure you’re in the project root directory\nRun the migrations:\n\nsupabase db push\nThis will create all necessary tables and configurations.\n\n\n15.7.2 Database Structure\nThe migrations create the following main tables:\n\nusers - Stores user account information\ntasks - Stores task data with fields for title, description, label, and image\nuser_subscriptions - Tracks subscription status\n\n\n\n15.7.3 Enable Row Level Security (RLS)\nThe migrations automatically set up Row Level Security policies to ensure:\n\nUsers can only see their own tasks\nUsers can only modify their own data\nProper authentication is enforced",
+    "objectID": "001120-tutorial-installThePackages-v001.html#depricated-warning-messages-when-doing-npm-install",
+    "href": "001120-tutorial-installThePackages-v001.html#depricated-warning-messages-when-doing-npm-install",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
+    "section": "14.7 Depricated warning messages when doing npm install",
+    "text": "14.7 Depricated warning messages when doing npm install\nYou may have noticed above that when you ran npm install, you got warning messages saying that one or more packages have been “depricated”. This means that there may be PATCH releases that fix bugs in the version of the package that you installed. This could happen if the package-lock.json file that was in the git repo has versions of packages that had later releases of new versions after the package-lock.json was created.\nThis generally should not be a problem for a learning tutorial. However, if you are planning on using this code in “production” it is recommended that you delete the package-lock.json file and re-run npm install. This should install the later versions of those packages that may have fixed some bugs. Hoewver, be aware the the original developer did not use these new package versions and therefore the code you have might not work 100% as expected and you might need to spend a little time debugging and testing the application.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#step-7-set-up-storage",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#step-7-set-up-storage",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.8 Step 7: Set Up Storage",
-    "text": "15.8 Step 7: Set Up Storage\n\n15.8.1 Create Storage Bucket\n\nGo to your Supabase dashboard\nNavigate to Storage\nCreate a new bucket named “task-images”\n\n\n\n15.8.2 Configure Bucket Settings\nFile size limit:\n\nSet maximum file size to 1 MB\n\nAllowed file types:\n\nConfigure to accept only images (JPEG, PNG, GIF, WebP)\n\nAccess settings:\n\nFor this tutorial, the bucket is set to public\nPublic means anyone with the URL can view the image\nFor production, consider making it private for better security\n\n\n\n15.8.3 Set Storage Policies\nThe storage policies should allow:\n\nAuthenticated users to upload images\nAnyone to read images (if public)\nUsers to delete their own images",
+    "objectID": "001120-tutorial-installThePackages-v001.html#additional-rules-for-package-version-numbers-in-package.json-file",
+    "href": "001120-tutorial-installThePackages-v001.html#additional-rules-for-package-version-numbers-in-package.json-file",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
+    "section": "14.8 Additional rules for package version numbers in package.json file",
+    "text": "14.8 Additional rules for package version numbers in package.json file\nAbove we discussed version numbers that start with a ‘^’. There are other types of “special characters” that affect which version of a package is actually installed. Below are the common forms with brief examples.\nThe following is a quick reference table. These are explained in more detail below.\n\n\n\n\n\n\n\n\n\n\nForm\nExample\nMeaning\n\n\n\n\n\n\nExact\n1.2.3\nOnly that version\n\n\n\n\nCaret\n^1.2.3\nNon-breaking updates (same major)\n\n\n\n\nTilde\n~1.2.3\nPatch updates (same minor)\n\n\n\n\nX-range\n1.2.x, *\nWildcards\n\n\n\n\nHyphen\n1.2.3 - 1.4.0\nInclusive range\n\n\n\n\nComparators\n&gt;=1.2.3 &lt;2\nLogical AND/OR with |   |\n\n\n\n\nPre-release\n^2.0.0-rc.1\nIncludes matching prereleases\n\n\n\n\nTag\n\"latest\", \"next\"\nRegistry dist-tag\n\n\n\n\nAlias\nnpm:pkg@^1\nInstall another package under this name\n\n\n\n\nLocal file\nfile:../dir\nFrom local disk\n\n\n\n\nWorkspace\nworkspace:*\nWorkspace package reference\n\n\n\n\nLink\nlink:../dir\nSymlink to local dir\n\n\n\n\nTarball URL\nhttps://…/pkg.tgz\nInstall from remote tarball\n\n\n\n\nGit\ngithub:user/repo#tag\nFrom VCS (branch/tag/commit)\n\n\n\n\n\n\n14.8.1 1) Exact version number (no extra special characters)\n\n1.2.3\n\n{ \"dependencies\": { \"lodash\": \"1.2.3\" } }\n\n\n14.8.2 2) Caret range (^) — allow non-breaking updates (same major) - discussed above\n\n^1.2.3 → &gt;=1.2.3 &lt;2.0.0\n^0.2.3 → &gt;=0.2.3 &lt;0.3.0 (major=0 is special)\n\n{ \"dependencies\": { \"lodash\": \"^4.17.21\" } }\n\n\n14.8.3 3) Tilde range (~) — allow patch updates (same minor)\n\n~1.2.3 → &gt;=1.2.3 &lt;1.3.0\n\n{ \"dependencies\": { \"lodash\": \"~4.17.0\" } }\n\n\n14.8.4 4) X-range / wildcard\n\n1.2.x, 1.x, *\n\n{ \"dependencies\": { \"lodash\": \"1.2.x\" } }\n\n\n14.8.5 5) Hyphen range\n\n1.2.3 - 1.4.0 → &gt;=1.2.3 &lt;=1.4.0\n\n{ \"dependencies\": { \"lodash\": \"4.17.0 - 4.17.21\" } }\n\n\n14.8.6 6) Comparator sets\n\nUse &gt;, &gt;=, &lt;, &lt;= and combine with spaces (AND) or || (OR):\n\n&gt;=1.2.3 &lt;2.0.0\n^1.2 || ^2.0\n\n\n{ \"dependencies\": { \"lodash\": \"&gt;=4.17.0 &lt;5\" } }\n\n\n14.8.7 7) Pre-releases\n\nAppend identifiers like -alpha.1, -beta, etc.\nMust match explicitly (e.g., ^2.0.0-beta.1 won’t include 2.0.0 unless allowed by the range).\n\n{ \"dependencies\": { \"react\": \"^19.0.0-rc.0\" } }\n\n\n14.8.8 8) Tags (dist-tags)\n\nNamed pointers published to the registry: latest, next, beta, etc.\n\n{ \"dependencies\": { \"typescript\": \"next\" } }\n\n\n14.8.9 9) Aliases (npm:)\n\nInstall one package as another name.\n\n{ \"dependencies\": { \"lodash\": \"npm:lodash-es@^4.17.21\" } }\n\n\n14.8.10 10) Local paths\n\nfile: to a directory or tarball on disk.\n\n{ \"dependencies\": { \"my-lib\": \"file:../my-lib\" } }\n\n\n14.8.11 11) Workspace references (workspace:)\n\nFor npm workspaces; pin to a workspace package.\n\n{ \"dependencies\": { \"ui\": \"workspace:*\" } }\n\n\n14.8.12 12) Local links (link:)\n\nSymlink to a local folder (similar to npm link).\n\n{ \"dependencies\": { \"tooling\": \"link:../tooling\" } }\n\n\n14.8.13 13) Tarball URLs\n\nRemote .tgz URL.\n\n{ \"dependencies\": { \"mypkg\": \"https://example.com/mypkg-1.2.3.tgz\" } }\n\n\n14.8.14 14) Git references\n\nFull or shorthand; may include #branch, #tag, or #commit.\n\n{\n  \"dependencies\": {\n    \"lib-ssh\": \"git+ssh://git@github.com/user/repo.git#main\",\n    \"lib-https\": \"git+https://github.com/user/repo.git#v1.2.3\",\n    \"gh-short\": \"github:user/repo#abc1234\",\n    \"gl-short\": \"gitlab:user/repo#v1.0.0\",\n    \"bb-short\": \"bitbucket:user/repo#develop\"\n  }\n}",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#step-8-deploy-edge-functions",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#step-8-deploy-edge-functions",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.9 Step 8: Deploy Edge Functions",
-    "text": "15.9 Step 8: Deploy Edge Functions\n\n15.9.1 Understanding Edge Functions\nEdge functions are custom serverless functions that run on demand in response to HTTP requests. They allow you to run backend code without managing servers.\nLocation in project: supabase/functions/\n\n\n15.9.2 The Three Functions\n1. createTaskWithAI\n\nCreates a new task in the database\nUses OpenAI to automatically assign a label based on the task title\nUpdates the task with the AI-generated label\n\n2. createStripeSession\n\nGenerates Stripe checkout URLs\nReturns either a checkout session (for new subscriptions) or customer portal (for existing customers)\nUsed when users click “Manage Subscription”\n\n3. stripe-webhook\n\nReceives event notifications from Stripe\nHandles subscription status changes\nUpdates user premium status in the database\n\n\n\n15.9.3 Deploy the Functions\nFrom your project root, deploy each function:\n# Deploy the AI task creation function\nsupabase functions deploy createTaskWithAI\n\n# Deploy the Stripe session function\nsupabase functions deploy createStripeSession\n\n# Deploy the webhook function\nsupabase functions deploy stripe-webhook\n\n\n15.9.4 Verify Deployment\n\nGo to your Supabase dashboard\nClick on “Edge Functions”\nConfirm all three functions are listed\nClick on each function to access metrics and logs for debugging\n\n\n\n15.9.5 Configure Stripe Webhook\nImportant: The Stripe webhook function needs special configuration:\n\nClick on the stripe-webhook function\nGo to “Details”\nScroll to “Function Configuration”\nDisable “Enforce JWT verification”\nClick “Save”\n\nWhy? This function is called by Stripe (not authenticated users), so JWT verification must be disabled.\n\n\n15.9.6 Update Stripe Webhook URL\nNow that your function is deployed, update Stripe with the actual endpoint:\n\nGo to Stripe Dashboard → Developers → Webhooks\nClick on your webhook endpoint\nUpdate the URL to:\nhttps://[your-project-ref].supabase.co/functions/v1/stripe-webhook",
+    "objectID": "001120-tutorial-installThePackages-v001.html#alternatives-to-npm",
+    "href": "001120-tutorial-installThePackages-v001.html#alternatives-to-npm",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
+    "section": "14.9 Alternatives to npm",
+    "text": "14.9 Alternatives to npm\nThe npm is the tool used to install and manage these packages. However there are other competing “package manager” tools for “npm packages”. Currently available package manager tools are listed below. There are pros/cons to using each one:\n\nnpm – default with Node.js; biggest ecosystem. Slower than others.\nYarn – fast installs; good caching. Old v1 now legacy.\nYarn Berry – no node_modules; great for managing many packages together. Complex setup.\npnpm – space-efficient; strict resolution. Some tools misbehave.\nBun – ultra-fast; includes runtime. New and less stable.\n\nIf you’re just starting out, I recommend using npm (it’s most popular). However, don’t be surprised if some other tutorials that you see mention other package managers. All package managers for Javascript have similar capabilities and features.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#step-9-run-the-application",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#step-9-run-the-application",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.10 Step 9: Run the Application",
-    "text": "15.10 Step 9: Run the Application\n\n15.10.1 Start the Development Server\nFrom your project root:\nnpm run dev\nThe application should start and display a local URL (usually http://localhost:3000).\n\n\n15.10.2 Test Core Functionality\n1. Authentication\n\nClick to log in with Google\nVerify successful authentication\nCheck that you’re redirected to the dashboard\n\n2. Task Management\n\nCreate a new task with a title and description\nConfirm that an appropriate label is automatically assigned by AI\nVerify the task appears in your dashboard\n\n3. Image Uploads\n\nClick to edit a task\nUpload an image attachment\nVerify the image is displayed correctly\n\n4. User Profile\n\nNavigate to your profile page\nConfirm your task count is tracked correctly\n\n5. Subscription Management\n\nClick “Manage Subscription”\nVerify you’re taken to a Stripe checkout page\nTest the checkout flow (use Stripe test card: 4242 4242 4242 4242)\n\n6. Sign Out\n\nTest the sign out functionality\nConfirm you’re redirected to the login page",
+    "objectID": "001120-tutorial-installThePackages-v001.html#alternatives-to-node.js",
+    "href": "001120-tutorial-installThePackages-v001.html#alternatives-to-node.js",
+    "title": "14  14.  Step 2: Installing the Node.js packages with npm",
+    "section": "14.10 Alternatives to Node.js",
+    "text": "14.10 Alternatives to Node.js\nSimilarly there are Javascript “runtime” environments other than Node.js. Again - if you’re just starting out, I recommend that you use Node.js but be aware of the existance of the others.\n\nDeno – modern and secure; runs JavaScript and TypeScript easily. Not all Node tools work yet.\nBun – very fast and all-in-one (includes tools for testing and building). Still quite new.\nCloudflare Workers – runs small apps close to users for speed. Can’t use all Node features.\nWorkerd – the open-source engine behind Cloudflare’s system. Mainly for advanced use.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'><yrChapterNumber>14. </yrChapterNumber> Step 2: Installing the Node.js packages with npm</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#deployment-to-production",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#deployment-to-production",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.11 Deployment to Production",
-    "text": "15.11 Deployment to Production\n\n15.11.1 Deploying the Frontend\nRecommended: Vercel\nThis is a static Next.js website, making it easy to deploy:\n\nPush your code to GitHub\nImport the project in Vercel\nAdd your environment variables\nDeploy\n\nAlternative Options:\n\nNetlify\nAWS Amplify\nAny static hosting service\n\n\n\n15.11.2 Update Environment Variables\nFor production, you’ll need to:\n\nUpdate Supabase project URL and keys\nSwitch Stripe from test mode to live mode\nUpdate OAuth redirect URIs\nConfigure production domains",
+    "objectID": "001130-tutorial-envFiles-v001.html",
+    "href": "001130-tutorial-envFiles-v001.html",
+    "title": "15  15.  Step 3: Create env files",
+    "section": "",
+    "text": ".env files are used to store private API keys (these are similar to passwords) and configuration information. This is the type of information that should NEVER be checked into github. Therefore the .gitignore file lists these types of files among other files that should not be added to your git repo.\nIn this project, we will need two different .env files. You will need to modify the contents of these .env files with the API keys that you generate for your Supabase accoutn and other accounts. The developer of this tutorial created one .env.example file. This is just an example file. It doesn’t contain real info. It should be copied into the locations for the .env files that we will be using.\nFor now, we will just copy the .env.exapmle file in the two locations. We will come back later and modify these files and explain more about them.\n\nYou need to create two local .env files for environment variables. These files will contain API keys and configuration that you’ll add throughout this tutorial. Note that the File names must be exact:\n\n.env.local - for the Next.js application.\nIn the terminal first cd to the top level folder for your repo then run the following command to create that file:\ncp .env.example .env.local\nsupabase/.env - for Supabase functions\nIn the terminal first cd to the top level folder for your repo then run the following command to create that file:\ncp .env.example supabase/.env",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> Step 3: Create env files</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#project-structure",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#project-structure",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.12 Project Structure",
-    "text": "15.12 Project Structure\nUnderstanding where to make changes:\n├── app/                    # Next.js pages and routes\n├── components/            # React UI components\n├── hooks/                 # Client logic and Supabase integration\n├── supabase/\n│   ├── functions/        # Edge functions (backend logic)\n│   └── migrations/       # Database schema and configurations\n└── tests/\n    └── integration/      # Integration test suite\nTo extend functionality:\n\nUI changes: Edit files in app/ and components/\nClient logic: Modify hooks in hooks/\nBackend logic: Update functions in supabase/functions/\nDatabase changes: Create new migrations in supabase/migrations/",
+    "objectID": "001140-tutorial-previewFrontEnd-v001.html",
+    "href": "001140-tutorial-previewFrontEnd-v001.html",
+    "title": "16  16.  Step 4 - Optional: Preview the Frontend",
+    "section": "",
+    "text": "If you want to see the frontend before connecting the backend:\n\nGo to the GitHub repository commits tab\nScroll to the bottom and find the commit labeled “front end boilerplate”\nCopy the commit hash\nCheck out that specific commit:\n\ntype git -v to see your git version\nrun ONE of the following command depending on your git version\n\ngit 2.23 and later: git switch --detach [commit-hash]\nolder versions of git: git checkout [commit-hash]\n\n\nRun the development server:\n\nnpm run dev\nThis version has placeholder backend logic, allowing you to explore the UI without full functionality.\n\nTo get back to the latest version of the code run the following:\n\nrun ONE of the following command depending on your git version\n\ngit 2.23 and later:\n\ngit switch - or\ngit switch BRANCH_NAME (where BRANCH_NAME is the name of your branch such as master or main)\n\nolder versions of git:\n\ngit checkout - or\ngit checkout BRANCH_NAME (where BRANCH_NAME is the name of your branch such as master or main)",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> Step 4 - Optional: Preview the Frontend</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#testing",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#testing",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.13 Testing",
-    "text": "15.13 Testing\n\n15.13.1 Integration Tests\nThe project includes a comprehensive integration test suite that connects to your real Supabase project.\n\n\n15.13.2 Set Up Test Environment\n\nCreate a test environment file:\n\ncp example.env tests/.env.test\n\nUpdate with your API keys and credentials\n\n\n\n15.13.3 Run Tests\nRun all tests:\nnpm test\nRun a specific test file:\nnpm test -- tests/integration/specific-test.spec.ts\nImportant: Tests may fail on the first run due to cold starts. If this happens, simply run them again.",
+    "objectID": "001150-tutorial-createSupabaseProject-v001.html",
+    "href": "001150-tutorial-createSupabaseProject-v001.html",
+    "title": "17  17.  Step 5: Create a Supabase Project",
+    "section": "",
+    "text": "17.0.1 Sign Up for Supabase\n\nGo to the Supabase website\nSign up for a free account\nCreate a new project\n\n\n\n17.0.2 Project Configuration\nWhen creating your project, you’ll need to:\n\nChoose a project name\nSet a database password (save this securely)\nSelect a region (choose the closest to your users)\n\nImportant: Save your database password - you’ll need it later.\n\n\n17.0.3 Get Your API Keys\nOnce your project is created:\n\nEdit the .env.local file. It currently looks like this:\n\n# You will need a .env.local file for local dev server (localhost)\n# You will need a .env.test.local file for running the integration tests.\n\n# Create the those files, and add the following variables.\n# The local files are ignored by default.\n\n# In .env.local and .env.test.local:\nNEXT_PUBLIC_SUPABASE_URL=\"https://XXXX.supabase.co\"\nNEXT_PUBLIC_SUPABASE_ANON_KEY=\"XXXX\"\n\n# In addition to that, you also need .env.test.local with these variables:\nSUPABASE_SERVICE_KEY=\"XXXX\"\nSTRIPE_SECRET_KEY=\"sk_test_XXX\"\nSTRIPE_PRICE_ID=\"price_XXX\"\nSTRIPE_WEBHOOK_SECRET=\"whsec_XXX\"```\n\nDelete the bottom few lines and top few lines so that the file now looks like this:\n# In .env.local and .env.test.local:\nNEXT_PUBLIC_SUPABASE_URL=\"https://XXXX.supabase.co\"\nNEXT_PUBLIC_SUPABASE_ANON_KEY=\"XXXX\"\nGo to Project Settings (Gear button at bottom left of screen) → Data API\nCopy the URL.\nModify the following line in the .env.local file to reflect the URL that you copied.\nNEXT_PUBLIC_SUPABASE_URL=\"https://XXXX.supabase.co\"\nClick on the API Keys section.\nCopy the anon public key. Modify the following line in the .env.local file to reflect the URL that you copied.\nNEXT_PUBLIC_SUPABASE_ANON_KEY=\"XXXX\"\nAdd these to your .env.local file:\n\nNEXT_PUBLIC_SUPABASE_URL=your-project-url\nNEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'><yrChapterNumber>17. </yrChapterNumber> Step 5: Create a Supabase Project</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#troubleshooting",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#troubleshooting",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.14 Troubleshooting",
-    "text": "15.14 Troubleshooting\n\n15.14.1 Common Issues\nEnvironment variables not loading:\n\nEnsure file names are exactly .env.local and supabase/.env\nRestart the development server after changes\nCheck for typos in variable names\n\nAuthentication errors:\n\nVerify Google OAuth redirect URIs match exactly\nCheck that the Supabase callback URL is correct\nEnsure OAuth credentials are properly configured\n\nEdge functions failing:\n\nCheck Supabase secrets are set correctly\nReview function logs in the Supabase dashboard\nVerify all dependencies are installed\n\nStripe webhook not working:\n\nConfirm JWT verification is disabled for the webhook function\nCheck that the webhook URL is correct\nVerify webhook signing secret matches\n\nDatabase errors:\n\nEnsure migrations ran successfully\nCheck Row Level Security policies\nVerify user authentication is working",
+    "objectID": "001160-tutorial-googleOauth-v001.html",
+    "href": "001160-tutorial-googleOauth-v001.html",
+    "title": "18  18.  Step 6: setup authentication (Google OAuth)",
+    "section": "",
+    "text": "18.1 Create a Google Cloud Project\nThis step connects your Supabase project with Google’s OAuth 2.0 service so users can log in using their Google accounts.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#next-steps",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#next-steps",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.15 Next Steps",
-    "text": "15.15 Next Steps\n\n15.15.1 Further Learning\nFor more detailed tutorials on specific features, check the tutorials/ folder in the project repository, which includes in-depth documentation on:\n\nAuthentication implementation\nDatabase design and RLS policies\nEdge functions in detail\nStorage configuration\nStripe integration patterns\n\n\n\n15.15.2 Extending the Project\nConsider adding:\n\nEmail notifications\nTask categories and filters\nTeam collaboration features\nAdvanced reporting and analytics\nMobile application\nAdditional payment plans",
+    "objectID": "001160-tutorial-googleOauth-v001.html#create-a-google-cloud-project",
+    "href": "001160-tutorial-googleOauth-v001.html#create-a-google-cloud-project",
+    "title": "18  18.  Step 6: setup authentication (Google OAuth)",
+    "section": "",
+    "text": "Open the Google Cloud Console.\nClick Create Project and give it a clear name (e.g., “MyApp Auth”).\nNavigate to APIs & Services → Credentials.\nClick Create Credentials → OAuth client ID to start generating keys.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#additional-resources",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#additional-resources",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.16 Additional Resources",
-    "text": "15.16 Additional Resources\n\nSupabase Documentation: https://supabase.com/docs\nNext.js Documentation: https://nextjs.org/docs\nStripe Documentation: https://stripe.com/docs\nOpenAI API Documentation: https://platform.openai.com/docs",
+    "objectID": "001160-tutorial-googleOauth-v001.html#configure-the-oauth-consent-screen",
+    "href": "001160-tutorial-googleOauth-v001.html#configure-the-oauth-consent-screen",
+    "title": "18  18.  Step 6: setup authentication (Google OAuth)",
+    "section": "18.2 Configure the OAuth Consent Screen",
+    "text": "18.2 Configure the OAuth Consent Screen\n\nGo to APIs & Services → OAuth consent screen.\nChoose External (unless you only need internal use).\nAdd your basic app info:\n\nApp name\n\nUser support email\n\nDeveloper contact email\n\n\nUnder Authorized domains, add the domain used by your Supabase project.\nSave and continue through the remaining steps.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
     ]
   },
   {
-    "objectID": "009999-tutorial-restOfTheSteps-v001.html#conclusion",
-    "href": "009999-tutorial-restOfTheSteps-v001.html#conclusion",
-    "title": "15  15.  rest of the steps …",
-    "section": "15.17 Conclusion",
-    "text": "15.17 Conclusion\nYou now have a fully functional SaaS application with authentication, database management, file storage, AI integration, and payment processing. This foundation can be extended and customized for virtually any SaaS product idea.\nIf you encounter any issues or have questions, refer to the project’s GitHub repository or leave a comment on the original tutorial video.\nHappy building!",
+    "objectID": "001160-tutorial-googleOauth-v001.html#get-your-oauth-credentials",
+    "href": "001160-tutorial-googleOauth-v001.html#get-your-oauth-credentials",
+    "title": "18  18.  Step 6: setup authentication (Google OAuth)",
+    "section": "18.3 Get Your OAuth Credentials",
+    "text": "18.3 Get Your OAuth Credentials\n\nReturn to APIs & Services → Credentials.\nCreate an OAuth 2.0 Client ID.\nChoose Web application as the application type.\nAdd your Supabase callback URL under Authorized redirect URIs: https://[your-project-ref].supabase.co/auth/v1/callback\nAfter creation, copy your Client ID and Client Secret.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'><yrChapterNumber>15. </yrChapterNumber> rest of the steps ...</span>"
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
+    ]
+  },
+  {
+    "objectID": "001160-tutorial-googleOauth-v001.html#configure-google-auth-in-supabase",
+    "href": "001160-tutorial-googleOauth-v001.html#configure-google-auth-in-supabase",
+    "title": "18  18.  Step 6: setup authentication (Google OAuth)",
+    "section": "18.4 Configure Google Auth in Supabase",
+    "text": "18.4 Configure Google Auth in Supabase\n\nOpen your Supabase dashboard.\nNavigate to Authentication → Providers.\nSelect Google.\nPaste your Client ID and Client Secret.\nClick Save to enable Google login for your project.\n\n\nWith this configuration complete, Supabase can now handle secure login flows using Google OAuth.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
+    ]
+  },
+  {
+    "objectID": "001170-tutorial-openAiApi-v001.html",
+    "href": "001170-tutorial-openAiApi-v001.html",
+    "title": "19  19.  Step 7: Set Up OpenAI API",
+    "section": "",
+    "text": "You’ll use OpenAI from a Supabase Edge Function, so the key must live in Supabase secrets (not in your frontend).\n\n19.0.1 Create OpenAI Account\n\nGo to the OpenAI Platform: https://platform.openai.com/\nSign up or log in to your account.\nOpen the Dashboard → API Keys (or Settings → API Keys) section.\n\n\n\n19.0.2 Generate API Key\n\nClick Create new secret key.\nGive it a recognizable name (e.g., edge-functions-prod).\nCopy the key immediately — you won’t be able to see it again.\nStore it securely in a password manager or secrets manager.\nNever commit this key to Git or expose it in client-side code.\n\n\n\n19.0.3 Store as Supabase Secret\nYou’ll configure your Edge Functions to read OPENAI_API_KEY from the Supabase environment.\n\nInstall Supabase CLI (if you haven’t already):\nnpm install -g supabase\nLink your local project to your Supabase project:\nsupabase link --project-ref [your-project-ref]\nYou can find [your-project-ref] in the URL of your Supabase project dashboard.\nSet the secret in Supabase:\nsupabase secrets set OPENAI_API_KEY=your-openai-key\nVerify in the Supabase dashboard (Project Settings → API → Secrets) that OPENAI_API_KEY is present.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'><yrChapterNumber>19. </yrChapterNumber> Step 7: Set Up OpenAI API</span>"
+    ]
+  },
+  {
+    "objectID": "001180-tutorial-setupStripe-v001.html",
+    "href": "001180-tutorial-setupStripe-v001.html",
+    "title": "20  20.  Step 8: Set Up Stripe",
+    "section": "",
+    "text": "Stripe will handle subscriptions and billing. You’ll run in Test Mode while developing.\n\n20.0.1 Create Stripe Account\n\nGo to https://stripe.com.\nSign up for a new account or log in.\nIn the dashboard, toggle View test data or Test Mode on (usually top-right).\nConfirm the dashboard now shows “Test data” so you don’t charge real cards.\n\n\n\n20.0.2 Get API Keys\n\nIn the Stripe Dashboard, go to Developers → API keys.\nUnder Standard keys, copy:\n\nPublishable key (starts with pk_test_)\nSecret key (starts with sk_test_)\n\nAdd the publishable key to your Next.js environment:\n# .env.local\nNEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-publishable-key\nStore the secret key in Supabase (for Edge Functions):\nsupabase secrets set STRIPE_SECRET_KEY=your-secret-key\nIf you have a separate dev/prod project, repeat this setup per environment.\n\n\n\n20.0.3 Create a Product\n\nIn Stripe dashboard, go to Products.\nClick + Add product.\nFill in:\n\nName (e.g., “Pro Plan”)\nOptional description and image.\n\nUnder Pricing, create a price:\n\nRecurring\nBilling period: Monthly\nAmount: e.g., $10 (or your own).\n\nSave the product and its price.\nCopy the Price ID (e.g., price_12345...).\nAdd the Price ID to your app’s config (e.g., environment variable or constants file), for example:\nNEXT_PUBLIC_STRIPE_PRICE_ID=your-price-id\n\n(Adjust to match how your code expects the price ID.)\n\n\n20.0.4 Get Webhook Signing Secret\nYou’ll use a webhook to let Stripe notify your app about subscription changes.\n\nGo to Developers → Webhooks in Stripe.\nClick + Add endpoint.\nFor now, you can use a temporary URL (you’ll update it later), such as:\n\na local tunneling URL from stripe listen or ngrok, or\nleave it blank until your Supabase function URL is known.\n\nUnder Select events to send, add:\n\ncheckout.session.completed\ncustomer.subscription.updated\ncustomer.subscription.deleted\n\nSave the endpoint.\nStripe will show a Signing secret (e.g., whsec_...). Copy it.\nStore it as a Supabase secret:\nsupabase secrets set STRIPE_WEBHOOK_SECRET=your-webhook-secret",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'><yrChapterNumber>20. </yrChapterNumber> Step 8: Set Up Stripe</span>"
+    ]
+  },
+  {
+    "objectID": "001190-tutorial-setupSupabaseDatabase-v001.html",
+    "href": "001190-tutorial-setupSupabaseDatabase-v001.html",
+    "title": "21  21.  Step 9: Set Up Supabase Database",
+    "section": "",
+    "text": "Your project ships with migrations that define the database schema and policies.\n\n21.0.1 Run Database Migrations\n\nEnsure you’re in the project root (where supabase/config.toml lives).\nRun:\nsupabase db push\nWait for the migration to complete without errors.\nIn the Supabase dashboard, open Table Editor to confirm the tables exist.\n\n\n\n21.0.2 Database Structure\nThe migrations typically create tables such as:\n\nusers\nStores user account data linked to Supabase auth (e.g., id, email, metadata).\ntasks\nRepresents tasks created by users:\n\nid, user_id\ntitle, description\nlabel (AI-generated or user-set)\nimage_url (path to Supabase Storage file)\ntimestamps for creation and updates\n\nuser_subscriptions\nTracks subscription status:\n\nuser_id\nStripe customer_id\nsubscription_id\nstatus (e.g., active, canceled)\ncurrent period dates\n\n\nAdjust field names to match your actual migrations.\n\n\n21.0.3 Enable Row Level Security (RLS)\nThe migrations also turn on RLS and define policies, so that:\n\nUsers can only read/update rows where user_id = their auth user id.\nAnonymous users cannot access private data.\nSystem operations (e.g., via service role) can bypass restrictions where needed.\n\nYou can verify policies under Database → Policies in the Supabase dashboard.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>21. </yrChapterNumber> Step 9: Set Up Supabase Database</span>"
+    ]
+  },
+  {
+    "objectID": "001200-tutorial-setupSupabaseStorage-v001.html",
+    "href": "001200-tutorial-setupSupabaseStorage-v001.html",
+    "title": "22  22.  Step 10: Set Up Supabase Storage Bucket",
+    "section": "",
+    "text": "You’ll store task images in Supabase Storage.\n\n22.0.1 Create Storage Bucket\n\nIn Supabase dashboard, go to Storage → Buckets.\nClick New bucket.\nName it task-images (or whatever your code expects).\nFor this tutorial, set the bucket to Public.\nCreate the bucket.\n\n\n\n22.0.2 Configure Bucket Settings\nFile size limit:\n\nDecide on an appropriate max file size (e.g., 1 MB).\nEnforce this in your upload UI and/or server-side logic.\n\nAllowed file types:\n\nRestrict to images:\n\nimage/jpeg\nimage/png\nimage/gif\nimage/webp\n\n\nAccess settings:\n\nPublic bucket:\n\nAnyone with the URL can view the image (simpler for tutorials).\n\nFor production:\n\nConsider a private bucket + signed URLs for more control.\n\n\n\n\n22.0.3 Set Storage Policies\nIn the Policies section for your task-images bucket, ensure:\n\nAuthenticated users can upload files (e.g., policy: if auth.role() = 'authenticated').\nAnyone can read files (for public tutorials).\nUsers can delete only their own images (e.g., match user_id in metadata/path).\n\nYou can either: - Use the provided migration policies, or - Create them via the Supabase dashboard policy builder.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'><yrChapterNumber>22. </yrChapterNumber> Step 10: Set Up Supabase Storage Bucket</span>"
+    ]
+  },
+  {
+    "objectID": "001210-tutorial-deploySupabaseEdgeFunctions-v001.html",
+    "href": "001210-tutorial-deploySupabaseEdgeFunctions-v001.html",
+    "title": "23  23.  Step 11: Deploy Supabase Edge Functions",
+    "section": "",
+    "text": "Edge Functions are serverless handlers for AI, billing, and webhooks.\nLocation in project: supabase/functions/\n\n23.0.1 The Three Functions\n\n1. createTaskWithAI\nUsed to:\n\nAccept task input (e.g., title, description).\nCall OpenAI using OPENAI_API_KEY.\nGenerate or refine a label.\nInsert/update the task row in the tasks table.\n\nThis function typically: - Validates the user (via JWT). - Checks subscription status if needed (e.g., premium-only features).\n\n\n2. createStripeSession\nUsed to:\n\nCreate Stripe Checkout sessions for new subscriptions.\nReturn a customer portal link if the user already has a subscription.\nRedirect users to Stripe when they click “Manage Subscription”.\n\nIt uses STRIPE_SECRET_KEY and price IDs to build sessions.\n\n\n3. stripe-webhook\nUsed to:\n\nReceive event notifications from Stripe.\nVerify the webhook signature using STRIPE_WEBHOOK_SECRET.\nSync subscription status (e.g., set user_subscriptions.status = 'active').\nHandle cancellations, renewals, and trial endings.\n\nThis function is called directly by Stripe, so it doesn’t use user JWTs.\n\n\n\n23.0.2 Deploy the Functions\nFrom your project root, deploy each function with the Supabase CLI:\n# Deploy the AI task creation function\nsupabase functions deploy createTaskWithAI\n\n# Deploy the Stripe session function\nsupabase functions deploy createStripeSession\n\n# Deploy the webhook function\nsupabase functions deploy stripe-webhook\nAfter deploying, the CLI will output function URLs like:\nhttps://[your-project-ref].supabase.co/functions/v1/createTaskWithAI\nKeep these handy for testing or local development.\n\n\n23.0.3 Verify Deployment\n\nIn Supabase dashboard, open Edge Functions.\nConfirm you see:\n\ncreateTaskWithAI\ncreateStripeSession\nstripe-webhook\n\nClick each function:\n\nCheck the Logs tab for any runtime errors.\nTrigger test requests (e.g., via curl or a REST client) if needed.\n\n\n\n\n23.0.4 Configure Stripe Webhook\nstripe-webhook must accept unauthenticated calls from Stripe.\n\nIn Supabase dashboard, click the stripe-webhook function.\nGo to the Details tab.\nFind Function configuration (or Settings).\nDisable Enforce JWT verification for this function.\nSave the changes.\n\nWhy? Stripe does not send JWTs; the function instead authenticates via STRIPE_WEBHOOK_SECRET.\n\n\n23.0.5 Update Stripe Webhook URL\nNow point Stripe to your deployed function.\n\nIn Stripe Dashboard, go to Developers → Webhooks.\nClick your webhook endpoint.\nUpdate the Endpoint URL to:\nhttps://[your-project-ref].supabase.co/functions/v1/stripe-webhook\nSave the endpoint.\nUse the Send test event button in Stripe to verify that your function:\n\nReceives the event.\nValidates the signature.\nUpdates your database correctly.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'><yrChapterNumber>23. </yrChapterNumber> Step 11: Deploy Supabase Edge Functions</span>"
+    ]
+  },
+  {
+    "objectID": "001220-tutorial-runTheApplication-v001.html",
+    "href": "001220-tutorial-runTheApplication-v001.html",
+    "title": "24  24.  Step 12: Run the Application",
+    "section": "",
+    "text": "Now that the backend is configured, you can run the Next.js app locally.\n\n24.0.1 Start the Development Server\nFrom your project root:\nnpm install\nnpm run dev\nThe app usually runs at http://localhost:3000.\nIf you’re using pnpm or yarn, adjust accordingly.\n\n\n24.0.2 Test Core Functionality\nWalk through the main user flow to confirm everything is wired up correctly.\n1. Authentication\n\nClick “Sign in with Google” (or your configured provider).\nComplete the OAuth flow.\nEnsure you’re redirected to the dashboard.\nIn Supabase Auth → Users, verify your user was created.\n\n2. Task Management\n\nFrom the dashboard, create a new task (title + description).\nConfirm:\n\nThe task appears in your list.\nThe AI-generated label is visible (or applied shortly after creation).\n\nCheck the tasks table in Supabase to see the new row.\n\n3. Image Uploads\n\nEdit a task and upload an image.\nConfirm:\n\nThe file appears in the task-images bucket.\nThe image is displayed in the app (using the public URL).\n\nTry uploading an invalid file type or large file to see error handling.\n\n4. User Profile\n\nNavigate to your profile page.\nCheck:\n\nBasic account information is correct.\nThe task count or other stats update as you add/remove tasks.\n\n\n5. Subscription Management\n\nClick “Manage Subscription” or equivalent button.\nConfirm:\n\nYou’re redirected to a Stripe-hosted checkout page.\nThe price and product name are correct.\n\nUse a Stripe test card (e.g., 4242 4242 4242 4242) with:\n\nAny future expiry date.\nAny 3-digit CVC.\nAny billing info.\n\nComplete checkout and return to the app.\nVerify:\n\nYour user_subscriptions row is updated to active.\nPremium-only features (if any) unlock.\n\n\n6. Sign Out\n\nClick “Sign out” or “Log out.”\nConfirm:\n\nYou’re redirected back to the login page.\nProtected routes are no longer accessible without signing in again.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'><yrChapterNumber>24. </yrChapterNumber> Step 12: Run the Application</span>"
+    ]
+  },
+  {
+    "objectID": "001230-tutorial-deployToProduction-v001.html",
+    "href": "001230-tutorial-deployToProduction-v001.html",
+    "title": "25  25.  Step 13: Deploy to Production",
+    "section": "",
+    "text": "Once everything works locally, you can deploy the frontend.\n\n25.0.1 Deploying the Frontend\nRecommended: Vercel\nVercel is tightly integrated with Next.js and offers smooth deployments.\n\nPush your code to a Git repository (e.g., GitHub).\nIn Vercel, click New Project → Import from your repo.\nDuring setup:\n\nSelect the correct framework: Next.js.\nAdd all required environment variables:\n\nNEXT_PUBLIC_SUPABASE_URL\nNEXT_PUBLIC_SUPABASE_ANON_KEY\nNEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY\nany other NEXT_PUBLIC_... or server-side variables.\n\n\nDeploy the app.\n\nAfter deployment:\n\nVisit the production URL to confirm it loads.\nTest login, task creation, and subscription flows in production.\n\nAlternative Options\nIf you prefer other providers:\n\nNetlify – good Next.js support (with appropriate adapters).\nAWS Amplify, Render, or any provider that supports Node/Next.js.\n\nConfiguration will be similar: point to your repo and set env vars.\n\n\n25.0.2 Update Environment Variables for Production\nFor the production instance, make sure to:\n\nUse your production Supabase project URL and anon/service keys.\nSwitch Stripe from test mode to live mode when ready:\n\nReplace pk_test_... and sk_test_... with pk_live_... / sk_live_....\nUpdate webhook endpoints/secrets accordingly.\n\nUpdate OAuth redirect URIs:\n\nAdd your production domain (e.g., https://yourapp.com) in Google OAuth and Supabase Auth settings.\n\nConfigure CORS and allowed redirect URLs in Supabase to include the production domain.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'><yrChapterNumber>25. </yrChapterNumber> Step 13: Deploy to Production</span>"
+    ]
+  },
+  {
+    "objectID": "001240-tutorial-extendTheFunctionality-v001.html",
+    "href": "001240-tutorial-extendTheFunctionality-v001.html",
+    "title": "26  26.  Step 14: Extending the functionality",
+    "section": "",
+    "text": "26.1 Project Structure\nAt this point, you have a full-stack SaaS application with:\nFrom here, you can refine the front end (i.e. Next.JS) to your liking, add features, harden security and observability to take the app into production. Ideas to grow your SaaS:\nYou can also use this tutorial as a framework to help you develop a brand new different application from scratch.\nHere’s a quick overview of the main folders and what you typically edit:\nTo extend functionality:",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'><yrChapterNumber>26. </yrChapterNumber> Step 14: Extending the functionality</span>"
+    ]
+  },
+  {
+    "objectID": "001240-tutorial-extendTheFunctionality-v001.html#project-structure",
+    "href": "001240-tutorial-extendTheFunctionality-v001.html#project-structure",
+    "title": "26  26.  Step 14: Extending the functionality",
+    "section": "",
+    "text": "├── app/                     # Next.js app routes and pages\n├── components/              # Reusable React UI components\n├── hooks/                   # Client logic and Supabase integration\n├── supabase/\n│   ├── functions/           # Edge functions (backend logic)\n│   └── migrations/          # Database schema and configurations\n└── tests/\n    └── integration/         # Integration test suite\n\n\nUI changes:\nUpdate layout, pages, and routing in app/ and shared UI in components/.\nClient logic:\nModify data fetching, hooks, and client-side behavior in hooks/.\nBackend logic:\nAdd or update Edge Functions in supabase/functions/ for new APIs or integrations.\nDatabase changes:\nCreate new migration files in supabase/migrations/ to add tables, columns, or policies.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'><yrChapterNumber>26. </yrChapterNumber> Step 14: Extending the functionality</span>"
+    ]
+  },
+  {
+    "objectID": "001250-tutorial-automatedTestingAndTroubleshooting-v001.html",
+    "href": "001250-tutorial-automatedTestingAndTroubleshooting-v001.html",
+    "title": "27  27.  Step 15: Automated Testing and Troubleshooting",
+    "section": "",
+    "text": "27.0.1 Integration Tests\nAutomated tests help ensure everything works after changes.\nThe project includes integration tests that talk to your real Supabase project (usually in a separate test environment).",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'><yrChapterNumber>27. </yrChapterNumber> Step 15: Automated Testing and Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "001250-tutorial-automatedTestingAndTroubleshooting-v001.html#troubleshooting",
+    "href": "001250-tutorial-automatedTestingAndTroubleshooting-v001.html#troubleshooting",
+    "title": "27  27.  Step 15: Automated Testing and Troubleshooting",
+    "section": "27.1 Troubleshooting",
+    "text": "27.1 Troubleshooting\nA few quick checks for common problems.\n\n27.1.1 Environment Variables Not Loading\n\nVerify the filenames:\n\nLocal Next.js: .env.local\nSupabase: supabase/.env (if applicable) and Supabase secrets.\n\nRestart the dev server after any env changes.\nConfirm the variables are defined in:\n\nThe Next.js runtime (console.log(process.env.NEXT_PUBLIC_... )).\nSupabase dashboard (for secrets).\n\n\n\n\n27.1.2 Authentication Errors\n\nEnsure your OAuth redirect URIs match exactly in:\n\nGoogle Cloud Console (OAuth credentials).\nSupabase Auth settings.\n\nMake sure the Supabase Site URL matches your local and production URLs.\nInspect the browser network tab for auth-related errors.\n\n\n\n27.1.3 Edge Functions Failing\n\nCheck that all required secrets are set (OPENAI_API_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET).\nIn Supabase:\n\nOpen Edge Functions → Logs to see runtime errors.\n\nMake sure code imports are correct and dependencies are installed.\n\n\n\n27.1.4 Stripe Webhook Not Working\n\nConfirm JWT verification is disabled for stripe-webhook.\nDouble-check the webhook URL in Stripe:\n\nIt must match the function URL exactly (including https).\n\nEnsure the Signing secret in Supabase matches the current secret shown in Stripe.\nUse Stripe’s Send test event to debug.\n\n\n\n27.1.5 Database Errors\n\nEnsure supabase db push ran successfully without errors.\nCheck that RLS policies allow the operation you’re trying.\nConfirm that the user is authenticated when performing actions that require auth.\nInspect Supabase logs or use the SQL editor to run queries manually.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'><yrChapterNumber>27. </yrChapterNumber> Step 15: Automated Testing and Troubleshooting</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html",
     "href": "000010-topics-v001.html",
-    "title": "19  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "title": "31  16.  TOPICS (ignore this section - it is just for me to develop the book)",
     "section": "",
-    "text": "19.1 Sessions 1,2",
+    "text": "31.1 Sessions 1,2",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#sessions-12",
     "href": "000010-topics-v001.html#sessions-12",
-    "title": "19  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "title": "31  16.  TOPICS (ignore this section - it is just for me to develop the book)",
     "section": "",
     "text": "Survey of current AI capabilities and shortcomings.\nPopular AI tools and models.\nAI tools for data analytics.\nRunning AI models locally vs remotely - privacy and security concerns.\nLegal and ethical considerations.\nExpert’s projections on trajectory of AI capabilities in the near and medium‑term future.",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#intro-to-coding-with-an-llm",
     "href": "000010-topics-v001.html#intro-to-coding-with-an-llm",
-    "title": "19  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "19.2 Intro to coding with an LLM",
-    "text": "19.2 Intro to coding with an LLM\n\nIntro to Cursor AI editor. . Context length issues.\nPrompting - best practices.\nAsk mode vs Agent mode\nPricing - based on token use, model selection input tokens vs output tokens\nIntro to “Developer Tools” in the browser (e.g. Console, etc)",
+    "title": "31  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "31.2 Intro to coding with an LLM",
+    "text": "31.2 Intro to coding with an LLM\n\nIntro to Cursor AI editor. . Context length issues.\nPrompting - best practices.\nAsk mode vs Agent mode\nPricing - based on token use, model selection input tokens vs output tokens\nIntro to “Developer Tools” in the browser (e.g. Console, etc)",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#how-an-llm-works",
     "href": "000010-topics-v001.html#how-an-llm-works",
-    "title": "19  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "19.3 How an LLM works",
-    "text": "19.3 How an LLM works\n\ntraining date cutoff\ntrained on “Internet”\nobjective - predict next token - if wrong modify weights slightly to make the correct token slightly more likely to be chosen next time\n\nrepeat this training over entire “Internet size” data many many timess\n\nprobability distribution of next most likely token\ntokenization\ntemperature -\nmodel sizes - parameters\nLLM vs other modalities - eg pictures, audio, video, special purpose (e.g. recognizing fraud),\nmulti-modal models",
+    "title": "31  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "31.3 How an LLM works",
+    "text": "31.3 How an LLM works\n\ntraining date cutoff\ntrained on “Internet”\nobjective - predict next token - if wrong modify weights slightly to make the correct token slightly more likely to be chosen next time\n\nrepeat this training over entire “Internet size” data many many timess\n\nprobability distribution of next most likely token\ntokenization\ntemperature -\nmodel sizes - parameters\nLLM vs other modalities - eg pictures, audio, video, special purpose (e.g. recognizing fraud),\nmulti-modal models",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#section",
     "href": "000010-topics-v001.html#section",
-    "title": "19  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "19.4 ",
-    "text": "19.4 \n\nSurvey of Web development technologies - HTML, CSS, JavaScript, NodeJS, web development frameworks (eg. React).\nDeeper dive into browser-based Developer Tools (e.g. the debugger)\nIf there is time - survey of advanced web development concepts - SCSS, bundlers (e.g.. webpack), etc\nHomework: Update the initial project to include additional features. Respond to feedback.\nSession 6\n\nAI agents (as related to coding)",
+    "title": "31  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "31.4 ",
+    "text": "31.4 \n\nSurvey of Web development technologies - HTML, CSS, JavaScript, NodeJS, web development frameworks (eg. React).\nDeeper dive into browser-based Developer Tools (e.g. the debugger)\nIf there is time - survey of advanced web development concepts - SCSS, bundlers (e.g.. webpack), etc\nHomework: Update the initial project to include additional features. Respond to feedback.\nSession 6\n\nAI agents (as related to coding)",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#overview-of-working-with-the-command-line",
     "href": "000010-topics-v001.html#overview-of-working-with-the-command-line",
-    "title": "19  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "19.5 Overview of working with the command line",
-    "text": "19.5 Overview of working with the command line",
+    "title": "31  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "31.5 Overview of working with the command line",
+    "text": "31.5 Overview of working with the command line",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#overview-of-gitgithub",
     "href": "000010-topics-v001.html#overview-of-gitgithub",
-    "title": "19  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "19.6 Overview of git/github",
-    "text": "19.6 Overview of git/github\n\nSession 7, 8\n\nOverview of relational databases and SQL\nNOSql - Document database (e.g. mongo db)\nIntegrating a database with your software\nHomework - expand on features of previous submission, track everything in git and github. Include database features if that hasn’t already been done.\n\nMCP Servers\nSessions 9,10:\n\nSurvey of Internet architecture and infrastructure technologies - e.g. servers (web, database), “containerization”, virtual servers, DNS\nDeploying a web product\nIf there is time: CI/CD using github\n\nSessions 11,12:\n\nSurvey of programming languages and related technologies. How to determine a good fit for your project? Survey of tech product categories (web, mobile, data analytics, embedded systems, high performance e.g. algorithmic trading, etc)\nSurvey of Python language for non-Python coders.\n\nSessions 13,14:\n\nUI development tools – e.g. figma, sketch, framer, webflow, canva\ncharting languages, eg. mermaid\n\nSessions 15,16:\n\nCreating and using automated test cases\n\n\n\n\nSessions 17,18:\n\nIntegrating with 3rd party services via APIs.\nAdding credit card processing to a web service (e.g. via Stripe)\nIf there is time: Creating your own APIs (possibly to be included in a follow on course)\n\nSessions 19,20:\n\nDeveloping mobile apps\nUsing phone emulators for app development (e.g. Android Studio, Xcode)\n\nSessions 21,22,23:\n\nOverview of no-code/low-code workflow automation tools – e.g. make, n8n, zapier, gumloop (new AI first approach), connect common tools without writing full software applications.\nRapid development when compared with custom coded apps but can be more expensive to run. Great for prototyping or getting out version 1 of complicated apps. Can also be used in production but at much higher (sometimes prohibitive) cost.\n\n\nHomework: develop\n\nSession 24:\n\nHigh level survey of architecture of deep learning models. Using this knowledge to inform best practices for effective use of AIs (e.g. why some AIs cannot count the number of r’s in “strawberry”). vector embeddings, tokens, the perceptron, deep neural networks, training data, objective function, backpropagation, sizes of models (measured in parameters) and compute requirements, pretraining, post training, reinforcement learning, RLHF, reasoning models, multi-modal models (“modality conversion models” vs “native multi modal”)\n\n\n\n\nSessions 25,26,27:\n\nHow to customize an AI with your own data:\nDifferent approaches to customizing an AI – discuss pros/cons of each approach\n\nAdd data to context (simplest approach), discuss context sizes of models\nRetrieval Augmented Generation (RAG), vector databases\nSurvey of “Fine Tuning” concepts\n\n\n(If there is time or perhaps for a 2nd semester course) -\n\nUsing advanced AI coding tools. The following are some current examples, but these will most likely need to be updated later. We will obviously not cover all of these. We will just introduce the types of tools and what they enable you to do). e.g. openRouter, langchain.com, langflow, flowwiseai , auto-gpt, agentGPT, llamaIndex, GradientJ, Haystack, orq.ai\nDeveloping AI agent software.",
+    "title": "31  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "31.6 Overview of git/github",
+    "text": "31.6 Overview of git/github\n\nSession 7, 8\n\nOverview of relational databases and SQL\nNOSql - Document database (e.g. mongo db)\nIntegrating a database with your software\nHomework - expand on features of previous submission, track everything in git and github. Include database features if that hasn’t already been done.\n\nMCP Servers\nSessions 9,10:\n\nSurvey of Internet architecture and infrastructure technologies - e.g. servers (web, database), “containerization”, virtual servers, DNS\nDeploying a web product\nIf there is time: CI/CD using github\n\nSessions 11,12:\n\nSurvey of programming languages and related technologies. How to determine a good fit for your project? Survey of tech product categories (web, mobile, data analytics, embedded systems, high performance e.g. algorithmic trading, etc)\nSurvey of Python language for non-Python coders.\n\nSessions 13,14:\n\nUI development tools – e.g. figma, sketch, framer, webflow, canva\ncharting languages, eg. mermaid\n\nSessions 15,16:\n\nCreating and using automated test cases\n\n\n\n\nSessions 17,18:\n\nIntegrating with 3rd party services via APIs.\nAdding credit card processing to a web service (e.g. via Stripe)\nIf there is time: Creating your own APIs (possibly to be included in a follow on course)\n\nSessions 19,20:\n\nDeveloping mobile apps\nUsing phone emulators for app development (e.g. Android Studio, Xcode)\n\nSessions 21,22,23:\n\nOverview of no-code/low-code workflow automation tools – e.g. make, n8n, zapier, gumloop (new AI first approach), connect common tools without writing full software applications.\nRapid development when compared with custom coded apps but can be more expensive to run. Great for prototyping or getting out version 1 of complicated apps. Can also be used in production but at much higher (sometimes prohibitive) cost.\n\n\nHomework: develop\n\nSession 24:\n\nHigh level survey of architecture of deep learning models. Using this knowledge to inform best practices for effective use of AIs (e.g. why some AIs cannot count the number of r’s in “strawberry”). vector embeddings, tokens, the perceptron, deep neural networks, training data, objective function, backpropagation, sizes of models (measured in parameters) and compute requirements, pretraining, post training, reinforcement learning, RLHF, reasoning models, multi-modal models (“modality conversion models” vs “native multi modal”)\n\n\n\n\nSessions 25,26,27:\n\nHow to customize an AI with your own data:\nDifferent approaches to customizing an AI – discuss pros/cons of each approach\n\nAdd data to context (simplest approach), discuss context sizes of models\nRetrieval Augmented Generation (RAG), vector databases\nSurvey of “Fine Tuning” concepts\n\n\n(If there is time or perhaps for a 2nd semester course) -\n\nUsing advanced AI coding tools. The following are some current examples, but these will most likely need to be updated later. We will obviously not cover all of these. We will just introduce the types of tools and what they enable you to do). e.g. openRouter, langchain.com, langflow, flowwiseai , auto-gpt, agentGPT, llamaIndex, GradientJ, Haystack, orq.ai\nDeveloping AI agent software.",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000500-htmlCssJavascript-v001.html",
     "href": "000500-htmlCssJavascript-v001.html",
-    "title": "20  17.  Overview of HTML, CSS, JavaScript",
+    "title": "32  17.  Overview of HTML, CSS, JavaScript",
     "section": "",
-    "text": "20.1 Intro to “Developer Tools” in the Browser\nModern browsers (Chrome, Edge, Firefox) include powerful developer consoles: - Elements: Inspect and edit HTML/CSS.\n- Console: Execute JavaScript commands interactively.\n- Network: Monitor API calls and performance.\n- Sources: Debug scripts and set breakpoints.\n- Application: View storage, cookies, and local data.\nUnderstanding these tools is essential for integrating and debugging AI-powered web applications.",
+    "text": "32.1 Intro to “Developer Tools” in the Browser\nModern browsers (Chrome, Edge, Firefox) include powerful developer consoles: - Elements: Inspect and edit HTML/CSS.\n- Console: Execute JavaScript commands interactively.\n- Network: Monitor API calls and performance.\n- Sources: Debug scripts and set breakpoints.\n- Application: View storage, cookies, and local data.\nUnderstanding these tools is essential for integrating and debugging AI-powered web applications.",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'><yrChapterNumber>17. </yrChapterNumber> Overview of HTML, CSS, JavaScript</span>"
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'><yrChapterNumber>17. </yrChapterNumber> Overview of HTML, CSS, JavaScript</span>"
     ]
   },
   {
     "objectID": "099999-llmsForDataAnalytics.html",
     "href": "099999-llmsForDataAnalytics.html",
-    "title": "21  18.  Using LLMs to Help With Data Analytics",
+    "title": "33  18.  Using LLMs to Help With Data Analytics",
     "section": "",
     "text": "Convert unstructured data (e.g. English Text) into structured data (e.g. JSON, XML, YAML, TOML, etc)",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Using LLMs to Help With Data Analytics</span>"
+      "<span class='chapter-number'>33</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Using LLMs to Help With Data Analytics</span>"
     ]
   },
   {
     "objectID": "900010-codeMetrics-v001.html",
     "href": "900010-codeMetrics-v001.html",
-    "title": "22  19.  Measures of well designed programs",
+    "title": "34  19.  Measures of well designed programs",
     "section": "",
     "text": "The following are some metrics that can be used to see if a program is designed well:\n\nCyclomatic Complexity: Measures independent execution paths in a function. Lower is better.\nCode Coverage: % of code exercised by automated tests. Aim ≥ 80%.\nCoupling and Cohesion:\n\nCoupling: how interdependent modules are (lower is better)\nCohesion: how focused a module’s responsibilities are (higher is better)\n\nLines of Code (LOC) per Method/Class: Monitors size; excessively large methods or classes often signal poor abstraction.\nMaintainability Index: Combines LOC, complexity, and comment density into a single score.\nDefect Density: Bugs per thousand lines of code; fewer indicates higher-code quality.\nTechnical Debt Ratio: Estimated “remediation cost” vs. development cost; lower ratios are healthier.\nStatic Analysis Warnings: Number/severity of linter or analyzer alerts per 1,000 LOC.\nCode Churn: Frequency and volume of changes; high churn may signal instability or unclear design.\nDocumentation Coverage: Ratio of documented public APIs to total; measures how well the codebase is described.",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>22</span>  <span class='chapter-title'><yrChapterNumber>19. </yrChapterNumber> Measures of well designed programs</span>"
+      "<span class='chapter-number'>34</span>  <span class='chapter-title'><yrChapterNumber>19. </yrChapterNumber> Measures of well designed programs</span>"
+    ]
+  },
+  {
+    "objectID": "990010-references-v001.html",
+    "href": "990010-references-v001.html",
+    "title": "Appendix A — A.  references",
+    "section": "",
+    "text": "A.1 Supabase MCP Servers",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'><yrChapterNumber>A. </yrChapterNumber> references</span>"
     ]
   }
 ]
