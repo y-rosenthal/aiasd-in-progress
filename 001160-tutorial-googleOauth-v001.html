@@ -42,6 +42,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -483,46 +486,106 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong><em>Click the screenshots on this page to make them larger.</em></strong></p>
+</div>
+</div>
 <p>This step connects your Supabase project with Google’s OAuth 2.0 service so users can log in using their Google accounts.</p>
+<p>OAuth stands for “Open Authentication”. It is a standard that website owners can use to integrate with 3rd party services, such as Google, Github, etc, so that the users of the website can use their Google/Github/etc password to login.</p>
+<p>From the perspective of our website, task-app, the code to do all this is run on the Supabase Servers. Therefore we will have to configure the Supabase Servers with the info necessary to make this happen.</p>
+<p>In addition will will need to setup a Google Cloud Project here: <a href="https://console.cloud.google.com/" class="uri">https://console.cloud.google.com/</a>. This is where you will need to setup Google to recognize your app and allow your users to login using their google accounts.</p>
+<p>See this page for more information about setting up Google’s OAuth 2.0 service. <a href="https://developers.google.com/identity/protocols/oauth2/" class="uri">https://developers.google.com/identity/protocols/oauth2/</a></p>
 <section id="create-a-google-cloud-project" class="level2" data-number="21.1">
 <h2 data-number="21.1" class="anchored" data-anchor-id="create-a-google-cloud-project"><span class="header-section-number">21.1</span> Create a Google Cloud Project</h2>
 <ol type="1">
-<li>Open the <strong>Google Cloud Console</strong>.</li>
-<li>Click <strong>Create Project</strong> and give it a clear name (e.g., “MyApp Auth”).</li>
-<li>Navigate to <strong>APIs &amp; Services → Credentials</strong>.</li>
-<li>Click <strong>Create Credentials → OAuth client ID</strong> to start generating keys.</li>
+<li><p>Go to <a href="https://console.cloud.google.com/" class="uri">https://console.cloud.google.com/</a> and login with your google userid and password. Then click “select a project”.</p>
+<p><a href="images/googleCloud-00005-firstProject.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/googleCloud-00005-firstProject.png" class="img-fluid" width="300"></a></p></li>
+<li><p>Click <strong>Create Project</strong> and give it a clear name</p>
+<p><a href="images/googleCloud-00007-newProject.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/googleCloud-00007-newProject.png" class="img-fluid" width="300"></a></p></li>
+<li><p>Enter a name for your project and click the create button.</p>
+<p><a href="images/googleCloud-00020-createNewProject.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/googleCloud-00020-createNewProject.png" class="img-fluid" width="300"></a></p></li>
+<li><p>Navigate to <strong>APIs &amp; Services → Credentials</strong>.</p>
+<p><a href="images/googleCloud-00030-ApisAndServices.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/googleCloud-00030-ApisAndServices.png" class="img-fluid" width="300"></a></p>
+<p><a href="images/googleCloud-00040-ApisAndServices-credentials.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/googleCloud-00040-ApisAndServices-credentials.png" class="img-fluid" width="300"></a></p></li>
+<li><p>Click <strong>Create Credentials → OAuth client ID</strong> to start generating keys.</p>
+<p><a href="images/googCld-00050-ApisAndServices-credentials-createCredentials.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/googCld-00050-ApisAndServices-credentials-createCredentials.png" class="img-fluid" width="300"></a></p></li>
 </ol>
 <hr>
 </section>
 <section id="configure-the-oauth-consent-screen" class="level2" data-number="21.2">
 <h2 data-number="21.2" class="anchored" data-anchor-id="configure-the-oauth-consent-screen"><span class="header-section-number">21.2</span> Configure the OAuth Consent Screen</h2>
 <ol type="1">
-<li>Go to <strong>APIs &amp; Services → OAuth consent screen</strong>.</li>
-<li>Choose <strong>External</strong> (unless you only need internal use).</li>
-<li>Add your basic app info:
+<li><p>Continue as shown below or start again from <strong>APIs &amp; Services → OAuth consent screen</strong>.</p>
+<p>This step can be accomplished in one of two ways. Read the following “Notes”. ::: {.callout-note} If you followed all of the above steps, you should see the following screen. Click as shown below. (However, if you took a break from what you were doing you can continue by going to back to <a href="https://console.cloud.google.com/" class="uri">https://console.cloud.google.com/</a> and clicking on APIs &amp; Services as shown in the next NOTE. :::</p>
+<p><a href="images/googCld-00060-ApisAndServices-oauthConsentScreen.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/googCld-00060-ApisAndServices-oauthConsentScreen.png" class="img-fluid" width="300"></a></p>
+<p><a href="images/googCld-00070-ApisAndServices-oauthConsentScreen-getStarted.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/googCld-00070-ApisAndServices-oauthConsentScreen-getStarted.png" class="img-fluid" width="300"></a></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you took a break and came back, or you got lost, you can continue by going to back to <a href="https://console.cloud.google.com/" class="uri">https://console.cloud.google.com/</a> and clicking on APIs &amp; Services as shown below.</p>
+</div>
+</div>
+<p><a href="images/googleCloud-00030-ApisAndServices.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="images/googleCloud-00030-ApisAndServices.png" class="img-fluid" width="300"></a></p>
+<p><a href="images/googCld-00060-ApisAndServices-oauthConsentScreen2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="images/googCld-00060-ApisAndServices-oauthConsentScreen2.png" class="img-fluid" width="300"></a> <a href="images/googCld-00090-ApisAndServices-oauthConsentScreen3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="images/googCld-00090-ApisAndServices-oauthConsentScreen3.png" class="img-fluid" width="300"></a></p></li>
+<li><p>Add your basic app info:</p>
 <ul>
-<li>App name<br>
-</li>
-<li>User support email<br>
-</li>
-<li>Developer contact email<br>
-</li>
-</ul></li>
-<li>Under <strong>Authorized domains</strong>, add the domain used by your Supabase project.</li>
-<li>Save and continue through the remaining steps.</li>
+<li><p>App name</p></li>
+<li><p>User support email</p></li>
+</ul>
+<p><a href="images/googCld-00100-appInfo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="images/googCld-00100-appInfo.png" class="img-fluid" width="300"></a></p></li>
+<li><p>Under “Audience” choose <strong>External</strong></p>
+<p>This will allow you app to be viewed from anywhere in the world. However, your app must undergo review by Google before being allowed to use Google OAuth2 externally. Until then you can setup “test users” with google accounts. Only the specified “test users” will be allowed to “sign in with google” until your app has been reviewed by Google.</p>
+<p>You will setup the test users laters.</p>
+<p><strong>NOTE:</strong> You can only choose “Internal” if you’ve setup an organization with Google.</p></li>
+<li><p>Under <strong>Authorized domains</strong>, add the domain used by your Supabase project.</p></li>
+<li><p>Under “Contact Information” specify an email address for Google to contact you for technical issues.</p></li>
+<li><p>Save and continue through the remaining steps.</p></li>
 </ol>
-<hr>
 </section>
 <section id="get-your-oauth-credentials" class="level2" data-number="21.3">
 <h2 data-number="21.3" class="anchored" data-anchor-id="get-your-oauth-credentials"><span class="header-section-number">21.3</span> Get Your OAuth Credentials</h2>
 <ol type="1">
-<li><p>Return to <strong>APIs &amp; Services → Credentials</strong>.</p></li>
-<li><p>Create an <strong>OAuth 2.0 Client ID</strong>.</p></li>
-<li><p>Choose <strong>Web application</strong> as the application type.</p></li>
-<li><p>Add your Supabase callback URL under <strong>Authorized redirect URIs</strong>: <code>https://[your-project-ref].supabase.co/auth/v1/callback</code></p></li>
-<li><p>After creation, copy your <strong>Client ID</strong> and <strong>Client Secret</strong>.</p></li>
+<li><p>Return to <strong>APIs &amp; Services → Credentials</strong>.</p>
+<p>Click as below to create an <strong>OAuth 2.0 Client ID</strong>.</p>
+<p><a href="images/googCld-00110-clientId1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="images/googCld-00110-clientId1.png" class="img-fluid" width="300"></a></p></li>
+<li><p>Choose <strong>Web application</strong> as the application type.</p>
+<p><a href="images/googCld-00120-clientId2-webApp.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="images/googCld-00120-clientId2-webApp.png" class="img-fluid" width="300"></a> You need to give a name to the application (Web client 1” in the screenshot below). This name is only used internal to the Google Cloud environment to refer to the application that you are setting up. This name will not appear anywhere to your users.</p>
+<p>You then need to setup the URIs (i.e.&nbsp;URLs) that the Supabase servers will be contacted with from Google to indicate that the login was successful. You need to get this info from your Supabase configuration. This info was also saved in your .env.local file</p>
+<p><a href="images/googCld-00130-clientId3-redirectUris.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="images/googCld-00130-clientId3-redirectUris.png" class="img-fluid" width="300"></a></p></li>
+<li><p>Add your Supabase callback URL under <strong>Authorized redirect URIs</strong>: <code>https://[your-project-ref].supabase.co/auth/v1/callback</code></p>
+<p>You can get <strong>your-project-ref</strong> by doing one of the following:</p>
+<ul>
+<li><p>logging into your Supabase account and getting this info from the Supabase settings.</p></li>
+<li><p>You also can retreive it from the .env.local file that you had setup earlier. That file contained a line such as :</p>
+<blockquote class="blockquote">
+<p>NEXT_PUBLIC_SUPABASE_URL=“https://dfdqbazsihcpsomfkyja.supabase.co”</p>
+</blockquote>
+<p>In this example <strong>dfdqbazsihcpsomfkyja</strong> is <em>your-project-ref</em>. Therefore the <strong>Authorize redirect URI</strong> for this example is:</p>
+<blockquote class="blockquote">
+<p><code>https://dfdqbazsihcpsomfkyja.supabase.co/auth/v1/callback</code></p>
+</blockquote>
+<p>Obviously you will have a different project-ref and therefore a slightly different URL.</p></li>
+</ul></li>
+<li><p>Click “Create button”</p>
+<p>After creation, copy your <strong>Client ID</strong> and <strong>Client Secret</strong>. You WILL NOT BE ABLE TO GET THESE CODES AGAIN FROM GOOGLE. Store these codes in a safe place. DO NOT store these code in any files that will be committed to git.</p>
+<p><a href="images/googCld-00140-oauthClientKey-created.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="images/googCld-00140-oauthClientKey-created.png" class="img-fluid" width="300"></a></p></li>
 </ol>
-<hr>
 </section>
 <section id="configure-google-auth-in-supabase" class="level2" data-number="21.4">
 <h2 data-number="21.4" class="anchored" data-anchor-id="configure-google-auth-in-supabase"><span class="header-section-number">21.4</span> Configure Google Auth in Supabase</h2>
@@ -535,6 +598,77 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <hr>
 <p>With this configuration complete, Supabase can now handle secure login flows using Google OAuth.</p>
+<hr>
+<!-- YR - MAYBE INCLUDE THIS LATER
+
+# Understanding OAuth and Google Cloud Console
+
+## What OAuth Is (In Simple Terms)
+
+It is like handing a valet a special key that only unlocks the car
+doors, not the trunk or glovebox.  
+Your app gets a limited “access token,” and Google keeps your real
+credentials safe.
+
+For your project, OAuth lets your app confirm who the user is and gives
+it permission to read or write data on the user’s behalf.
+
+## What Google Cloud Console Is
+
+Google Cloud Console is a dashboard where you set up and manage
+everything your app needs from Google’s services.  
+For OAuth, it is where you register your app and tell Google:
+
+- what your app is called  
+- where users should be sent after they sign in  
+- what kinds of permissions the app needs  
+- who is allowed to use the app during development  
+
+Think of it as filling out an application form so Google can trust and
+recognize your app.
+
+## How to Configure Google OAuth for the Project
+
+Below is the general setup flow you can walk the reader through:
+
+1. Go to <https://console.cloud.google.com> and create a new project.  
+   Each project keeps its settings separate, which keeps things tidy.
+
+2. Open **APIs & Services** → **OAuth consent screen**.  
+   This page defines what users see when Google asks them to approve
+   access.  
+   Set the app name, user support email, and developer email.
+
+3. Add any required **Scopes**.  
+   Scopes describe what the app wants permission to do.  
+   For basic sign-in, a minimal scope is usually enough.
+
+4. Save the consent screen and go to  
+   **APIs & Services** → **Credentials**.
+
+5. Create a new **OAuth Client ID**.  
+   Choose **Web application** for browser-based apps.  
+   You will be asked for **Authorized redirect URIs** — this is where
+   Google sends users after they sign in.  
+   The repo instructions will tell you the exact URL to enter.
+
+6. After creating the client, Google will give you two important values:  
+   - **Client ID**  
+   - **Client Secret**  
+   These are like your app’s ID badge and private key.  
+   Your app will use them when communicating with Google.
+
+7. Add these values to your project’s environment file exactly as the
+   repo describes.  
+   This links your local app with the settings you created in Google
+   Cloud.
+
+That’s the whole setup.  
+Once this is done, your app can redirect users to Google, ask for
+permission, and receive a secure access token back — all without ever
+seeing anyone’s password.
+
+-->
 <!-- YRTODO - original
 
 ## Step 3: Set Up Google OAuth
@@ -1003,6 +1137,38 @@ titles.forEach(title => {
   }
 });
 </script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
