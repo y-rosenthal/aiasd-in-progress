@@ -1660,289 +1660,344 @@
     ]
   },
   {
-    "objectID": "001160-tutorial-googleOauth-v001.html",
-    "href": "001160-tutorial-googleOauth-v001.html",
-    "title": "21  18.  Step 6: setup authentication (Google OAuth)",
+    "objectID": "001155-tutorial-supabaseCli-v001.html",
+    "href": "001155-tutorial-supabaseCli-v001.html",
+    "title": "21  17b.  Step 5a: Install the Supabase CLI command",
     "section": "",
-    "text": "21.1 Create a Google Cloud Project\nThis step connects your Supabase project with Google’s OAuth 2.0 service so users can log in using their Google accounts.\nOAuth stands for “Open Authentication”. It is a standard that website owners can use to integrate with 3rd party services, such as Google, Github, etc, so that the users of the website can use their Google/Github/etc password to login.\nFrom the perspective of our website, task-app, the code to do all this is run on the Supabase Servers. Therefore we will have to configure the Supabase Servers with the info necessary to make this happen.\nIn addition will will need to setup a Google Cloud Project here: https://console.cloud.google.com/. This is where you will need to setup Google to recognize your app and allow your users to login using their google accounts.\nSee this page for more information about setting up Google’s OAuth 2.0 service. https://developers.google.com/identity/protocols/oauth2/",
+    "text": "21.1 Installing the Supabase CLI\nThe supabase CLI is a command that you can run from your terminal to control and configure your Supabase project. The name of the command is appropriately “supabase”. There is more than one way to install this command.\nIn the previous section you setup a Supabase project on the Supabase website. Supabase has many different features (database, authentication, edge functions, storage buckets, etc). You can configure most of what you need to configure by “clicking around” on the website. However, there are some things that cannot be done on the website. For these things we must use the “supabase CLI tool”.\nIn addition, using the supabase CLI command can often be easier and more efficient than accessing the same functionality via the Supabase website. Think of it this way: the web dashboard is like using Google Docs, while the CLI is like having Microsoft Word on your computer. Both work, but having local tools gives you more control and flexibility.\nIMPORTANT: In this tutorial we will be installing it via npm (the Node Package Manager) and running it via npx (the Node Package eXecutor). Therefore when following this tutorial, every time you run the command from the command line you will actually need to type npx supabase (instead of just supabase). If you install the command another way, you would just type supabase and not npx supabase. Keep this in mind if you ask any of the popular AI LLMs for help. They might tell you to type supabase ... and you need to know to actually type npx supabase ...\nIn order to use this command in your terminal you must install it on your computer.\nThere are three options for installing the supabase CLI:\nTo install the supabase cli in your project from npm run the following command from the root (top level folder) for your project:",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>17b. </yrChapterNumber> Step 5a: Install the Supabase CLI command</span>"
+    ]
+  },
+  {
+    "objectID": "001155-tutorial-supabaseCli-v001.html#installing-the-supabase-cli",
+    "href": "001155-tutorial-supabaseCli-v001.html#installing-the-supabase-cli",
+    "title": "21  17b.  Step 5a: Install the Supabase CLI command",
+    "section": "",
+    "text": "THIS IS WHAT WE WILL DO IN THIS TUTORIAL: You can install the supabase CLI command as an npm package.\nANOTHER OPTION: You can also install the supabase CLI command on Mac by using the Homebrew package manager or on Windows by using the Scoop package manager. We will not do that in this tutorial. However, see the instructions here https://github.com/supabase/cli?tab=readme-ov-file to learn more about this option.\nYET ANOTHER OPTION: You can also download the actual program files from here: https://github.com/supabase/cli/releases. Be aware that this page lists “pre-release” versions as well as “release” versions. The “pre-release” versions may have the latest fixes and modifications but are not supported. For example, at the time of this writing the latest “release” version is 2.58.5 but there are “pre-release” versions 2.58.6, 2.59.*, 2.60.1, 2.60.2 Use the pre-release versions if you want the absolute latest features but be aware that they may not have been fully tested.\nSee official instructions for how to install here: https://supabase.com/docs/guides/local-development/cli/getting-started\n\n\nnpm install supabase --save-dev",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>17b. </yrChapterNumber> Step 5a: Install the Supabase CLI command</span>"
+    ]
+  },
+  {
+    "objectID": "001155-tutorial-supabaseCli-v001.html#how-to-use-the-supabase-command-via-npm-and-npx",
+    "href": "001155-tutorial-supabaseCli-v001.html#how-to-use-the-supabase-command-via-npm-and-npx",
+    "title": "21  17b.  Step 5a: Install the Supabase CLI command",
+    "section": "21.2 How to use the supabase command via npm and npx",
+    "text": "21.2 How to use the supabase command via npm and npx\nIMPORTANT: If you are using supabase cli via npm then you should prefix all uses of the supabase command with “npx” (see examples below).\nFor example, the following command will show you which version of the supabase cli you are using:\nnpx supabase --version\nThe following gives you a very short summary for how to use the supabase command\nnpx supabase --help\nnpx is the Node Package eXecution command. This command can be used to run (or eXecute) a command that is installed as an npm package.\n\n21.2.1 supabase ‘sub-commands’\nThe supabse command has numerous “sub commands”. For example:\n\nnpx supabase db is used to work with the Supabase database.\nRun npx supabase db --help to get help specific to the db sub-command.\nnpx supabse functions is used to work with Supabase “edge functions”.\nRun npx supabase functions --help to get help specific to the db sub-command.\netc.\n\nThe full official reference for how to use the supabase CLI command is here: https://supabase.com/docs/reference/cli/introduction There are many options and the official reference can be overwhelming. We will walk you through an introduction of using the supabase CLI command in this tutorial.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>17b. </yrChapterNumber> Step 5a: Install the Supabase CLI command</span>"
+    ]
+  },
+  {
+    "objectID": "001155-tutorial-supabaseCli-v001.html#login-in-to-supabase",
+    "href": "001155-tutorial-supabaseCli-v001.html#login-in-to-supabase",
+    "title": "21  17b.  Step 5a: Install the Supabase CLI command",
+    "section": "21.3 Login in to Supabase",
+    "text": "21.3 Login in to Supabase\nRun the following command:\nnpx supabase login\n\nYou should see the following: Hello from Supabase! Press Enter to open browser and login automatically.\nPress Enter and a browser will open and display a code. Copy the code.\nGo back to the terminal and enter the code and press Enter\nYou should now be logged into supabase.",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>17b. </yrChapterNumber> Step 5a: Install the Supabase CLI command</span>"
+    ]
+  },
+  {
+    "objectID": "001155-tutorial-supabaseCli-v001.html#link-your-project",
+    "href": "001155-tutorial-supabaseCli-v001.html#link-your-project",
+    "title": "21  17b.  Step 5a: Install the Supabase CLI command",
+    "section": "21.4 Link Your Project",
+    "text": "21.4 Link Your Project\nYou will need to “link” your project on your computers to your Supabase project that you setup on the Supabase website. To do so, you will need to know your “project ref”.\n\n21.4.1 Finding your project-ref\nYour project ref is the set of letters and numbers that appears as part of your project’s URL. You’ll find your project URL in your Supabase dashboard URL. It looks like this:\n\nhttps://app.supabase.com/project/abcdefghijk123\n\nThe part after /project/ is your project ref, ie. in the example above this would be abcdefghijk123. However, your own project-ref will obviously be different.\n\n\n21.4.2 Link your project\nOnce you have identified your project ref, open your terminal, and navigate to your project directory. Then run the following command where YOUR_PROJECT_REF is replaced with your actual project ref.\nnpx supabase link --project-ref YOUR_PROJECT_REF\nFor example, given the example above the command would be:\nnpx supabase link --project-ref abcdefghijk123\nWhat just happened? You’ve created a connection between your local machine and your cloud project. The CLI now knows which project you’re working with.\n\n\n21.4.3 Test the link\nYou can run the following commands to test that your link has been established correctly.\nThe following should show all Supabase projects your CLI account has access to:\nnpx supabase projects list\nThe following should show whether your local directory is currently linked to a Supabase project:\nnpx supabase link status",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>17b. </yrChapterNumber> Step 5a: Install the Supabase CLI command</span>"
+    ]
+  },
+  {
+    "objectID": "001160-tutorial-googleOauth-v001.html",
+    "href": "001160-tutorial-googleOauth-v001.html",
+    "title": "22  18.  Step 6: setup authentication (Google OAuth)",
+    "section": "",
+    "text": "22.1 Create a Google Cloud Project\nThis step connects your Supabase project with Google’s OAuth 2.0 service so users can log in using their Google accounts.\nOAuth stands for “Open Authentication”. It is a standard that website owners can use to integrate with 3rd party services, such as Google, Github, etc, so that the users of the website can use their Google/Github/etc password to login.\nFrom the perspective of our website, task-app, the code to do all this is run on the Supabase Servers. Therefore we will have to configure the Supabase Servers with the info necessary to make this happen.\nIn addition will will need to setup a Google Cloud Project here: https://console.cloud.google.com/. This is where you will need to setup Google to recognize your app and allow your users to login using their google accounts.\nSee this page for more information about setting up Google’s OAuth 2.0 service. https://developers.google.com/identity/protocols/oauth2/",
+    "crumbs": [
+      "Building with Next and Supabase",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
     ]
   },
   {
     "objectID": "001160-tutorial-googleOauth-v001.html#create-a-google-cloud-project",
     "href": "001160-tutorial-googleOauth-v001.html#create-a-google-cloud-project",
-    "title": "21  18.  Step 6: setup authentication (Google OAuth)",
+    "title": "22  18.  Step 6: setup authentication (Google OAuth)",
     "section": "",
     "text": "Go to https://console.cloud.google.com/ and login with your google userid and password. Then click “select a project”.\n\nClick Create Project and give it a clear name\n\nEnter a name for your project and click the create button.\n\nNavigate to APIs & Services → Credentials.\n\n\nClick Create Credentials → OAuth client ID to start generating keys.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
     ]
   },
   {
     "objectID": "001160-tutorial-googleOauth-v001.html#configure-the-oauth-consent-screen",
     "href": "001160-tutorial-googleOauth-v001.html#configure-the-oauth-consent-screen",
-    "title": "21  18.  Step 6: setup authentication (Google OAuth)",
-    "section": "21.2 Configure the OAuth Consent Screen",
-    "text": "21.2 Configure the OAuth Consent Screen\n\nContinue as shown below or start again from APIs & Services → OAuth consent screen.\nThis step can be accomplished in one of two ways. Read the following “Notes”. ::: {.callout-note} If you followed all of the above steps, you should see the following screen. Click as shown below. (However, if you took a break from what you were doing you can continue by going to back to https://console.cloud.google.com/ and clicking on APIs & Services as shown in the next NOTE. :::\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you took a break and came back, or you got lost, you can continue by going to back to https://console.cloud.google.com/ and clicking on APIs & Services as shown below.\n\n\n\n \nAdd your basic app info:\n\nApp name\nUser support email\n\n\nUnder “Audience” choose External\nThis will allow you app to be viewed from anywhere in the world. However, your app must undergo review by Google before being allowed to use Google OAuth2 externally. Until then you can setup “test users” with google accounts. Only the specified “test users” will be allowed to “sign in with google” until your app has been reviewed by Google.\nYou will setup the test users laters.\nNOTE: You can only choose “Internal” if you’ve setup an organization with Google.\nUnder Authorized domains, add the domain used by your Supabase project.\nUnder “Contact Information” specify an email address for Google to contact you for technical issues.\nSave and continue through the remaining steps.",
+    "title": "22  18.  Step 6: setup authentication (Google OAuth)",
+    "section": "22.2 Configure the OAuth Consent Screen",
+    "text": "22.2 Configure the OAuth Consent Screen\n\nContinue as shown below or start again from APIs & Services → OAuth consent screen.\nThis step can be accomplished in one of two ways. Read the following “Notes”. ::: {.callout-note} If you followed all of the above steps, you should see the following screen. Click as shown below. (However, if you took a break from what you were doing you can continue by going to back to https://console.cloud.google.com/ and clicking on APIs & Services as shown in the next NOTE. :::\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you took a break and came back, or you got lost, you can continue by going to back to https://console.cloud.google.com/ and clicking on APIs & Services as shown below.\n\n\n\n \nAdd your basic app info:\n\nApp name\nUser support email\n\n\nUnder “Audience” choose External\nThis will allow you app to be viewed from anywhere in the world. However, your app must undergo review by Google before being allowed to use Google OAuth2 externally. Until then you can setup “test users” with google accounts. Only the specified “test users” will be allowed to “sign in with google” until your app has been reviewed by Google.\nYou will setup the test users laters.\nNOTE: You can only choose “Internal” if you’ve setup an organization with Google.\nUnder Authorized domains, add the domain used by your Supabase project.\nUnder “Contact Information” specify an email address for Google to contact you for technical issues.\nSave and continue through the remaining steps.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
     ]
   },
   {
     "objectID": "001160-tutorial-googleOauth-v001.html#get-your-oauth-credentials",
     "href": "001160-tutorial-googleOauth-v001.html#get-your-oauth-credentials",
-    "title": "21  18.  Step 6: setup authentication (Google OAuth)",
-    "section": "21.3 Get Your OAuth Credentials",
-    "text": "21.3 Get Your OAuth Credentials\n\nReturn to APIs & Services → Credentials.\nClick as below to create an OAuth 2.0 Client ID.\n\nChoose Web application as the application type.\n You need to give a name to the application (Web client 1” in the screenshot below). This name is only used internal to the Google Cloud environment to refer to the application that you are setting up. This name will not appear anywhere to your users.\nYou then need to setup the URIs (i.e. URLs) that the Supabase servers will be contacted with from Google to indicate that the login was successful. You need to get this info from your Supabase configuration. This info was also saved in your .env.local file\n\nAdd your Supabase callback URL under Authorized redirect URIs: https://[your-project-ref].supabase.co/auth/v1/callback\nYou can get your-project-ref by doing one of the following:\n\nlogging into your Supabase account and getting this info from the Supabase settings.\nYou also can retreive it from the .env.local file that you had setup earlier. That file contained a line such as :\n\nNEXT_PUBLIC_SUPABASE_URL=“https://dfdqbazsihcpsomfkyja.supabase.co”\n\nIn this example dfdqbazsihcpsomfkyja is your-project-ref. Therefore the Authorize redirect URI for this example is:\n\nhttps://dfdqbazsihcpsomfkyja.supabase.co/auth/v1/callback\n\nObviously you will have a different project-ref and therefore a slightly different URL.\n\nClick “Create button”\nAfter creation, copy your Client ID and Client Secret. You WILL NOT BE ABLE TO GET THESE CODES AGAIN FROM GOOGLE. Store these codes in a safe place. DO NOT store these code in any files that will be committed to git.",
+    "title": "22  18.  Step 6: setup authentication (Google OAuth)",
+    "section": "22.3 Get Your OAuth Credentials",
+    "text": "22.3 Get Your OAuth Credentials\n\nReturn to APIs & Services → Credentials.\nClick as below to create an OAuth 2.0 Client ID.\n\nChoose Web application as the application type.\n You need to give a name to the application (Web client 1” in the screenshot below). This name is only used internal to the Google Cloud environment to refer to the application that you are setting up. This name will not appear anywhere to your users.\nYou then need to setup the URIs (i.e. URLs) that the Supabase servers will be contacted with from Google to indicate that the login was successful. You need to get this info from your Supabase configuration. This info was also saved in your .env.local file\n\nAdd your Supabase callback URL under Authorized redirect URIs: https://[your-project-ref].supabase.co/auth/v1/callback\nYou can get your-project-ref by doing one of the following:\n\nlogging into your Supabase account and getting this info from the Supabase settings.\nYou also can retreive it from the .env.local file that you had setup earlier. That file contained a line such as :\n\nNEXT_PUBLIC_SUPABASE_URL=“https://dfdqbazsihcpsomfkyja.supabase.co”\n\nIn this example dfdqbazsihcpsomfkyja is your-project-ref. Therefore the Authorize redirect URI for this example is:\n\nhttps://dfdqbazsihcpsomfkyja.supabase.co/auth/v1/callback\n\nObviously you will have a different project-ref and therefore a slightly different URL.\n\nClick “Create button”\nAfter creation, copy your Client ID and Client Secret. You WILL NOT BE ABLE TO GET THESE CODES AGAIN FROM GOOGLE. Store these codes in a safe place. DO NOT store these code in any files that will be committed to git.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
     ]
   },
   {
     "objectID": "001160-tutorial-googleOauth-v001.html#configure-google-auth-in-supabase",
     "href": "001160-tutorial-googleOauth-v001.html#configure-google-auth-in-supabase",
-    "title": "21  18.  Step 6: setup authentication (Google OAuth)",
-    "section": "21.4 Configure Google Auth in Supabase",
-    "text": "21.4 Configure Google Auth in Supabase\n\nOpen your Supabase dashboard.\nNavigate to Authentication → Providers.\nSelect Google.\nPaste your Client ID and Client Secret.\nClick Save to enable Google login for your project.\n\n\nWith this configuration complete, Supabase can now handle secure login flows using Google OAuth.",
+    "title": "22  18.  Step 6: setup authentication (Google OAuth)",
+    "section": "22.4 Configure Google Auth in Supabase",
+    "text": "22.4 Configure Google Auth in Supabase\n\nOpen your Supabase dashboard.\nNavigate to Authentication → Providers.\nSelect Google.\nPaste your Client ID and Client Secret.\nClick Save to enable Google login for your project.\n\n\nWith this configuration complete, Supabase can now handle secure login flows using Google OAuth.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Step 6: setup authentication (Google OAuth)</span>"
     ]
   },
   {
     "objectID": "001170-tutorial-openAiApi-v001.html",
     "href": "001170-tutorial-openAiApi-v001.html",
-    "title": "22  19.  Step 7: Set Up OpenAI API",
+    "title": "23  19.  Step 7: Set Up OpenAI API",
     "section": "",
-    "text": "You’ll use OpenAI from a Supabase Edge Function, so the key must live in Supabase secrets (not in your frontend).\n\n22.0.1 Create OpenAI Account\n\nGo to the OpenAI Platform: https://platform.openai.com/\nSign up or log in to your account.\nOpen the Dashboard → API Keys (or Settings → API Keys) section.\n\n\n\n22.0.2 Generate API Key\n\nClick Create new secret key.\nGive it a recognizable name (e.g., edge-functions-prod).\nCopy the key immediately — you won’t be able to see it again.\nStore it securely in a password manager or secrets manager.\nNever commit this key to Git or expose it in client-side code.\n\n\n\n22.0.3 Store as Supabase Secret\nYou’ll configure your Edge Functions to read OPENAI_API_KEY from the Supabase environment.\n\nInstall Supabase CLI (if you haven’t already):\nnpm install -g supabase\nLink your local project to your Supabase project:\nsupabase link --project-ref [your-project-ref]\nYou can find [your-project-ref] in the URL of your Supabase project dashboard.\nSet the secret in Supabase:\nsupabase secrets set OPENAI_API_KEY=your-openai-key\nVerify in the Supabase dashboard (Project Settings → API → Secrets) that OPENAI_API_KEY is present.",
+    "text": "You’ll use OpenAI from a Supabase Edge Function, so the key must live in Supabase secrets (not in your frontend).\n\n23.0.1 Create OpenAI Account\n\nGo to the OpenAI Platform: https://platform.openai.com/\nSign up or log in to your account.\nOpen the Dashboard → API Keys (or Settings → API Keys) section.\n\n\n\n23.0.2 Generate API Key\n\nClick Create new secret key.\nGive it a recognizable name (e.g., edge-functions-prod).\nCopy the key immediately — you won’t be able to see it again.\nStore it securely in a password manager or secrets manager.\nNever commit this key to Git or expose it in client-side code.\n\n\n\n23.0.3 Store as Supabase Secret\nYou’ll configure your Edge Functions to read OPENAI_API_KEY from the Supabase environment.\n\nInstall Supabase CLI (if you haven’t already):\nnpm install -g supabase\nLink your local project to your Supabase project:\nsupabase link --project-ref [your-project-ref]\nYou can find [your-project-ref] in the URL of your Supabase project dashboard.\nSet the secret in Supabase:\nsupabase secrets set OPENAI_API_KEY=your-openai-key\nVerify in the Supabase dashboard (Project Settings → API → Secrets) that OPENAI_API_KEY is present.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>22</span>  <span class='chapter-title'><yrChapterNumber>19. </yrChapterNumber> Step 7: Set Up OpenAI API</span>"
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'><yrChapterNumber>19. </yrChapterNumber> Step 7: Set Up OpenAI API</span>"
     ]
   },
   {
     "objectID": "001180-tutorial-setupStripe-v001.html",
     "href": "001180-tutorial-setupStripe-v001.html",
-    "title": "23  20.  Step 8: Set Up Stripe",
+    "title": "24  20.  Step 8: Set Up Stripe",
     "section": "",
-    "text": "Stripe will handle subscriptions and billing. You’ll run in Test Mode while developing.\n\n23.0.1 Create Stripe Account\n\nGo to https://stripe.com.\nSign up for a new account or log in.\nIn the dashboard, toggle View test data or Test Mode on (usually top-right).\nConfirm the dashboard now shows “Test data” so you don’t charge real cards.\n\n\n\n23.0.2 Get API Keys\n\nIn the Stripe Dashboard, go to Developers → API keys.\nUnder Standard keys, copy:\n\nPublishable key (starts with pk_test_)\nSecret key (starts with sk_test_)\n\nAdd the publishable key to your Next.js environment:\n# .env.local\nNEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-publishable-key\nStore the secret key in Supabase (for Edge Functions):\nsupabase secrets set STRIPE_SECRET_KEY=your-secret-key\nIf you have a separate dev/prod project, repeat this setup per environment.\n\n\n\n23.0.3 Create a Product\n\nIn Stripe dashboard, go to Products.\nClick + Add product.\nFill in:\n\nName (e.g., “Pro Plan”)\nOptional description and image.\n\nUnder Pricing, create a price:\n\nRecurring\nBilling period: Monthly\nAmount: e.g., $10 (or your own).\n\nSave the product and its price.\nCopy the Price ID (e.g., price_12345...).\nAdd the Price ID to your app’s config (e.g., environment variable or constants file), for example:\nNEXT_PUBLIC_STRIPE_PRICE_ID=your-price-id\n\n(Adjust to match how your code expects the price ID.)\n\n\n23.0.4 Get Webhook Signing Secret\nYou’ll use a webhook to let Stripe notify your app about subscription changes.\n\nGo to Developers → Webhooks in Stripe.\nClick + Add endpoint.\nFor now, you can use a temporary URL (you’ll update it later), such as:\n\na local tunneling URL from stripe listen or ngrok, or\nleave it blank until your Supabase function URL is known.\n\nUnder Select events to send, add:\n\ncheckout.session.completed\ncustomer.subscription.updated\ncustomer.subscription.deleted\n\nSave the endpoint.\nStripe will show a Signing secret (e.g., whsec_...). Copy it.\nStore it as a Supabase secret:\nsupabase secrets set STRIPE_WEBHOOK_SECRET=your-webhook-secret",
+    "text": "Stripe will handle subscriptions and billing. You’ll run in Test Mode while developing.\n\n24.0.1 Create Stripe Account\n\nGo to https://stripe.com.\nSign up for a new account or log in.\nIn the dashboard, toggle View test data or Test Mode on (usually top-right).\nConfirm the dashboard now shows “Test data” so you don’t charge real cards.\n\n\n\n24.0.2 Get API Keys\n\nIn the Stripe Dashboard, go to Developers → API keys.\nUnder Standard keys, copy:\n\nPublishable key (starts with pk_test_)\nSecret key (starts with sk_test_)\n\nAdd the publishable key to your Next.js environment:\n# .env.local\nNEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-publishable-key\nStore the secret key in Supabase (for Edge Functions):\nsupabase secrets set STRIPE_SECRET_KEY=your-secret-key\nIf you have a separate dev/prod project, repeat this setup per environment.\n\n\n\n24.0.3 Create a Product\n\nIn Stripe dashboard, go to Products.\nClick + Add product.\nFill in:\n\nName (e.g., “Pro Plan”)\nOptional description and image.\n\nUnder Pricing, create a price:\n\nRecurring\nBilling period: Monthly\nAmount: e.g., $10 (or your own).\n\nSave the product and its price.\nCopy the Price ID (e.g., price_12345...).\nAdd the Price ID to your app’s config (e.g., environment variable or constants file), for example:\nNEXT_PUBLIC_STRIPE_PRICE_ID=your-price-id\n\n(Adjust to match how your code expects the price ID.)\n\n\n24.0.4 Get Webhook Signing Secret\nYou’ll use a webhook to let Stripe notify your app about subscription changes.\n\nGo to Developers → Webhooks in Stripe.\nClick + Add endpoint.\nFor now, you can use a temporary URL (you’ll update it later), such as:\n\na local tunneling URL from stripe listen or ngrok, or\nleave it blank until your Supabase function URL is known.\n\nUnder Select events to send, add:\n\ncheckout.session.completed\ncustomer.subscription.updated\ncustomer.subscription.deleted\n\nSave the endpoint.\nStripe will show a Signing secret (e.g., whsec_...). Copy it.\nStore it as a Supabase secret:\nsupabase secrets set STRIPE_WEBHOOK_SECRET=your-webhook-secret",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>23</span>  <span class='chapter-title'><yrChapterNumber>20. </yrChapterNumber> Step 8: Set Up Stripe</span>"
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'><yrChapterNumber>20. </yrChapterNumber> Step 8: Set Up Stripe</span>"
     ]
   },
   {
     "objectID": "001190-tutorial-setupSupabaseDatabase-v001.html",
     "href": "001190-tutorial-setupSupabaseDatabase-v001.html",
-    "title": "24  21.  Step 9: Set Up Supabase Database",
+    "title": "25  21.  Step 9: Set Up Supabase Database",
     "section": "",
-    "text": "Your project ships with migrations that define the database schema and policies.\n\n24.0.1 Run Database Migrations\n\nEnsure you’re in the project root (where supabase/config.toml lives).\nRun:\nsupabase db push\nWait for the migration to complete without errors.\nIn the Supabase dashboard, open Table Editor to confirm the tables exist.\n\n\n\n24.0.2 Database Structure\nThe migrations typically create tables such as:\n\nusers\nStores user account data linked to Supabase auth (e.g., id, email, metadata).\ntasks\nRepresents tasks created by users:\n\nid, user_id\ntitle, description\nlabel (AI-generated or user-set)\nimage_url (path to Supabase Storage file)\ntimestamps for creation and updates\n\nuser_subscriptions\nTracks subscription status:\n\nuser_id\nStripe customer_id\nsubscription_id\nstatus (e.g., active, canceled)\ncurrent period dates\n\n\nAdjust field names to match your actual migrations.\n\n\n24.0.3 Enable Row Level Security (RLS)\nThe migrations also turn on RLS and define policies, so that:\n\nUsers can only read/update rows where user_id = their auth user id.\nAnonymous users cannot access private data.\nSystem operations (e.g., via service role) can bypass restrictions where needed.\n\nYou can verify policies under Database → Policies in the Supabase dashboard.",
+    "text": "Your project ships with migrations that define the database schema and policies.\n\n25.0.1 Run Database Migrations\n\nEnsure you’re in the project root (where supabase/config.toml lives).\nRun:\nsupabase db push\n\n\n\n\n\n\n\nNote\n\n\n\nThere is a bug in the current code. When running the above command you will probably see the following errors.\n$ npx supabase db push\nInitialising login role...\nConnecting to remote database...\nDo you want to push these migrations to the remote database?\n • 0_init_profile.sql\n • 1_init_tasks.sql\n • 2_init_auth.sql\n • 3_init_storage_schema.sql\n • 4_init_usage_tracking.sql\n • 5_init_task_limit_triggers.sql\n • 6_init_account_tier_triggers.sql\n • 7_init_stripe_integration.sql\n\n [Y/n] y\n \nApplying migration 0_init_profile.sql...\nNOTICE (42710): extension \"uuid-ossp\" already exists, skipping\n\nApplying migration 1_init_tasks.sql...\nERROR: function uuid_generate_v4() does not exist (SQLSTATE 42883)\nAt statement: 0                                                   \n-- Tasks table                                                    \ncreate table public.tasks (                                       \n  task_id uuid default uuid_generate_v4() primary key,            \n                       ^                                          \nTry rerunning the command with --debug to troubleshoot the error.\nThis is caused by the file: supabase/migrations/1_init_tasks.sql\nThe file contains a call to the function: uuid_generate_v4().\nThis function should not be used any longer. Rather replace the call to that function with a call to the function gen_random_uuid(). Save the file and try the npx supabase db push again.\n\n\n\nWait for the migration to complete without errors.\nIn the Supabase dashboard, open Table Editor to confirm the tables exist.\n\n\n\n\n25.0.2 Enable Row Level Security (RLS)\nThe migrations typically turn on RLS and define policies, so that:\n\nUsers can only read/update rows where user_id = their auth user id.\nAnonymous users cannot access private data.\nSystem operations (e.g., via service role) can bypass restrictions where needed.\n\nYou can verify policies under Database → Policies in the Supabase dashboard.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>24</span>  <span class='chapter-title'><yrChapterNumber>21. </yrChapterNumber> Step 9: Set Up Supabase Database</span>"
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'><yrChapterNumber>21. </yrChapterNumber> Step 9: Set Up Supabase Database</span>"
     ]
   },
   {
     "objectID": "001200-tutorial-setupSupabaseStorage-v001.html",
     "href": "001200-tutorial-setupSupabaseStorage-v001.html",
-    "title": "25  22.  Step 10: Set Up Supabase Storage Bucket",
+    "title": "26  22.  Step 10: Set Up Supabase Storage Bucket",
     "section": "",
-    "text": "You’ll store task images in Supabase Storage.\n\n25.0.1 Create Storage Bucket\n\nIn Supabase dashboard, go to Storage → Buckets.\nClick New bucket.\nName it task-images (or whatever your code expects).\nFor this tutorial, set the bucket to Public.\nCreate the bucket.\n\n\n\n25.0.2 Configure Bucket Settings\nFile size limit:\n\nDecide on an appropriate max file size (e.g., 1 MB).\nEnforce this in your upload UI and/or server-side logic.\n\nAllowed file types:\n\nRestrict to images:\n\nimage/jpeg\nimage/png\nimage/gif\nimage/webp\n\n\nAccess settings:\n\nPublic bucket:\n\nAnyone with the URL can view the image (simpler for tutorials).\n\nFor production:\n\nConsider a private bucket + signed URLs for more control.\n\n\n\n\n25.0.3 Set Storage Policies\nIn the Policies section for your task-images bucket, ensure:\n\nAuthenticated users can upload files (e.g., policy: if auth.role() = 'authenticated').\nAnyone can read files (for public tutorials).\nUsers can delete only their own images (e.g., match user_id in metadata/path).\n\nYou can either: - Use the provided migration policies, or - Create them via the Supabase dashboard policy builder.",
+    "text": "You’ll store task images in Supabase Storage.\n\n26.0.1 Create Storage Bucket\n\nIn Supabase dashboard, go to Storage → Buckets.\nClick New bucket.\nName it task-images (or whatever your code expects).\nFor this tutorial, set the bucket to Public.\nCreate the bucket.\n\n\n\n26.0.2 Configure Bucket Settings\nFile size limit:\n\nDecide on an appropriate max file size (e.g., 1 MB).\nEnforce this in your upload UI and/or server-side logic.\n\nAllowed file types:\n\nRestrict to images:\n\nimage/jpeg\nimage/png\nimage/gif\nimage/webp\n\n\nAccess settings:\n\nPublic bucket:\n\nAnyone with the URL can view the image (simpler for tutorials).\n\nFor production:\n\nConsider a private bucket + signed URLs for more control.\n\n\n\n\n26.0.3 Set Storage Policies\nIn the Policies section for your task-images bucket, ensure:\n\nAuthenticated users can upload files (e.g., policy: if auth.role() = 'authenticated').\nAnyone can read files (for public tutorials).\nUsers can delete only their own images (e.g., match user_id in metadata/path).\n\nYou can either: - Use the provided migration policies, or - Create them via the Supabase dashboard policy builder.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>25</span>  <span class='chapter-title'><yrChapterNumber>22. </yrChapterNumber> Step 10: Set Up Supabase Storage Bucket</span>"
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'><yrChapterNumber>22. </yrChapterNumber> Step 10: Set Up Supabase Storage Bucket</span>"
     ]
   },
   {
     "objectID": "001210-tutorial-deploySupabaseEdgeFunctions-v001.html",
     "href": "001210-tutorial-deploySupabaseEdgeFunctions-v001.html",
-    "title": "26  23.  Step 11: Deploy Supabase Edge Functions",
+    "title": "27  23.  Step 11: Deploy Supabase Edge Functions",
     "section": "",
-    "text": "Edge Functions are serverless handlers for AI, billing, and webhooks.\nLocation in project: supabase/functions/\n\n26.0.1 The Three Functions\n\n1. createTaskWithAI\nUsed to:\n\nAccept task input (e.g., title, description).\nCall OpenAI using OPENAI_API_KEY.\nGenerate or refine a label.\nInsert/update the task row in the tasks table.\n\nThis function typically: - Validates the user (via JWT). - Checks subscription status if needed (e.g., premium-only features).\n\n\n2. createStripeSession\nUsed to:\n\nCreate Stripe Checkout sessions for new subscriptions.\nReturn a customer portal link if the user already has a subscription.\nRedirect users to Stripe when they click “Manage Subscription”.\n\nIt uses STRIPE_SECRET_KEY and price IDs to build sessions.\n\n\n3. stripe-webhook\nUsed to:\n\nReceive event notifications from Stripe.\nVerify the webhook signature using STRIPE_WEBHOOK_SECRET.\nSync subscription status (e.g., set user_subscriptions.status = 'active').\nHandle cancellations, renewals, and trial endings.\n\nThis function is called directly by Stripe, so it doesn’t use user JWTs.\n\n\n\n26.0.2 Deploy the Functions\nFrom your project root, deploy each function with the Supabase CLI:\n# Deploy the AI task creation function\nsupabase functions deploy createTaskWithAI\n\n# Deploy the Stripe session function\nsupabase functions deploy createStripeSession\n\n# Deploy the webhook function\nsupabase functions deploy stripe-webhook\nAfter deploying, the CLI will output function URLs like:\nhttps://[your-project-ref].supabase.co/functions/v1/createTaskWithAI\nKeep these handy for testing or local development.\n\n\n26.0.3 Verify Deployment\n\nIn Supabase dashboard, open Edge Functions.\nConfirm you see:\n\ncreateTaskWithAI\ncreateStripeSession\nstripe-webhook\n\nClick each function:\n\nCheck the Logs tab for any runtime errors.\nTrigger test requests (e.g., via curl or a REST client) if needed.\n\n\n\n\n26.0.4 Configure Stripe Webhook\nstripe-webhook must accept unauthenticated calls from Stripe.\n\nIn Supabase dashboard, click the stripe-webhook function.\nGo to the Details tab.\nFind Function configuration (or Settings).\nDisable Enforce JWT verification for this function.\nSave the changes.\n\nWhy? Stripe does not send JWTs; the function instead authenticates via STRIPE_WEBHOOK_SECRET.\n\n\n26.0.5 Update Stripe Webhook URL\nNow point Stripe to your deployed function.\n\nIn Stripe Dashboard, go to Developers → Webhooks.\nClick your webhook endpoint.\nUpdate the Endpoint URL to:\nhttps://[your-project-ref].supabase.co/functions/v1/stripe-webhook\nSave the endpoint.\nUse the Send test event button in Stripe to verify that your function:\n\nReceives the event.\nValidates the signature.\nUpdates your database correctly.",
+    "text": "Edge Functions are serverless handlers for AI, billing, and webhooks.\nLocation in project: supabase/functions/\n\n27.0.1 The Three Functions\n\n1. createTaskWithAI\nUsed to:\n\nAccept task input (e.g., title, description).\nCall OpenAI using OPENAI_API_KEY.\nGenerate or refine a label.\nInsert/update the task row in the tasks table.\n\nThis function typically: - Validates the user (via JWT). - Checks subscription status if needed (e.g., premium-only features).\n\n\n2. createStripeSession\nUsed to:\n\nCreate Stripe Checkout sessions for new subscriptions.\nReturn a customer portal link if the user already has a subscription.\nRedirect users to Stripe when they click “Manage Subscription”.\n\nIt uses STRIPE_SECRET_KEY and price IDs to build sessions.\n\n\n3. stripe-webhook\nUsed to:\n\nReceive event notifications from Stripe.\nVerify the webhook signature using STRIPE_WEBHOOK_SECRET.\nSync subscription status (e.g., set user_subscriptions.status = 'active').\nHandle cancellations, renewals, and trial endings.\n\nThis function is called directly by Stripe, so it doesn’t use user JWTs.\n\n\n\n27.0.2 Deploy the Functions\nFrom your project root, deploy each function with the Supabase CLI:\n# Deploy the AI task creation function\nsupabase functions deploy createTaskWithAI\n\n# Deploy the Stripe session function\nsupabase functions deploy createStripeSession\n\n# Deploy the webhook function\nsupabase functions deploy stripe-webhook\nAfter deploying, the CLI will output function URLs like:\nhttps://[your-project-ref].supabase.co/functions/v1/createTaskWithAI\nKeep these handy for testing or local development.\n\n\n27.0.3 Verify Deployment\n\nIn Supabase dashboard, open Edge Functions.\nConfirm you see:\n\ncreateTaskWithAI\ncreateStripeSession\nstripe-webhook\n\nClick each function:\n\nCheck the Logs tab for any runtime errors.\nTrigger test requests (e.g., via curl or a REST client) if needed.\n\n\n\n\n27.0.4 Configure Stripe Webhook\nstripe-webhook must accept unauthenticated calls from Stripe.\n\nIn Supabase dashboard, click the stripe-webhook function.\nGo to the Details tab.\nFind Function configuration (or Settings).\nDisable Enforce JWT verification for this function.\nSave the changes.\n\nWhy? Stripe does not send JWTs; the function instead authenticates via STRIPE_WEBHOOK_SECRET.\n\n\n27.0.5 Update Stripe Webhook URL\nNow point Stripe to your deployed function.\n\nIn Stripe Dashboard, go to Developers → Webhooks.\nClick your webhook endpoint.\nUpdate the Endpoint URL to:\nhttps://[your-project-ref].supabase.co/functions/v1/stripe-webhook\nSave the endpoint.\nUse the Send test event button in Stripe to verify that your function:\n\nReceives the event.\nValidates the signature.\nUpdates your database correctly.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>26</span>  <span class='chapter-title'><yrChapterNumber>23. </yrChapterNumber> Step 11: Deploy Supabase Edge Functions</span>"
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'><yrChapterNumber>23. </yrChapterNumber> Step 11: Deploy Supabase Edge Functions</span>"
     ]
   },
   {
     "objectID": "001220-tutorial-runTheApplication-v001.html",
     "href": "001220-tutorial-runTheApplication-v001.html",
-    "title": "27  24.  Step 12: Run the Application",
+    "title": "28  24.  Step 12: Run the Application",
     "section": "",
-    "text": "Now that the backend is configured, you can run the Next.js app locally.\n\n27.0.1 Start the Development Server\nFrom your project root:\nnpm install\nnpm run dev\nThe app usually runs at http://localhost:3000.\nIf you’re using pnpm or yarn, adjust accordingly.\n\n\n27.0.2 Test Core Functionality\nWalk through the main user flow to confirm everything is wired up correctly.\n1. Authentication\n\nClick “Sign in with Google” (or your configured provider).\nComplete the OAuth flow.\nEnsure you’re redirected to the dashboard.\nIn Supabase Auth → Users, verify your user was created.\n\n2. Task Management\n\nFrom the dashboard, create a new task (title + description).\nConfirm:\n\nThe task appears in your list.\nThe AI-generated label is visible (or applied shortly after creation).\n\nCheck the tasks table in Supabase to see the new row.\n\n3. Image Uploads\n\nEdit a task and upload an image.\nConfirm:\n\nThe file appears in the task-images bucket.\nThe image is displayed in the app (using the public URL).\n\nTry uploading an invalid file type or large file to see error handling.\n\n4. User Profile\n\nNavigate to your profile page.\nCheck:\n\nBasic account information is correct.\nThe task count or other stats update as you add/remove tasks.\n\n\n5. Subscription Management\n\nClick “Manage Subscription” or equivalent button.\nConfirm:\n\nYou’re redirected to a Stripe-hosted checkout page.\nThe price and product name are correct.\n\nUse a Stripe test card (e.g., 4242 4242 4242 4242) with:\n\nAny future expiry date.\nAny 3-digit CVC.\nAny billing info.\n\nComplete checkout and return to the app.\nVerify:\n\nYour user_subscriptions row is updated to active.\nPremium-only features (if any) unlock.\n\n\n6. Sign Out\n\nClick “Sign out” or “Log out.”\nConfirm:\n\nYou’re redirected back to the login page.\nProtected routes are no longer accessible without signing in again.",
+    "text": "Now that the backend is configured, you can run the Next.js app locally.\n\n28.0.1 Start the Development Server\nFrom your project root:\nnpm install\nnpm run dev\nThe app usually runs at http://localhost:3000.\nIf you’re using pnpm or yarn, adjust accordingly.\n\n\n28.0.2 Test Core Functionality\nWalk through the main user flow to confirm everything is wired up correctly.\n1. Authentication\n\nClick “Sign in with Google” (or your configured provider).\nComplete the OAuth flow.\nEnsure you’re redirected to the dashboard.\nIn Supabase Auth → Users, verify your user was created.\n\n2. Task Management\n\nFrom the dashboard, create a new task (title + description).\nConfirm:\n\nThe task appears in your list.\nThe AI-generated label is visible (or applied shortly after creation).\n\nCheck the tasks table in Supabase to see the new row.\n\n3. Image Uploads\n\nEdit a task and upload an image.\nConfirm:\n\nThe file appears in the task-images bucket.\nThe image is displayed in the app (using the public URL).\n\nTry uploading an invalid file type or large file to see error handling.\n\n4. User Profile\n\nNavigate to your profile page.\nCheck:\n\nBasic account information is correct.\nThe task count or other stats update as you add/remove tasks.\n\n\n5. Subscription Management\n\nClick “Manage Subscription” or equivalent button.\nConfirm:\n\nYou’re redirected to a Stripe-hosted checkout page.\nThe price and product name are correct.\n\nUse a Stripe test card (e.g., 4242 4242 4242 4242) with:\n\nAny future expiry date.\nAny 3-digit CVC.\nAny billing info.\n\nComplete checkout and return to the app.\nVerify:\n\nYour user_subscriptions row is updated to active.\nPremium-only features (if any) unlock.\n\n\n6. Sign Out\n\nClick “Sign out” or “Log out.”\nConfirm:\n\nYou’re redirected back to the login page.\nProtected routes are no longer accessible without signing in again.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>27</span>  <span class='chapter-title'><yrChapterNumber>24. </yrChapterNumber> Step 12: Run the Application</span>"
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'><yrChapterNumber>24. </yrChapterNumber> Step 12: Run the Application</span>"
     ]
   },
   {
     "objectID": "001230-tutorial-deployToProduction-v001.html",
     "href": "001230-tutorial-deployToProduction-v001.html",
-    "title": "28  25.  Step 13: Deploy to Production",
+    "title": "29  25.  Step 13: Deploy to Production",
     "section": "",
-    "text": "Once everything works locally, you can deploy the frontend.\n\n28.0.1 Deploying the Frontend\nRecommended: Vercel\nVercel is tightly integrated with Next.js and offers smooth deployments.\n\nPush your code to a Git repository (e.g., GitHub).\nIn Vercel, click New Project → Import from your repo.\nDuring setup:\n\nSelect the correct framework: Next.js.\nAdd all required environment variables:\n\nNEXT_PUBLIC_SUPABASE_URL\nNEXT_PUBLIC_SUPABASE_ANON_KEY\nNEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY\nany other NEXT_PUBLIC_... or server-side variables.\n\n\nDeploy the app.\n\nAfter deployment:\n\nVisit the production URL to confirm it loads.\nTest login, task creation, and subscription flows in production.\n\nAlternative Options\nIf you prefer other providers:\n\nNetlify – good Next.js support (with appropriate adapters).\nAWS Amplify, Render, or any provider that supports Node/Next.js.\n\nConfiguration will be similar: point to your repo and set env vars.\n\n\n28.0.2 Update Environment Variables for Production\nFor the production instance, make sure to:\n\nUse your production Supabase project URL and anon/service keys.\nSwitch Stripe from test mode to live mode when ready:\n\nReplace pk_test_... and sk_test_... with pk_live_... / sk_live_....\nUpdate webhook endpoints/secrets accordingly.\n\nUpdate OAuth redirect URIs:\n\nAdd your production domain (e.g., https://yourapp.com) in Google OAuth and Supabase Auth settings.\n\nConfigure CORS and allowed redirect URLs in Supabase to include the production domain.",
+    "text": "Once everything works locally, you can deploy the frontend.\n\n29.0.1 Deploying the Frontend\nRecommended: Vercel\nVercel is tightly integrated with Next.js and offers smooth deployments.\n\nPush your code to a Git repository (e.g., GitHub).\nIn Vercel, click New Project → Import from your repo.\nDuring setup:\n\nSelect the correct framework: Next.js.\nAdd all required environment variables:\n\nNEXT_PUBLIC_SUPABASE_URL\nNEXT_PUBLIC_SUPABASE_ANON_KEY\nNEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY\nany other NEXT_PUBLIC_... or server-side variables.\n\n\nDeploy the app.\n\nAfter deployment:\n\nVisit the production URL to confirm it loads.\nTest login, task creation, and subscription flows in production.\n\nAlternative Options\nIf you prefer other providers:\n\nNetlify – good Next.js support (with appropriate adapters).\nAWS Amplify, Render, or any provider that supports Node/Next.js.\n\nConfiguration will be similar: point to your repo and set env vars.\n\n\n29.0.2 Update Environment Variables for Production\nFor the production instance, make sure to:\n\nUse your production Supabase project URL and anon/service keys.\nSwitch Stripe from test mode to live mode when ready:\n\nReplace pk_test_... and sk_test_... with pk_live_... / sk_live_....\nUpdate webhook endpoints/secrets accordingly.\n\nUpdate OAuth redirect URIs:\n\nAdd your production domain (e.g., https://yourapp.com) in Google OAuth and Supabase Auth settings.\n\nConfigure CORS and allowed redirect URLs in Supabase to include the production domain.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>28</span>  <span class='chapter-title'><yrChapterNumber>25. </yrChapterNumber> Step 13: Deploy to Production</span>"
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'><yrChapterNumber>25. </yrChapterNumber> Step 13: Deploy to Production</span>"
     ]
   },
   {
     "objectID": "001240-tutorial-extendTheFunctionality-v001.html",
     "href": "001240-tutorial-extendTheFunctionality-v001.html",
-    "title": "29  26.  Step 14: Extending the functionality",
+    "title": "30  26.  Step 14: Extending the functionality",
     "section": "",
-    "text": "29.1 Project Structure\nAt this point, you have a full-stack SaaS application with:\nFrom here, you can refine the front end (i.e. Next.JS) to your liking, add features, harden security and observability to take the app into production. Ideas to grow your SaaS:\nYou can also use this tutorial as a framework to help you develop a brand new different application from scratch.\nHere’s a quick overview of the main folders and what you typically edit:\nTo extend functionality:",
+    "text": "30.1 Project Structure\nAt this point, you have a full-stack SaaS application with:\nFrom here, you can refine the front end (i.e. Next.JS) to your liking, add features, harden security and observability to take the app into production. Ideas to grow your SaaS:\nYou can also use this tutorial as a framework to help you develop a brand new different application from scratch.\nHere’s a quick overview of the main folders and what you typically edit:\nTo extend functionality:",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>29</span>  <span class='chapter-title'><yrChapterNumber>26. </yrChapterNumber> Step 14: Extending the functionality</span>"
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'><yrChapterNumber>26. </yrChapterNumber> Step 14: Extending the functionality</span>"
     ]
   },
   {
     "objectID": "001240-tutorial-extendTheFunctionality-v001.html#project-structure",
     "href": "001240-tutorial-extendTheFunctionality-v001.html#project-structure",
-    "title": "29  26.  Step 14: Extending the functionality",
+    "title": "30  26.  Step 14: Extending the functionality",
     "section": "",
     "text": "├── app/                     # Next.js app routes and pages\n├── components/              # Reusable React UI components\n├── hooks/                   # Client logic and Supabase integration\n├── supabase/\n│   ├── functions/           # Edge functions (backend logic)\n│   └── migrations/          # Database schema and configurations\n└── tests/\n    └── integration/         # Integration test suite\n\n\nUI changes:\nUpdate layout, pages, and routing in app/ and shared UI in components/.\nClient logic:\nModify data fetching, hooks, and client-side behavior in hooks/.\nBackend logic:\nAdd or update Edge Functions in supabase/functions/ for new APIs or integrations.\nDatabase changes:\nCreate new migration files in supabase/migrations/ to add tables, columns, or policies.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>29</span>  <span class='chapter-title'><yrChapterNumber>26. </yrChapterNumber> Step 14: Extending the functionality</span>"
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'><yrChapterNumber>26. </yrChapterNumber> Step 14: Extending the functionality</span>"
     ]
   },
   {
     "objectID": "001250-tutorial-automatedTestingAndTroubleshooting-v001.html",
     "href": "001250-tutorial-automatedTestingAndTroubleshooting-v001.html",
-    "title": "30  27.  Step 15: Automated Testing and Troubleshooting",
+    "title": "31  27.  Step 15: Automated Testing and Troubleshooting",
     "section": "",
-    "text": "30.0.1 Integration Tests\nAutomated tests help ensure everything works after changes.\nThe project includes integration tests that talk to your real Supabase project (usually in a separate test environment).",
+    "text": "31.0.1 Integration Tests\nAutomated tests help ensure everything works after changes.\nThe project includes integration tests that talk to your real Supabase project (usually in a separate test environment).",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>30</span>  <span class='chapter-title'><yrChapterNumber>27. </yrChapterNumber> Step 15: Automated Testing and Troubleshooting</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'><yrChapterNumber>27. </yrChapterNumber> Step 15: Automated Testing and Troubleshooting</span>"
     ]
   },
   {
     "objectID": "001250-tutorial-automatedTestingAndTroubleshooting-v001.html#troubleshooting",
     "href": "001250-tutorial-automatedTestingAndTroubleshooting-v001.html#troubleshooting",
-    "title": "30  27.  Step 15: Automated Testing and Troubleshooting",
-    "section": "30.1 Troubleshooting",
-    "text": "30.1 Troubleshooting\nA few quick checks for common problems.\n\n30.1.1 Environment Variables Not Loading\n\nVerify the filenames:\n\nLocal Next.js: .env.local\nSupabase: supabase/.env (if applicable) and Supabase secrets.\n\nRestart the dev server after any env changes.\nConfirm the variables are defined in:\n\nThe Next.js runtime (console.log(process.env.NEXT_PUBLIC_... )).\nSupabase dashboard (for secrets).\n\n\n\n\n30.1.2 Authentication Errors\n\nEnsure your OAuth redirect URIs match exactly in:\n\nGoogle Cloud Console (OAuth credentials).\nSupabase Auth settings.\n\nMake sure the Supabase Site URL matches your local and production URLs.\nInspect the browser network tab for auth-related errors.\n\n\n\n30.1.3 Edge Functions Failing\n\nCheck that all required secrets are set (OPENAI_API_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET).\nIn Supabase:\n\nOpen Edge Functions → Logs to see runtime errors.\n\nMake sure code imports are correct and dependencies are installed.\n\n\n\n30.1.4 Stripe Webhook Not Working\n\nConfirm JWT verification is disabled for stripe-webhook.\nDouble-check the webhook URL in Stripe:\n\nIt must match the function URL exactly (including https).\n\nEnsure the Signing secret in Supabase matches the current secret shown in Stripe.\nUse Stripe’s Send test event to debug.\n\n\n\n30.1.5 Database Errors\n\nEnsure supabase db push ran successfully without errors.\nCheck that RLS policies allow the operation you’re trying.\nConfirm that the user is authenticated when performing actions that require auth.\nInspect Supabase logs or use the SQL editor to run queries manually.",
+    "title": "31  27.  Step 15: Automated Testing and Troubleshooting",
+    "section": "31.1 Troubleshooting",
+    "text": "31.1 Troubleshooting\nA few quick checks for common problems.\n\n31.1.1 Environment Variables Not Loading\n\nVerify the filenames:\n\nLocal Next.js: .env.local\nSupabase: supabase/.env (if applicable) and Supabase secrets.\n\nRestart the dev server after any env changes.\nConfirm the variables are defined in:\n\nThe Next.js runtime (console.log(process.env.NEXT_PUBLIC_... )).\nSupabase dashboard (for secrets).\n\n\n\n\n31.1.2 Authentication Errors\n\nEnsure your OAuth redirect URIs match exactly in:\n\nGoogle Cloud Console (OAuth credentials).\nSupabase Auth settings.\n\nMake sure the Supabase Site URL matches your local and production URLs.\nInspect the browser network tab for auth-related errors.\n\n\n\n31.1.3 Edge Functions Failing\n\nCheck that all required secrets are set (OPENAI_API_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET).\nIn Supabase:\n\nOpen Edge Functions → Logs to see runtime errors.\n\nMake sure code imports are correct and dependencies are installed.\n\n\n\n31.1.4 Stripe Webhook Not Working\n\nConfirm JWT verification is disabled for stripe-webhook.\nDouble-check the webhook URL in Stripe:\n\nIt must match the function URL exactly (including https).\n\nEnsure the Signing secret in Supabase matches the current secret shown in Stripe.\nUse Stripe’s Send test event to debug.\n\n\n\n31.1.5 Database Errors\n\nEnsure supabase db push ran successfully without errors.\nCheck that RLS policies allow the operation you’re trying.\nConfirm that the user is authenticated when performing actions that require auth.\nInspect Supabase logs or use the SQL editor to run queries manually.",
     "crumbs": [
       "Building with Next and Supabase",
-      "<span class='chapter-number'>30</span>  <span class='chapter-title'><yrChapterNumber>27. </yrChapterNumber> Step 15: Automated Testing and Troubleshooting</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'><yrChapterNumber>27. </yrChapterNumber> Step 15: Automated Testing and Troubleshooting</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html",
     "href": "000010-topics-v001.html",
-    "title": "34  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "title": "35  16.  TOPICS (ignore this section - it is just for me to develop the book)",
     "section": "",
-    "text": "34.1 Sessions 1,2",
+    "text": "35.1 Sessions 1,2",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>34</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#sessions-12",
     "href": "000010-topics-v001.html#sessions-12",
-    "title": "34  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "title": "35  16.  TOPICS (ignore this section - it is just for me to develop the book)",
     "section": "",
     "text": "Survey of current AI capabilities and shortcomings.\nPopular AI tools and models.\nAI tools for data analytics.\nRunning AI models locally vs remotely - privacy and security concerns.\nLegal and ethical considerations.\nExpert’s projections on trajectory of AI capabilities in the near and medium‑term future.",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>34</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#intro-to-coding-with-an-llm",
     "href": "000010-topics-v001.html#intro-to-coding-with-an-llm",
-    "title": "34  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "34.2 Intro to coding with an LLM",
-    "text": "34.2 Intro to coding with an LLM\n\nIntro to Cursor AI editor. . Context length issues.\nPrompting - best practices.\nAsk mode vs Agent mode\nPricing - based on token use, model selection input tokens vs output tokens\nIntro to “Developer Tools” in the browser (e.g. Console, etc)",
+    "title": "35  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "35.2 Intro to coding with an LLM",
+    "text": "35.2 Intro to coding with an LLM\n\nIntro to Cursor AI editor. . Context length issues.\nPrompting - best practices.\nAsk mode vs Agent mode\nPricing - based on token use, model selection input tokens vs output tokens\nIntro to “Developer Tools” in the browser (e.g. Console, etc)",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>34</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#how-an-llm-works",
     "href": "000010-topics-v001.html#how-an-llm-works",
-    "title": "34  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "34.3 How an LLM works",
-    "text": "34.3 How an LLM works\n\ntraining date cutoff\ntrained on “Internet”\nobjective - predict next token - if wrong modify weights slightly to make the correct token slightly more likely to be chosen next time\n\nrepeat this training over entire “Internet size” data many many timess\n\nprobability distribution of next most likely token\ntokenization\ntemperature -\nmodel sizes - parameters\nLLM vs other modalities - eg pictures, audio, video, special purpose (e.g. recognizing fraud),\nmulti-modal models",
+    "title": "35  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "35.3 How an LLM works",
+    "text": "35.3 How an LLM works\n\ntraining date cutoff\ntrained on “Internet”\nobjective - predict next token - if wrong modify weights slightly to make the correct token slightly more likely to be chosen next time\n\nrepeat this training over entire “Internet size” data many many timess\n\nprobability distribution of next most likely token\ntokenization\ntemperature -\nmodel sizes - parameters\nLLM vs other modalities - eg pictures, audio, video, special purpose (e.g. recognizing fraud),\nmulti-modal models",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>34</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#section",
     "href": "000010-topics-v001.html#section",
-    "title": "34  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "34.4 ",
-    "text": "34.4 \n\nSurvey of Web development technologies - HTML, CSS, JavaScript, NodeJS, web development frameworks (eg. React).\nDeeper dive into browser-based Developer Tools (e.g. the debugger)\nIf there is time - survey of advanced web development concepts - SCSS, bundlers (e.g.. webpack), etc\nHomework: Update the initial project to include additional features. Respond to feedback.\nSession 6\n\nAI agents (as related to coding)",
+    "title": "35  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "35.4 ",
+    "text": "35.4 \n\nSurvey of Web development technologies - HTML, CSS, JavaScript, NodeJS, web development frameworks (eg. React).\nDeeper dive into browser-based Developer Tools (e.g. the debugger)\nIf there is time - survey of advanced web development concepts - SCSS, bundlers (e.g.. webpack), etc\nHomework: Update the initial project to include additional features. Respond to feedback.\nSession 6\n\nAI agents (as related to coding)",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>34</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#overview-of-working-with-the-command-line",
     "href": "000010-topics-v001.html#overview-of-working-with-the-command-line",
-    "title": "34  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "34.5 Overview of working with the command line",
-    "text": "34.5 Overview of working with the command line",
+    "title": "35  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "35.5 Overview of working with the command line",
+    "text": "35.5 Overview of working with the command line",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>34</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000010-topics-v001.html#overview-of-gitgithub",
     "href": "000010-topics-v001.html#overview-of-gitgithub",
-    "title": "34  16.  TOPICS (ignore this section - it is just for me to develop the book)",
-    "section": "34.6 Overview of git/github",
-    "text": "34.6 Overview of git/github\n\nSession 7, 8\n\nOverview of relational databases and SQL\nNOSql - Document database (e.g. mongo db)\nIntegrating a database with your software\nHomework - expand on features of previous submission, track everything in git and github. Include database features if that hasn’t already been done.\n\nMCP Servers\nSessions 9,10:\n\nSurvey of Internet architecture and infrastructure technologies - e.g. servers (web, database), “containerization”, virtual servers, DNS\nDeploying a web product\nIf there is time: CI/CD using github\n\nSessions 11,12:\n\nSurvey of programming languages and related technologies. How to determine a good fit for your project? Survey of tech product categories (web, mobile, data analytics, embedded systems, high performance e.g. algorithmic trading, etc)\nSurvey of Python language for non-Python coders.\n\nSessions 13,14:\n\nUI development tools – e.g. figma, sketch, framer, webflow, canva\ncharting languages, eg. mermaid\n\nSessions 15,16:\n\nCreating and using automated test cases\n\n\n\n\nSessions 17,18:\n\nIntegrating with 3rd party services via APIs.\nAdding credit card processing to a web service (e.g. via Stripe)\nIf there is time: Creating your own APIs (possibly to be included in a follow on course)\n\nSessions 19,20:\n\nDeveloping mobile apps\nUsing phone emulators for app development (e.g. Android Studio, Xcode)\n\nSessions 21,22,23:\n\nOverview of no-code/low-code workflow automation tools – e.g. make, n8n, zapier, gumloop (new AI first approach), connect common tools without writing full software applications.\nRapid development when compared with custom coded apps but can be more expensive to run. Great for prototyping or getting out version 1 of complicated apps. Can also be used in production but at much higher (sometimes prohibitive) cost.\n\n\nHomework: develop\n\nSession 24:\n\nHigh level survey of architecture of deep learning models. Using this knowledge to inform best practices for effective use of AIs (e.g. why some AIs cannot count the number of r’s in “strawberry”). vector embeddings, tokens, the perceptron, deep neural networks, training data, objective function, backpropagation, sizes of models (measured in parameters) and compute requirements, pretraining, post training, reinforcement learning, RLHF, reasoning models, multi-modal models (“modality conversion models” vs “native multi modal”)\n\n\n\n\nSessions 25,26,27:\n\nHow to customize an AI with your own data:\nDifferent approaches to customizing an AI – discuss pros/cons of each approach\n\nAdd data to context (simplest approach), discuss context sizes of models\nRetrieval Augmented Generation (RAG), vector databases\nSurvey of “Fine Tuning” concepts\n\n\n(If there is time or perhaps for a 2nd semester course) -\n\nUsing advanced AI coding tools. The following are some current examples, but these will most likely need to be updated later. We will obviously not cover all of these. We will just introduce the types of tools and what they enable you to do). e.g. openRouter, langchain.com, langflow, flowwiseai , auto-gpt, agentGPT, llamaIndex, GradientJ, Haystack, orq.ai\nDeveloping AI agent software.",
+    "title": "35  16.  TOPICS (ignore this section - it is just for me to develop the book)",
+    "section": "35.6 Overview of git/github",
+    "text": "35.6 Overview of git/github\n\nSession 7, 8\n\nOverview of relational databases and SQL\nNOSql - Document database (e.g. mongo db)\nIntegrating a database with your software\nHomework - expand on features of previous submission, track everything in git and github. Include database features if that hasn’t already been done.\n\nMCP Servers\nSessions 9,10:\n\nSurvey of Internet architecture and infrastructure technologies - e.g. servers (web, database), “containerization”, virtual servers, DNS\nDeploying a web product\nIf there is time: CI/CD using github\n\nSessions 11,12:\n\nSurvey of programming languages and related technologies. How to determine a good fit for your project? Survey of tech product categories (web, mobile, data analytics, embedded systems, high performance e.g. algorithmic trading, etc)\nSurvey of Python language for non-Python coders.\n\nSessions 13,14:\n\nUI development tools – e.g. figma, sketch, framer, webflow, canva\ncharting languages, eg. mermaid\n\nSessions 15,16:\n\nCreating and using automated test cases\n\n\n\n\nSessions 17,18:\n\nIntegrating with 3rd party services via APIs.\nAdding credit card processing to a web service (e.g. via Stripe)\nIf there is time: Creating your own APIs (possibly to be included in a follow on course)\n\nSessions 19,20:\n\nDeveloping mobile apps\nUsing phone emulators for app development (e.g. Android Studio, Xcode)\n\nSessions 21,22,23:\n\nOverview of no-code/low-code workflow automation tools – e.g. make, n8n, zapier, gumloop (new AI first approach), connect common tools without writing full software applications.\nRapid development when compared with custom coded apps but can be more expensive to run. Great for prototyping or getting out version 1 of complicated apps. Can also be used in production but at much higher (sometimes prohibitive) cost.\n\n\nHomework: develop\n\nSession 24:\n\nHigh level survey of architecture of deep learning models. Using this knowledge to inform best practices for effective use of AIs (e.g. why some AIs cannot count the number of r’s in “strawberry”). vector embeddings, tokens, the perceptron, deep neural networks, training data, objective function, backpropagation, sizes of models (measured in parameters) and compute requirements, pretraining, post training, reinforcement learning, RLHF, reasoning models, multi-modal models (“modality conversion models” vs “native multi modal”)\n\n\n\n\nSessions 25,26,27:\n\nHow to customize an AI with your own data:\nDifferent approaches to customizing an AI – discuss pros/cons of each approach\n\nAdd data to context (simplest approach), discuss context sizes of models\nRetrieval Augmented Generation (RAG), vector databases\nSurvey of “Fine Tuning” concepts\n\n\n(If there is time or perhaps for a 2nd semester course) -\n\nUsing advanced AI coding tools. The following are some current examples, but these will most likely need to be updated later. We will obviously not cover all of these. We will just introduce the types of tools and what they enable you to do). e.g. openRouter, langchain.com, langflow, flowwiseai , auto-gpt, agentGPT, llamaIndex, GradientJ, Haystack, orq.ai\nDeveloping AI agent software.",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>34</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'><yrChapterNumber>16. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)</span>"
     ]
   },
   {
     "objectID": "000500-htmlCssJavascript-v001.html",
     "href": "000500-htmlCssJavascript-v001.html",
-    "title": "35  17.  Overview of HTML, CSS, JavaScript",
+    "title": "36  17.  Overview of HTML, CSS, JavaScript",
     "section": "",
-    "text": "35.1 Intro to “Developer Tools” in the Browser\nModern browsers (Chrome, Edge, Firefox) include powerful developer consoles: - Elements: Inspect and edit HTML/CSS.\n- Console: Execute JavaScript commands interactively.\n- Network: Monitor API calls and performance.\n- Sources: Debug scripts and set breakpoints.\n- Application: View storage, cookies, and local data.\nUnderstanding these tools is essential for integrating and debugging AI-powered web applications.",
+    "text": "36.1 Intro to “Developer Tools” in the Browser\nModern browsers (Chrome, Edge, Firefox) include powerful developer consoles: - Elements: Inspect and edit HTML/CSS.\n- Console: Execute JavaScript commands interactively.\n- Network: Monitor API calls and performance.\n- Sources: Debug scripts and set breakpoints.\n- Application: View storage, cookies, and local data.\nUnderstanding these tools is essential for integrating and debugging AI-powered web applications.",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>35</span>  <span class='chapter-title'><yrChapterNumber>17. </yrChapterNumber> Overview of HTML, CSS, JavaScript</span>"
+      "<span class='chapter-number'>36</span>  <span class='chapter-title'><yrChapterNumber>17. </yrChapterNumber> Overview of HTML, CSS, JavaScript</span>"
     ]
   },
   {
     "objectID": "099999-llmsForDataAnalytics.html",
     "href": "099999-llmsForDataAnalytics.html",
-    "title": "36  18.  Using LLMs to Help With Data Analytics",
+    "title": "37  18.  Using LLMs to Help With Data Analytics",
     "section": "",
     "text": "Convert unstructured data (e.g. English Text) into structured data (e.g. JSON, XML, YAML, TOML, etc)",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>36</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Using LLMs to Help With Data Analytics</span>"
+      "<span class='chapter-number'>37</span>  <span class='chapter-title'><yrChapterNumber>18. </yrChapterNumber> Using LLMs to Help With Data Analytics</span>"
     ]
   },
   {
     "objectID": "900010-codeMetrics-v001.html",
     "href": "900010-codeMetrics-v001.html",
-    "title": "37  19.  Measures of well designed programs",
+    "title": "38  19.  Measures of well designed programs",
     "section": "",
     "text": "The following are some metrics that can be used to see if a program is designed well:\n\nCyclomatic Complexity: Measures independent execution paths in a function. Lower is better.\nCode Coverage: % of code exercised by automated tests. Aim ≥ 80%.\nCoupling and Cohesion:\n\nCoupling: how interdependent modules are (lower is better)\nCohesion: how focused a module’s responsibilities are (higher is better)\n\nLines of Code (LOC) per Method/Class: Monitors size; excessively large methods or classes often signal poor abstraction.\nMaintainability Index: Combines LOC, complexity, and comment density into a single score.\nDefect Density: Bugs per thousand lines of code; fewer indicates higher-code quality.\nTechnical Debt Ratio: Estimated “remediation cost” vs. development cost; lower ratios are healthier.\nStatic Analysis Warnings: Number/severity of linter or analyzer alerts per 1,000 LOC.\nCode Churn: Frequency and volume of changes; high churn may signal instability or unclear design.\nDocumentation Coverage: Ratio of documented public APIs to total; measures how well the codebase is described.",
     "crumbs": [
       "Ignore this - in progress work",
-      "<span class='chapter-number'>37</span>  <span class='chapter-title'><yrChapterNumber>19. </yrChapterNumber> Measures of well designed programs</span>"
+      "<span class='chapter-number'>38</span>  <span class='chapter-title'><yrChapterNumber>19. </yrChapterNumber> Measures of well designed programs</span>"
     ]
   },
   {
