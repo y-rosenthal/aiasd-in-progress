@@ -321,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Create env files</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -333,13 +333,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Create a Supabase Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>17b. </yrchapternumber> Step 5a: Install the Supabase CLI command</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>17b. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -495,10 +495,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#create-stripe-account" id="toc-create-stripe-account" class="nav-link active" data-scroll-target="#create-stripe-account"><span class="header-section-number">24.0.1</span> Create Stripe Account</a></li>
-  <li><a href="#get-api-keys" id="toc-get-api-keys" class="nav-link" data-scroll-target="#get-api-keys"><span class="header-section-number">24.0.2</span> Get API Keys</a></li>
-  <li><a href="#create-a-product" id="toc-create-a-product" class="nav-link" data-scroll-target="#create-a-product"><span class="header-section-number">24.0.3</span> Create a Product</a></li>
-  <li><a href="#get-webhook-signing-secret" id="toc-get-webhook-signing-secret" class="nav-link" data-scroll-target="#get-webhook-signing-secret"><span class="header-section-number">24.0.4</span> Get Webhook Signing Secret</a></li>
+  <li><a href="#create-stripe-account" id="toc-create-stripe-account" class="nav-link active" data-scroll-target="#create-stripe-account"><span class="header-section-number">24.1</span> Create Stripe Account</a></li>
+  <li><a href="#the-stripe-sandbox" id="toc-the-stripe-sandbox" class="nav-link" data-scroll-target="#the-stripe-sandbox"><span class="header-section-number">24.2</span> The Stripe Sandbox</a></li>
+  <li><a href="#get-api-keys" id="toc-get-api-keys" class="nav-link" data-scroll-target="#get-api-keys"><span class="header-section-number">24.3</span> Get API Keys</a>
+  <ul class="collapse">
+  <li><a href="#create-a-product" id="toc-create-a-product" class="nav-link" data-scroll-target="#create-a-product"><span class="header-section-number">24.3.1</span> Create a Product</a></li>
+  <li><a href="#get-webhook-signing-secret" id="toc-get-webhook-signing-secret" class="nav-link" data-scroll-target="#get-webhook-signing-secret"><span class="header-section-number">24.3.2</span> Get Webhook Signing Secret</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -525,37 +528,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Stripe will handle subscriptions and billing. You’ll run in Test Mode while developing.</p>
-<section id="create-stripe-account" class="level3" data-number="24.0.1">
-<h3 data-number="24.0.1" class="anchored" data-anchor-id="create-stripe-account"><span class="header-section-number">24.0.1</span> Create Stripe Account</h3>
+<section id="create-stripe-account" class="level2" data-number="24.1">
+<h2 data-number="24.1" class="anchored" data-anchor-id="create-stripe-account"><span class="header-section-number">24.1</span> Create Stripe Account</h2>
 <ol type="1">
 <li>Go to <a href="https://stripe.com" class="uri">https://stripe.com</a>.</li>
 <li>Sign up for a new account or log in.</li>
-<li>In the dashboard, toggle <strong>View test data</strong> or <strong>Test Mode</strong> on (usually top-right).</li>
-<li>Confirm the dashboard now shows “Test data” so you don’t charge real cards.</li>
 </ol>
+<!-- YR - old info
+3. In the dashboard, toggle **View test data** or **Test Mode** on (usually top-right).
+4. Confirm the dashboard now shows “Test data” so you don’t charge real cards.
+-->
 </section>
-<section id="get-api-keys" class="level3" data-number="24.0.2">
-<h3 data-number="24.0.2" class="anchored" data-anchor-id="get-api-keys"><span class="header-section-number">24.0.2</span> Get API Keys</h3>
+<section id="the-stripe-sandbox" class="level2" data-number="24.2">
+<h2 data-number="24.2" class="anchored" data-anchor-id="the-stripe-sandbox"><span class="header-section-number">24.2</span> The Stripe Sandbox</h2>
+<p>When you first start using Stripe you will be in “Sandbox” mode. This means that real cards are never charged. However, you can use “fake” credit cards (see below) to make sure that your code works.</p>
+</section>
+<section id="get-api-keys" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="get-api-keys"><span class="header-section-number">24.3</span> Get API Keys</h2>
+<p>Click on the “Home” menu (you should be there when you start).</p>
+<p>The API keys should be listed (search for API on the page).</p>
+<!-- YR OLD STUFF
+
+1. In the Stripe Dashboard, go to **Developers → API keys**.
+2. Under **Standard keys**, copy:
+   - **Publishable key** (starts with `pk_test_`)
+   - **Secret key** (starts with `sk_test_`)
+
+-->
 <ol type="1">
-<li><p>In the Stripe Dashboard, go to <strong>Developers → API keys</strong>.</p></li>
-<li><p>Under <strong>Standard keys</strong>, copy:</p>
-<ul>
-<li><strong>Publishable key</strong> (starts with <code>pk_test_</code>)</li>
-<li><strong>Secret key</strong> (starts with <code>sk_test_</code>)</li>
-</ul></li>
 <li><p>Add the publishable key to your Next.js environment:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .env.local</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</span><span class="op">=</span>your-publishable-key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Store the secret key in Supabase (for Edge Functions):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> secrets set STRIPE_SECRET_KEY=your-secret-key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>If you have a separate dev/prod project, repeat this setup per environment.</p></li>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set STRIPE_SECRET_KEY=your-secret-key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>If you have a separate dev/prod project, repeat this setup per environment (we do not in this tutorial).</p></li>
 </ol>
-</section>
-<section id="create-a-product" class="level3" data-number="24.0.3">
-<h3 data-number="24.0.3" class="anchored" data-anchor-id="create-a-product"><span class="header-section-number">24.0.3</span> Create a Product</h3>
+<section id="create-a-product" class="level3" data-number="24.3.1">
+<h3 data-number="24.3.1" class="anchored" data-anchor-id="create-a-product"><span class="header-section-number">24.3.1</span> Create a Product</h3>
 <ol type="1">
-<li><p>In Stripe dashboard, go to <strong>Products</strong>.</p></li>
-<li><p>Click <strong>+ Add product</strong>.</p></li>
+<li><p>In Stripe dashboard, go to <strong>Product Catalog</strong> &gt; <strong>All Products</strong>.</p></li>
+<li><p>Click <strong>+ Create product</strong>.</p></li>
 <li><p>Fill in:</p>
 <ul>
 <li><strong>Name</strong> (e.g., “Pro Plan”)</li>
@@ -565,26 +577,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>Recurring</strong></li>
 <li>Billing period: <strong>Monthly</strong></li>
-<li>Amount: e.g., <code>$10</code> (or your own).</li>
+<li>Amount: e.g., <code>$10</code></li>
 </ul></li>
 <li><p>Save the product and its price.</p></li>
 <li><p>Copy the <strong>Price ID</strong> (e.g., <code>price_12345...</code>).</p></li>
-<li><p>Add the Price ID to your app’s config (e.g., environment variable or constants file), for example:</p>
+<li><p>Add the Price ID to your app’s config (e.g., environment variable or constants file), for example: .env.local</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_STRIPE_PRICE_ID</span><span class="op">=</span>your-price-id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ol>
 <p><em>(Adjust to match how your code expects the price ID.)</em></p>
 </section>
-<section id="get-webhook-signing-secret" class="level3" data-number="24.0.4">
-<h3 data-number="24.0.4" class="anchored" data-anchor-id="get-webhook-signing-secret"><span class="header-section-number">24.0.4</span> Get Webhook Signing Secret</h3>
+<section id="get-webhook-signing-secret" class="level3" data-number="24.3.2">
+<h3 data-number="24.3.2" class="anchored" data-anchor-id="get-webhook-signing-secret"><span class="header-section-number">24.3.2</span> Get Webhook Signing Secret</h3>
 <p>You’ll use a webhook to let Stripe notify your app about subscription changes.</p>
 <ol type="1">
 <li><p>Go to <strong>Developers → Webhooks</strong> in Stripe.</p></li>
 <li><p>Click <strong>+ Add endpoint</strong>.</p></li>
-<li><p>For now, you can use a temporary URL (you’ll update it later), such as:</p>
-<ul>
-<li>a local tunneling URL from <code>stripe listen</code> or <code>ngrok</code>, <strong>or</strong></li>
-<li>leave it blank until your Supabase function URL is known.</li>
-</ul></li>
+<li><p>For now, you can use a temporary URL (you’ll update it later), such as: <code>https://mybogusurl.com/</code> <!--
+   - a local tunneling URL from `stripe listen` or `ngrok`, **or**
+   - leave it blank until your Supabase function URL is known.
+--></p></li>
 <li><p>Under <strong>Select events to send</strong>, add:</p>
 <ul>
 <li><code>checkout.session.completed</code></li>
@@ -598,6 +609,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

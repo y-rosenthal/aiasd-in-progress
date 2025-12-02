@@ -77,6 +77,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -321,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Create env files</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -333,13 +336,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Create a Supabase Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>17b. </yrchapternumber> Step 5a: Install the Supabase CLI command</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>17b. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -495,9 +498,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#create-openai-account" id="toc-create-openai-account" class="nav-link active" data-scroll-target="#create-openai-account"><span class="header-section-number">23.0.1</span> Create OpenAI Account</a></li>
-  <li><a href="#generate-api-key" id="toc-generate-api-key" class="nav-link" data-scroll-target="#generate-api-key"><span class="header-section-number">23.0.2</span> Generate API Key</a></li>
-  <li><a href="#store-as-supabase-secret" id="toc-store-as-supabase-secret" class="nav-link" data-scroll-target="#store-as-supabase-secret"><span class="header-section-number">23.0.3</span> Store as Supabase Secret</a></li>
+  <li><a href="#create-openai-account" id="toc-create-openai-account" class="nav-link active" data-scroll-target="#create-openai-account"><span class="header-section-number">23.1</span> Create OpenAI Account</a></li>
+  <li><a href="#create-a-project-optional" id="toc-create-a-project-optional" class="nav-link" data-scroll-target="#create-a-project-optional"><span class="header-section-number">23.2</span> Create a “project” (optional)</a>
+  <ul class="collapse">
+  <li><a href="#click-settings-gear-button" id="toc-click-settings-gear-button" class="nav-link" data-scroll-target="#click-settings-gear-button"><span class="header-section-number">23.2.1</span> Click settings (gear) button</a></li>
+  <li><a href="#select-projects" id="toc-select-projects" class="nav-link" data-scroll-target="#select-projects"><span class="header-section-number">23.2.2</span> Select “projects”</a></li>
+  <li><a href="#click-create" id="toc-click-create" class="nav-link" data-scroll-target="#click-create"><span class="header-section-number">23.2.3</span> Click “create”</a></li>
+  <li><a href="#give-your-project-a-name" id="toc-give-your-project-a-name" class="nav-link" data-scroll-target="#give-your-project-a-name"><span class="header-section-number">23.2.4</span> Give your project a name</a></li>
+  </ul></li>
+  <li><a href="#create-api-keys" id="toc-create-api-keys" class="nav-link" data-scroll-target="#create-api-keys"><span class="header-section-number">23.3</span> Create API keys</a>
+  <ul class="collapse">
+  <li><a href="#click-api-keys" id="toc-click-api-keys" class="nav-link" data-scroll-target="#click-api-keys"><span class="header-section-number">23.3.1</span> Click <strong>API Keys</strong></a></li>
+  <li><a href="#click-create-new-secret-key." id="toc-click-create-new-secret-key." class="nav-link" data-scroll-target="#click-create-new-secret-key."><span class="header-section-number">23.3.2</span> Click <strong>Create new secret key</strong>.</a></li>
+  <li><a href="#key-owner---you-or-a-service-account" id="toc-key-owner---you-or-a-service-account" class="nav-link" data-scroll-target="#key-owner---you-or-a-service-account"><span class="header-section-number">23.3.3</span> Key Owner - “YOU” or a “SERVICE ACCOUNT”</a></li>
+  <li><a href="#copy-the-key-immediately-you-wont-be-able-to-see-it-again." id="toc-copy-the-key-immediately-you-wont-be-able-to-see-it-again." class="nav-link" data-scroll-target="#copy-the-key-immediately-you-wont-be-able-to-see-it-again."><span class="header-section-number">23.3.4</span> Copy the key immediately — you won’t be able to see it again.</a></li>
+  </ul></li>
+  <li><a href="#setting-permissions-for-keys-owned-by-a-service-account-1" id="toc-setting-permissions-for-keys-owned-by-a-service-account-1" class="nav-link" data-scroll-target="#setting-permissions-for-keys-owned-by-a-service-account-1"><span class="header-section-number">23.4</span> Setting permissions for keys owned by a “Service Account”</a>
+  <ul class="collapse">
+  <li><a href="#store-as-supabase-secret" id="toc-store-as-supabase-secret" class="nav-link" data-scroll-target="#store-as-supabase-secret"><span class="header-section-number">23.4.1</span> Store as Supabase Secret</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -523,40 +542,110 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>You’ll use OpenAI from a Supabase Edge Function, so the key must live in Supabase secrets (not in your frontend).</p>
-<section id="create-openai-account" class="level3" data-number="23.0.1">
-<h3 data-number="23.0.1" class="anchored" data-anchor-id="create-openai-account"><span class="header-section-number">23.0.1</span> Create OpenAI Account</h3>
+<p>Click here <a href="https://platform.openai.com/docs/quickstart" class="uri">https://platform.openai.com/docs/quickstart</a> for the OpenAI official quickstart guide.</p>
+<p>See below for step by step instructions.</p>
+<section id="create-openai-account" class="level2" data-number="23.1">
+<h2 data-number="23.1" class="anchored" data-anchor-id="create-openai-account"><span class="header-section-number">23.1</span> Create OpenAI Account</h2>
 <ol type="1">
-<li>Go to the OpenAI Platform: <a href="https://platform.openai.com/" class="uri">https://platform.openai.com/</a></li>
-<li>Sign up or log in to your account.</li>
-<li>Open the <strong>Dashboard → API Keys</strong> (or <strong>Settings → API Keys</strong>) section.</li>
+<li><p>Go to the OpenAI Platform: <a href="https://platform.openai.com/" class="uri">https://platform.openai.com/</a></p></li>
+<li><p>Sign up or log in to your account.</p></li>
+<li><p>Open the <strong>Dashboard</strong> (or click on the gear for settings) <a href="images/openaiApi-000100-dashboard.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/openaiApi-000100-dashboard.png" class="img-fluid" width="300"></a></p></li>
 </ol>
 </section>
-<section id="generate-api-key" class="level3" data-number="23.0.2">
-<h3 data-number="23.0.2" class="anchored" data-anchor-id="generate-api-key"><span class="header-section-number">23.0.2</span> Generate API Key</h3>
-<ol type="1">
-<li>Click <strong>Create new secret key</strong>.</li>
-<li>Give it a recognizable name (e.g., <code>edge-functions-prod</code>).</li>
-<li>Copy the key immediately — you won’t be able to see it again.</li>
-<li>Store it securely in a password manager or secrets manager.</li>
-<li><strong>Never</strong> commit this key to Git or expose it in client-side code.</li>
-</ol>
+<section id="create-a-project-optional" class="level2" data-number="23.2">
+<h2 data-number="23.2" class="anchored" data-anchor-id="create-a-project-optional"><span class="header-section-number">23.2</span> Create a “project” (optional)</h2>
+<p>All OpenAI API keys are associated with a “project”. You automatically have one “Default Project”. However, it can be helpful to create a new OpenAI “project” for every website or other product you are creating.</p>
+<p>OpenAI “projects” allow for more control as to how your API Keys are used.</p>
+<p>When you use a “project” …</p>
+<ul>
+<li><p>you can have several people in your team share the API Key</p></li>
+<li><p>you can set more fine grained permissions as to how the project can use the key</p></li>
+</ul>
+<p>See here for more info about Open AI projects: <a href="https://help.openai.com/en/articles/9186755-managing-projects-in-the-api-platform" class="uri">https://help.openai.com/en/articles/9186755-managing-projects-in-the-api-platform</a></p>
+<p>To create a project, do the following:</p>
+<section id="click-settings-gear-button" class="level3" data-number="23.2.1">
+<h3 data-number="23.2.1" class="anchored" data-anchor-id="click-settings-gear-button"><span class="header-section-number">23.2.1</span> Click settings (gear) button</h3>
+<p><a href="images/openaiApi-000400-dashboard-settings.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/openaiApi-000400-dashboard-settings.png" class="img-fluid" width="300"></a></p>
 </section>
-<section id="store-as-supabase-secret" class="level3" data-number="23.0.3">
-<h3 data-number="23.0.3" class="anchored" data-anchor-id="store-as-supabase-secret"><span class="header-section-number">23.0.3</span> Store as Supabase Secret</h3>
+<section id="select-projects" class="level3" data-number="23.2.2">
+<h3 data-number="23.2.2" class="anchored" data-anchor-id="select-projects"><span class="header-section-number">23.2.2</span> Select “projects”</h3>
+<p><a href="images/openaiApi-000500-projects.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/openaiApi-000500-projects.png" class="img-fluid" width="300"></a></p>
+</section>
+<section id="click-create" class="level3" data-number="23.2.3">
+<h3 data-number="23.2.3" class="anchored" data-anchor-id="click-create"><span class="header-section-number">23.2.3</span> Click “create”</h3>
+<p><a href="images/openaiApi-000600-projects-create.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/openaiApi-000600-projects-create.png" class="img-fluid" width="300"></a></p>
+</section>
+<section id="give-your-project-a-name" class="level3" data-number="23.2.4">
+<h3 data-number="23.2.4" class="anchored" data-anchor-id="give-your-project-a-name"><span class="header-section-number">23.2.4</span> Give your project a name</h3>
+<p><a href="images/openaiApi-000600-projects-create-dialog.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/openaiApi-000600-projects-create-dialog.png" class="img-fluid" width="300"></a></p>
+</section>
+</section>
+<section id="create-api-keys" class="level2" data-number="23.3">
+<h2 data-number="23.3" class="anchored" data-anchor-id="create-api-keys"><span class="header-section-number">23.3</span> Create API keys</h2>
+<section id="click-api-keys" class="level3" data-number="23.3.1">
+<h3 data-number="23.3.1" class="anchored" data-anchor-id="click-api-keys"><span class="header-section-number">23.3.1</span> Click <strong>API Keys</strong></h3>
+<p><a href="images/openaiApi-000200-apiKeys.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/openaiApi-000200-apiKeys.png" class="img-fluid" width="300"></a></p>
+</section>
+<section id="click-create-new-secret-key." class="level3" data-number="23.3.2">
+<h3 data-number="23.3.2" class="anchored" data-anchor-id="click-create-new-secret-key."><span class="header-section-number">23.3.2</span> Click <strong>Create new secret key</strong>.</h3>
+<p><a href="images/openaiApi-000300-createNewKey.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/openaiApi-000300-createNewKey.png" class="img-fluid" width="300"></a></p>
+</section>
+<section id="key-owner---you-or-a-service-account" class="level3" data-number="23.3.3">
+<h3 data-number="23.3.3" class="anchored" data-anchor-id="key-owner---you-or-a-service-account"><span class="header-section-number">23.3.3</span> Key Owner - “YOU” or a “SERVICE ACCOUNT”</h3>
+<p>When creating the key you need to specify whether the key is owned by “you” or by a “service account”. See more explanation below.</p>
+<p><a href="images/openaiApi-000700-createApiKey-ownerYou.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/openaiApi-000700-createApiKey-ownerYou.png" class="img-fluid" style="width:48.0%"></a> <a href="images/openaiApi-000800-createApiKey-ownerServiceAccount.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="images/openaiApi-000800-createApiKey-ownerServiceAccount.png" class="img-fluid" style="width:48.0%"></a></p>
+<p>API Keys that are owned directly by “you” are useful when you are performing experiments with AI or just getting to understand how things work. In addition <em>some</em> 3rd part websites ask you to upload an OpenAI API key so that the work that they do for you is billed to YOUR OpenAI API key - i.e.&nbsp;the service doesn’t pay for the AI processing it does on your behalf, you do. It makes sense for these types of keys to be owned by “You”.</p>
+<p>However, when creating software products that use API Keys it’s recommended to create a “Service Account” for that product and have the key be owned by that service account. The use of the key can then be tracked to your product’s “service account”.</p>
+<section id="setting-permissions-for-keys-owned-by-you" class="level4">
+<h4 class="anchored" data-anchor-id="setting-permissions-for-keys-owned-by-you">Setting permissions for keys owned by “You”</h4>
+<p>If you create a key that is owned by “You” (see above) then you are given the opportunity to set permissions that govern what is and what isn’t allowed to be done with the key. This is especially important if you are going to be using your API Key to access 3rd party services. You can restrict the API Key to only allow some features to ensure that the 3rd party service doesn’t abuse the use of the key (as use of the API key would be charged to you).</p>
+<p>If you create a key that is owned by a “Service Account” (as recommended for this project) then you can set permissions</p>
+</section>
+<section id="setting-permissions-for-keys-owned-by-a-service-account" class="level4">
+<h4 class="anchored" data-anchor-id="setting-permissions-for-keys-owned-by-a-service-account">Setting permissions for keys owned by a “Service Account”</h4>
+<p>By contrast, the permissions for a key that is owned by a “Service Account” are governed by the service account’s “role”. To change what the key can do, you must change the service account’s roles/permissions, not the key. We’ll see below (after saving the key) how to modify the permissions for such a key.</p>
+</section>
+</section>
+<section id="copy-the-key-immediately-you-wont-be-able-to-see-it-again." class="level3" data-number="23.3.4">
+<h3 data-number="23.3.4" class="anchored" data-anchor-id="copy-the-key-immediately-you-wont-be-able-to-see-it-again."><span class="header-section-number">23.3.4</span> Copy the key immediately — you won’t be able to see it again.</h3>
+<p>When you click “create secret key” (see above) you will be shown the actual key. Copy the key immediately and save it — you won’t be able to see it again.</p>
+<p>The key should be treated in the same way as a password. (In the following screenshot the API Key is purposely obscured). It is secret information which should never be divulged to anyone outside of your organization. Even within your organization, only people who have a “need to know” should be given access to the actual key value. Therefore do NOT commit this to git because git repos are often shared with people who should not have access to this type of info.</p>
+<p><a href="images/openaiApi-000900-createApiKey-saveTheKey.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="images/openaiApi-000900-createApiKey-saveTheKey.png" class="img-fluid" width="300"></a></p>
+<p>In the next section we will explain how to store this API Key in the supabase/.env file. This is because the communication with OpenAI will be done via a Supabase Edge Function. Much of the other “secret” information that we will be using in this tutorial will also be stored in .env files (see the section above that describes more about .env files).</p>
+<p>For now, I recommend that for the purposes of this tutorial, you also store all of the secret info in a Word document (or similar). This is <strong><em>NOT</em></strong> the recommended approach for actual software development projects. However, as you are learning it can be helpful to have one file that stores all of the “secret information” in one place. You can store notes and screenshots in this file that help you remember where you got the information (e.g.&nbsp;OpenAI) and what it will be used for.</p>
+</section>
+</section>
+<section id="setting-permissions-for-keys-owned-by-a-service-account-1" class="level2" data-number="23.4">
+<h2 data-number="23.4" class="anchored" data-anchor-id="setting-permissions-for-keys-owned-by-a-service-account-1"><span class="header-section-number">23.4</span> Setting permissions for keys owned by a “Service Account”</h2>
+<p>How to adjust permissions:</p>
+<p>Go to Organization → Admin keys / Service accounts.</p>
+<p>Select the service account.</p>
+<p>Modify its assigned roles/permissions.</p>
+<p>All keys for that service account will now reflect those updated permissions.</p>
+<p>If you’d like, I can outline how to set up a more restrictive service account.</p>
+<section id="store-as-supabase-secret" class="level3" data-number="23.4.1">
+<h3 data-number="23.4.1" class="anchored" data-anchor-id="store-as-supabase-secret"><span class="header-section-number">23.4.1</span> Store as Supabase Secret</h3>
 <p>You’ll configure your Edge Functions to read <code>OPENAI_API_KEY</code> from the Supabase environment.</p>
 <ol type="1">
-<li><p>Install Supabase CLI (if you haven’t already):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> supabase</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Link your local project to your Supabase project:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> link <span class="at">--project-ref</span> <span class="pp">[</span><span class="ss">your</span><span class="pp">-</span><span class="ss">project</span><span class="pp">-</span><span class="ss">ref</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can find <code>[your-project-ref]</code> in the URL of your Supabase project dashboard.</p></li>
-<li><p>Set the secret in Supabase:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> secrets set OPENAI_API_KEY=your-openai-key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Verify in the Supabase dashboard (<strong>Project Settings → API → Secrets</strong>) that <code>OPENAI_API_KEY</code> is present.</p></li>
+<li><p>Install Supabase CLI (if you haven’t already)</p>
+<p>(see the chapter above about the Supabase CLI)</p></li>
+<li><p>Link your local project to your Supabase project (if you haven’t already)</p>
+<p>(see the chapter above about the Supabase CLI)</p></li>
+<li><p>Run the following command to set the secret in Supabase, where “your-openai-key” is the tet of the key that you just got from openai</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> secrets set OPENAI_API_KEY=your-openai-key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Confirm that the key was set:</p>
+<p>You can run the following command to confirm that there is an OPENAI_API_KEY set to some value. However, the “DIGEST” that is shown here is NOT the actual key. This is done for security reasons. You can delete the key and reset it but you cannot see the actual value for the key.</p>
+<blockquote class="blockquote">
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>NAME           | DIGEST                                                           
+----------------|------------------------------------------------------------------
+ OPENAI_API_KEY | 661627b246146bfd00805f19997db43c066fba3002fabe2ed6a9922c8db29f87 </code></pre>
+</blockquote>
+<p>You can also use the supabase website dashboard (<strong>Project Settings → API → Secrets</strong>) to see the same info.</p></li>
 </ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -987,6 +1076,38 @@ titles.forEach(title => {
   }
 });
 </script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

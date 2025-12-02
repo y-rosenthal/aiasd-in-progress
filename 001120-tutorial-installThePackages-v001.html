@@ -321,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Create env files</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -333,13 +333,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Create a Supabase Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>17b. </yrchapternumber> Step 5a: Install the Supabase CLI command</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>17b. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -504,7 +504,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#npm-package-version-numbers" id="toc-npm-package-version-numbers" class="nav-link" data-scroll-target="#npm-package-version-numbers"><span class="header-section-number">17.4</span> npm package version numbers</a></li>
   <li><a href="#using-a-before-a-version-number-e.g.-1.1.2" id="toc-using-a-before-a-version-number-e.g.-1.1.2" class="nav-link" data-scroll-target="#using-a-before-a-version-number-e.g.-1.1.2"><span class="header-section-number">17.5</span> using a “^” before a version number (e.g.&nbsp;“^1.1.2”)</a></li>
   <li><a href="#package-lock.json-records-the-exact-version-numbers-that-were-used" id="toc-package-lock.json-records-the-exact-version-numbers-that-were-used" class="nav-link" data-scroll-target="#package-lock.json-records-the-exact-version-numbers-that-were-used"><span class="header-section-number">17.6</span> package-lock.json records the exact version numbers that were used</a></li>
-  <li><a href="#depricated-warning-messages-when-doing-npm-install" id="toc-depricated-warning-messages-when-doing-npm-install" class="nav-link" data-scroll-target="#depricated-warning-messages-when-doing-npm-install"><span class="header-section-number">17.7</span> Depricated warning messages when doing npm install</a></li>
+  <li><a href="#deprecated-warning-messages-when-doing-npm-install" id="toc-deprecated-warning-messages-when-doing-npm-install" class="nav-link" data-scroll-target="#deprecated-warning-messages-when-doing-npm-install"><span class="header-section-number">17.7</span> Deprecated warning messages when doing npm install</a></li>
   <li><a href="#additional-rules-for-package-version-numbers-in-package.json-file" id="toc-additional-rules-for-package-version-numbers-in-package.json-file" class="nav-link" data-scroll-target="#additional-rules-for-package-version-numbers-in-package.json-file"><span class="header-section-number">17.8</span> Additional rules for package version numbers in package.json file</a>
   <ul class="collapse">
   <li><a href="#exact-version-number-no-extra-special-characters" id="toc-exact-version-number-no-extra-special-characters" class="nav-link" data-scroll-target="#exact-version-number-no-extra-special-characters"><span class="header-section-number">17.8.1</span> 1) Exact version number (no extra special characters)</a></li>
@@ -561,7 +561,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 This file should be in the top folder (i.e.&nbsp;“root folder”) for the project.<br>
 (See more about the exact format of the <code>package.json</code> file below).</p></li>
 <li><p><strong>Run the <code>npm install</code> command in the terminal from the root folder for the project.</strong><br>
-The <code>npm install</code> command downloads the packages that are used by this project into a folder named node_packages. (We’ll discuss this command more below).</p></li>
+The <code>npm install</code> command downloads the packages that are used by this project into a folder named node_modules. (We’ll discuss this command more below).</p></li>
 </ul>
 </section>
 <section id="more-about-the-package.json-file" class="level2" data-number="17.2">
@@ -736,9 +736,9 @@ For example the version number 0.7.1 has</p>
 <li><p>If there is no <code>package-lock.json</code> file in the project then the versions of the packages as indicated in the package.json file are downloaded to the node_modules folder. Note that these could be later versions than the actual numbers listed in the file. For example if the package.json file lists version ^1.7.3 then the latest version number that still has a 1 in the first position will be installed. (see above for more info about version numbers in the package.json file)</p></li>
 </ul>
 </section>
-<section id="depricated-warning-messages-when-doing-npm-install" class="level2" data-number="17.7">
-<h2 data-number="17.7" class="anchored" data-anchor-id="depricated-warning-messages-when-doing-npm-install"><span class="header-section-number">17.7</span> Depricated warning messages when doing npm install</h2>
-<p>You may have noticed above that when you ran npm install, you got warning messages saying that one or more packages have been “depricated”. This means that there may be PATCH releases that fix bugs in the version of the package that you installed. This could happen if the package-lock.json file that was in the git repo has versions of packages that had later releases of new versions after the package-lock.json was created.</p>
+<section id="deprecated-warning-messages-when-doing-npm-install" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="deprecated-warning-messages-when-doing-npm-install"><span class="header-section-number">17.7</span> Deprecated warning messages when doing npm install</h2>
+<p>You may have noticed above that when you ran npm install, you got warning messages saying that one or more packages have been “deprecated”. In npm, a deprecation warning can refer either to an entire package or, more commonly, to a specific version of a package. In most cases, it means that the maintainers recommend upgrading to a newer version because the version being installed is outdated, has known issues, or has been superseded. This could happen if the package-lock.json file that was in the git repo has versions of packages that had later releases of new versions after the package-lock.json was created.</p>
 <p>This generally should not be a problem for a learning tutorial. However, if you are planning on using this code in “production” it is recommended that you delete the package-lock.json file and re-run <code>npm install</code>. This should install the later versions of those packages that may have fixed some bugs. Hoewver, be aware the the original developer did not use these new package versions and therefore the code you have might not work 100% as expected and you <em>might</em> need to spend a little time debugging and testing the application.</p>
 </section>
 <section id="additional-rules-for-package-version-numbers-in-package.json-file" class="level2" data-number="17.8">
@@ -872,8 +872,13 @@ For example the version number 0.7.1 has</p>
 </section>
 <section id="caret-range-allow-non-breaking-updates-same-major---discussed-above" class="level3" data-number="17.8.2">
 <h3 data-number="17.8.2" class="anchored" data-anchor-id="caret-range-allow-non-breaking-updates-same-major---discussed-above"><span class="header-section-number">17.8.2</span> 2) Caret range (<code>^</code>) — allow non-breaking updates (same major) - discussed above</h3>
+<p>The idea of the <code>^</code> is to only allow newer versions that will not break existing code. In general this means it allows for newer versions that have the same major number. For example:</p>
 <ul>
 <li><code>^1.2.3</code> → <code>&gt;=1.2.3 &lt;2.0.0</code></li>
+</ul>
+<p>However, if the major version is 0 (e.g.&nbsp;0.2.3) the caret works a little differently. A major version 0 is intended to signal that the package is still experimental or under active development. Because the package is not considered stable, even small changes—like a minor or patch update—may break existing code.</p>
+<p>For this reason, npm’s version range rules become more restrictive for major-zero versions: the <code>^</code> will only allow updates that keep the left-most non-zero digit the same. This prevents accidentally upgrading to a version that might introduce breaking changes. For example:</p>
+<ul>
 <li><code>^0.2.3</code> → <code>&gt;=0.2.3 &lt;0.3.0</code> (major=0 is special)</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span> <span class="dt">"dependencies"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"lodash"</span><span class="fu">:</span> <span class="st">"^4.17.21"</span> <span class="fu">}</span> <span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -914,7 +919,7 @@ For example the version number 0.7.1 has</p>
 <h3 data-number="17.8.7" class="anchored" data-anchor-id="pre-releases"><span class="header-section-number">17.8.7</span> 7) Pre-releases</h3>
 <ul>
 <li>Append identifiers like <code>-alpha.1</code>, <code>-beta</code>, etc.</li>
-<li>Must match explicitly (e.g., <code>^2.0.0-beta.1</code> won’t include <code>2.0.0</code> unless allowed by the range).</li>
+<li>Pre-release … Must match explicitly. A prerelease like <code>^2.0.0-beta.1</code> will not include the final <code>2.0.0</code> version unless the range explicitly allows it (per npm’s semver rules).</li>
 </ul>
 <div class="sourceCode" id="cb13"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span> <span class="dt">"dependencies"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"react"</span><span class="fu">:</span> <span class="st">"^19.0.0-rc.0"</span> <span class="fu">}</span> <span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
@@ -1408,8 +1413,8 @@ For example the version number 0.7.1 has</p>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./001130-tutorial-envFiles-v001.html" class="pagination-link" aria-label="<yrChapterNumber>15. </yrChapterNumber> Step 3: Create env files">
-        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Create env files</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./001130-tutorial-envFiles-v001.html" class="pagination-link" aria-label="<yrChapterNumber>15. </yrChapterNumber> Step 3: Storing your private info (env files, etc)">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
