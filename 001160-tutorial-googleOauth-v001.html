@@ -464,9 +464,22 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#create-a-google-cloud-project" id="toc-create-a-google-cloud-project" class="nav-link active" data-scroll-target="#create-a-google-cloud-project"><span class="header-section-number">22.1</span> Create a Google Cloud Project</a></li>
-  <li><a href="#configure-the-oauth-consent-screen" id="toc-configure-the-oauth-consent-screen" class="nav-link" data-scroll-target="#configure-the-oauth-consent-screen"><span class="header-section-number">22.2</span> Configure the OAuth Consent Screen</a></li>
-  <li><a href="#get-your-oauth-credentials" id="toc-get-your-oauth-credentials" class="nav-link" data-scroll-target="#get-your-oauth-credentials"><span class="header-section-number">22.3</span> Get Your OAuth Credentials</a></li>
-  <li><a href="#configure-google-auth-in-supabase" id="toc-configure-google-auth-in-supabase" class="nav-link" data-scroll-target="#configure-google-auth-in-supabase"><span class="header-section-number">22.4</span> Configure Google Auth in Supabase</a></li>
+  <li><a href="#configure-the-oauth-consent-screen" id="toc-configure-the-oauth-consent-screen" class="nav-link" data-scroll-target="#configure-the-oauth-consent-screen"><span class="header-section-number">22.2</span> Configure the OAuth Consent Screen</a>
+  <ul class="collapse">
+  <li><a href="#googleOauth-1stTime" id="toc-googleOauth-1stTime" class="nav-link" data-scroll-target="#googleOauth-1stTime"><span class="header-section-number">22.2.1</span> First time setting up Google OAuth</a></li>
+  <li><a href="#googleOauth-2ndTime" id="toc-googleOauth-2ndTime" class="nav-link" data-scroll-target="#googleOauth-2ndTime"><span class="header-section-number">22.2.2</span> If you’ve started to setup Google OAuth before</a></li>
+  </ul></li>
+  <li><a href="#add-your-basic-app-info" id="toc-add-your-basic-app-info" class="nav-link" data-scroll-target="#add-your-basic-app-info"><span class="header-section-number">22.3</span> Add your basic app info:</a>
+  <ul class="collapse">
+  <li><a href="#app-name" id="toc-app-name" class="nav-link" data-scroll-target="#app-name"><span class="header-section-number">22.3.1</span> App name</a></li>
+  <li><a href="#user-support-email" id="toc-user-support-email" class="nav-link" data-scroll-target="#user-support-email"><span class="header-section-number">22.3.2</span> User support email</a></li>
+  <li><a href="#authorized-domains" id="toc-authorized-domains" class="nav-link" data-scroll-target="#authorized-domains"><span class="header-section-number">22.3.3</span> Authorized domains</a></li>
+  <li><a href="#audience" id="toc-audience" class="nav-link" data-scroll-target="#audience"><span class="header-section-number">22.3.4</span> Audience</a></li>
+  <li><a href="#developer-contact-information" id="toc-developer-contact-information" class="nav-link" data-scroll-target="#developer-contact-information"><span class="header-section-number">22.3.5</span> Developer Contact Information</a></li>
+  <li><a href="#click-save" id="toc-click-save" class="nav-link" data-scroll-target="#click-save"><span class="header-section-number">22.3.6</span> Click “Save”</a></li>
+  </ul></li>
+  <li><a href="#get-your-oauth-credentials" id="toc-get-your-oauth-credentials" class="nav-link" data-scroll-target="#get-your-oauth-credentials"><span class="header-section-number">22.4</span> Get Your OAuth Credentials</a></li>
+  <li><a href="#configure-google-auth-in-supabase" id="toc-configure-google-auth-in-supabase" class="nav-link" data-scroll-target="#configure-google-auth-in-supabase"><span class="header-section-number">22.5</span> Configure Google Auth in Supabase</a></li>
   </ul>
 </nav>
     </div>
@@ -513,12 +526,13 @@ Note
 <section id="create-a-google-cloud-project" class="level2" data-number="22.1">
 <h2 data-number="22.1" class="anchored" data-anchor-id="create-a-google-cloud-project"><span class="header-section-number">22.1</span> Create a Google Cloud Project</h2>
 <ol type="1">
-<li><p>Go to <a href="https://console.cloud.google.com/" class="uri">https://console.cloud.google.com/</a> and login with your google userid and password. Then click “select a project”.</p>
-<p><a href="images/googleCloud-00005-firstProject.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/googleCloud-00005-firstProject.png" class="img-fluid" width="300"></a></p></li>
-<li><p>Click <strong>Create Project</strong> and give it a clear name</p>
+<li><p>Go to <a href="https://console.cloud.google.com/" class="uri">https://console.cloud.google.com/</a> and login with your google userid and password.</p>
+<p><a href="images/googleCloud-00005-firstProject.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/googleCloud-00005-firstProject.png" class="img-fluid" width="300"></a></p>
+<p>The rectangle in the upper left corner shows the project you are working on. If you’ve never used google cloud the box will say “Select a project” (as it does in the screenshot.) Click on the rectangle to select the project you want. See next step to create a new project.</p></li>
+<li><p>To create a new project, click <strong>Create Project</strong> and give it a clear name</p>
 <p><a href="images/googleCloud-00007-newProject.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/googleCloud-00007-newProject.png" class="img-fluid" width="300"></a></p></li>
 <li><p>Enter a name for your project and click the create button.</p>
-<p><a href="images/googleCloud-00020-createNewProject.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/googleCloud-00020-createNewProject.png" class="img-fluid" width="300"></a></p></li>
+<p><a href="images/googleCloud-00020-createNewProject2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/googleCloud-00020-createNewProject2.png" class="img-fluid" width="300"></a></p></li>
 <li><p>Navigate to <strong>APIs &amp; Services → Credentials</strong>.</p>
 <p><a href="images/googleCloud-00030-ApisAndServices.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/googleCloud-00030-ApisAndServices.png" class="img-fluid" width="300"></a></p>
 <p><a href="images/googleCloud-00040-ApisAndServices-credentials.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/googleCloud-00040-ApisAndServices-credentials.png" class="img-fluid" width="300"></a></p></li>
@@ -529,9 +543,28 @@ Note
 </section>
 <section id="configure-the-oauth-consent-screen" class="level2" data-number="22.2">
 <h2 data-number="22.2" class="anchored" data-anchor-id="configure-the-oauth-consent-screen"><span class="header-section-number">22.2</span> Configure the OAuth Consent Screen</h2>
-<ol type="1">
-<li><p>Continue as shown below or start again from <strong>APIs &amp; Services → OAuth consent screen</strong>.</p>
-<p>This step can be accomplished in one of two ways. Read the following “Notes”. ::: {.callout-note} If you followed all of the above steps, you should see the following screen. Click as shown below. (However, if you took a break from what you were doing you can continue by going to back to <a href="https://console.cloud.google.com/" class="uri">https://console.cloud.google.com/</a> and clicking on APIs &amp; Services as shown in the next NOTE. :::</p>
+<p>The flow takes a slightly different path if you’ve never setup Google OAuth for this project or if you have started to set it up before.</p>
+<ul>
+<li><p>If this is the first time you’re setting up Google OAuth use the <a href="#googleOauth-1stTime">steps shown below</a>.</p></li>
+<li><p>If you started to setup Google OAuth below - <a href="#googleOauth-2ndTime">skip to the next section.</a></p></li>
+</ul>
+<section id="googleOauth-1stTime" class="level3" data-number="22.2.1">
+<h3 data-number="22.2.1" class="anchored" data-anchor-id="googleOauth-1stTime"><span class="header-section-number">22.2.1</span> First time setting up Google OAuth</h3>
+<p>Continue as shown below or start again from <strong>APIs &amp; Services → OAuth consent screen</strong>.</p>
+<p>This step can be accomplished in one of two ways. Read the following “Note”.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you followed all of the above steps, you should see the following screen. Click as shown below. (However, if you took a break from what you were doing you can continue by going to back to <a href="https://console.cloud.google.com/" class="uri">https://console.cloud.google.com/</a> and clicking on APIs &amp; Services as shown in the next NOTE.</p>
+</div>
+</div>
 <p><a href="images/googCld-00060-ApisAndServices-oauthConsentScreen.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/googCld-00060-ApisAndServices-oauthConsentScreen.png" class="img-fluid" width="300"></a></p>
 <p><a href="images/googCld-00070-ApisAndServices-oauthConsentScreen-getStarted.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/googCld-00070-ApisAndServices-oauthConsentScreen-getStarted.png" class="img-fluid" width="300"></a></p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -548,32 +581,73 @@ Note
 </div>
 </div>
 <p><a href="images/googleCloud-00030-ApisAndServices.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="images/googleCloud-00030-ApisAndServices.png" class="img-fluid" width="300"></a></p>
-<p><a href="images/googCld-00060-ApisAndServices-oauthConsentScreen2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="images/googCld-00060-ApisAndServices-oauthConsentScreen2.png" class="img-fluid" width="300"></a> <a href="images/googCld-00090-ApisAndServices-oauthConsentScreen3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="images/googCld-00090-ApisAndServices-oauthConsentScreen3.png" class="img-fluid" width="300"></a></p></li>
-<li><p>Add your basic app info:</p>
-<ul>
-<li><p>App name</p></li>
-<li><p>User support email</p></li>
-</ul>
-<p><a href="images/googCld-00100-appInfo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="images/googCld-00100-appInfo.png" class="img-fluid" width="300"></a></p></li>
-<li><p>Under “Audience” choose <strong>External</strong></p>
-<p>This will allow you app to be viewed from anywhere in the world. However, your app must undergo review by Google before being allowed to use Google OAuth2 externally. Until then you can setup “test users” with google accounts. Only the specified “test users” will be allowed to “sign in with google” until your app has been reviewed by Google.</p>
-<p>You will setup the test users laters.</p>
-<p><strong>NOTE:</strong> You can only choose “Internal” if you’ve setup an organization with Google.</p></li>
-<li><p>Under <strong>Authorized domains</strong>, add the domain used by your Supabase project.</p></li>
-<li><p>Under “Contact Information” specify an email address for Google to contact you for technical issues.</p></li>
-<li><p>Save and continue through the remaining steps.</p></li>
+<p><a href="images/googCld-00060-ApisAndServices-oauthConsentScreen2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="images/googCld-00060-ApisAndServices-oauthConsentScreen2.png" class="img-fluid" width="300"></a> <a href="images/googCld-00090-ApisAndServices-oauthConsentScreen3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="images/googCld-00090-ApisAndServices-oauthConsentScreen3.png" class="img-fluid" width="300"></a></p>
+</section>
+<section id="googleOauth-2ndTime" class="level3" data-number="22.2.2">
+<h3 data-number="22.2.2" class="anchored" data-anchor-id="googleOauth-2ndTime"><span class="header-section-number">22.2.2</span> If you’ve started to setup Google OAuth before</h3>
+<ol type="1">
+<li><p>Navigate back to <a href="https://console.cloud.google.com/" class="uri">https://console.cloud.google.com/</a> and click on APIs &amp; Services as shown below.</p>
+<p><a href="images/googleCloud-00030-ApisAndServices.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="images/googleCloud-00030-ApisAndServices.png" class="img-fluid" width="300"></a></p></li>
+<li><p>Then click on OAuth Consent Screen</p>
+<p><a href="images/googCld-00060-ApisAndServices-oauthConsentScreen2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="images/googCld-00060-ApisAndServices-oauthConsentScreen2.png" class="img-fluid" width="300"></a></p></li>
 </ol>
 </section>
-<section id="get-your-oauth-credentials" class="level2" data-number="22.3">
-<h2 data-number="22.3" class="anchored" data-anchor-id="get-your-oauth-credentials"><span class="header-section-number">22.3</span> Get Your OAuth Credentials</h2>
+</section>
+<section id="add-your-basic-app-info" class="level2" data-number="22.3">
+<h2 data-number="22.3" class="anchored" data-anchor-id="add-your-basic-app-info"><span class="header-section-number">22.3</span> Add your basic app info:</h2>
+<p>Whether this is the first time you are configuring Google OAuth, you should see one of the screens similar to those shown below.<em><em>NOTE</em> that if you have already started to configure Google OAuth before, you may need to click on the <strong>Branding</strong> option in the left hand menu (2nd choice from the top- see the blue oval in the picture). </em></p>
+<p>If you don’t see the info mentioned below, click on the different menu choices on the left hand side to search for where to enter the info below. Google often updates their website and the exact location for the info may have mooved by the time you read this.</p>
+<p>The information that you fill out on this screen will affect what the users see when they try to “login with google”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/googCld-00100-appInfo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="You may see this"><img src="images/googCld-00100-appInfo.png" class="img-fluid figure-img" width="300" alt="You may see this"></a></p>
+<figcaption>You may see this</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/googCld-00150-appInfo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="or may see this"><img src="images/googCld-00150-appInfo.png" class="img-fluid figure-img" width="300" alt="or may see this"></a></p>
+<figcaption>or may see this</figcaption>
+</figure>
+</div>
+<section id="app-name" class="level3" data-number="22.3.1">
+<h3 data-number="22.3.1" class="anchored" data-anchor-id="app-name"><span class="header-section-number">22.3.1</span> App name</h3>
+<p>A name for your app (users will see this)</p>
+</section>
+<section id="user-support-email" class="level3" data-number="22.3.2">
+<h3 data-number="22.3.2" class="anchored" data-anchor-id="user-support-email"><span class="header-section-number">22.3.2</span> User support email</h3>
+<p>email for users to contact you with questions</p>
+</section>
+<section id="authorized-domains" class="level3" data-number="22.3.3">
+<h3 data-number="22.3.3" class="anchored" data-anchor-id="authorized-domains"><span class="header-section-number">22.3.3</span> Authorized domains</h3>
+<p>Under <strong>Authorized domains</strong>, add the domain used by your Supabase project. For example: <strong><em>bysrsyzsihcpsomfkyja.supabase.co</em></strong> You can get this from your Supabase dashboard. If you have been following this tutorial in order this info should also be in the .env.local file if you have in your top level folder for your project.</p>
+</section>
+<section id="audience" class="level3" data-number="22.3.4">
+<h3 data-number="22.3.4" class="anchored" data-anchor-id="audience"><span class="header-section-number">22.3.4</span> Audience</h3>
+<p>Under “Audience” choose <strong>External</strong></p>
+<p>This will allow you app to be viewed from anywhere in the world. However, your app must undergo review by Google before being allowed to use Google OAuth2 externally. Until then you can setup “test users” with google accounts. Only the specified “test users” will be allowed to “sign in with google” until your app has been reviewed by Google.</p>
+<p>You will setup the test users later.</p>
+<p><strong>NOTE:</strong> You can only choose “Internal” if you’ve setup an organization with Google.</p>
+</section>
+<section id="developer-contact-information" class="level3" data-number="22.3.5">
+<h3 data-number="22.3.5" class="anchored" data-anchor-id="developer-contact-information"><span class="header-section-number">22.3.5</span> Developer Contact Information</h3>
+<p>Type an email address for Google to contact you for technical issues.</p>
+</section>
+<section id="click-save" class="level3" data-number="22.3.6">
+<h3 data-number="22.3.6" class="anchored" data-anchor-id="click-save"><span class="header-section-number">22.3.6</span> Click “Save”</h3>
+<p>Save and continue through the remaining steps.</p>
+</section>
+</section>
+<section id="get-your-oauth-credentials" class="level2" data-number="22.4">
+<h2 data-number="22.4" class="anchored" data-anchor-id="get-your-oauth-credentials"><span class="header-section-number">22.4</span> Get Your OAuth Credentials</h2>
 <ol type="1">
 <li><p>Return to <strong>APIs &amp; Services → Credentials</strong>.</p>
 <p>Click as below to create an <strong>OAuth 2.0 Client ID</strong>.</p>
-<p><a href="images/googCld-00110-clientId1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="images/googCld-00110-clientId1.png" class="img-fluid" width="300"></a></p></li>
+<p><a href="images/googCld-00110-clientId1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="images/googCld-00110-clientId1.png" class="img-fluid" width="300"></a></p></li>
 <li><p>Choose <strong>Web application</strong> as the application type.</p>
-<p><a href="images/googCld-00120-clientId2-webApp.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="images/googCld-00120-clientId2-webApp.png" class="img-fluid" width="300"></a> You need to give a name to the application (Web client 1” in the screenshot below). This name is only used internal to the Google Cloud environment to refer to the application that you are setting up. This name will not appear anywhere to your users.</p>
+<p><a href="images/googCld-00120-clientId2-webApp.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="images/googCld-00120-clientId2-webApp.png" class="img-fluid" width="300"></a> You need to give a name to the application (Web client 1” in the screenshot below). This name is only used internal to the Google Cloud environment to refer to the application that you are setting up. This name will not appear anywhere to your users.</p>
 <p>You then need to setup the URIs (i.e.&nbsp;URLs) that the Supabase servers will be contacted with from Google to indicate that the login was successful. You need to get this info from your Supabase configuration. This info was also saved in your .env.local file</p>
-<p><a href="images/googCld-00130-clientId3-redirectUris.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="images/googCld-00130-clientId3-redirectUris.png" class="img-fluid" width="300"></a></p></li>
+<p><a href="images/googCld-00130-clientId3-redirectUris.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="images/googCld-00130-clientId3-redirectUris.png" class="img-fluid" width="300"></a></p></li>
 <li><p>Add your Supabase callback URL under <strong>Authorized redirect URIs</strong>: <code>https://[your-project-ref].supabase.co/auth/v1/callback</code></p>
 <p>You can get <strong>your-project-ref</strong> by doing one of the following:</p>
 <ul>
@@ -590,11 +664,11 @@ Note
 </ul></li>
 <li><p>Click “Create button”</p>
 <p>After creation, copy your <strong>Client ID</strong> and <strong>Client Secret</strong>. You WILL NOT BE ABLE TO GET THESE CODES AGAIN FROM GOOGLE. Store these codes in a safe place. DO NOT store these code in any files that will be committed to git.</p>
-<p><a href="images/googCld-00140-oauthClientKey-created.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="images/googCld-00140-oauthClientKey-created.png" class="img-fluid" width="300"></a></p></li>
+<p><a href="images/googCld-00140-oauthClientKey-created.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="images/googCld-00140-oauthClientKey-created.png" class="img-fluid" width="300"></a></p></li>
 </ol>
 </section>
-<section id="configure-google-auth-in-supabase" class="level2" data-number="22.4">
-<h2 data-number="22.4" class="anchored" data-anchor-id="configure-google-auth-in-supabase"><span class="header-section-number">22.4</span> Configure Google Auth in Supabase</h2>
+<section id="configure-google-auth-in-supabase" class="level2" data-number="22.5">
+<h2 data-number="22.5" class="anchored" data-anchor-id="configure-google-auth-in-supabase"><span class="header-section-number">22.5</span> Configure Google Auth in Supabase</h2>
 <ol type="1">
 <li>Open your <strong>Supabase dashboard</strong>.</li>
 <li>Navigate to <strong>Authentication → Providers</strong>.</li>
