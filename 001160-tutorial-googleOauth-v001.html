@@ -78,6 +78,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="yrStyles-main-v001.css">
+<link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -505,6 +506,45 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<!-- YRTODO: the following code and the script at the bottom implement the resize
+screenshot controls. This works on all "lightbox" images, not just 
+screenshots. See the suggestions at the end of this chatgpt chat for
+moving the code into a Quarto component and automating it so that it
+autmatically appears on any page that has a lightbox image.
+https://chatgpt.com/c/6931aac9-21f8-8325-8013-2e04f32a9516
+-->
+<style>
+#screenshot-controls {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border:1px solid #333;
+  border-radius: 8px;
+  padding:10px;
+  border:1px solid #333;
+  border-radius: 8px;
+  padding:10px
+}
+.yrSizerButton {margin: 2px;display: inline-block;}
+</style>
+<div id="screenshot-controls" style="">
+<div class="header" style="text-align:center;">
+<strong>Resize Screenshots</strong>
+</div>
+<div class="header" style="text-align:center;">
+<button onclick="changeScreenshotSize(1.2)" class="yrSizerButton"> <i class="bi bi-zoom-in"></i> + </button> <button onclick="changeScreenshotSize(0.8)" class="yrSizerButton"> <i class="bi bi-zoom-out"></i> – </button> <button onclick="resetScreenshotSize()" class="yrSizerButton"> <i class="bi bi-arrow-counterclockwise"></i> Reset </button> <button onclick="maximizeScreenshotSize()" class="yrSizerButton"> <i class="bi bi-arrows-fullscreen"></i> Max </button><br>
+
+<div class="header" style="text-align:center;">
+<strong>Hotkeys</strong>
+</div>
+<strong><em>bigger</em></strong> – ctrl/cmd + shift + B<br>
+<strong><em>smaller</em></strong> – ctrl/cmd + shift + S<br>
+<strong><em>max</em></strong> – ctrl/cmd + shift + M<br>
+<strong><em>reset</em></strong> – ctrl/cmd + shift + 0<br>
+<strong>Alternative:</strong> <em>Click on a screenshot to make it full screen.</em>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -515,7 +555,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong><em>Click the screenshots on this page to make them larger.</em></strong></p>
+<p>Resize the screenshots on this page with the buttons at the top right of this screen.</p>
 </div>
 </div>
 <p>This step connects your Supabase project with Google’s OAuth 2.0 service so users can log in using their Google accounts.</p>
@@ -785,6 +825,95 @@ seeing anyone’s password.
 5. Save the configuration
 
 -->
+<script>
+/* ------------------ attach controls to margin sidebar ------------------ */
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.getElementById("quarto-margin-sidebar");
+  const panel = document.getElementById("screenshot-controls");
+
+  if (sidebar && panel) {
+    sidebar.prepend(panel);   // put panel at top of right margin
+  }
+
+  // initialize image widths
+  setTimeout(() => {
+    getImages().forEach(img => {
+      const w = parseFloat(window.getComputedStyle(img).width);
+      img.dataset.originalWidth = w;
+      img.dataset.baseWidth = w;
+    });
+  }, 100);
+});
+
+/* ------------------ screenshot zoom logic ------------------ */
+
+let screenshotScale = 1;
+
+function getImages() {
+  return document.querySelectorAll("a.lightbox img");
+}
+
+function changeScreenshotSize(multiplier) {
+  screenshotScale *= multiplier;
+  screenshotScale = Math.max(0.3, Math.min(4, screenshotScale));
+  applyScreenshotSize();
+}
+
+function resetScreenshotSize() {
+  screenshotScale = 1;
+  getImages().forEach(img => {
+    img.style.width = img.dataset.originalWidth + "px";
+    img.dataset.baseWidth = img.dataset.originalWidth;
+  });
+}
+
+function applyScreenshotSize() {
+  getImages().forEach(img => {
+    img.style.width = (img.dataset.baseWidth * screenshotScale) + "px";
+  });
+}
+
+function maximizeScreenshotSize() {
+  getImages().forEach(img => {
+    const container = img.closest('.quarto-figure, p, div, section, main') || document.body;
+    const maxWidth = Math.min(container.clientWidth, img.naturalWidth);
+    img.style.width = maxWidth + "px";
+    img.dataset.baseWidth = maxWidth;
+  });
+  screenshotScale = 1;
+}
+
+/* keyboard shortcuts */
+document.addEventListener("keydown", (e) => {
+  const mod = e.ctrlKey || e.metaKey;
+  const shift = e.shiftKey;
+  const k = e.key.toLowerCase();
+
+  // Bigger: Cmd/Ctrl + Shift + B
+  if (mod && shift && k === "b") {
+    e.preventDefault();
+    changeScreenshotSize(1.2);
+  }
+
+  // Smaller: Cmd/Ctrl + Shift + S
+  if (mod && shift && k === "s") {
+    e.preventDefault();
+    changeScreenshotSize(0.8);
+  }
+
+  // Reset: Cmd/Ctrl + Shift + 0
+  if (mod && shift && k === "0"|| k === ")") {
+    e.preventDefault();
+    resetScreenshotSize();
+  }
+
+  // Maximize: Cmd/Ctrl + Shift + M
+  if (mod && shift && k === "m") {
+    e.preventDefault();
+    maximizeScreenshotSize();
+  }
+});
+</script>
 
 
 </section>
@@ -1202,6 +1331,7 @@ seeing anyone’s password.
   </div>
 </nav>
 </div> <!-- /content -->
+<script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
 <div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
   <p>© 2025 Y. Rosenthal. All rights reserved.</p>
 </div>

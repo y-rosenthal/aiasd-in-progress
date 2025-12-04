@@ -107,28 +107,33 @@ format:
     toc-expand: true
     fontsize: 80%
     number-depth: 3
+    css:
+      - yrStyles-main-v001.css
+      - _extensions/screenshot-controls/screenshot-controls.css
     include-in-header:
       - file: yrNocacheHeaders-v001.html
       - text: |
           <script src="yrstuff-v001.js"></script>
-    css: yrStyles-main-v001.css
-    include-after-body:
-      text: |
-        <div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
-          <p>© 2025 Y. Rosenthal. All rights reserved.</p>
-        </div>
-        <script>
-        const titles = document.querySelectorAll('.title');
 
-        titles.forEach(title => {
-          if (title.textContent.trim().startsWith('Appendix')) {
-            const chapterNumber = title.querySelector('yrChapterNumber');
-            if (chapterNumber) {
-              chapterNumber.classList.add('yrAppendixChapterNumber');
+    include-after-body:
+      - text: |
+          <script src="_extensions/screenshot-controls/screenshot-controls.js"></script>
+      - text: |
+          <div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+            <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+          </div>
+          <script>
+          const titles = document.querySelectorAll('.title');
+  
+          titles.forEach(title => {
+            if (title.textContent.trim().startsWith('Appendix')) {
+              const chapterNumber = title.querySelector('yrChapterNumber');
+              if (chapterNumber) {
+                chapterNumber.classList.add('yrAppendixChapterNumber');
+              }
             }
-          }
-        });
-        </script>
+          });
+          </script>
   #  pdf:
   #    documentclass: scrreprt
   #    fontsize: 9px
