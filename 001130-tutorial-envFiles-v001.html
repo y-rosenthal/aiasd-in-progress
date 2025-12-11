@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building with Next and Supabase</a></li><li class="breadcrumb-item"><a href="./001130-tutorial-envFiles-v001.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building a ‘full-stack’ web application</a></li><li class="breadcrumb-item"><a href="./001130-tutorial-envFiles-v001.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -283,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Building with Next and Supabase</span></a>
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -491,13 +491,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#more-about-the-.env-files" id="toc-more-about-the-.env-files" class="nav-link active" data-scroll-target="#more-about-the-.env-files"><span class="header-section-number">18.1</span> More about the .env files</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building with Next and Supabase</a></li><li class="breadcrumb-item"><a href="./001130-tutorial-envFiles-v001.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building a ‘full-stack’ web application</a></li><li class="breadcrumb-item"><a href="./001130-tutorial-envFiles-v001.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></h1>
 </div>
@@ -532,15 +538,21 @@ to your git repo.
 <hr>
 <p>You need to create two local <code>.env</code> files for environment variables. These files will contain API keys and configuration that you’ll add throughout this tutorial. Note that the <strong>File names must be exact:</strong></p>
 <ul>
-<li><p><code>.env.local</code> - for the Next.js application.<br>
-In the terminal first cd to the top level folder for your repo then run the following command to create that file:</p>
+<li><p><code>.env.local</code> - for the Next.js application.</p>
+<p>In the terminal first cd to the top level folder for your repo then run the following command to create that file:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> .env.example .env.local</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p><code>supabase/.env</code> - for Supabase functions<br>
 In the terminal first cd to the top level folder for your repo then run the following command to create that file:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> .env.example supabase/.env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
+<section id="more-about-the-.env-files" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="more-about-the-.env-files"><span class="header-section-number">18.1</span> More about the .env files</h2>
+<ul>
+<li>The .env.local file is use d</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

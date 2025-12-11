@@ -77,6 +77,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -122,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building with Next and Supabase</a></li><li class="breadcrumb-item"><a href="./001150-tutorial-createSupabaseProject-v001.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Setup Supabase</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building a ‘full-stack’ web application</a></li><li class="breadcrumb-item"><a href="./001150-tutorial-createSupabaseProject-v001.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Setup Supabase</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -283,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Building with Next and Supabase</span></a>
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -506,7 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building with Next and Supabase</a></li><li class="breadcrumb-item"><a href="./001150-tutorial-createSupabaseProject-v001.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Setup Supabase</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building a ‘full-stack’ web application</a></li><li class="breadcrumb-item"><a href="./001150-tutorial-createSupabaseProject-v001.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Setup Supabase</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Step 5: Setup Supabase</span></h1>
 </div>
@@ -581,17 +584,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .env.local and .env.test.local:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_URL</span><span class="op">=</span><span class="st">"https://XXXX.supabase.co"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_ANON_KEY</span><span class="op">=</span><span class="st">"XXXX"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Go to Project Settings (Gear button at bottom left of screen) → Data API<br>
-Copy the URL.<br>
+<li><p>Go to Project Settings (Gear button at bottom left of screen) → Data API</p>
+<p><a href="images/supabase-000100-settings.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/supabase-000100-settings.png" class="img-fluid" width="300"></a> Copy the URL.<br>
 Modify the following line in the .env.local file to reflect the URL that you copied.</p>
 <pre><code>NEXT_PUBLIC_SUPABASE_URL="https://XXXX.supabase.co"</code></pre></li>
 <li><p>Click on the <code>API Keys</code> section.<br>
-Copy the <code>anon public</code> key. Modify the following line in the .env.local file to reflect the URL that you copied.</p>
+Copy the <code>anon public</code> key.</p>
+<p><a href="images/supabase-000200-anonPublicKey.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/supabase-000200-anonPublicKey.png" class="img-fluid" width="300"></a></p>
+<p>Modify the following line in the .env.local file to reflect the URL that you copied.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_ANON_KEY</span><span class="op">=</span><span class="st">"XXXX"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Add these to your <code>.env.local</code> file:</p></li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_URL</span><span class="op">=</span>your-project-url</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_ANON_KEY</span><span class="op">=</span>your-anon-key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -1025,6 +1027,38 @@ titles.forEach(title => {
   }
 });
 </script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
