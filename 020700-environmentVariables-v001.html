@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>18&nbsp; 18.  Environment Variables – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./020800-singleVsDoubleQuotes-v001.html" rel="next">
+<link href="./020600-echoRedirectionAndViewing-v001.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+<link rel="stylesheet" href="yrStyles-f26-v001.css">
+<link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./020100-whatIsTheCommandLine-v001.html">The Command Line (Bash)</a></li><li class="breadcrumb-item"><a href="./020700-environmentVariables-v001.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Environment Variables</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26/yudkowskyBook-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005100-whatIsAiSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> What Is AI Safety? Risks, Vocabulary, and Viewpoints</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005200-aiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> AI Security Incidents in the News (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005250-moreAiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> More AI Security Incidents: Hijacked Tools, Leaks, and Deepfakes (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005300-aiSafetyDebate-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Governments, Companies, and the AI Safety Debate (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005350-aiSafetyBeyondWashington-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> The AI Safety Debate Beyond Washington (2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Today</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010100-whatAiCanDoToday-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> What AI Can Do Today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010200-howLlmsWork-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> How Large Language Models Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010300-limitsRisksAndResponsibleUse-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Limits, Risks, and Responsible Use</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010400-aiAssistedDevelopment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> AI-Assisted Development: From Chatbots to Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010500-aiCodingToolsLandscape-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> The AI Coding Tool Landscape (Fall 2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Command Line (Bash)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020100-whatIsTheCommandLine-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> What Is the Command Line?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020200-installingAndOpeningBash-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>13. </yrchapternumber> Getting Bash on Your Computer (Mac and Windows)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020300-filesFoldersAndPaths-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>14. </yrchapternumber> Files, Folders, and Paths</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020400-navigatingPwdLsCd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Moving Around: pwd, ls, and cd</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020500-creatingAndDeleting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> Creating, Copying, Moving, and Deleting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020600-echoRedirectionAndViewing-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Writing to Files: echo, &gt;, &gt;&gt;, and cat</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020700-environmentVariables-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Environment Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020800-singleVsDoubleQuotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Single Quotes vs. Double Quotes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020900-gettingHelpAndShortcuts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>20. </yrchapternumber> Getting Help and Working Faster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021000-wildcardsPipesAndSearching-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>21. </yrchapternumber> Wildcards, Pipes, and Searching</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021100-bashScriptsAndAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title"><yrchapternumber>22. </yrchapternumber> Bash Scripts (and Using AI at the Command Line)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working on Your Own</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030100-whatIsVersionControl-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> What Is Version Control? (Git vs. GitHub)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030200-installingAndConfiguringGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Installing and Configuring Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030300-yourFirstRepository-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>25. </yrchapternumber> Your First Repository: init, status, add, commit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030400-historyAndUndo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title"><yrchapternumber>26. </yrchapternumber> Viewing History and Undoing Changes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030500-gitignoreAndSecrets-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title"><yrchapternumber>27. </yrchapternumber> .gitignore and Keeping Secrets Out of Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030600-githubRemotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><yrchapternumber>28. </yrchapternumber> Putting Your Repository on GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030700-cloneAndPull-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><yrchapternumber>29. </yrchapternumber> Cloning and Pulling (Working from Two Computers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">How the Web Works</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040100-browsersAndWebServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> Browsers, Web Servers, and HTTP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>31. </yrchapternumber> URLs, Domain Names, IP Addresses, and DNS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040300-htmlCssJavascriptAndDevTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>32. </yrchapternumber> HTML, CSS, JavaScript, and Browser Developer Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040400-whatHappensOnTheServer-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title"><yrchapternumber>33. </yrchapternumber> What Happens on the Server: Back Ends, Databases, and APIs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040500-webFrameworks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><yrchapternumber>34. </yrchapternumber> Web Frameworks and Meta-Frameworks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040600-apisKeysAndThirdPartyServices-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><yrchapternumber>35. </yrchapternumber> APIs, API Keys, and Third-Party Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040700-hostingAndDeployment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><yrchapternumber>36. </yrchapternumber> Hosting and Deployment: Getting Your App Online</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040800-architectingWithAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title"><yrchapternumber>37. </yrchapternumber> Putting It Together: Architecting a Web App with AI</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude: The Big Picture</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050100-claudeProductFamily-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title"><yrchapternumber>38. </yrchapternumber> The Claude Product Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050200-claudeModelsPlansAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><yrchapternumber>39. </yrchapternumber> Claude Models, Plans, and Usage Limits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050300-navigatingClaudeDocs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><yrchapternumber>40. </yrchapternumber> Navigating the Claude Documentation (and Keeping Up)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude Code Essentials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060100-installingClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><yrchapternumber>41. </yrchapternumber> Installing Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060200-firstSession-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title"><yrchapternumber>42. </yrchapternumber> Your First Claude Code Session</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060300-howClaudeCodeWorks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title"><yrchapternumber>43. </yrchapternumber> How Claude Code Works: The Agentic Loop and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060400-slashCommands-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title"><yrchapternumber>44. </yrchapternumber> Essential Slash Commands</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060500-permissionsModesAndSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title"><yrchapternumber>45. </yrchapternumber> Permissions, Modes, and Safety</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060600-claudeMdAndMemory-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title"><yrchapternumber>46. </yrchapternumber> CLAUDE.md and Memory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060700-dotClaudeFoldersAndSettings-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title"><yrchapternumber>47. </yrchapternumber> The .claude Folders and Settings Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060800-contextModelsEffortAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title"><yrchapternumber>48. </yrchapternumber> Context, Models, Effort, and Usage in Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060900-workingEffectively-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title"><yrchapternumber>49. </yrchapternumber> Working Effectively with Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./061000-claudeCodeBeyondTheTerminal-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Claude Code Beyond the Terminal</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Extending Claude Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070100-extendingOverview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><yrchapternumber>51. </yrchapternumber> Extending Claude Code: The Big Picture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070200-skills-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><yrchapternumber>52. </yrchapternumber> Skills</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070300-mcpServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><yrchapternumber>53. </yrchapternumber> MCP Servers: Connecting Claude to Other Tools and Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070400-browserAutomationMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title"><yrchapternumber>54. </yrchapternumber> Hands-On: Letting Claude Use a Browser (Playwright MCP and Chrome)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070500-supabaseMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title"><yrchapternumber>55. </yrchapternumber> Hands-On: The Supabase MCP Server</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070600-hooks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title"><yrchapternumber>56. </yrchapternumber> Hooks: Running Your Own Commands Automatically</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070700-subagents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title"><yrchapternumber>57. </yrchapternumber> Subagents (and Running Agents in Parallel)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070800-plugins-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title"><yrchapternumber>58. </yrchapternumber> Plugins and Marketplaces</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070900-mods-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title"><yrchapternumber>59. </yrchapternumber> Mods: Customizing Claude Code Itself</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working with Others</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080100-branchesAndMerging-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title"><yrchapternumber>60. </yrchapternumber> Branches and Merging</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080200-mergeConflicts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Merge Conflicts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080300-sharedRepositoriesAndForks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title"><yrchapternumber>62. </yrchapternumber> Sharing a Repository: Collaborators and Forks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080400-pullRequestsAndCodeReview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title"><yrchapternumber>63. </yrchapternumber> Pull Requests and Code Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080500-worktreesAndParallelAgents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title"><yrchapternumber>64. </yrchapternumber> Git Worktrees and Parallel AI Agents</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title"><yrchapternumber>65. </yrchapternumber> Tutorial - intro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001007-tutorial-supabase-projectArchitecture-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title"><yrchapternumber>66. </yrchapternumber> Project Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001100-tutorial-installNodeNpm-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title"><yrchapternumber>67. </yrchapternumber> Step 0: Install Node.js and npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001110-tutorial-cloneRepo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title"><yrchapternumber>68. </yrchapternumber> Step 1: Fork the repo and clone it</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001120-tutorial-installThePackages-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title"><yrchapternumber>69. </yrchapternumber> Step 2: Installing the Node.js packages with npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title"><yrchapternumber>70. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001140-tutorial-previewFrontEnd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title"><yrchapternumber>71. </yrchapternumber> Step 4 - Optional: Preview the Frontend</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><yrchapternumber>73. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001160-tutorial-googleOauth-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">74</span>&nbsp; <span class="chapter-title"><yrchapternumber>74. </yrchapternumber> Step 6: setup authentication (Google OAuth)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001170-tutorial-openAiApi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">75</span>&nbsp; <span class="chapter-title"><yrchapternumber>75. </yrchapternumber> Step 7: Set Up OpenAI API</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001180-tutorial-setupStripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">76</span>&nbsp; <span class="chapter-title"><yrchapternumber>76. </yrchapternumber> Step 8: Set Up Stripe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">77</span>&nbsp; <span class="chapter-title"><yrchapternumber>77. </yrchapternumber> Step 9: Set Up Supabase Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001200-tutorial-setupSupabaseStorage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">78</span>&nbsp; <span class="chapter-title"><yrchapternumber>78. </yrchapternumber> Step 10: Set Up Supabase Storage Bucket</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">79</span>&nbsp; <span class="chapter-title"><yrchapternumber>79. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001220-tutorial-runTheApplication-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">80</span>&nbsp; <span class="chapter-title"><yrchapternumber>80. </yrchapternumber> Step 12: Run the Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001230-tutorial-deployToProduction-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">81</span>&nbsp; <span class="chapter-title"><yrchapternumber>81. </yrchapternumber> Step 13: Deploy to Production</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001240-tutorial-extendTheFunctionality-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">82</span>&nbsp; <span class="chapter-title"><yrchapternumber>82. </yrchapternumber> Step 14: Extending the functionality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">83</span>&nbsp; <span class="chapter-title"><yrchapternumber>83. </yrchapternumber> Step 15: Automated Testing and Troubleshooting</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">84</span>&nbsp; <span class="chapter-title"><yrchapternumber>84. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">85</span>&nbsp; <span class="chapter-title"><yrchapternumber>85. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">86</span>&nbsp; <span class="chapter-title"><yrchapternumber>86. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">87</span>&nbsp; <span class="chapter-title"><yrchapternumber>87. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./990010-references-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#shell-variables" id="toc-shell-variables" class="nav-link active" data-scroll-target="#shell-variables"><span class="header-section-number">18.1</span> Shell variables</a></li>
+  <li><a href="#environment-variables-and-export" id="toc-environment-variables-and-export" class="nav-link" data-scroll-target="#environment-variables-and-export"><span class="header-section-number">18.2</span> Environment variables and <code>export</code></a></li>
+  <li><a href="#why-environment-variables-are-used" id="toc-why-environment-variables-are-used" class="nav-link" data-scroll-target="#why-environment-variables-are-used"><span class="header-section-number">18.3</span> Why environment variables are used</a></li>
+  <li><a href="#common-environment-variables" id="toc-common-environment-variables" class="nav-link" data-scroll-target="#common-environment-variables"><span class="header-section-number">18.4</span> Common environment variables</a></li>
+  <li><a href="#path-how-the-shell-finds-commands" id="toc-path-how-the-shell-finds-commands" class="nav-link" data-scroll-target="#path-how-the-shell-finds-commands"><span class="header-section-number">18.5</span> <code>PATH</code>: how the shell finds commands</a></li>
+  <li><a href="#making-variables-permanent" id="toc-making-variables-permanent" class="nav-link" data-scroll-target="#making-variables-permanent"><span class="header-section-number">18.6</span> Making variables permanent</a></li>
+  <li><a href="#api-keys-.env-files-and-secrets" id="toc-api-keys-.env-files-and-secrets" class="nav-link" data-scroll-target="#api-keys-.env-files-and-secrets"><span class="header-section-number">18.7</span> API keys, <code>.env</code> files, and secrets</a>
+  <ul class="collapse">
+  <li><a href="#example-claude-code-and-anthropic_api_key" id="toc-example-claude-code-and-anthropic_api_key" class="nav-link" data-scroll-target="#example-claude-code-and-anthropic_api_key"><span class="header-section-number">18.7.1</span> Example: Claude Code and <code>ANTHROPIC_API_KEY</code></a></li>
+  </ul></li>
+  <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
+  <ul class="collapse">
+  <li><a href="#easy" id="toc-easy" class="nav-link" data-scroll-target="#easy">Easy</a></li>
+  <li><a href="#medium" id="toc-medium" class="nav-link" data-scroll-target="#medium">Medium</a></li>
+  <li><a href="#hard" id="toc-hard" class="nav-link" data-scroll-target="#hard">Hard</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./020100-whatIsTheCommandLine-v001.html">The Command Line (Bash)</a></li><li class="breadcrumb-item"><a href="./020700-environmentVariables-v001.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Environment Variables</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Environment Variables</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Programs often need information that shouldn’t be typed into their code: where your home folder is, which folders contain commands, or a secret password for an online service. The shell keeps this kind of information in <strong>variables</strong>. This page explains shell variables and environment variables, why they are used, and how to make them permanent.</p>
+<section id="shell-variables" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="shell-variables"><span class="header-section-number">18.1</span> Shell variables</h2>
+<p>A <strong>variable</strong> is a name that holds a value. It’s like naming a cell in Excel (say, calling cell <code>B2</code> “TaxRate”) so you can use the name instead of the value.</p>
+<p>Create a variable with <code>name=value</code>, and read it by putting a <code>$</code> in front of its name:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">course</span><span class="op">=</span><span class="st">"AI Assisted Development"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$course</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"I am taking </span><span class="va">$course</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>AI Assisted Development
+I am taking AI Assisted Development</code></pre>
+<p>The value needs quotes because it contains spaces. Inside the double quotes in the last command, the shell replaced <code>$course</code> with the variable’s value.</p>
+<p>When the variable name touches other text, put the name in curly braces, <code>${name}</code>, to show where the name ends:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">file</span><span class="op">=</span>report</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$file_2026</span><span class="st">.txt"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">${file}</span><span class="st">_2026.txt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>.txt
+report_2026.txt</code></pre>
+<p>In the first <code>echo</code>, the shell looked for a variable named <code>file_2026</code> (underscores and digits can be part of a name). There is no such variable, so it was replaced with nothing.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Common mistakes with variables
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>No spaces around <code>=</code>.</strong> <code>name = Maria</code> doesn’t create a variable: the shell thinks <code>name</code> is a command and reports an error (<code>command not found: name</code> on a Mac, <code>name: command not found</code> in Git Bash).</li>
+<li><strong>Quote values that contain spaces.</strong> <code>name=Maria Lopez</code> fails with <code>command not found</code> for <code>Lopez</code>. Use <code>name="Maria Lopez"</code>.</li>
+<li><strong>Names are case-sensitive.</strong> <code>$Name</code> and <code>$name</code> are different variables.</li>
+<li><strong>Typos fail silently.</strong> A variable that doesn’t exist is simply empty, so <code>echo $corse</code> (instead of <code>$course</code>) prints an empty line instead of an error.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="environment-variables-and-export" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="environment-variables-and-export"><span class="header-section-number">18.2</span> Environment variables and <code>export</code></h2>
+<p>Every program on your computer runs with a set of named values called its <strong>environment</strong>. <strong>Environment variables</strong> are variables that the shell passes on to every program it starts.</p>
+<p>A variable you create with <code>name=value</code> is a <strong>shell variable</strong>: only the shell itself knows about it. The <code>export</code> command turns it into an environment variable, so that the programs you start can see it too.</p>
+<p>The <code>printenv</code> command is a separate program that prints the value of an environment variable. Watch what it sees before and after <code>export</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">city</span><span class="op">=</span><span class="st">"Boston"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">printenv</span> city</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">city</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">printenv</span> city</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>Boston</code></pre>
+<p>The first <code>printenv city</code> printed nothing, because <code>city</code> was only a shell variable. After <code>export</code>, the second one printed <code>Boston</code>.</p>
+<p>Usually you create and export a variable in one step, and by convention environment variable names are written in UPPERCASE:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CITY</span><span class="op">=</span><span class="st">"Boston"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To remove a variable, use <code>unset CITY</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: shell variables vs.&nbsp;environment variables
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Every running program is a <strong>process</strong>. When your shell starts a program, that program becomes a <strong>child process</strong> of the shell, and it receives a <em>copy</em> of the shell’s environment variables (but none of its plain shell variables).</li>
+<li>The copy only goes one way. A child process can change its own copy, but it can never change the variables of the shell that started it. (That’s why a script that sets a variable doesn’t change your terminal, unless you run the script with <code>source</code>, which runs its lines in your current shell.)</li>
+<li><code>echo $city</code> works for both kinds of variables, because the <em>shell</em> replaces <code>$city</code> before <code>echo</code> even runs. To see whether a variable was exported, use <code>printenv city</code> or look for it in the output of <code>env</code>.</li>
+<li>You can also set an environment variable for one single command by writing it in front of the command: <code>GREETING=hello printenv GREETING</code> prints <code>hello</code>, but afterwards <code>printenv GREETING</code> prints nothing.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="why-environment-variables-are-used" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="why-environment-variables-are-used"><span class="header-section-number">18.3</span> Why environment variables are used</h2>
+<ol type="1">
+<li><strong>To configure a program without changing its code.</strong> The same program can behave differently depending on its environment. A web app might read a variable such as <code>DATABASE_URL</code> and connect to a practice database on your laptop (“development”) but to the real customer database on the server (“production”).</li>
+<li><strong>To keep secrets out of code.</strong> Passwords and <strong>API keys</strong> (secret codes that let your program use an online service, such as a payment or AI service) should never be typed into code, which may end up on GitHub for everyone to see. Instead the code reads them from the environment, for example <code>os.environ["WEATHER_API_KEY"]</code> in Python or <code>process.env.WEATHER_API_KEY</code> in JavaScript.</li>
+<li><strong>To describe the computer and the user.</strong> Programs find your home folder through <code>HOME</code>, and the shell finds commands through <code>PATH</code>.</li>
+</ol>
+</section>
+<section id="common-environment-variables" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="common-environment-variables"><span class="header-section-number">18.4</span> Common environment variables</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>HOME</code></td>
+<td>your home directory</td>
+</tr>
+<tr class="even">
+<td><code>USER</code></td>
+<td>your user name (in Git Bash: <code>USERNAME</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>PWD</code></td>
+<td>the current working directory (it changes every time you <code>cd</code>)</td>
+</tr>
+<tr class="even">
+<td><code>SHELL</code></td>
+<td>your default shell, the one a new terminal window starts</td>
+</tr>
+<tr class="odd">
+<td><code>PATH</code></td>
+<td>the folders the shell searches for commands (see below)</td>
+</tr>
+<tr class="even">
+<td><code>LANG</code></td>
+<td>your language and character set, for example <code>en_US.UTF-8</code></td>
+</tr>
+</tbody>
+</table>
+<p>Try a few of them:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Windows (Git Bash)</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$HOME</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$USER</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SHELL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>/Users/maria
+maria
+/bin/zsh</code></pre>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$HOME</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$USERNAME</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SHELL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>/c/Users/sam
+sam
+/usr/bin/bash</code></pre>
+<p>In Git Bash, <code>echo $USER</code> usually prints an empty line, because Windows stores your user name in a variable called <code>USERNAME</code>. (The <code>whoami</code> command works on both systems.)</p>
+</div>
+</div>
+</div>
+<p>To list <em>all</em> your environment variables, type <code>env</code> (or <code>printenv</code> with no arguments). The list is long; most of the entries are used by programs behind the scenes.</p>
+</section>
+<section id="path-how-the-shell-finds-commands" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="path-how-the-shell-finds-commands"><span class="header-section-number">18.5</span> <code>PATH</code>: how the shell finds commands</h2>
+<p>When you type a command such as <code>ls</code>, the shell doesn’t search your whole computer for it. It looks only in the folders listed in the <code>PATH</code> variable, in order, and runs the first program named <code>ls</code> that it finds.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PATH</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output (something like this on a Mac; yours will probably be longer):</p>
+<pre><code>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</code></pre>
+<p>The folders are separated by colons (<code>:</code>). In Git Bash the list is longer and includes Windows folders, written in the <code>/c/...</code> style.</p>
+<p>The <code>which</code> command tells you where a command was found:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output (Mac; in Git Bash it’s <code>/usr/bin/ls</code>):</p>
+<pre><code>/bin/ls</code></pre>
+<p>When you see <strong>command not found</strong>, there are three usual reasons: you made a typo, the program isn’t installed, or it is installed in a folder that isn’t on your <code>PATH</code>. That last one often happens right after installing a new tool, which is why installation instructions sometimes say “add this folder to your PATH”. (You will see this again in <a href="./060100-installingClaudeCode-v001.html">Installing Claude Code</a>.)</p>
+<p>To add a folder, put it in front of the existing list:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$HOME</span><span class="st">/bin:</span><span class="va">$PATH</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Read it as: “the new <code>PATH</code> is my <code>bin</code> folder, a colon, and then the old <code>PATH</code>.”</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Don’t forget the old <code>$PATH</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>export PATH="$HOME/bin"</code> (without <code>:$PATH</code> at the end) <em>replaces</em> the whole list. After that, even <code>ls</code> gives “command not found”. If this happens, close the terminal window and open a new one; the change was only temporary.</p>
+</div>
+</div>
+<p>Notice that your current folder is not on the <code>PATH</code>. That’s why you have to type <code>./</code> in front of a script in the current folder to run it (see <a href="./021100-bashScriptsAndAi-v001.html">Bash Scripts</a>).</p>
+</section>
+<section id="making-variables-permanent" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="making-variables-permanent"><span class="header-section-number">18.6</span> Making variables permanent</h2>
+<p>Variables that you set at the prompt disappear when you close the terminal window. Every new terminal window starts by running a <strong>startup file</strong> in your home folder, so to keep a setting, put its <code>export</code> line in that file.</p>
+<p>For example, many programs check the <code>EDITOR</code> variable to decide which text editor to open. To set it permanently, open your startup file in <code>nano</code> (see below), add the line <code>export EDITOR="nano"</code> at the bottom, press <code>Ctrl+O</code> and <code>Enter</code> to save, and <code>Ctrl+X</code> to exit. Then open a new terminal window, or load the file into the current one with <code>source</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Windows (Git Bash)</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>zsh reads <code>~/.zshrc</code> every time you open a new Terminal window. Open it with:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.zshrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After saving and exiting, load it with:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.zshrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>Put your settings in <code>~/.bashrc</code>. Open it with:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.bashrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After saving and exiting, load it with:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When Git Bash starts, it actually reads <code>~/.bash_profile</code>. If you have a <code>~/.bashrc</code> but no <code>~/.bash_profile</code>, the next new Git Bash window prints a <strong>WARNING</strong> about this and creates a <code>~/.bash_profile</code> that loads your <code>~/.bashrc</code>. That is expected, and it happens only once.</p>
+</div>
+</div>
+</div>
+<p><code>source</code> runs the lines of a file in your <em>current</em> shell, so the new setting takes effect right away.</p>
+<p>You can also add a line without opening an editor, using <code>&gt;&gt;</code> from <a href="./020600-echoRedirectionAndViewing-v001.html">Writing to Files</a> (use <code>~/.bashrc</code> instead of <code>~/.zshrc</code> in Git Bash):</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export EDITOR="nano"'</span> <span class="op">&gt;&gt;</span> ~/.zshrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use <code>&gt;&gt;</code>, never <code>&gt;</code>, which would erase everything else in the file. The single quotes make sure the line is written exactly as typed. That matters as soon as a line contains <code>$</code>, as in <code>export PATH="$HOME/bin:$PATH"</code>; the next page, <a href="./020800-singleVsDoubleQuotes-v001.html">Single Quotes vs.&nbsp;Double Quotes</a>, explains why.</p>
+</section>
+<section id="api-keys-.env-files-and-secrets" class="level2" data-number="18.7">
+<h2 data-number="18.7" class="anchored" data-anchor-id="api-keys-.env-files-and-secrets"><span class="header-section-number">18.7</span> API keys, <code>.env</code> files, and secrets</h2>
+<p>Projects usually keep their settings and keys in a text file named <code>.env</code> in the project folder, one <code>NAME=value</code> per line:</p>
+<pre><code>DATABASE_URL=postgres://localhost/club_app
+WEATHER_API_KEY=paste-your-key-here</code></pre>
+<p>Many frameworks and tools load this file into the environment automatically when the app starts. Because a <code>.env</code> file holds secrets, it must never be committed to Git: see <a href="./030500-gitignoreAndSecrets-v001.html">.gitignore and Keeping Secrets Out of Git</a> and <a href="./040600-apisKeysAndThirdPartyServices-v001.html">APIs, API Keys, and Third-Party Services</a>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Keep secrets secret
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Never paste a real API key into code, a chat, an AI prompt, a screenshot, or a shared document.</li>
+<li>Don’t print a key with <code>echo</code> while your screen is shared or recorded.</li>
+<li>Commands you type are saved in your shell’s history file, so a key typed at the prompt ends up stored on disk in plain text.</li>
+<li>If a key leaks, revoke it on the service’s website and create a new one.</li>
+</ul>
+</div>
+</div>
+<section id="example-claude-code-and-anthropic_api_key" class="level3" data-number="18.7.1">
+<h3 data-number="18.7.1" class="anchored" data-anchor-id="example-claude-code-and-anthropic_api_key"><span class="header-section-number">18.7.1</span> Example: Claude Code and <code>ANTHROPIC_API_KEY</code></h3>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/env-vars">Environment variables</a></span></p>
+<p>Claude Code reads many environment variables; its documentation lists them all. One of them shows why it pays to know what’s in your environment: <code>ANTHROPIC_API_KEY</code>. If this variable is set, Claude Code uses that API key <strong>instead of your Claude subscription</strong>, even if you are logged in, so your usage is billed to the API account that owns the key. (In an interactive session, it asks you once to approve the key before using it.) If you meant to use your subscription, remove the variable with:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">unset</span> <span class="va">ANTHROPIC_API_KEY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Also delete any line that sets it from your startup file (<code>~/.zshrc</code> or <code>~/.bashrc</code>), or it will come back in the next terminal window.</p>
+</section>
+</section>
+<section id="practice-questions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
+<section id="easy" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="easy">Easy</h3>
+<section id="question-1-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-1-short-answer">Question 1 · Short answer</h4>
+<p>What is a variable in the shell?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A name that holds a value, such as <code>course="AI Assisted Development"</code>. You read the value by putting <code>$</code> in front of the name: <code>$course</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-multiple-choice">Question 2 · Multiple choice</h4>
+<p>Which command correctly creates a variable named <code>name</code> with the value <code>Maria</code>?</p>
+<ol type="a">
+<li><code>name = Maria</code></li>
+<li><code>name=Maria</code></li>
+<li><code>$name=Maria</code></li>
+<li><code>name == Maria</code></li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> There must be no spaces around <code>=</code>. With spaces (a, d) the line is not an assignment, so you get an error instead: “command not found” for <code>name</code> (in zsh on a Mac, d gives the odd message <code>zsh: = not found</code>). The <code>$</code> (c) is used only when you <em>read</em> a variable, not when you create it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-true-or-false">Question 3 · True or false</h4>
+<p>A variable you create at the prompt is still there after you close the terminal window and open a new one.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> Variables live only as long as the shell that created them. To keep a variable, put its <code>export</code> line in your startup file (<code>~/.zshrc</code> on a Mac, <code>~/.bashrc</code> in Git Bash).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-matching" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-matching">Question 4 · Matching</h4>
+<p>Match each environment variable with what it holds.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th></th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. <code>HOME</code></td>
+<td></td>
+<td>A. the folders the shell searches for commands</td>
+</tr>
+<tr class="even">
+<td>2. <code>PATH</code></td>
+<td></td>
+<td>B. the current working directory</td>
+</tr>
+<tr class="odd">
+<td>3. <code>PWD</code></td>
+<td></td>
+<td>C. your home directory</td>
+</tr>
+<tr class="even">
+<td>4. <code>SHELL</code></td>
+<td></td>
+<td>D. the path to your default shell program</td>
+</tr>
+</tbody>
+</table>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>1 → C, 2 → A, 3 → B, 4 → D.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-5-short-answer">Question 5 · Short answer</h4>
+<p>What does the <code>export</code> command do?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>It turns a shell variable into an <strong>environment variable</strong>, so that the shell passes it on to every program it starts. Without <code>export</code>, only the shell itself knows the variable.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-multiple-choice">Question 6 · Multiple choice</h4>
+<p>Which command lists all of your environment variables?</p>
+<ol type="a">
+<li><code>ls</code></li>
+<li><code>env</code></li>
+<li><code>echo</code></li>
+<li><code>pwd</code></li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> <code>env</code> (or <code>printenv</code> with no arguments) lists all environment variables. <code>ls</code> lists files, <code>echo</code> prints the text you give it, and <code>pwd</code> prints the current directory.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="medium" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="medium">Medium</h3>
+<section id="question-7-predict-the-output" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-predict-the-output">Question 7 · Predict the output</h4>
+<p>What does this print, and how would you fix it so it prints <code>I like apples</code>?</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">fruit</span><span class="op">=</span>apple</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"I like </span><span class="va">$fruits</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>It prints <code>I like</code> (followed by nothing), because the shell looks for a variable named <code>fruits</code>, which doesn’t exist and is therefore empty. Use curly braces to mark where the name ends:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"I like </span><span class="va">${fruit}</span><span class="st">s"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-write-the-command">Question 8 · Write the command</h4>
+<p>Create a variable <code>project</code> with the value <code>budget app</code>, then use it to print <code>Working on budget app</code>.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="va">project</span><span class="op">=</span><span class="st">"budget app"</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Working on </span><span class="va">$project</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The quotes around <code>budget app</code> are needed because the value contains a space.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-9-predict-the-output" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-predict-the-output">Question 9 · Predict the output</h4>
+<p>What does each <code>printenv</code> command print? Explain the difference.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="va">color</span><span class="op">=</span><span class="st">"blue"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">printenv</span> color</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">color</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">printenv</span> color</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The first <code>printenv color</code> prints nothing; the second prints <code>blue</code>. <code>printenv</code> is a separate program, so it only sees <strong>environment</strong> variables. At first, <code>color</code> is only a shell variable. After <code>export color</code>, the shell passes it on to the programs it starts, including <code>printenv</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-10-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-short-answer">Question 10 · Short answer</h4>
+<p>Maria types <code>which python3</code> and sees <code>/usr/bin/python3</code>. What does this tell her?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When she types <code>python3</code>, the shell runs the program stored at <code>/usr/bin/python3</code>. The folder <code>/usr/bin</code> is on her <code>PATH</code>, and it’s the first folder in the <code>PATH</code> that contains a program named <code>python3</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-11-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-scenario">Question 11 · Scenario</h4>
+<p>Sam installs a new command-line tool, but typing its name gives <code>command not found</code>. Give three possible reasons.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>He mistyped the command name.</li>
+<li>The installation didn’t finish, so the program isn’t actually there.</li>
+<li>The program was installed in a folder that isn’t on his <code>PATH</code> (or he needs to open a new terminal window so that an updated <code>PATH</code> takes effect).</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="question-12-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-write-the-command">Question 12 · Write the command</h4>
+<p>Maria (Mac) wants <code>export EDITOR="nano"</code> to apply in every new Terminal window, and she wants it to take effect in her current window too. Write two commands that do this without opening an editor.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export EDITOR="nano"'</span> <span class="op">&gt;&gt;</span> ~/.zshrc</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.zshrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>&gt;&gt;</code> appends the line to the end of her startup file (a single <code>&gt;</code> would erase the rest of the file), and <code>source</code> runs the file in the current shell.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-13-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-13-short-answer">Question 13 · Short answer</h4>
+<p>Give two reasons why programs usually read API keys from environment variables instead of having the keys typed into the code.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Security:</strong> code is shared (for example on GitHub); a key written in the code would be visible to everyone who can see it.</li>
+<li><strong>Flexibility:</strong> the same code can use different keys and settings on different computers (your laptop, a teammate’s laptop, the production server) without being changed.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="question-14-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-14-write-the-command">Question 14 · Write the command</h4>
+<p>In Git Bash, <code>echo $USER</code> prints an empty line for Sam. Give two commands that print his user name.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>echo $USERNAME</code> (Windows stores the user name in <code>USERNAME</code>) or <code>whoami</code>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
+<section id="question-15-find-the-bug" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-15-find-the-bug">Question 15 · Find the bug</h4>
+<p>Maria wanted to add her <code>~/bin</code> folder to her <code>PATH</code> and typed:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$HOME</span><span class="st">/bin"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now even <code>ls</code> says <code>command not found</code>. What went wrong, how does she recover, and what should she have typed?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>She replaced the whole <code>PATH</code> with a single folder, so the shell no longer looks in <code>/bin</code>, <code>/usr/bin</code>, and the other folders where <code>ls</code> and most other commands live. To recover, she can close the terminal window and open a new one (the change only affected that window). The correct command keeps the old list at the end:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$HOME</span><span class="st">/bin:</span><span class="va">$PATH</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-16-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-16-scenario">Question 16 · Scenario</h4>
+<p>Sam opened <code>~/.bashrc</code> in nano, added <code>export GREETING="hi"</code>, saved, and exited. In the same window, <code>echo $GREETING</code> prints an empty line.</p>
+<ol type="a">
+<li>Why, and what two things could he do?</li>
+<li>The next time he opens Git Bash, he sees a WARNING about <code>~/.bash_profile</code>. Should he worry?</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Startup files are read only when a shell starts, and his current shell started before he edited the file. He can run <code>source ~/.bashrc</code> to run the file in the current shell, or open a new Git Bash window.</p></li>
+<li><p>No.&nbsp;Git Bash starts by reading <code>~/.bash_profile</code>. Because he had a <code>~/.bashrc</code> but no <code>~/.bash_profile</code>, Git Bash created a <code>~/.bash_profile</code> that loads <code>~/.bashrc</code> and printed the warning to tell him so. It only happens once.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="question-17-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-17-scenario">Question 17 · Scenario</h4>
+<p>A student with a Claude Pro subscription notices charges on an API account she set up last semester for another class. Her <code>~/.zshrc</code> contains a line that exports <code>ANTHROPIC_API_KEY</code>. Explain what is probably happening and how she should fix it.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When <code>ANTHROPIC_API_KEY</code> is set, Claude Code uses that API key instead of her subscription (after she approved the key once in an interactive session), so her usage is billed to the API account. To fix it, she should run <code>unset ANTHROPIC_API_KEY</code> in her current terminal <strong>and</strong> delete the <code>export</code> line from <code>~/.zshrc</code> (otherwise it comes back in every new window). She should not “check” the key by printing it with <code>echo</code>, since that shows the secret on screen.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-18-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-18-long-answer">Question 18 · Long answer</h4>
+<p>A web app reads the environment variable <code>DATABASE_URL</code> to decide which database to connect to. Explain how this lets the same code run safely on a developer’s laptop and on the production server.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The code never contains a database address; it just reads <code>DATABASE_URL</code> from its environment. On the laptop, <code>DATABASE_URL</code> (for example in a <code>.env</code> file) points to a practice database with fake data, so mistakes during development can’t damage real customer data. On the production server, the hosting provider sets <code>DATABASE_URL</code> to the real database. Nobody has to edit the code when it moves from one machine to the other, and the real database’s password never appears in the code or in Git.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-19-compare" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-19-compare">Question 19 · Compare</h4>
+<p>After <code>city="Boston"</code> (without <code>export</code>), <code>echo $city</code> prints <code>Boston</code>, but <code>printenv city</code> prints nothing. Explain why.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>city</code> is a <strong>shell variable</strong>, which only the shell itself knows about. In <code>echo $city</code>, the <em>shell</em> replaces <code>$city</code> with <code>Boston</code> before <code>echo</code> runs, so <code>echo</code> just prints the text it was given. <code>printenv</code> is a separate program that looks the name up in its own environment, and shell variables aren’t passed to programs the shell starts. After <code>export city</code>, <code>printenv city</code> would print <code>Boston</code> too.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-20-ordering" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-20-ordering">Question 20 · Ordering</h4>
+<p>Put these steps in order to permanently add <code>~/bin</code> to the <code>PATH</code> on a Mac:</p>
+<ol type="a">
+<li>Run <code>source ~/.zshrc</code> (or open a new Terminal window).</li>
+<li>Open the startup file with <code>nano ~/.zshrc</code>.</li>
+<li>Check the result with <code>echo $PATH</code>.</li>
+<li>Add the line <code>export PATH="$HOME/bin:$PATH"</code> at the bottom of the file.</li>
+<li>Save with <code>Ctrl+O</code>, <code>Enter</code>, and exit with <code>Ctrl+X</code>.</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>b → d → e → a → c.&nbsp;Open the file, add the line, save and exit, load the file into the current shell (or open a new window), and then check that <code>PATH</code> now starts with Maria’s <code>bin</code> folder.</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./020600-echoRedirectionAndViewing-v001.html" class="pagination-link" aria-label="<yrChapterNumber>17. </yrChapterNumber> Writing to Files: echo, >, >>, and cat">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Writing to Files: echo, &gt;, &gt;&gt;, and cat</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./020800-singleVsDoubleQuotes-v001.html" class="pagination-link" aria-label="<yrChapterNumber>19. </yrChapterNumber> Single Quotes vs. Double Quotes">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Single Quotes vs.&nbsp;Double Quotes</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>
+/* yrAnswerToggles-v001
+ *
+ * Adds "Show all answers" / "Hide all answers" buttons to every page that
+ * contains practice-question answer callouts. An answer callout is any
+ * callout that has the class .yr-answer, for example:
+ *
+ *     ::: {.callout-tip .yr-answer collapse="true" icon="false"}
+ *     ## Suggested answer
+ *     ...
+ *     :::
+ *
+ * The buttons are inserted in two places:
+ *   1. directly below the page title
+ *   2. at the top of the practice questions section, i.e. right after
+ *        ## Practice Questions {#practice-questions .unnumbered}
+ *
+ * This file is included inline (include-after-body: file: ...) instead of
+ * with <script src="...">, so it works for pages in subfolders too.
+ * Pages without .yr-answer callouts (e.g. f26/yudkowskyBook-v001.qmd, which
+ * has its own buttons) are not affected.
+ */
+(function () {
+  function getAnswerCallouts() {
+    return Array.prototype.slice.call(document.querySelectorAll(".callout.yr-answer"));
+  }
+
+  function setCalloutExpanded(callout, expanded) {
+    var content = callout.querySelector(".callout-collapse");
+    var header = callout.querySelector(".callout-header");
+    if (!content) {
+      return;
+    }
+    if (window.bootstrap && window.bootstrap.Collapse) {
+      var instance = window.bootstrap.Collapse.getOrCreateInstance(content, { toggle: false });
+      if (expanded) {
+        instance.show();
+      } else {
+        instance.hide();
+      }
+    } else {
+      content.classList.toggle("show", expanded);
+    }
+    // Keep the arrow icon in sync (Quarto rotates it based on aria-expanded).
+    if (header) {
+      header.setAttribute("aria-expanded", expanded ? "true" : "false");
+      header.classList.toggle("collapsed", !expanded);
+    }
+  }
+
+  function setAllAnswers(expanded) {
+    getAnswerCallouts().forEach(function (callout) {
+      setCalloutExpanded(callout, expanded);
+    });
+  }
+
+  function makeButton(text, expanded) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "yr-answer-btn";
+    btn.textContent = text;
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+      setAllAnswers(expanded);
+    });
+    return btn;
+  }
+
+  function makeToolbar(extraClass, includeJumpLink, count) {
+    var bar = document.createElement("div");
+    bar.className = "yr-answer-toolbar " + extraClass;
+
+    var label = document.createElement("span");
+    label.className = "yr-answer-toolbar-label";
+    label.textContent = "Practice question answers (" + count + "):";
+    bar.appendChild(label);
+
+    bar.appendChild(makeButton("Show all answers", true));
+    bar.appendChild(makeButton("Hide all answers", false));
+
+    if (includeJumpLink && document.getElementById("practice-questions")) {
+      var link = document.createElement("a");
+      link.className = "yr-answer-jump";
+      link.href = "#practice-questions";
+      link.textContent = "Jump to practice questions ↓";
+      bar.appendChild(link);
+    }
+    return bar;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var count = getAnswerCallouts().length;
+    if (count === 0) {
+      return;
+    }
+
+    var titleBlock = document.getElementById("title-block-header");
+    if (titleBlock) {
+      titleBlock.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-top", true, count));
+    }
+
+    var section = document.getElementById("practice-questions");
+    if (section) {
+      var heading = section.querySelector("h2, h3");
+      if (heading) {
+        heading.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-section", false, count));
+      }
+    }
+  });
+})();
+</script>
+<script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>

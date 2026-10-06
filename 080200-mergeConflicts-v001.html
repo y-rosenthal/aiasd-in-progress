@@ -1,0 +1,2106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>61&nbsp; 61.  Merge Conflicts – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./080300-sharedRepositoriesAndForks-v001.html" rel="next">
+<link href="./080100-branchesAndMerging-v001.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+<link rel="stylesheet" href="yrStyles-f26-v001.css">
+<link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./080100-branchesAndMerging-v001.html">Git and GitHub: Working with Others</a></li><li class="breadcrumb-item"><a href="./080200-mergeConflicts-v001.html"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Merge Conflicts</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26/yudkowskyBook-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005100-whatIsAiSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> What Is AI Safety? Risks, Vocabulary, and Viewpoints</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005200-aiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> AI Security Incidents in the News (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005250-moreAiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> More AI Security Incidents: Hijacked Tools, Leaks, and Deepfakes (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005300-aiSafetyDebate-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Governments, Companies, and the AI Safety Debate (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005350-aiSafetyBeyondWashington-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> The AI Safety Debate Beyond Washington (2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Today</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010100-whatAiCanDoToday-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> What AI Can Do Today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010200-howLlmsWork-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> How Large Language Models Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010300-limitsRisksAndResponsibleUse-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Limits, Risks, and Responsible Use</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010400-aiAssistedDevelopment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> AI-Assisted Development: From Chatbots to Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010500-aiCodingToolsLandscape-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> The AI Coding Tool Landscape (Fall 2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Command Line (Bash)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020100-whatIsTheCommandLine-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> What Is the Command Line?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020200-installingAndOpeningBash-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>13. </yrchapternumber> Getting Bash on Your Computer (Mac and Windows)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020300-filesFoldersAndPaths-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>14. </yrchapternumber> Files, Folders, and Paths</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020400-navigatingPwdLsCd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Moving Around: pwd, ls, and cd</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020500-creatingAndDeleting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> Creating, Copying, Moving, and Deleting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020600-echoRedirectionAndViewing-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Writing to Files: echo, &gt;, &gt;&gt;, and cat</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020700-environmentVariables-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Environment Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020800-singleVsDoubleQuotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Single Quotes vs. Double Quotes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020900-gettingHelpAndShortcuts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>20. </yrchapternumber> Getting Help and Working Faster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021000-wildcardsPipesAndSearching-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>21. </yrchapternumber> Wildcards, Pipes, and Searching</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021100-bashScriptsAndAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title"><yrchapternumber>22. </yrchapternumber> Bash Scripts (and Using AI at the Command Line)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working on Your Own</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030100-whatIsVersionControl-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> What Is Version Control? (Git vs. GitHub)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030200-installingAndConfiguringGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Installing and Configuring Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030300-yourFirstRepository-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>25. </yrchapternumber> Your First Repository: init, status, add, commit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030400-historyAndUndo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title"><yrchapternumber>26. </yrchapternumber> Viewing History and Undoing Changes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030500-gitignoreAndSecrets-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title"><yrchapternumber>27. </yrchapternumber> .gitignore and Keeping Secrets Out of Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030600-githubRemotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><yrchapternumber>28. </yrchapternumber> Putting Your Repository on GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030700-cloneAndPull-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><yrchapternumber>29. </yrchapternumber> Cloning and Pulling (Working from Two Computers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">How the Web Works</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040100-browsersAndWebServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> Browsers, Web Servers, and HTTP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>31. </yrchapternumber> URLs, Domain Names, IP Addresses, and DNS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040300-htmlCssJavascriptAndDevTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>32. </yrchapternumber> HTML, CSS, JavaScript, and Browser Developer Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040400-whatHappensOnTheServer-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title"><yrchapternumber>33. </yrchapternumber> What Happens on the Server: Back Ends, Databases, and APIs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040500-webFrameworks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><yrchapternumber>34. </yrchapternumber> Web Frameworks and Meta-Frameworks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040600-apisKeysAndThirdPartyServices-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><yrchapternumber>35. </yrchapternumber> APIs, API Keys, and Third-Party Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040700-hostingAndDeployment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><yrchapternumber>36. </yrchapternumber> Hosting and Deployment: Getting Your App Online</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040800-architectingWithAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title"><yrchapternumber>37. </yrchapternumber> Putting It Together: Architecting a Web App with AI</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude: The Big Picture</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050100-claudeProductFamily-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title"><yrchapternumber>38. </yrchapternumber> The Claude Product Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050200-claudeModelsPlansAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><yrchapternumber>39. </yrchapternumber> Claude Models, Plans, and Usage Limits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050300-navigatingClaudeDocs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><yrchapternumber>40. </yrchapternumber> Navigating the Claude Documentation (and Keeping Up)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude Code Essentials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060100-installingClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><yrchapternumber>41. </yrchapternumber> Installing Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060200-firstSession-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title"><yrchapternumber>42. </yrchapternumber> Your First Claude Code Session</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060300-howClaudeCodeWorks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title"><yrchapternumber>43. </yrchapternumber> How Claude Code Works: The Agentic Loop and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060400-slashCommands-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title"><yrchapternumber>44. </yrchapternumber> Essential Slash Commands</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060500-permissionsModesAndSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title"><yrchapternumber>45. </yrchapternumber> Permissions, Modes, and Safety</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060600-claudeMdAndMemory-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title"><yrchapternumber>46. </yrchapternumber> CLAUDE.md and Memory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060700-dotClaudeFoldersAndSettings-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title"><yrchapternumber>47. </yrchapternumber> The .claude Folders and Settings Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060800-contextModelsEffortAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title"><yrchapternumber>48. </yrchapternumber> Context, Models, Effort, and Usage in Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060900-workingEffectively-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title"><yrchapternumber>49. </yrchapternumber> Working Effectively with Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./061000-claudeCodeBeyondTheTerminal-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Claude Code Beyond the Terminal</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Extending Claude Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070100-extendingOverview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><yrchapternumber>51. </yrchapternumber> Extending Claude Code: The Big Picture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070200-skills-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><yrchapternumber>52. </yrchapternumber> Skills</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070300-mcpServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><yrchapternumber>53. </yrchapternumber> MCP Servers: Connecting Claude to Other Tools and Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070400-browserAutomationMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title"><yrchapternumber>54. </yrchapternumber> Hands-On: Letting Claude Use a Browser (Playwright MCP and Chrome)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070500-supabaseMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title"><yrchapternumber>55. </yrchapternumber> Hands-On: The Supabase MCP Server</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070600-hooks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title"><yrchapternumber>56. </yrchapternumber> Hooks: Running Your Own Commands Automatically</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070700-subagents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title"><yrchapternumber>57. </yrchapternumber> Subagents (and Running Agents in Parallel)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070800-plugins-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title"><yrchapternumber>58. </yrchapternumber> Plugins and Marketplaces</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070900-mods-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title"><yrchapternumber>59. </yrchapternumber> Mods: Customizing Claude Code Itself</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working with Others</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080100-branchesAndMerging-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title"><yrchapternumber>60. </yrchapternumber> Branches and Merging</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080200-mergeConflicts-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Merge Conflicts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080300-sharedRepositoriesAndForks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title"><yrchapternumber>62. </yrchapternumber> Sharing a Repository: Collaborators and Forks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080400-pullRequestsAndCodeReview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title"><yrchapternumber>63. </yrchapternumber> Pull Requests and Code Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080500-worktreesAndParallelAgents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title"><yrchapternumber>64. </yrchapternumber> Git Worktrees and Parallel AI Agents</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title"><yrchapternumber>65. </yrchapternumber> Tutorial - intro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001007-tutorial-supabase-projectArchitecture-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title"><yrchapternumber>66. </yrchapternumber> Project Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001100-tutorial-installNodeNpm-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title"><yrchapternumber>67. </yrchapternumber> Step 0: Install Node.js and npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001110-tutorial-cloneRepo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title"><yrchapternumber>68. </yrchapternumber> Step 1: Fork the repo and clone it</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001120-tutorial-installThePackages-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title"><yrchapternumber>69. </yrchapternumber> Step 2: Installing the Node.js packages with npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title"><yrchapternumber>70. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001140-tutorial-previewFrontEnd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title"><yrchapternumber>71. </yrchapternumber> Step 4 - Optional: Preview the Frontend</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><yrchapternumber>73. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001160-tutorial-googleOauth-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">74</span>&nbsp; <span class="chapter-title"><yrchapternumber>74. </yrchapternumber> Step 6: setup authentication (Google OAuth)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001170-tutorial-openAiApi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">75</span>&nbsp; <span class="chapter-title"><yrchapternumber>75. </yrchapternumber> Step 7: Set Up OpenAI API</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001180-tutorial-setupStripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">76</span>&nbsp; <span class="chapter-title"><yrchapternumber>76. </yrchapternumber> Step 8: Set Up Stripe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">77</span>&nbsp; <span class="chapter-title"><yrchapternumber>77. </yrchapternumber> Step 9: Set Up Supabase Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001200-tutorial-setupSupabaseStorage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">78</span>&nbsp; <span class="chapter-title"><yrchapternumber>78. </yrchapternumber> Step 10: Set Up Supabase Storage Bucket</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">79</span>&nbsp; <span class="chapter-title"><yrchapternumber>79. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001220-tutorial-runTheApplication-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">80</span>&nbsp; <span class="chapter-title"><yrchapternumber>80. </yrchapternumber> Step 12: Run the Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001230-tutorial-deployToProduction-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">81</span>&nbsp; <span class="chapter-title"><yrchapternumber>81. </yrchapternumber> Step 13: Deploy to Production</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001240-tutorial-extendTheFunctionality-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">82</span>&nbsp; <span class="chapter-title"><yrchapternumber>82. </yrchapternumber> Step 14: Extending the functionality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">83</span>&nbsp; <span class="chapter-title"><yrchapternumber>83. </yrchapternumber> Step 15: Automated Testing and Troubleshooting</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">84</span>&nbsp; <span class="chapter-title"><yrchapternumber>84. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">85</span>&nbsp; <span class="chapter-title"><yrchapternumber>85. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">86</span>&nbsp; <span class="chapter-title"><yrchapternumber>86. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">87</span>&nbsp; <span class="chapter-title"><yrchapternumber>87. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./990010-references-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#when-do-conflicts-happen" id="toc-when-do-conflicts-happen" class="nav-link active" data-scroll-target="#when-do-conflicts-happen"><span class="header-section-number">61.1</span> When do conflicts happen?</a></li>
+  <li><a href="#a-conflict-step-by-step" id="toc-a-conflict-step-by-step" class="nav-link" data-scroll-target="#a-conflict-step-by-step"><span class="header-section-number">61.2</span> A conflict, step by step</a></li>
+  <li><a href="#reading-the-conflict" id="toc-reading-the-conflict" class="nav-link" data-scroll-target="#reading-the-conflict"><span class="header-section-number">61.3</span> Reading the conflict</a></li>
+  <li><a href="#resolving-the-conflict" id="toc-resolving-the-conflict" class="nav-link" data-scroll-target="#resolving-the-conflict"><span class="header-section-number">61.4</span> Resolving the conflict</a></li>
+  <li><a href="#changing-your-mind-git-merge---abort" id="toc-changing-your-mind-git-merge---abort" class="nav-link" data-scroll-target="#changing-your-mind-git-merge---abort"><span class="header-section-number">61.5</span> Changing your mind: <code>git merge --abort</code></a></li>
+  <li><a href="#conflicts-when-you-pull" id="toc-conflicts-when-you-pull" class="nav-link" data-scroll-target="#conflicts-when-you-pull"><span class="header-section-number">61.6</span> Conflicts when you pull</a></li>
+  <li><a href="#avoiding-conflicts-and-keeping-them-small" id="toc-avoiding-conflicts-and-keeping-them-small" class="nav-link" data-scroll-target="#avoiding-conflicts-and-keeping-them-small"><span class="header-section-number">61.7</span> Avoiding conflicts (and keeping them small)</a></li>
+  <li><a href="#getting-help-from-claude-code" id="toc-getting-help-from-claude-code" class="nav-link" data-scroll-target="#getting-help-from-claude-code"><span class="header-section-number">61.8</span> Getting help from Claude Code</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">61.9</span> Key takeaways</a></li>
+  <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
+  <ul class="collapse">
+  <li><a href="#easy" id="toc-easy" class="nav-link" data-scroll-target="#easy">Easy</a></li>
+  <li><a href="#medium" id="toc-medium" class="nav-link" data-scroll-target="#medium">Medium</a></li>
+  <li><a href="#hard" id="toc-hard" class="nav-link" data-scroll-target="#hard">Hard</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./080100-branchesAndMerging-v001.html">Git and GitHub: Working with Others</a></li><li class="breadcrumb-item"><a href="./080200-mergeConflicts-v001.html"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Merge Conflicts</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Merge Conflicts</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Most merges happen automatically. But when two branches change the <em>same lines</em> of a file in different ways, Git can’t know which version you want, so it stops and asks you to decide. This is a <strong>merge conflict</strong>. Conflicts are a normal part of working with branches, teammates, and AI agents, and once you have resolved one or two, they are not scary.</p>
+<section id="when-do-conflicts-happen" class="level2" data-number="61.1">
+<h2 data-number="61.1" class="anchored" data-anchor-id="when-do-conflicts-happen"><span class="header-section-number">61.1</span> When do conflicts happen?</h2>
+<p>Git merges files line by line:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What the two branches changed</th>
+<th>Result of the merge</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Different files</td>
+<td>Merged automatically</td>
+</tr>
+<tr class="even">
+<td>Different parts of the same file (with unchanged lines between them)</td>
+<td>Merged automatically</td>
+</tr>
+<tr class="odd">
+<td>The <strong>same lines</strong> (or lines right next to each other), in different ways</td>
+<td><strong>Conflict</strong> - you decide</td>
+</tr>
+<tr class="even">
+<td>One branch deleted a file, the other edited it</td>
+<td><strong>Conflict</strong> - you decide</td>
+</tr>
+</tbody>
+</table>
+<p>The same thing can happen with <code>git pull</code>, because a pull ends with a merge (see <a href="./080300-sharedRepositoriesAndForks-v001.html">Sharing a Repository</a>). When a conflict happens, nothing is lost: Git keeps both versions and shows you exactly where they disagree.</p>
+</section>
+<section id="a-conflict-step-by-step" class="level2" data-number="61.2">
+<h2 data-number="61.2" class="anchored" data-anchor-id="a-conflict-step-by-step"><span class="header-section-number">61.2</span> A conflict, step by step</h2>
+<p>The easiest way to learn is to create a conflict on purpose. Maria continues from <a href="./080100-branchesAndMerging-v001.html">Branches and Merging</a>. In <code>src/index.html</code>, her introduction line reads:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Hi, I'm Maria. I study business and build websites.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li>She creates a branch <code>new-intro</code>, changes the page title to <code>Maria Lopez - Portfolio</code>, rewrites the intro line as <code>&lt;p&gt;Hi, I'm Maria, a business student who builds websites.&lt;/p&gt;</code>, and commits.</li>
+<li>She switches back to <code>main</code>, changes the <strong>same</strong> intro line differently, to <code>&lt;p&gt;Hi, I'm Maria. I study business and love building websites.&lt;/p&gt;</code>, and commits again.</li>
+</ol>
+<p>Both branches changed the intro line, so merging them conflicts:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge new-intro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>Auto-merging src/index.html
+CONFLICT (content): Merge conflict in src/index.html
+Automatic merge failed; fix conflicts and then commit the result.</code></pre>
+<p>The merge is now <em>paused</em>. Git is waiting for you.</p>
+</section>
+<section id="reading-the-conflict" class="level2" data-number="61.3">
+<h2 data-number="61.3" class="anchored" data-anchor-id="reading-the-conflict"><span class="header-section-number">61.3</span> Reading the conflict</h2>
+<p><code>git status</code> tells you which files need attention:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add &lt;file&gt;..." to mark resolution)
+    both modified:   src/index.html
+
+no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
+<p>“Unmerged paths” lists the conflicted files; <code>both modified</code> means both branches changed the file. Open <code>src/index.html</code> in your editor (or look with <code>cat</code>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Maria Lopez - Portfolio&lt;/title&gt;
+    &lt;link rel="stylesheet" href="../css/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to My Portfolio&lt;/h1&gt;
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+    &lt;p&gt;Hi, I'm Maria. I study business and love building websites.&lt;/p&gt;
+=======
+    &lt;p&gt;Hi, I'm Maria, a business student who builds websites.&lt;/p&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; new-intro
+    &lt;p&gt;&lt;a href="contact.html"&gt;Contact me&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>Git has written <strong>conflict markers</strong> into the file:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Marker</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code></td>
+<td>Start of the conflict. The lines below it are <strong>your current branch’s</strong> version (HEAD, here <code>main</code>).</td>
+</tr>
+<tr class="even">
+<td><code>=======</code></td>
+<td>Separates the two versions.</td>
+</tr>
+<tr class="odd">
+<td><code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; new-intro</code></td>
+<td>End of the conflict. The lines just above it are the version from the branch you are merging in (<code>new-intro</code>).</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the new title is already there, without markers: Git merged the part only one branch changed and left only the real disagreement for you.</p>
+</section>
+<section id="resolving-the-conflict" class="level2" data-number="61.4">
+<h2 data-number="61.4" class="anchored" data-anchor-id="resolving-the-conflict"><span class="header-section-number">61.4</span> Resolving the conflict</h2>
+<ol type="1">
+<li><p><strong>Decide what the file should say.</strong> Keep your version, keep the other version, or combine them. Maria combines them:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Hi, I'm Maria, a business student who loves building websites.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Delete all three marker lines</strong> (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>) and save the file. A file that still contains markers is broken: the markers would appear on the web page. Before you stage the file, <code>git diff --check</code> lists any leftover markers (it also flags stray spaces at the ends of lines) and prints nothing when the file is clean:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--check</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Mark the file as resolved</strong> by staging it:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add src/index.html</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+ modified:   src/index.html</code></pre></li>
+<li><p><strong>Finish the merge with a commit:</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Git opens your editor with the message <code>Merge branch 'new-intro'</code> already filled in (plus some comment lines starting with <code>#</code>, which Git ignores). Save and close to accept it (in nano: <code>Ctrl+O</code>, <code>Enter</code>, <code>Ctrl+X</code>).</p>
+<p>Output:</p>
+<pre><code>[main cd24c15] Merge branch 'new-intro'</code></pre></li>
+</ol>
+<p>The history now shows the merge commit joining the two branches:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output (older commits cut off):</p>
+<pre><code>*   cd24c15 (HEAD -&gt; main) Merge branch 'new-intro'
+|\
+| * 0f4ca56 (new-intro) Update title and intro
+* | ed29994 Reword intro
+|/
+*   c2c5ec0 (origin/main) Merge branch 'style-links'</code></pre>
+<p>Finally, Maria tests the page in her browser, deletes the merged branch (<code>git branch -d new-intro</code>), and runs <code>git push</code>.</p>
+</section>
+<section id="changing-your-mind-git-merge---abort" class="level2" data-number="61.5">
+<h2 data-number="61.5" class="anchored" data-anchor-id="changing-your-mind-git-merge---abort"><span class="header-section-number">61.5</span> Changing your mind: <code>git merge --abort</code></h2>
+<p>If a conflict is bigger than you expected, or you are not sure which version is right, you can cancel the whole merge <strong>before you commit it</strong>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge <span class="at">--abort</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This prints nothing; your files and branch go back to exactly how they were before you ran <code>git merge</code>, and <code>git status</code> shows a clean working tree again. You can talk to your teammate, then try the merge later.</p>
+</section>
+<section id="conflicts-when-you-pull" class="level2" data-number="61.6">
+<h2 data-number="61.6" class="anchored" data-anchor-id="conflicts-when-you-pull"><span class="header-section-number">61.6</span> Conflicts when you pull</h2>
+<p><code>git pull</code> downloads new commits and then merges them, so a teammate’s edit to the same lines produces the same kind of conflict, and you resolve it the same way (edit, <code>git add</code>, <code>git commit</code>). The only visible difference is that the bottom marker shows a long commit ID instead of a branch name, for example <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d96bf5be8abfe33f58d30404c943a4cb773bfe6</code>. Pulling in teams is covered in <a href="./080300-sharedRepositoriesAndForks-v001.html">Sharing a Repository</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: Keeping one whole side of a file
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you know you want <em>all</em> of one version of a conflicted file, you don’t have to edit the markers by hand. To keep your current branch’s version of the whole file:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--ours</span> src/index.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, to keep the incoming branch’s version instead:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--theirs</span> src/index.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then <code>git add</code> the file and <code>git commit</code> as usual. During a merge, “ours” is the branch you are on and “theirs” is the branch you are merging in. (Careful: during a <em>rebase</em>, Git swaps these two meanings.)</p>
+<p>Many editors, including VS Code, also highlight conflict markers and offer one-click buttons to keep one side or both. They edit the same markers for you, so the steps afterwards (<code>git add</code>, <code>git commit</code>) are the same.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: Other kinds of conflicts
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Modify/delete:</strong> one branch deleted a file that the other branch edited. Git reports <code>CONFLICT (modify/delete)</code> and <code>git status</code> shows, for example, <code>deleted by them: css/style.css</code>. Resolve it by keeping the file (<code>git add css/style.css</code>) or deleting it (<code>git rm css/style.css</code>), then commit.</li>
+<li><strong>Binary files</strong> such as images: Git can’t put markers inside a picture. Pick one version with <code>git restore --ours</code> or <code>--theirs</code>, then <code>git add</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="avoiding-conflicts-and-keeping-them-small" class="level2" data-number="61.7">
+<h2 data-number="61.7" class="anchored" data-anchor-id="avoiding-conflicts-and-keeping-them-small"><span class="header-section-number">61.7</span> Avoiding conflicts (and keeping them small)</h2>
+<ul>
+<li><strong>Pull often</strong> and merge <code>main</code> into your branch regularly, so you find differences while they are small.</li>
+<li><strong>Keep branches short-lived</strong> and commits small and focused. A branch that lives for weeks drifts far from <code>main</code>.</li>
+<li><strong>Communicate.</strong> Agree on who is working on which files or features.</li>
+<li><strong>Don’t reformat whole files</strong> (or let an editor or AI do it) as part of an unrelated change. Changing the indentation of 300 lines creates 300 conflicting lines for everyone else.</li>
+<li><strong>Give parallel AI agents separate areas</strong> of the code (see <a href="./080500-worktreesAndParallelAgents-v001.html">Git Worktrees and Parallel AI Agents</a>).</li>
+</ul>
+</section>
+<section id="getting-help-from-claude-code" class="level2" data-number="61.8">
+<h2 data-number="61.8" class="anchored" data-anchor-id="getting-help-from-claude-code"><span class="header-section-number">61.8</span> Getting help from Claude Code</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/prompt-library">Prompt library</a> · <a href="https://code.claude.com/docs/en/quickstart">Quickstart</a></span></p>
+<p>Claude Code can resolve conflicts for you. The Claude Code prompt library includes this prompt:</p>
+<pre class="text"><code>resolve the merge conflicts in this branch and explain what you kept from each side</code></pre>
+<p>Claude reads both versions, edits the files, and explains its choices. That explanation matters, because the AI only sees the code: it doesn’t know which change your team actually wanted. Before you commit Claude’s resolution:</p>
+<ul>
+<li>Read the explanation and the changes. <code>git diff HEAD</code> shows everything the merge will change compared with your last commit, even in files Claude has already staged. Is each choice what the authors of <em>both</em> branches intended?</li>
+<li>Make sure no markers are left with <code>git diff HEAD --check</code>. (Plain <code>git diff --check</code> misses markers in files that have already been staged with <code>git add</code>, which Claude may have done.)</li>
+<li>Run the app or the tests and check the result in the browser.</li>
+<li>If you want to review first, say so in the prompt, for example “…but don’t commit; I’ll review it first.”</li>
+</ul>
+</section>
+<section id="key-takeaways" class="level2" data-number="61.9">
+<h2 data-number="61.9" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">61.9</span> Key takeaways</h2>
+<ul>
+<li>A conflict happens when two branches change the same lines differently (or one deletes a file the other edits). Nothing is lost.</li>
+<li>Between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> is your current branch’s version; between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; other-branch</code> is the incoming version.</li>
+<li>To resolve: edit the file, remove all markers, <code>git add</code> the file, then <code>git commit</code>.</li>
+<li><code>git merge --abort</code> cancels a merge that you haven’t committed yet.</li>
+<li>Pull often, keep branches short, and coordinate to avoid conflicts. Review any AI-made resolution before committing.</li>
+</ul>
+</section>
+<section id="practice-questions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
+<section id="easy" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="easy">Easy</h3>
+<section id="question-1-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-1-multiple-choice">Question 1 · Multiple choice</h4>
+<p>When does Git report a merge conflict?</p>
+<ol type="a">
+<li>Every time you merge two branches.</li>
+<li>When both branches changed the same lines of a file in different ways.</li>
+<li>When a branch has more than three commits.</li>
+<li>When you merge a branch that was pushed to GitHub.</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> Git merges automatically whenever the changes don’t overlap. Only overlapping changes to the same lines (or a deleted-versus-edited file) need a human decision. Most merges don’t conflict (a), and the number of commits (c) or where a branch has been pushed (d) doesn’t matter.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-matching" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-matching">Question 2 · Matching</h4>
+<p>Match each part of a conflict with its meaning.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Part</th>
+<th></th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code></td>
+<td></td>
+<td>A. Separates the two versions</td>
+</tr>
+<tr class="even">
+<td>2. Lines between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code></td>
+<td></td>
+<td>B. End of the conflict, naming the branch being merged in</td>
+</tr>
+<tr class="odd">
+<td>3. <code>=======</code></td>
+<td></td>
+<td>C. Your current branch’s version</td>
+</tr>
+<tr class="even">
+<td>4. Lines between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code></td>
+<td></td>
+<td>D. Start of the conflict</td>
+</tr>
+<tr class="odd">
+<td>5. <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; new-intro</code></td>
+<td></td>
+<td>E. The incoming branch’s version</td>
+</tr>
+</tbody>
+</table>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>1 → D, 2 → C, 3 → A, 4 → E, 5 → B.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-true-or-false">Question 3 · True or false</h4>
+<p>A merge conflict means that Git has lost part of your work.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> Git keeps both versions and writes them into the file between conflict markers. It only needs you to decide what the final version should be.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-fill-in-the-blank" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-fill-in-the-blank">Question 4 · Fill in the blank</h4>
+<p>After editing a conflicted file and removing the markers, you mark the file as resolved with <code>git ______ &lt;file&gt;</code> and finish the merge with <code>git ______</code>.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>git add &lt;file&gt;</code> and then <code>git commit</code>. Staging the file tells Git the conflict in it is resolved; the commit creates the merge commit.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-5-short-answer">Question 5 · Short answer</h4>
+<p>What does <code>git merge --abort</code> do, and when can you use it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>It cancels the merge in progress and puts your files and branch back exactly as they were before you ran <code>git merge</code>. You can use it while the merge is paused by a conflict, before you have committed the merge.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-true-or-false">Question 6 · True or false</h4>
+<p>Maria changes line 3 of <code>README.md</code> on her branch, and Sam changes line 40 of the same file on his. Merging the two branches will always produce a conflict.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> Git merges line by line. Changes to different, non-adjacent parts of the same file are combined automatically. Only overlapping changes conflict.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="medium" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="medium">Medium</h3>
+<section id="question-7-ordering" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-ordering">Question 7 · Ordering</h4>
+<p>Put these steps for handling a conflict in the right order:</p>
+<ul>
+<li>A. Run <code>git commit</code></li>
+<li>B. Run <code>git merge feature</code> and see <code>CONFLICT</code></li>
+<li>C. Edit the file so it contains the right text, and delete the markers</li>
+<li>D. Run <code>git status</code> to see which files are conflicted</li>
+<li>E. Run <code>git add</code> on the fixed file</li>
+</ul>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>B → D → C → E → A. Start the merge, find the conflicted files, fix each file (removing all markers), stage it, then commit to complete the merge.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-read-the-output" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-read-the-output">Question 8 · Read the output</h4>
+<p>Sam is on <code>main</code> and runs <code>git merge price-update</code>. Part of <code>menu.html</code> now looks like this:</p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+    &lt;p&gt;Coffee: $3.00&lt;/p&gt;
+=======
+    &lt;p&gt;Coffee: $3.50&lt;/p&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; price-update</code></pre>
+<p>Which price is on <code>main</code>, and which is on <code>price-update</code>? If the new price is correct, what should this part of the file look like after resolving?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>$3.00</code> is on <code>main</code> (the HEAD section, between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> and <code>=======</code>), and <code>$3.50</code> is on <code>price-update</code> (between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>). Resolved, the part should be just:</p>
+<pre><code>    &lt;p&gt;Coffee: $3.50&lt;/p&gt;</code></pre>
+<p>with all three marker lines removed.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-9-write-the-resolution" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-write-the-resolution">Question 9 · Write the resolution</h4>
+<p>Two teammates each added a different item at the end of the same list:</p>
+<pre><code>    &lt;li&gt;Home&lt;/li&gt;
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+    &lt;li&gt;About&lt;/li&gt;
+=======
+    &lt;li&gt;Contact&lt;/li&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; add-contact-link</code></pre>
+<p>Both links should stay. Write the resolved lines.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>    &lt;li&gt;Home&lt;/li&gt;
+    &lt;li&gt;About&lt;/li&gt;
+    &lt;li&gt;Contact&lt;/li&gt;</code></pre>
+<p>Combining both sides is often the right answer when both people added something useful. The markers must be gone.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-10-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-short-answer">Question 10 · Short answer</h4>
+<p>During a conflict, where in the output of <code>git status</code> do you find the conflicted files, and what label does a file get when both branches changed it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Under the heading <strong>Unmerged paths</strong>, where each conflicted file is labeled <code>both modified:</code> (for example <code>both modified:   src/index.html</code>).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-11-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-write-the-command">Question 11 · Write the command</h4>
+<p>You think you have removed all conflict markers from your files, but you want Git to double-check before you stage them. Which command lists leftover markers?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>git diff --check</code>. It prints a line such as <code>src/index.html:9: leftover conflict marker</code> for each marker it finds and prints nothing when the files are clean. (Searching with <code>grep -n "&lt;&lt;&lt;&lt;&lt;&lt;&lt;" src/index.html</code> also works.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-12-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-scenario">Question 12 · Scenario</h4>
+<p>In the middle of resolving a conflict in five files, Maria realizes she doesn’t understand Sam’s changes and wants to talk to him first. She hasn’t committed anything yet. What should she do?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run <code>git merge --abort</code>. It cancels the merge and restores her branch and files to the state before the merge, so she can talk to Sam and redo the merge later.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-13-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-13-scenario">Question 13 · Scenario</h4>
+<p>Sam runs <code>git pull</code> and gets a conflict. The end marker in his file reads <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d96bf5be8abfe33f58d30404c943a4cb773bfe6</code> instead of a branch name. Why, and does he resolve it differently from a branch merge?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>git pull</code> downloads the new commits from GitHub and merges them, and Git labels the incoming side with the commit ID it is merging instead of a local branch name. The resolution is exactly the same: edit the file, remove the markers, <code>git add</code> it, and <code>git commit</code>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
+<section id="question-14-find-the-bug" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-14-find-the-bug">Question 14 · Find the bug</h4>
+<p>After a conflict, Maria ran <code>git add src/index.html</code> and <code>git commit</code> immediately. Now her home page shows <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; new-heading</code> as text. What went wrong, why didn’t Git stop her, and how should she fix it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>She staged and committed the file without editing it, so the conflict markers were committed as ordinary text. Git doesn’t check file contents when you run <code>git add</code>: staging is how <em>you</em> tell Git the conflict is resolved. To fix it, she edits the file to the correct text, deletes the markers, checks with <code>git diff --check</code>, then <code>git add src/index.html</code> and commits the fix (for example <code>git commit -m "Remove leftover conflict markers"</code>).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-15-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-15-long-answer">Question 15 · Long answer</h4>
+<p>Why can’t Git simply keep the newest change when two branches edit the same line? Use an example.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Git doesn’t understand what the text <em>means</em>, and “newest” isn’t necessarily “right”. Example: Maria changes a price to <code>$3.50</code> because of a supplier increase, and later Sam changes the same line to <code>Coffee (large): $3.00</code> to add a size. Keeping only the newer line would silently undo Maria’s price change; the correct result might be <code>Coffee (large): $3.50</code>. Only a person who knows the intent of both changes can decide, so Git stops and asks.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-16-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-16-scenario">Question 16 · Scenario</h4>
+<p>You asked Claude Code to “resolve the merge conflicts in this branch and explain what you kept from each side”. It says it’s done. List what you should check before committing the merge.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Read Claude’s explanation and the actual changes (<code>git status</code>, and <code>git diff HEAD</code>, which also covers files Claude has already staged). Does each choice match what <em>both</em> authors intended? The AI only sees the code, not your team’s decisions.</li>
+<li>Confirm that no conflict markers are left (<code>git diff HEAD --check</code>, which also checks files Claude has already staged).</li>
+<li>Run the app or tests and check the affected pages.</li>
+<li>Only then <code>git add</code> and <code>git commit</code> (or let Claude commit after your review).</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="question-17-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-17-long-answer">Question 17 · Long answer</h4>
+<p>Three students are building one website together. Give four habits that will reduce merge conflicts, and briefly say why each one helps.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Any four of these, with reasons:</p>
+<ol type="1">
+<li><strong>Pull often / merge <code>main</code> into your branch regularly</strong> - you see others’ changes early, while differences are small.</li>
+<li><strong>Keep branches short-lived and commits small</strong> - less time to drift apart, and smaller conflicts when they happen.</li>
+<li><strong>Agree who works on which files or features</strong> - fewer people editing the same lines.</li>
+<li><strong>Don’t reformat whole files in unrelated changes</strong> - reformatting touches every line and conflicts with everyone.</li>
+<li><strong>Push finished work promptly</strong> - others build on the latest version.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="question-18-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-18-scenario">Question 18 · Scenario</h4>
+<p>Two AI coding sessions worked in parallel on the same website. One added a dark theme to <code>css/style.css</code>; the other was asked to “clean up the CSS” and re-indented and reordered the whole file. Why is merging these two branches likely to be painful, and how could it have been avoided?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The clean-up changed almost every line of <code>css/style.css</code>, and the dark theme also changed that file, so the two branches overlap nearly everywhere and the merge produces large conflicts that are hard to read. To avoid it: give parallel sessions separate files or areas, avoid whole-file reformatting while other work is in progress (or do it alone, merged quickly, before other branches start), and merge small changes often.</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./080100-branchesAndMerging-v001.html" class="pagination-link" aria-label="<yrChapterNumber>60. </yrChapterNumber> Branches and Merging">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title"><yrchapternumber>60. </yrchapternumber> Branches and Merging</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./080300-sharedRepositoriesAndForks-v001.html" class="pagination-link" aria-label="<yrChapterNumber>62. </yrChapterNumber> Sharing a Repository: Collaborators and Forks">
+        <span class="nav-page-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title"><yrchapternumber>62. </yrchapternumber> Sharing a Repository: Collaborators and Forks</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>
+/* yrAnswerToggles-v001
+ *
+ * Adds "Show all answers" / "Hide all answers" buttons to every page that
+ * contains practice-question answer callouts. An answer callout is any
+ * callout that has the class .yr-answer, for example:
+ *
+ *     ::: {.callout-tip .yr-answer collapse="true" icon="false"}
+ *     ## Suggested answer
+ *     ...
+ *     :::
+ *
+ * The buttons are inserted in two places:
+ *   1. directly below the page title
+ *   2. at the top of the practice questions section, i.e. right after
+ *        ## Practice Questions {#practice-questions .unnumbered}
+ *
+ * This file is included inline (include-after-body: file: ...) instead of
+ * with <script src="...">, so it works for pages in subfolders too.
+ * Pages without .yr-answer callouts (e.g. f26/yudkowskyBook-v001.qmd, which
+ * has its own buttons) are not affected.
+ */
+(function () {
+  function getAnswerCallouts() {
+    return Array.prototype.slice.call(document.querySelectorAll(".callout.yr-answer"));
+  }
+
+  function setCalloutExpanded(callout, expanded) {
+    var content = callout.querySelector(".callout-collapse");
+    var header = callout.querySelector(".callout-header");
+    if (!content) {
+      return;
+    }
+    if (window.bootstrap && window.bootstrap.Collapse) {
+      var instance = window.bootstrap.Collapse.getOrCreateInstance(content, { toggle: false });
+      if (expanded) {
+        instance.show();
+      } else {
+        instance.hide();
+      }
+    } else {
+      content.classList.toggle("show", expanded);
+    }
+    // Keep the arrow icon in sync (Quarto rotates it based on aria-expanded).
+    if (header) {
+      header.setAttribute("aria-expanded", expanded ? "true" : "false");
+      header.classList.toggle("collapsed", !expanded);
+    }
+  }
+
+  function setAllAnswers(expanded) {
+    getAnswerCallouts().forEach(function (callout) {
+      setCalloutExpanded(callout, expanded);
+    });
+  }
+
+  function makeButton(text, expanded) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "yr-answer-btn";
+    btn.textContent = text;
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+      setAllAnswers(expanded);
+    });
+    return btn;
+  }
+
+  function makeToolbar(extraClass, includeJumpLink, count) {
+    var bar = document.createElement("div");
+    bar.className = "yr-answer-toolbar " + extraClass;
+
+    var label = document.createElement("span");
+    label.className = "yr-answer-toolbar-label";
+    label.textContent = "Practice question answers (" + count + "):";
+    bar.appendChild(label);
+
+    bar.appendChild(makeButton("Show all answers", true));
+    bar.appendChild(makeButton("Hide all answers", false));
+
+    if (includeJumpLink && document.getElementById("practice-questions")) {
+      var link = document.createElement("a");
+      link.className = "yr-answer-jump";
+      link.href = "#practice-questions";
+      link.textContent = "Jump to practice questions ↓";
+      bar.appendChild(link);
+    }
+    return bar;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var count = getAnswerCallouts().length;
+    if (count === 0) {
+      return;
+    }
+
+    var titleBlock = document.getElementById("title-block-header");
+    if (titleBlock) {
+      titleBlock.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-top", true, count));
+    }
+
+    var section = document.getElementById("practice-questions");
+    if (section) {
+      var heading = section.querySelector("h2, h3");
+      if (heading) {
+        heading.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-section", false, count));
+      }
+    }
+  });
+})();
+</script>
+<script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>

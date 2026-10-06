@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>50&nbsp; 50.  Claude Code Beyond the Terminal – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./070100-extendingOverview-v001.html" rel="next">
+<link href="./060900-workingEffectively-v001.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+<link rel="stylesheet" href="yrStyles-f26-v001.css">
+<link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./060100-installingClaudeCode-v001.html">Claude Code Essentials</a></li><li class="breadcrumb-item"><a href="./061000-claudeCodeBeyondTheTerminal-v001.html"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Claude Code Beyond the Terminal</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26/yudkowskyBook-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005100-whatIsAiSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> What Is AI Safety? Risks, Vocabulary, and Viewpoints</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005200-aiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> AI Security Incidents in the News (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005250-moreAiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> More AI Security Incidents: Hijacked Tools, Leaks, and Deepfakes (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005300-aiSafetyDebate-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Governments, Companies, and the AI Safety Debate (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005350-aiSafetyBeyondWashington-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> The AI Safety Debate Beyond Washington (2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Today</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010100-whatAiCanDoToday-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> What AI Can Do Today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010200-howLlmsWork-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> How Large Language Models Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010300-limitsRisksAndResponsibleUse-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Limits, Risks, and Responsible Use</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010400-aiAssistedDevelopment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> AI-Assisted Development: From Chatbots to Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010500-aiCodingToolsLandscape-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> The AI Coding Tool Landscape (Fall 2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Command Line (Bash)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020100-whatIsTheCommandLine-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> What Is the Command Line?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020200-installingAndOpeningBash-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>13. </yrchapternumber> Getting Bash on Your Computer (Mac and Windows)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020300-filesFoldersAndPaths-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>14. </yrchapternumber> Files, Folders, and Paths</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020400-navigatingPwdLsCd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Moving Around: pwd, ls, and cd</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020500-creatingAndDeleting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> Creating, Copying, Moving, and Deleting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020600-echoRedirectionAndViewing-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Writing to Files: echo, &gt;, &gt;&gt;, and cat</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020700-environmentVariables-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Environment Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020800-singleVsDoubleQuotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Single Quotes vs. Double Quotes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020900-gettingHelpAndShortcuts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>20. </yrchapternumber> Getting Help and Working Faster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021000-wildcardsPipesAndSearching-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>21. </yrchapternumber> Wildcards, Pipes, and Searching</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021100-bashScriptsAndAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title"><yrchapternumber>22. </yrchapternumber> Bash Scripts (and Using AI at the Command Line)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working on Your Own</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030100-whatIsVersionControl-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> What Is Version Control? (Git vs. GitHub)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030200-installingAndConfiguringGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Installing and Configuring Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030300-yourFirstRepository-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>25. </yrchapternumber> Your First Repository: init, status, add, commit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030400-historyAndUndo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title"><yrchapternumber>26. </yrchapternumber> Viewing History and Undoing Changes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030500-gitignoreAndSecrets-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title"><yrchapternumber>27. </yrchapternumber> .gitignore and Keeping Secrets Out of Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030600-githubRemotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><yrchapternumber>28. </yrchapternumber> Putting Your Repository on GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030700-cloneAndPull-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><yrchapternumber>29. </yrchapternumber> Cloning and Pulling (Working from Two Computers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">How the Web Works</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040100-browsersAndWebServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> Browsers, Web Servers, and HTTP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>31. </yrchapternumber> URLs, Domain Names, IP Addresses, and DNS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040300-htmlCssJavascriptAndDevTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>32. </yrchapternumber> HTML, CSS, JavaScript, and Browser Developer Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040400-whatHappensOnTheServer-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title"><yrchapternumber>33. </yrchapternumber> What Happens on the Server: Back Ends, Databases, and APIs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040500-webFrameworks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><yrchapternumber>34. </yrchapternumber> Web Frameworks and Meta-Frameworks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040600-apisKeysAndThirdPartyServices-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><yrchapternumber>35. </yrchapternumber> APIs, API Keys, and Third-Party Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040700-hostingAndDeployment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><yrchapternumber>36. </yrchapternumber> Hosting and Deployment: Getting Your App Online</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040800-architectingWithAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title"><yrchapternumber>37. </yrchapternumber> Putting It Together: Architecting a Web App with AI</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude: The Big Picture</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050100-claudeProductFamily-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title"><yrchapternumber>38. </yrchapternumber> The Claude Product Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050200-claudeModelsPlansAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><yrchapternumber>39. </yrchapternumber> Claude Models, Plans, and Usage Limits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050300-navigatingClaudeDocs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><yrchapternumber>40. </yrchapternumber> Navigating the Claude Documentation (and Keeping Up)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude Code Essentials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060100-installingClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><yrchapternumber>41. </yrchapternumber> Installing Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060200-firstSession-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title"><yrchapternumber>42. </yrchapternumber> Your First Claude Code Session</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060300-howClaudeCodeWorks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title"><yrchapternumber>43. </yrchapternumber> How Claude Code Works: The Agentic Loop and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060400-slashCommands-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title"><yrchapternumber>44. </yrchapternumber> Essential Slash Commands</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060500-permissionsModesAndSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title"><yrchapternumber>45. </yrchapternumber> Permissions, Modes, and Safety</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060600-claudeMdAndMemory-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title"><yrchapternumber>46. </yrchapternumber> CLAUDE.md and Memory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060700-dotClaudeFoldersAndSettings-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title"><yrchapternumber>47. </yrchapternumber> The .claude Folders and Settings Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060800-contextModelsEffortAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title"><yrchapternumber>48. </yrchapternumber> Context, Models, Effort, and Usage in Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060900-workingEffectively-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title"><yrchapternumber>49. </yrchapternumber> Working Effectively with Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./061000-claudeCodeBeyondTheTerminal-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Claude Code Beyond the Terminal</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Extending Claude Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070100-extendingOverview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><yrchapternumber>51. </yrchapternumber> Extending Claude Code: The Big Picture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070200-skills-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><yrchapternumber>52. </yrchapternumber> Skills</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070300-mcpServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><yrchapternumber>53. </yrchapternumber> MCP Servers: Connecting Claude to Other Tools and Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070400-browserAutomationMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title"><yrchapternumber>54. </yrchapternumber> Hands-On: Letting Claude Use a Browser (Playwright MCP and Chrome)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070500-supabaseMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title"><yrchapternumber>55. </yrchapternumber> Hands-On: The Supabase MCP Server</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070600-hooks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title"><yrchapternumber>56. </yrchapternumber> Hooks: Running Your Own Commands Automatically</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070700-subagents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title"><yrchapternumber>57. </yrchapternumber> Subagents (and Running Agents in Parallel)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070800-plugins-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title"><yrchapternumber>58. </yrchapternumber> Plugins and Marketplaces</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070900-mods-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title"><yrchapternumber>59. </yrchapternumber> Mods: Customizing Claude Code Itself</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working with Others</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080100-branchesAndMerging-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title"><yrchapternumber>60. </yrchapternumber> Branches and Merging</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080200-mergeConflicts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Merge Conflicts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080300-sharedRepositoriesAndForks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title"><yrchapternumber>62. </yrchapternumber> Sharing a Repository: Collaborators and Forks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080400-pullRequestsAndCodeReview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title"><yrchapternumber>63. </yrchapternumber> Pull Requests and Code Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080500-worktreesAndParallelAgents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title"><yrchapternumber>64. </yrchapternumber> Git Worktrees and Parallel AI Agents</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title"><yrchapternumber>65. </yrchapternumber> Tutorial - intro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001007-tutorial-supabase-projectArchitecture-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title"><yrchapternumber>66. </yrchapternumber> Project Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001100-tutorial-installNodeNpm-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title"><yrchapternumber>67. </yrchapternumber> Step 0: Install Node.js and npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001110-tutorial-cloneRepo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title"><yrchapternumber>68. </yrchapternumber> Step 1: Fork the repo and clone it</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001120-tutorial-installThePackages-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title"><yrchapternumber>69. </yrchapternumber> Step 2: Installing the Node.js packages with npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title"><yrchapternumber>70. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001140-tutorial-previewFrontEnd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title"><yrchapternumber>71. </yrchapternumber> Step 4 - Optional: Preview the Frontend</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><yrchapternumber>73. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001160-tutorial-googleOauth-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">74</span>&nbsp; <span class="chapter-title"><yrchapternumber>74. </yrchapternumber> Step 6: setup authentication (Google OAuth)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001170-tutorial-openAiApi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">75</span>&nbsp; <span class="chapter-title"><yrchapternumber>75. </yrchapternumber> Step 7: Set Up OpenAI API</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001180-tutorial-setupStripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">76</span>&nbsp; <span class="chapter-title"><yrchapternumber>76. </yrchapternumber> Step 8: Set Up Stripe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">77</span>&nbsp; <span class="chapter-title"><yrchapternumber>77. </yrchapternumber> Step 9: Set Up Supabase Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001200-tutorial-setupSupabaseStorage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">78</span>&nbsp; <span class="chapter-title"><yrchapternumber>78. </yrchapternumber> Step 10: Set Up Supabase Storage Bucket</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">79</span>&nbsp; <span class="chapter-title"><yrchapternumber>79. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001220-tutorial-runTheApplication-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">80</span>&nbsp; <span class="chapter-title"><yrchapternumber>80. </yrchapternumber> Step 12: Run the Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001230-tutorial-deployToProduction-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">81</span>&nbsp; <span class="chapter-title"><yrchapternumber>81. </yrchapternumber> Step 13: Deploy to Production</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001240-tutorial-extendTheFunctionality-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">82</span>&nbsp; <span class="chapter-title"><yrchapternumber>82. </yrchapternumber> Step 14: Extending the functionality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">83</span>&nbsp; <span class="chapter-title"><yrchapternumber>83. </yrchapternumber> Step 15: Automated Testing and Troubleshooting</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">84</span>&nbsp; <span class="chapter-title"><yrchapternumber>84. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">85</span>&nbsp; <span class="chapter-title"><yrchapternumber>85. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">86</span>&nbsp; <span class="chapter-title"><yrchapternumber>86. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">87</span>&nbsp; <span class="chapter-title"><yrchapternumber>87. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./990010-references-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#same-engine-many-surfaces" id="toc-same-engine-many-surfaces" class="nav-link active" data-scroll-target="#same-engine-many-surfaces"><span class="header-section-number">50.1</span> Same engine, many surfaces</a></li>
+  <li><a href="#in-your-code-editor-vs-code-and-jetbrains" id="toc-in-your-code-editor-vs-code-and-jetbrains" class="nav-link" data-scroll-target="#in-your-code-editor-vs-code-and-jetbrains"><span class="header-section-number">50.2</span> In your code editor: VS Code and JetBrains</a></li>
+  <li><a href="#the-desktop-apps-code-tab" id="toc-the-desktop-apps-code-tab" class="nav-link" data-scroll-target="#the-desktop-apps-code-tab"><span class="header-section-number">50.3</span> The Desktop app’s Code tab</a></li>
+  <li><a href="#cloud-sessions-at-claude.aicode" id="toc-cloud-sessions-at-claude.aicode" class="nav-link" data-scroll-target="#cloud-sessions-at-claude.aicode"><span class="header-section-number">50.4</span> Cloud sessions at claude.ai/code</a></li>
+  <li><a href="#from-your-phone-the-mobile-app-and-remote-control" id="toc-from-your-phone-the-mobile-app-and-remote-control" class="nav-link" data-scroll-target="#from-your-phone-the-mobile-app-and-remote-control"><span class="header-section-number">50.5</span> From your phone: the mobile app and Remote Control</a></li>
+  <li><a href="#driving-your-browser-the-chrome-integration" id="toc-driving-your-browser-the-chrome-integration" class="nav-link" data-scroll-target="#driving-your-browser-the-chrome-integration"><span class="header-section-number">50.6</span> Driving your browser: the Chrome integration</a></li>
+  <li><a href="#on-github-github-actions-and-code-review" id="toc-on-github-github-actions-and-code-review" class="nav-link" data-scroll-target="#on-github-github-actions-and-code-review"><span class="header-section-number">50.7</span> On GitHub: GitHub Actions and Code Review</a></li>
+  <li><a href="#in-slack" id="toc-in-slack" class="nav-link" data-scroll-target="#in-slack"><span class="header-section-number">50.8</span> In Slack</a></li>
+  <li><a href="#automation-routines-scheduled-tasks-and-loop" id="toc-automation-routines-scheduled-tasks-and-loop" class="nav-link" data-scroll-target="#automation-routines-scheduled-tasks-and-loop"><span class="header-section-number">50.9</span> Automation: routines, scheduled tasks, and <code>/loop</code></a></li>
+  <li><a href="#sharing-your-results-artifacts" id="toc-sharing-your-results-artifacts" class="nav-link" data-scroll-target="#sharing-your-results-artifacts"><span class="header-section-number">50.10</span> Sharing your results: artifacts</a></li>
+  <li><a href="#what-carries-over-between-surfaces" id="toc-what-carries-over-between-surfaces" class="nav-link" data-scroll-target="#what-carries-over-between-surfaces"><span class="header-section-number">50.11</span> What carries over between surfaces</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">50.12</span> Key takeaways</a></li>
+  <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
+  <ul class="collapse">
+  <li><a href="#easy" id="toc-easy" class="nav-link" data-scroll-target="#easy">Easy</a></li>
+  <li><a href="#medium" id="toc-medium" class="nav-link" data-scroll-target="#medium">Medium</a></li>
+  <li><a href="#hard" id="toc-hard" class="nav-link" data-scroll-target="#hard">Hard</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./060100-installingClaudeCode-v001.html">Claude Code Essentials</a></li><li class="breadcrumb-item"><a href="./061000-claudeCodeBeyondTheTerminal-v001.html"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Claude Code Beyond the Terminal</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Claude Code Beyond the Terminal</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This course uses Claude Code in the terminal, but Claude Code also runs in code editors, a desktop app, the cloud, your phone, GitHub, and Slack. This page is a tour: what each place is good for, what it needs, and which of your settings come along.</p>
+<section id="same-engine-many-surfaces" class="level2" data-number="50.1">
+<h2 data-number="50.1" class="anchored" data-anchor-id="same-engine-many-surfaces"><span class="header-section-number">50.1</span> Same engine, many surfaces</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/platforms">Platforms and integrations</a> · <a href="https://code.claude.com/docs/en/overview">Claude Code overview</a></span></p>
+<p>Each place where you can use Claude Code is called a <strong>surface</strong>. In the docs’ words, Claude Code “runs the same underlying engine everywhere, but each surface is tuned for a different way of working.” For any surface, ask: <em>where does the work run</em>, and <em>where do you watch and steer it</em>?</p>
+<pre><code>WHERE CLAUDE CODE RUNS        WHERE YOU WATCH AND STEER IT
+----------------------        ------------------------------------------
+Your computer          &lt;----  terminal, VS Code, JetBrains, Desktop app
+                       &lt;----  your phone or any browser (Remote Control)
+
+Anthropic's cloud      &lt;----  claude.ai/code, Desktop app, phone app,
+                              terminal (claude --cloud), Slack
+
+GitHub's servers       &lt;----  @claude comments on issues and pull requests</code></pre>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Surface</th>
+<th>Runs on</th>
+<th>How you use it</th>
+<th>Best for</th>
+<th>Needs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Terminal (CLI)</strong></td>
+<td>Your computer</td>
+<td>Type in a terminal</td>
+<td>Everything, including scripting</td>
+<td>Paid plan, API key, or cloud provider</td>
+</tr>
+<tr class="even">
+<td><strong>VS Code / JetBrains</strong></td>
+<td>Your computer</td>
+<td>Inside your code editor</td>
+<td>Coding with files and changes in view</td>
+<td>Same as the CLI</td>
+</tr>
+<tr class="odd">
+<td><strong>Desktop Code tab</strong></td>
+<td>Your computer (or cloud, or SSH)</td>
+<td>A graphical app</td>
+<td>Parallel sessions, visual review</td>
+<td>Paid plan</td>
+</tr>
+<tr class="even">
+<td><strong>Cloud sessions</strong></td>
+<td>Anthropic’s cloud</td>
+<td>claude.ai/code, phone, Desktop, <code>claude --cloud</code></td>
+<td>Long or parallel tasks</td>
+<td>Pro, Max, Team, some Enterprise seats; GitHub</td>
+</tr>
+<tr class="odd">
+<td><strong>Remote Control</strong></td>
+<td>Your computer</td>
+<td>Your phone or any browser</td>
+<td>Steering local work from elsewhere</td>
+<td>Paid plan sign-in (no API key)</td>
+</tr>
+<tr class="even">
+<td><strong>Chrome integration</strong></td>
+<td>Your computer and browser</td>
+<td><code>claude --chrome</code></td>
+<td>Testing web apps</td>
+<td>Paid plan, <code>/login</code></td>
+</tr>
+<tr class="odd">
+<td><strong>GitHub Actions</strong></td>
+<td>GitHub’s servers</td>
+<td><code>@claude</code> in issues and pull requests</td>
+<td>Repository chores</td>
+<td>API key or subscription token</td>
+</tr>
+<tr class="even">
+<td><strong>Code Review</strong></td>
+<td>Anthropic’s cloud</td>
+<td>Automatic on pull requests</td>
+<td>Reviewing every pull request</td>
+<td>Team or Enterprise (research preview)</td>
+</tr>
+<tr class="odd">
+<td><strong>Routines</strong></td>
+<td>Anthropic’s cloud</td>
+<td>Schedule, API call, or GitHub event</td>
+<td>Unattended recurring jobs</td>
+<td>Paid plan (research preview)</td>
+</tr>
+<tr class="even">
+<td><strong>Slack</strong></td>
+<td>Anthropic’s cloud</td>
+<td><code>@Claude</code> in a channel</td>
+<td>Chat requests to pull requests</td>
+<td>See <a href="#in-slack">In Slack</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="in-your-code-editor-vs-code-and-jetbrains" class="level2" data-number="50.2">
+<h2 data-number="50.2" class="anchored" data-anchor-id="in-your-code-editor-vs-code-and-jetbrains"><span class="header-section-number">50.2</span> In your code editor: VS Code and JetBrains</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/vs-code">Use Claude Code in VS Code</a> · <a href="https://code.claude.com/docs/en/jetbrains">JetBrains IDEs</a></span></p>
+<ul>
+<li><strong>VS Code extension</strong>: a Claude Code panel inside VS Code (also in editors built on VS Code, such as Cursor), with inline diffs, <code>@</code>-mentions of files, and plan review. It bundles its own copy of Claude Code (typing <code>claude</code> in a terminal still needs the normal install), offers a subset of the slash commands, and shares conversation history with the CLI: <code>claude --resume</code> in a terminal can continue an extension conversation.</li>
+<li><strong>JetBrains plugin</strong> (IntelliJ, PyCharm, WebStorm, and others; still labeled beta in the JetBrains Marketplace): it runs the <code>claude</code> command in the editor’s built-in terminal and shows Claude’s changes in the editor’s diff viewer. It does <strong>not</strong> include Claude Code, so install the CLI first.</li>
+<li>From a separate terminal, the <code>/ide</code> command connects a running Claude Code session to your editor.</li>
+</ul>
+</section>
+<section id="the-desktop-apps-code-tab" class="level2" data-number="50.3">
+<h2 data-number="50.3" class="anchored" data-anchor-id="the-desktop-apps-code-tab"><span class="header-section-number">50.3</span> The Desktop app’s Code tab</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/desktop">Desktop application</a> · <a href="https://code.claude.com/docs/en/desktop-quickstart">Get started with the desktop app</a></span></p>
+<p>The Claude Desktop app (Mac and Windows; Linux in beta) has a <strong>Code</strong> tab: Claude Code with buttons and panels instead of a terminal. It needs a paid plan, and you don’t have to install the CLI separately. Highlights:</p>
+<ul>
+<li>Several <strong>sessions</strong> at once, listed in a sidebar, each optionally in its own copy of the project (a Git <strong>worktree</strong>; see <a href="./080500-worktreesAndParallelAgents-v001.html">Git Worktrees and Parallel AI Agents</a>).</li>
+<li>A visual <strong>diff view</strong> where you can comment on Claude’s changes, a preview pane for your running web app, a built-in terminal and file editor, and pull-request status.</li>
+<li>For each session you choose <strong>Local</strong> (your computer), <strong>Cloud</strong>, or <strong>SSH</strong> (another computer you manage).</li>
+</ul>
+<p>Typing <code>/desktop</code> in the terminal moves your session into the app (Mac and x64 Windows); <code>/resume</code> in the Code tab picks up terminal sessions. The app has no scripting mode (<code>claude -p</code>), and some terminal-only commands, such as <code>/permissions</code>, don’t work there.</p>
+</section>
+<section id="cloud-sessions-at-claude.aicode" class="level2" data-number="50.4">
+<h2 data-number="50.4" class="anchored" data-anchor-id="cloud-sessions-at-claude.aicode"><span class="header-section-number">50.4</span> Cloud sessions at claude.ai/code</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/claude-code-on-the-web">Use Claude Code in the cloud</a> · <a href="https://code.claude.com/docs/en/web-quickstart">Get started with Claude Code in the cloud</a></span></p>
+<p>A <strong>cloud session</strong> runs Claude Code on a virtual machine that Anthropic manages, not on your computer, so it keeps working after you close your laptop. You can start one at <a href="https://claude.ai/code">claude.ai/code</a>, from the phone app’s Code tab, from the Desktop app (choose <strong>Cloud</strong>), or from your terminal:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--cloud</span> <span class="st">"Fix the failing test in tests/test_login.py"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Claude <strong>clones your GitHub repository</strong> (the version on GitHub, not your local files, so push your commits first), works on a new branch, and pushes it. You review the changes and create a pull request.</li>
+<li>A cloud session uses only what is <strong>in the repository</strong>, such as a committed <code>CLAUDE.md</code>, not your personal settings in <code>~/.claude</code>.</li>
+<li>Good for: parallel tasks, repositories you don’t have locally, and well-defined tasks that need little steering.</li>
+<li><code>claude --teleport</code> brings a cloud session’s branch and conversation into your terminal.</li>
+<li>Plans: Pro, Max, Team, and some Enterprise seats. Cloud sessions use your normal plan limits; the virtual machine costs nothing extra.</li>
+</ul>
+</section>
+<section id="from-your-phone-the-mobile-app-and-remote-control" class="level2" data-number="50.5">
+<h2 data-number="50.5" class="anchored" data-anchor-id="from-your-phone-the-mobile-app-and-remote-control"><span class="header-section-number">50.5</span> From your phone: the mobile app and Remote Control</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/mobile">Claude Code on mobile</a> · <a href="https://code.claude.com/docs/en/remote-control">Remote Control</a></span></p>
+<p>There is no separate Claude Code phone app: use the <strong>Code</strong> tab in the regular Claude app for iPhone or Android (<code>/mobile</code> shows a QR code to get it). From your phone you can:</p>
+<ul>
+<li>start and check on <strong>cloud sessions</strong>, which run without your computer; or</li>
+<li>use <strong>Remote Control</strong> to drive a session that runs <strong>on your own computer</strong>. Your files, tools, and MCP servers stay on your machine, and the phone (or any browser at claude.ai/code) is just a window into the session.</li>
+</ul>
+<p>To turn on Remote Control, type <code>/remote-control</code> (or <code>/rc</code>) in a running session, or start with <code>claude --remote-control</code>. Your computer must stay on, with Claude Code running. It requires a paid plan sign-in (API keys don’t work); on Team and Enterprise plans an admin must enable it. Claude can send push notifications to your phone when it finishes or needs a decision.</p>
+</section>
+<section id="driving-your-browser-the-chrome-integration" class="level2" data-number="50.6">
+<h2 data-number="50.6" class="anchored" data-anchor-id="driving-your-browser-the-chrome-integration"><span class="header-section-number">50.6</span> Driving your browser: the Chrome integration</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/chrome">Use Claude Code with Chrome</a></span></p>
+<p>With the Claude in Chrome extension installed, Claude Code (in the terminal or in VS Code) can open tabs, click, type, and read the browser’s console errors, which is perfect for testing the web app you’re building. Start with <code>claude --chrome</code>; <code>/chrome</code> changes its settings. It works with Chrome and Edge (not inside WSL), and it uses your real browser <em>and your logins</em>, so it can act on any site where you are signed in. You’ll try it in <a href="./070400-browserAutomationMcp-v001.html">Letting Claude Use a Browser</a>.</p>
+</section>
+<section id="on-github-github-actions-and-code-review" class="level2" data-number="50.7">
+<h2 data-number="50.7" class="anchored" data-anchor-id="on-github-github-actions-and-code-review"><span class="header-section-number">50.7</span> On GitHub: GitHub Actions and Code Review</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/github-actions">Claude Code GitHub Actions</a> · <a href="https://code.claude.com/docs/en/code-review">Code Review</a></span></p>
+<ul>
+<li><strong>GitHub Actions</strong>: a workflow file in your repository runs Claude Code on GitHub’s servers when someone mentions <code>@claude</code> in an issue or a pull-request comment (or on a schedule). Claude can answer, write code, push commits, and open pull requests. Set it up with <code>/install-github-app</code> inside Claude Code (you need admin access to the repository). Runs use GitHub Actions minutes plus Claude usage (an API key or a subscription token).</li>
+<li><strong>Code Review</strong> (research preview, Team and Enterprise): a managed service in which several agents review every pull request and comment on the lines where they find problems. It is billed separately from the plan’s included usage. On any plan, <code>/code-review</code> reviews your changes locally.</li>
+</ul>
+<p>More in <a href="./080400-pullRequestsAndCodeReview-v001.html">Pull Requests and Code Review</a>.</p>
+</section>
+<section id="in-slack" class="level2" data-number="50.8">
+<h2 data-number="50.8" class="anchored" data-anchor-id="in-slack"><span class="header-section-number">50.8</span> In Slack</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/slack">Claude Code in Slack</a> · <a href="https://claude.com/docs/claude-tag/overview">Claude Tag</a></span></p>
+<ul>
+<li><strong>Claude Tag</strong> (Team and Enterprise, beta): <code>@Claude</code> in a channel acts as the organization’s shared teammate, for coding and non-coding work.</li>
+<li><strong>Claude Code in Slack</strong> (the earlier version, Pro and Max): mention <code>@Claude</code> with a coding task, and it starts a cloud session under your own account. It works only in Slack workspaces that are not connected to Claude Tag.</li>
+</ul>
+</section>
+<section id="automation-routines-scheduled-tasks-and-loop" class="level2" data-number="50.9">
+<h2 data-number="50.9" class="anchored" data-anchor-id="automation-routines-scheduled-tasks-and-loop"><span class="header-section-number">50.9</span> Automation: routines, scheduled tasks, and <code>/loop</code></h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/routines">Automate work with routines</a> · <a href="https://code.claude.com/docs/en/scheduled-tasks">Run prompts on a schedule</a> · <a href="https://code.claude.com/docs/en/desktop-scheduled-tasks">Desktop scheduled tasks</a></span></p>
+<p>A <strong>routine</strong> (research preview, paid plans) is a saved prompt plus repositories and connectors that runs in the cloud on a schedule, when called through an API, or when something happens on GitHub. Create one at claude.ai/code/routines, in the Desktop app, or with <code>/schedule</code> in the CLI. Two other options run on your own computer:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Cloud routine</th>
+<th>Desktop scheduled task</th>
+<th><code>/loop</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Runs on</td>
+<td>Anthropic’s cloud</td>
+<td>Your computer</td>
+<td>Your computer</td>
+</tr>
+<tr class="even">
+<td>Computer must be on?</td>
+<td>No</td>
+<td>Yes (with the app open)</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>Session must be open?</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Your local files?</td>
+<td>No (fresh copy of the repository)</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>Shortest interval</td>
+<td>1 hour</td>
+<td>1 minute</td>
+<td>1 minute</td>
+</tr>
+</tbody>
+</table>
+<p>For example, <code>/loop 5m check whether the deploy finished</code> repeats a prompt every five minutes while the session stays open. Every run uses your plan’s usage, like any other session.</p>
+</section>
+<section id="sharing-your-results-artifacts" class="level2" data-number="50.10">
+<h2 data-number="50.10" class="anchored" data-anchor-id="sharing-your-results-artifacts"><span class="header-section-number">50.10</span> Sharing your results: artifacts</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/artifacts">Share session output as artifacts</a></span></p>
+<p>Claude Code can publish an <strong>artifact</strong>: a live web page on claude.ai built from your session, such as a walkthrough of a code change with notes, or a dashboard. Just ask (“make an artifact that…”). It stays private until you share it. Artifacts need a paid plan and a session signed in with <code>/login</code> (not an API key), in the CLI or the Desktop app. An artifact is one page with no back end, not a way to host an app.</p>
+</section>
+<section id="what-carries-over-between-surfaces" class="level2" data-number="50.11">
+<h2 data-number="50.11" class="anchored" data-anchor-id="what-carries-over-between-surfaces"><span class="header-section-number">50.11</span> What carries over between surfaces</h2>
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/platforms">Platforms and integrations</a> · <a href="https://code.claude.com/docs/en/desktop">Desktop: shared configuration</a> · <a href="https://code.claude.com/docs/en/web-quickstart">Compare ways to run Claude Code</a></span></p>
+<ul>
+<li><strong>Local surfaces share your setup.</strong> The terminal, VS Code, JetBrains, and local Desktop sessions read the same files: <code>CLAUDE.md</code> files, settings (<code>~/.claude/settings.json</code> and the project’s <code>.claude/settings.json</code>), MCP servers, hooks, and skills (see <a href="./060700-dotClaudeFoldersAndSettings-v001.html">The .claude Folders and Settings Files</a>).</li>
+<li><strong>Remote Control</strong> keeps everything local available, because the session still runs on your computer.</li>
+<li><strong>Cloud sessions use the repository only.</strong> If the cloud should follow a rule, commit it to the repository (for example in the project’s <code>CLAUDE.md</code>).</li>
+<li><strong>Conversations can move</strong>: VS Code and the CLI share history (<code>claude --resume</code>); <code>/desktop</code> moves a terminal session into the app; <code>claude --teleport</code> copies a cloud session to your terminal.</li>
+<li><strong>Usage is shared</strong>: with a subscription, the terminal, editors, Desktop, cloud sessions, and your claude.ai chats all draw from the same plan limits (see <a href="./050200-claudeModelsPlansAndUsage-v001.html">Claude Models, Plans, and Usage Limits</a>).</li>
+<li><strong>Not everything is identical</strong>: slash commands and permission modes differ between surfaces.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: More ways to run several sessions or work remotely
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/agent-view">Agent view</a> · <a href="https://code.claude.com/docs/en/claude-projects">Projects</a> · <a href="https://code.claude.com/docs/en/platforms">Platforms: work away from your terminal</a></span></p>
+<ul>
+<li><strong>Agent view</strong> (research preview): <code>claude agents</code> shows all your background sessions on this computer and which ones need you (see <a href="./070700-subagents-v001.html">Subagents</a>).</li>
+<li><strong>Projects</strong> (public beta, rolling out to some Pro and Max users): one conversation in which Claude starts and tracks many cloud sessions.</li>
+<li><strong>Dispatch</strong> (Pro and Max): message a task from your phone, and it can start a Code session in the Desktop app. The Help Center says it isn’t available to new users of the new combined Claude experience.</li>
+<li><strong>Channels</strong> (research preview): push events, such as a failed test run, into a running session so Claude can react.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="key-takeaways" class="level2" data-number="50.12">
+<h2 data-number="50.12" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">50.12</span> Key takeaways</h2>
+<ul>
+<li>Claude Code is one engine with many surfaces; the main difference is whether it runs on your computer or in the cloud.</li>
+<li>Local surfaces share your configuration; cloud sessions see only your repository.</li>
+<li>With a subscription, all your surfaces share the same plan limits.</li>
+</ul>
+</section>
+<section id="practice-questions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
+<section id="easy" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="easy">Easy</h3>
+<section id="question-1-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-1-short-answer">Question 1 · Short answer</h4>
+<p>What is a <strong>surface</strong> in Claude Code? Name three surfaces.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A surface is a place where you use Claude Code. Each surface connects to the same Claude Code engine. Examples: the terminal (CLI), the VS Code extension, the JetBrains plugin, the Desktop app’s Code tab, cloud sessions at claude.ai/code, and the Code tab in the mobile app.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-true-or-false">Question 2 · True or false</h4>
+<p>Claude Code has its own separate mobile app that you download from the app store.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> You use the <strong>Code</strong> tab in the regular Claude app for iPhone or Android. From there you can start and check on cloud sessions or steer a session on your computer with Remote Control.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-matching" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-matching">Question 3 · Matching</h4>
+<p>Match each surface with its description.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Surface</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. VS Code extension</td>
+<td></td>
+<td>A. Responds to <code>@claude</code> comments in issues and pull requests</td>
+</tr>
+<tr class="even">
+<td>2. Desktop Code tab</td>
+<td></td>
+<td>B. A graphical app with parallel sessions and a visual diff view</td>
+</tr>
+<tr class="odd">
+<td>3. Cloud session</td>
+<td></td>
+<td>C. Steer a session running on your computer from your phone</td>
+</tr>
+<tr class="even">
+<td>4. Remote Control</td>
+<td></td>
+<td>D. A Claude Code panel inside your code editor</td>
+</tr>
+<tr class="odd">
+<td>5. GitHub Actions</td>
+<td></td>
+<td>E. Runs on a virtual machine Anthropic manages and keeps going after you disconnect</td>
+</tr>
+</tbody>
+</table>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>1 → D, 2 → B, 3 → E, 4 → C, 5 → A.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-true-or-false">Question 4 · True or false</h4>
+<p>The JetBrains plugin includes its own copy of Claude Code, so you don’t need to install the CLI.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> The JetBrains plugin runs the <code>claude</code> command in the editor’s terminal, so you must install the CLI first. (The VS Code extension, by contrast, bundles its own copy for its panel.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-5-write-the-command">Question 5 · Write the command</h4>
+<p>Write the command that starts Claude Code with the Chrome integration turned on.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--chrome</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Inside a session, <code>/chrome</code> changes the Chrome settings.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-multiple-choice">Question 6 · Multiple choice</h4>
+<p>Which of these keeps working after you shut down your laptop?</p>
+<ol type="a">
+<li>A session in the terminal (CLI)</li>
+<li>A Remote Control session</li>
+<li>A cloud session</li>
+<li>A session in the VS Code extension</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>c.</strong> A cloud session runs on a virtual machine managed by Anthropic. The other three run on your own computer, so they stop when the computer is off (Remote Control is only a remote <em>window</em> into a session on your computer).</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="medium" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="medium">Medium</h3>
+<section id="question-7-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-scenario">Question 7 · Scenario</h4>
+<p>Maria wants Claude Code to work on a long refactoring task while she goes to class with her laptop closed. Which surface fits, what does it need, and what should she do first if she has commits that exist only on her laptop?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A <strong>cloud session</strong> (claude.ai/code, or <code>claude --cloud "..."</code> from her terminal). It needs a plan that includes cloud sessions (such as Pro or Max) and her repository on <strong>GitHub</strong>. The cloud copies the repository from GitHub, not her laptop’s files, so she should <strong>push</strong> her local commits first.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-scenario">Question 8 · Scenario</h4>
+<p>Sam is in a local Claude Code session that uses a database and an MCP server that exist only on his computer. He wants to keep steering the session from his phone while he is at the gym. Which feature should he use, how does he turn it on, and what must stay true while he’s away?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Remote Control.</strong> He types <code>/remote-control</code> (or <code>/rc</code>) in the running session and then opens it from the Code tab of the Claude app. His computer must stay on with Claude Code running, because the session (and his database and MCP server) still runs there. He must be signed in with a paid plan, not an API key. A cloud session would not work here: it couldn’t reach his local database.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-9-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-write-the-command">Question 9 · Write the command</h4>
+<ol type="a">
+<li>Start a cloud session from your terminal with the task “Update the README”.</li>
+<li>Later, bring a cloud session into your terminal to continue working on it locally.</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>   <span class="ex">claude</span> <span class="at">--cloud</span> <span class="st">"Update the README"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>   <span class="ex">claude</span> <span class="at">--teleport</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+This opens a list of your cloud sessions; pick one, and Claude Code fetches its branch and conversation. Run it inside a clone of the same repository; if you have uncommitted changes, it asks you to stash (set aside) them first.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="question-10-predict" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-predict">Question 10 · Predict</h4>
+<p>Sam’s personal <code>~/.claude/settings.json</code> allows some commands without asking, and his repository contains a committed <code>CLAUDE.md</code> with project rules. He starts a <strong>cloud session</strong> on that repository. Which of the two does the cloud session use, and why?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>It uses the repository’s committed <strong><code>CLAUDE.md</code></strong> but not his personal <code>~/.claude/settings.json</code>. A cloud session clones the repository and uses only what is in it; files that live only on his computer don’t come along. Local surfaces (terminal, VS Code, JetBrains, Desktop local sessions) would use both.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-11-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-scenario">Question 11 · Scenario</h4>
+<p>Choose a routine, a Desktop scheduled task, or <code>/loop</code> for each job, and explain:</p>
+<ol type="a">
+<li>Every weekday at 8 a.m., summarize new GitHub issues, even when your laptop is off.</li>
+<li>While you work, check every 5 minutes whether a deployment has finished.</li>
+<li>Every night, process files that exist only on your computer.</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><strong>Routine</strong>: it runs in the cloud, so the computer can be off.</li>
+<li><strong><code>/loop</code></strong>, for example <code>/loop 5m check whether the deployment finished</code>: quick repeated checks inside the open session.</li>
+<li><strong>Desktop scheduled task</strong>: it runs on your computer, so it can read your local files, and it doesn’t need an open session (but the computer must be awake, with the Desktop app open).</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="question-12-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-multiple-choice">Question 12 · Multiple choice</h4>
+<p>Which of these requires signing in with a claude.ai subscription and does <strong>not</strong> work with an API key?</p>
+<ol type="a">
+<li>The terminal CLI</li>
+<li>The VS Code extension</li>
+<li>Remote Control</li>
+<li>The JetBrains plugin</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>c.</strong> Remote Control requires a paid plan sign-in; API keys aren’t supported. The CLI, the VS Code extension, and the JetBrains plugin all work with a subscription <em>or</em> a Console API key (and with cloud providers).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-13-compare" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-13-compare">Question 13 · Compare</h4>
+<p>What is the difference between <strong>Claude Code GitHub Actions</strong> and <strong>Code Review</strong>?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>GitHub Actions</strong> is a workflow you add to your own repository. It runs Claude Code on GitHub’s servers when someone mentions <code>@claude</code> (or on events and schedules you choose), and Claude can answer, write code, push commits, and open pull requests. You set it up with <code>/install-github-app</code>.</p>
+<p><strong>Code Review</strong> is a managed service (research preview, Team and Enterprise) that automatically reviews pull requests with several agents and posts comments on problem lines. It doesn’t need a workflow file, and it is billed separately from the plan’s included usage.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
+<section id="question-14-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-14-scenario">Question 14 · Scenario</h4>
+<p>Sam has a Pro plan. His university’s Slack workspace has been connected to Claude Tag by the university’s Enterprise organization. When Sam mentions <code>@Claude</code> with a coding task, he gets a notice instead of a new cloud session under his account. Explain why, and what his options are.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The earlier <strong>Claude Code in Slack</strong> (which runs sessions under each user’s own Pro or Max account) works only in Slack workspaces that are <strong>not</strong> connected to Claude Tag. This workspace is connected, so <code>@Claude</code> there is the organization’s Claude Tag, run with the university’s settings and billing. Sam can use Claude Tag in channels where the university allows it, or use his Pro plan directly (for example a cloud session at claude.ai/code).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-15-compare" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-15-compare">Question 15 · Compare</h4>
+<p>Explain the difference between <code>claude --cloud</code>, <code>claude --remote-control</code>, and <code>claude --teleport</code>.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>claude --cloud "task"</code> <strong>creates a new cloud session</strong>: the work runs on Anthropic’s virtual machine.</li>
+<li><code>claude --remote-control</code> <strong>starts a local session</strong> that you can also steer from your phone or a browser; the work runs on your computer.</li>
+<li><code>claude --teleport</code> <strong>brings an existing cloud session to your terminal</strong>: it fetches the session’s branch and conversation so you can continue locally.</li>
+</ul>
+<p>A memory aid: <code>--cloud</code> sends new work up, <code>--teleport</code> brings cloud work down, and <code>--remote-control</code> keeps the work at home while you leave.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-16-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-16-long-answer">Question 16 · Long answer</h4>
+<p>A four-person student team wants the same project rules (for example “run the tests before every commit”) to apply whether a member uses the terminal, VS Code, the Desktop app, or a cloud session. Each member also has personal preferences. How should they organize their setup?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Put shared <strong>project rules</strong> in files that are <strong>committed to the repository</strong>: the project’s <code>CLAUDE.md</code> and <code>.claude/settings.json</code>. Local surfaces read them, and cloud sessions see them because cloud sessions clone the repository.</li>
+<li>Keep <strong>personal preferences</strong> in each person’s own files (<code>~/.claude/...</code>). These apply on that person’s local surfaces only and never reach cloud sessions or teammates.</li>
+<li>Remember that cloud sessions use only what is in the repository, so anything the cloud must follow has to be committed.</li>
+</ul>
+<p>(Details on which files to commit are in <a href="./060700-dotClaudeFoldersAndSettings-v001.html">The .claude Folders and Settings Files</a>.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-17-compare" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-17-compare">Question 17 · Compare</h4>
+<p>A classmate says, “The Desktop app’s Code tab is just a nicer terminal, so I’ll never need the CLI.” Give two reasons to use the Desktop Code tab and two things that are available only in the CLI.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Desktop strengths: several sessions side by side in one window (each optionally in its own worktree); a visual diff view where you can comment on changes; a preview pane for your running app; no terminal knowledge needed.</p>
+<p>CLI-only: scripting with <code>claude -p</code> (Desktop is interactive only); the <code>dontAsk</code> permission mode; agent teams; terminal commands that open dialogs, such as <code>/permissions</code>. The CLI is also the most complete surface, and it works with API keys and cloud providers.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-18-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-18-long-answer">Question 18 · Long answer</h4>
+<p>Why is the Chrome integration both powerful and risky? Describe two precautions.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Powerful: Claude can test your web app in a real browser, read console errors, fill in forms, and work with sites where you’re already logged in, without any extra setup.</p>
+<p>Risky: it acts with <strong>your logins</strong>, so a mistake could send an email, change data, or buy something. A web page can also contain <strong>prompt injection</strong>: hidden text that tries to give Claude instructions.</p>
+<p>Precautions: watch what Claude does, especially on sites involving money, email, or private data; limit which sites Claude may use (site permissions are managed in the Chrome extension’s settings); for sensitive work, use a permission mode in which you approve actions yourself (see <a href="./060500-permissionsModesAndSafety-v001.html">Permissions, Modes, and Safety</a>); prefer a test account or a local development site; and don’t let it browse untrusted sites while you’re signed in to important accounts. (A separate, isolated browser is covered in <a href="./070400-browserAutomationMcp-v001.html">Letting Claude Use a Browser</a>.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-19-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-19-scenario">Question 19 · Scenario</h4>
+<p>Maria wants to show her professor, who doesn’t use Claude Code, a page that walks through the code changes Claude made, with notes. Which Claude Code feature fits, what does it require, and what can’t it do?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>An <strong>artifact</strong>: she asks Claude to make one, and Claude Code publishes a live page on claude.ai. It stays private until she shares it from the page header. It requires a paid plan and a session signed in with <code>/login</code> (not an API key), in the CLI or the Desktop app. An artifact is a single self-contained page with no back end, so it can’t host a real web application.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-20-hands-on" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-20-hands-on">Question 20 · Hands-on</h4>
+<p>Try Claude Code on a second surface. For example, install the VS Code extension, open your practice project, and ask Claude a question about it. Then, in a terminal in the same folder, run <code>claude --resume</code> and look for that conversation. Write down: (1) which surface you tried, (2) whether the conversation appeared in the terminal, and (3) one thing that looked or worked differently from the terminal.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Answers vary. A good answer names the surface; reports that the conversation from the VS Code extension does appear in the <code>claude --resume</code> list (the extension and the CLI share conversation history); and notes a real difference, for example inline diffs in the editor, a smaller set of slash commands, or no <code>!</code> shell shortcut in the extension. If you tried the Desktop app instead, <code>/desktop</code> in the terminal (or <code>/resume</code> in the Code tab) moves the session between the two.</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./060900-workingEffectively-v001.html" class="pagination-link" aria-label="<yrChapterNumber>49. </yrChapterNumber> Working Effectively with Claude Code">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title"><yrchapternumber>49. </yrchapternumber> Working Effectively with Claude Code</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./070100-extendingOverview-v001.html" class="pagination-link" aria-label="<yrChapterNumber>51. </yrChapterNumber> Extending Claude Code: The Big Picture">
+        <span class="nav-page-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><yrchapternumber>51. </yrchapternumber> Extending Claude Code: The Big Picture</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>
+/* yrAnswerToggles-v001
+ *
+ * Adds "Show all answers" / "Hide all answers" buttons to every page that
+ * contains practice-question answer callouts. An answer callout is any
+ * callout that has the class .yr-answer, for example:
+ *
+ *     ::: {.callout-tip .yr-answer collapse="true" icon="false"}
+ *     ## Suggested answer
+ *     ...
+ *     :::
+ *
+ * The buttons are inserted in two places:
+ *   1. directly below the page title
+ *   2. at the top of the practice questions section, i.e. right after
+ *        ## Practice Questions {#practice-questions .unnumbered}
+ *
+ * This file is included inline (include-after-body: file: ...) instead of
+ * with <script src="...">, so it works for pages in subfolders too.
+ * Pages without .yr-answer callouts (e.g. f26/yudkowskyBook-v001.qmd, which
+ * has its own buttons) are not affected.
+ */
+(function () {
+  function getAnswerCallouts() {
+    return Array.prototype.slice.call(document.querySelectorAll(".callout.yr-answer"));
+  }
+
+  function setCalloutExpanded(callout, expanded) {
+    var content = callout.querySelector(".callout-collapse");
+    var header = callout.querySelector(".callout-header");
+    if (!content) {
+      return;
+    }
+    if (window.bootstrap && window.bootstrap.Collapse) {
+      var instance = window.bootstrap.Collapse.getOrCreateInstance(content, { toggle: false });
+      if (expanded) {
+        instance.show();
+      } else {
+        instance.hide();
+      }
+    } else {
+      content.classList.toggle("show", expanded);
+    }
+    // Keep the arrow icon in sync (Quarto rotates it based on aria-expanded).
+    if (header) {
+      header.setAttribute("aria-expanded", expanded ? "true" : "false");
+      header.classList.toggle("collapsed", !expanded);
+    }
+  }
+
+  function setAllAnswers(expanded) {
+    getAnswerCallouts().forEach(function (callout) {
+      setCalloutExpanded(callout, expanded);
+    });
+  }
+
+  function makeButton(text, expanded) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "yr-answer-btn";
+    btn.textContent = text;
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+      setAllAnswers(expanded);
+    });
+    return btn;
+  }
+
+  function makeToolbar(extraClass, includeJumpLink, count) {
+    var bar = document.createElement("div");
+    bar.className = "yr-answer-toolbar " + extraClass;
+
+    var label = document.createElement("span");
+    label.className = "yr-answer-toolbar-label";
+    label.textContent = "Practice question answers (" + count + "):";
+    bar.appendChild(label);
+
+    bar.appendChild(makeButton("Show all answers", true));
+    bar.appendChild(makeButton("Hide all answers", false));
+
+    if (includeJumpLink && document.getElementById("practice-questions")) {
+      var link = document.createElement("a");
+      link.className = "yr-answer-jump";
+      link.href = "#practice-questions";
+      link.textContent = "Jump to practice questions ↓";
+      bar.appendChild(link);
+    }
+    return bar;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var count = getAnswerCallouts().length;
+    if (count === 0) {
+      return;
+    }
+
+    var titleBlock = document.getElementById("title-block-header");
+    if (titleBlock) {
+      titleBlock.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-top", true, count));
+    }
+
+    var section = document.getElementById("practice-questions");
+    if (section) {
+      var heading = section.querySelector("h2, h3");
+      if (heading) {
+        heading.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-section", false, count));
+      }
+    }
+  });
+})();
+</script>
+<script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>

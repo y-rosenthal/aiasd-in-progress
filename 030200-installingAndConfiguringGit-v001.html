@@ -1,0 +1,2057 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>24&nbsp; 24.  Installing and Configuring Git – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./030300-yourFirstRepository-v001.html" rel="next">
+<link href="./030100-whatIsVersionControl-v001.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+<link rel="stylesheet" href="yrStyles-f26-v001.css">
+<link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./030100-whatIsVersionControl-v001.html">Git and GitHub: Working on Your Own</a></li><li class="breadcrumb-item"><a href="./030200-installingAndConfiguringGit-v001.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Installing and Configuring Git</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26/yudkowskyBook-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005100-whatIsAiSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> What Is AI Safety? Risks, Vocabulary, and Viewpoints</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005200-aiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> AI Security Incidents in the News (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005250-moreAiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> More AI Security Incidents: Hijacked Tools, Leaks, and Deepfakes (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005300-aiSafetyDebate-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Governments, Companies, and the AI Safety Debate (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005350-aiSafetyBeyondWashington-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> The AI Safety Debate Beyond Washington (2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Today</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010100-whatAiCanDoToday-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> What AI Can Do Today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010200-howLlmsWork-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> How Large Language Models Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010300-limitsRisksAndResponsibleUse-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Limits, Risks, and Responsible Use</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010400-aiAssistedDevelopment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> AI-Assisted Development: From Chatbots to Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010500-aiCodingToolsLandscape-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> The AI Coding Tool Landscape (Fall 2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Command Line (Bash)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020100-whatIsTheCommandLine-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> What Is the Command Line?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020200-installingAndOpeningBash-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>13. </yrchapternumber> Getting Bash on Your Computer (Mac and Windows)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020300-filesFoldersAndPaths-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>14. </yrchapternumber> Files, Folders, and Paths</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020400-navigatingPwdLsCd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Moving Around: pwd, ls, and cd</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020500-creatingAndDeleting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> Creating, Copying, Moving, and Deleting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020600-echoRedirectionAndViewing-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Writing to Files: echo, &gt;, &gt;&gt;, and cat</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020700-environmentVariables-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Environment Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020800-singleVsDoubleQuotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Single Quotes vs. Double Quotes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020900-gettingHelpAndShortcuts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>20. </yrchapternumber> Getting Help and Working Faster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021000-wildcardsPipesAndSearching-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>21. </yrchapternumber> Wildcards, Pipes, and Searching</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021100-bashScriptsAndAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title"><yrchapternumber>22. </yrchapternumber> Bash Scripts (and Using AI at the Command Line)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working on Your Own</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030100-whatIsVersionControl-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> What Is Version Control? (Git vs. GitHub)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030200-installingAndConfiguringGit-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Installing and Configuring Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030300-yourFirstRepository-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>25. </yrchapternumber> Your First Repository: init, status, add, commit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030400-historyAndUndo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title"><yrchapternumber>26. </yrchapternumber> Viewing History and Undoing Changes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030500-gitignoreAndSecrets-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title"><yrchapternumber>27. </yrchapternumber> .gitignore and Keeping Secrets Out of Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030600-githubRemotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><yrchapternumber>28. </yrchapternumber> Putting Your Repository on GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030700-cloneAndPull-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><yrchapternumber>29. </yrchapternumber> Cloning and Pulling (Working from Two Computers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">How the Web Works</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040100-browsersAndWebServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> Browsers, Web Servers, and HTTP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>31. </yrchapternumber> URLs, Domain Names, IP Addresses, and DNS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040300-htmlCssJavascriptAndDevTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>32. </yrchapternumber> HTML, CSS, JavaScript, and Browser Developer Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040400-whatHappensOnTheServer-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title"><yrchapternumber>33. </yrchapternumber> What Happens on the Server: Back Ends, Databases, and APIs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040500-webFrameworks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><yrchapternumber>34. </yrchapternumber> Web Frameworks and Meta-Frameworks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040600-apisKeysAndThirdPartyServices-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><yrchapternumber>35. </yrchapternumber> APIs, API Keys, and Third-Party Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040700-hostingAndDeployment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><yrchapternumber>36. </yrchapternumber> Hosting and Deployment: Getting Your App Online</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040800-architectingWithAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title"><yrchapternumber>37. </yrchapternumber> Putting It Together: Architecting a Web App with AI</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude: The Big Picture</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050100-claudeProductFamily-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title"><yrchapternumber>38. </yrchapternumber> The Claude Product Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050200-claudeModelsPlansAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><yrchapternumber>39. </yrchapternumber> Claude Models, Plans, and Usage Limits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050300-navigatingClaudeDocs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><yrchapternumber>40. </yrchapternumber> Navigating the Claude Documentation (and Keeping Up)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude Code Essentials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060100-installingClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><yrchapternumber>41. </yrchapternumber> Installing Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060200-firstSession-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title"><yrchapternumber>42. </yrchapternumber> Your First Claude Code Session</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060300-howClaudeCodeWorks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title"><yrchapternumber>43. </yrchapternumber> How Claude Code Works: The Agentic Loop and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060400-slashCommands-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title"><yrchapternumber>44. </yrchapternumber> Essential Slash Commands</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060500-permissionsModesAndSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title"><yrchapternumber>45. </yrchapternumber> Permissions, Modes, and Safety</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060600-claudeMdAndMemory-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title"><yrchapternumber>46. </yrchapternumber> CLAUDE.md and Memory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060700-dotClaudeFoldersAndSettings-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title"><yrchapternumber>47. </yrchapternumber> The .claude Folders and Settings Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060800-contextModelsEffortAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title"><yrchapternumber>48. </yrchapternumber> Context, Models, Effort, and Usage in Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060900-workingEffectively-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title"><yrchapternumber>49. </yrchapternumber> Working Effectively with Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./061000-claudeCodeBeyondTheTerminal-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Claude Code Beyond the Terminal</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Extending Claude Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070100-extendingOverview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><yrchapternumber>51. </yrchapternumber> Extending Claude Code: The Big Picture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070200-skills-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><yrchapternumber>52. </yrchapternumber> Skills</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070300-mcpServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><yrchapternumber>53. </yrchapternumber> MCP Servers: Connecting Claude to Other Tools and Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070400-browserAutomationMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title"><yrchapternumber>54. </yrchapternumber> Hands-On: Letting Claude Use a Browser (Playwright MCP and Chrome)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070500-supabaseMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title"><yrchapternumber>55. </yrchapternumber> Hands-On: The Supabase MCP Server</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070600-hooks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title"><yrchapternumber>56. </yrchapternumber> Hooks: Running Your Own Commands Automatically</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070700-subagents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title"><yrchapternumber>57. </yrchapternumber> Subagents (and Running Agents in Parallel)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070800-plugins-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title"><yrchapternumber>58. </yrchapternumber> Plugins and Marketplaces</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070900-mods-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title"><yrchapternumber>59. </yrchapternumber> Mods: Customizing Claude Code Itself</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working with Others</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080100-branchesAndMerging-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title"><yrchapternumber>60. </yrchapternumber> Branches and Merging</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080200-mergeConflicts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Merge Conflicts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080300-sharedRepositoriesAndForks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title"><yrchapternumber>62. </yrchapternumber> Sharing a Repository: Collaborators and Forks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080400-pullRequestsAndCodeReview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title"><yrchapternumber>63. </yrchapternumber> Pull Requests and Code Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080500-worktreesAndParallelAgents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title"><yrchapternumber>64. </yrchapternumber> Git Worktrees and Parallel AI Agents</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title"><yrchapternumber>65. </yrchapternumber> Tutorial - intro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001007-tutorial-supabase-projectArchitecture-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title"><yrchapternumber>66. </yrchapternumber> Project Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001100-tutorial-installNodeNpm-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title"><yrchapternumber>67. </yrchapternumber> Step 0: Install Node.js and npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001110-tutorial-cloneRepo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title"><yrchapternumber>68. </yrchapternumber> Step 1: Fork the repo and clone it</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001120-tutorial-installThePackages-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title"><yrchapternumber>69. </yrchapternumber> Step 2: Installing the Node.js packages with npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title"><yrchapternumber>70. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001140-tutorial-previewFrontEnd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title"><yrchapternumber>71. </yrchapternumber> Step 4 - Optional: Preview the Frontend</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><yrchapternumber>73. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001160-tutorial-googleOauth-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">74</span>&nbsp; <span class="chapter-title"><yrchapternumber>74. </yrchapternumber> Step 6: setup authentication (Google OAuth)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001170-tutorial-openAiApi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">75</span>&nbsp; <span class="chapter-title"><yrchapternumber>75. </yrchapternumber> Step 7: Set Up OpenAI API</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001180-tutorial-setupStripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">76</span>&nbsp; <span class="chapter-title"><yrchapternumber>76. </yrchapternumber> Step 8: Set Up Stripe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">77</span>&nbsp; <span class="chapter-title"><yrchapternumber>77. </yrchapternumber> Step 9: Set Up Supabase Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001200-tutorial-setupSupabaseStorage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">78</span>&nbsp; <span class="chapter-title"><yrchapternumber>78. </yrchapternumber> Step 10: Set Up Supabase Storage Bucket</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">79</span>&nbsp; <span class="chapter-title"><yrchapternumber>79. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001220-tutorial-runTheApplication-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">80</span>&nbsp; <span class="chapter-title"><yrchapternumber>80. </yrchapternumber> Step 12: Run the Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001230-tutorial-deployToProduction-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">81</span>&nbsp; <span class="chapter-title"><yrchapternumber>81. </yrchapternumber> Step 13: Deploy to Production</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001240-tutorial-extendTheFunctionality-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">82</span>&nbsp; <span class="chapter-title"><yrchapternumber>82. </yrchapternumber> Step 14: Extending the functionality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">83</span>&nbsp; <span class="chapter-title"><yrchapternumber>83. </yrchapternumber> Step 15: Automated Testing and Troubleshooting</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">84</span>&nbsp; <span class="chapter-title"><yrchapternumber>84. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">85</span>&nbsp; <span class="chapter-title"><yrchapternumber>85. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">86</span>&nbsp; <span class="chapter-title"><yrchapternumber>86. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">87</span>&nbsp; <span class="chapter-title"><yrchapternumber>87. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./990010-references-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#is-git-already-installed" id="toc-is-git-already-installed" class="nav-link active" data-scroll-target="#is-git-already-installed"><span class="header-section-number">24.1</span> Is Git already installed?</a></li>
+  <li><a href="#installing-git" id="toc-installing-git" class="nav-link" data-scroll-target="#installing-git"><span class="header-section-number">24.2</span> Installing Git</a></li>
+  <li><a href="#tell-git-who-you-are" id="toc-tell-git-who-you-are" class="nav-link" data-scroll-target="#tell-git-who-you-are"><span class="header-section-number">24.3</span> Tell Git who you are</a></li>
+  <li><a href="#three-recommended-settings" id="toc-three-recommended-settings" class="nav-link" data-scroll-target="#three-recommended-settings"><span class="header-section-number">24.4</span> Three recommended settings</a></li>
+  <li><a href="#check-your-settings" id="toc-check-your-settings" class="nav-link" data-scroll-target="#check-your-settings"><span class="header-section-number">24.5</span> Check your settings</a></li>
+  <li><a href="#commit-messages-and-other-git-files-are-plain-text" id="toc-commit-messages-and-other-git-files-are-plain-text" class="nav-link" data-scroll-target="#commit-messages-and-other-git-files-are-plain-text"><span class="header-section-number">24.6</span> Commit messages and other Git files are plain text</a></li>
+  <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
+  <ul class="collapse">
+  <li><a href="#easy" id="toc-easy" class="nav-link" data-scroll-target="#easy">Easy</a></li>
+  <li><a href="#medium" id="toc-medium" class="nav-link" data-scroll-target="#medium">Medium</a></li>
+  <li><a href="#hard" id="toc-hard" class="nav-link" data-scroll-target="#hard">Hard</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./030100-whatIsVersionControl-v001.html">Git and GitHub: Working on Your Own</a></li><li class="breadcrumb-item"><a href="./030200-installingAndConfiguringGit-v001.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Installing and Configuring Git</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Installing and Configuring Git</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Before you can use Git, it has to be installed, and you have to tell it who you are. This takes about ten minutes, and you do it <strong>once per computer</strong>.</p>
+<section id="is-git-already-installed" class="level2" data-number="24.1">
+<h2 data-number="24.1" class="anchored" data-anchor-id="is-git-already-installed"><span class="header-section-number">24.1</span> Is Git already installed?</h2>
+<p>Open your terminal (Terminal on a Mac, Git Bash on Windows) and type:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output (your version number will be different):</p>
+<pre><code>git version 2.56.0</code></pre>
+<p>If you see a version number, Git is installed. Any reasonably recent version works for this book. On a Mac or on Windows the line may have a little extra text after the number, such as <code>(Apple Git-...)</code> or <code>.windows.2</code>.</p>
+</section>
+<section id="installing-git" class="level2" data-number="24.2">
+<h2 data-number="24.2" class="anchored" data-anchor-id="installing-git"><span class="header-section-number">24.2</span> Installing Git</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Windows (Git Bash)</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><strong>Option 1 (easiest): Apple’s Command Line Tools.</strong> Type <code>git --version</code> in Terminal. If Git isn’t installed yet, macOS offers to install Apple’s <strong>Command Line Tools</strong>, a free package of developer tools that includes Git. Accept, wait for the download to finish, and run <code>git --version</code> again. (You can also start this install yourself with <code>xcode-select --install</code>.)</p>
+<p><strong>Option 2: Homebrew.</strong> If you use <a href="https://brew.sh">Homebrew</a> (a popular “package manager” for installing developer tools on a Mac), this installs the newest version of Git:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Apple’s Git is usually a few versions behind the newest one. That doesn’t matter for this book.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>You already have Git. <strong>Git for Windows</strong>, which you installed in <a href="./020200-installingAndOpeningBash-v001.html">Getting Bash on Your Computer</a> to get Git Bash, <em>is</em> Git. Open Git Bash and run <code>git --version</code> to check.</p>
+<p>The installer asked several questions about Git. These four matter most:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Installer screen</th>
+<th>Recommended choice</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Choosing the default editor used by Git</td>
+<td>Visual Studio Code (if it’s installed), otherwise Nano. <strong>Not</strong> Vim, the default.</td>
+</tr>
+<tr class="even">
+<td>Adjusting the name of the initial branch in new repositories</td>
+<td>“Override the default branch name for new repositories”, with <code>main</code></td>
+</tr>
+<tr class="odd">
+<td>Choose the default behavior of <code>git pull</code></td>
+<td>Merge (the default)</td>
+</tr>
+<tr class="even">
+<td>Choose a credential helper</td>
+<td>Git Credential Manager (the default)</td>
+</tr>
+</tbody>
+</table>
+<p>If you skipped these screens (for example, if you installed with <code>winget</code>, which accepts every default), just run the configuration commands below. They fix everything.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="tell-git-who-you-are" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="tell-git-who-you-are"><span class="header-section-number">24.3</span> Tell Git who you are</h2>
+<p>Every commit records an <strong>author</strong>: a name and an email address. Set yours once:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Maria Lopez"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"maria@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These commands print nothing when they succeed. Use your real name (or the name you want others to see), with quotes around it because it contains a space.</p>
+<ul>
+<li><strong><code>--global</code></strong> means “for my user account on this computer”, so the setting applies to every repository you create or copy here.</li>
+<li>Use the <strong>same email as your GitHub account</strong>, so GitHub can link your commits to your profile. Anyone who can see your repository can see this email. To keep your address private, GitHub gives you a <strong>noreply</strong> address: on github.com go to <strong>Settings &gt; Emails</strong>, turn on <strong>Keep my email addresses private</strong>, and use the address shown there. It looks like <code>ID+USERNAME@users.noreply.github.com</code>.</li>
+</ul>
+</section>
+<section id="three-recommended-settings" class="level2" data-number="24.4">
+<h2 data-number="24.4" class="anchored" data-anchor-id="three-recommended-settings"><span class="header-section-number">24.4</span> Three recommended settings</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> init.defaultBranch main</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> core.editor <span class="st">"nano"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> pull.rebase false</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong><code>init.defaultBranch main</code></strong>: the name of the first branch in every new repository. Plain Git still calls it <code>master</code> and prints a long hint about it; GitHub uses <code>main</code>. (Some installations, such as Apple’s Git, already use <code>main</code>. Setting it yourself is harmless and makes every computer behave the same.)</li>
+<li><strong><code>core.editor</code></strong>: the <strong>text editor</strong> Git opens when it needs you to type something, for example a commit message when you forget <code>-m</code>. <strong>Nano</strong> is a simple editor that runs inside the terminal: type your text, save with <code>Ctrl+O</code> then <code>Enter</code>, and exit with <code>Ctrl+X</code>. If you prefer VS Code, use <code>git config --global core.editor "code --wait"</code> instead (on a Mac, first open VS Code’s Command Palette and run “Shell Command: Install ‘code’ command in PATH”).</li>
+<li><strong><code>pull.rebase false</code></strong>: tells <code>git pull</code> what to do when both your computer and GitHub have new commits: <strong>merge</strong> them. Without any setting, Git stops with an error in that situation (you’ll meet it in <a href="./030700-cloneAndPull-v001.html">Cloning and Pulling</a>). The Windows installer usually sets this already; on a Mac you need this line.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Stuck in Vim?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If Git ever opens a screen full of <code>~</code> symbols that doesn’t respond normally, you’re in <strong>Vim</strong>, a powerful but tricky editor. To get out: press <code>Esc</code>, type <code>:wq</code>, and press <code>Enter</code> (this saves and quits). Then set <code>core.editor</code> as shown above so it doesn’t happen again.</p>
+</div>
+</div>
+</section>
+<section id="check-your-settings" class="level2" data-number="24.5">
+<h2 data-number="24.5" class="anchored" data-anchor-id="check-your-settings"><span class="header-section-number">24.5</span> Check your settings</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>user.name=Maria Lopez
+user.email=maria@example.com
+init.defaultbranch=main
+core.editor=nano
+pull.rebase=false</code></pre>
+<p>(Git shows setting names in lowercase, such as <code>init.defaultbranch</code>; they’re not case-sensitive.) To check a single setting, give its name:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config user.name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>Maria Lopez</code></pre>
+<p>If <code>git config --global --list</code> prints an error such as <code>fatal: unable to read config file '/Users/maria/.gitconfig': No such file or directory</code>, you haven’t set anything yet.</p>
+<p>On Windows, the choices you made in the installer are stored in a different (system-wide) file, so they don’t appear in this list. To see <strong>every</strong> setting and the file it comes from, run <code>git config --list --show-origin</code>.</p>
+</section>
+<section id="commit-messages-and-other-git-files-are-plain-text" class="level2" data-number="24.6">
+<h2 data-number="24.6" class="anchored" data-anchor-id="commit-messages-and-other-git-files-are-plain-text"><span class="header-section-number">24.6</span> Commit messages and other Git files are plain text</h2>
+<p>Commit messages, <code>.gitignore</code> files, and code are all <strong>plain text</strong>. Always write them in a <strong>text editor</strong> (nano, VS Code, Notepad, TextEdit in plain-text mode), never in a word processor such as Word or Pages. See <a href="./020600-echoRedirectionAndViewing-v001.html">Writing to Files</a> for the difference.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: where Git stores your settings
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>--global</code> settings live in a plain text file in your home folder, <code>~/.gitconfig</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.gitconfig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<pre><code>[user]
+    name = Maria Lopez
+    email = maria@example.com
+[init]
+    defaultBranch = main
+[core]
+    editor = nano
+[pull]
+    rebase = false</code></pre>
+<p>Git actually reads settings at three levels:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Level</th>
+<th>Applies to</th>
+<th>Stored in</th>
+<th>Set with</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>system</td>
+<td>every user on the computer</td>
+<td>a file in Git’s install folder</td>
+<td>(the installer)</td>
+</tr>
+<tr class="even">
+<td>global</td>
+<td>you, in all your repositories</td>
+<td><code>~/.gitconfig</code></td>
+<td><code>git config --global ...</code></td>
+</tr>
+<tr class="odd">
+<td>local</td>
+<td>one repository only</td>
+<td><code>.git/config</code> inside the repository</td>
+<td><code>git config ...</code> (no <code>--global</code>), run inside the repository</td>
+</tr>
+</tbody>
+</table>
+<p>When the same setting appears at several levels, the most specific one wins: local beats global, and global beats system. For example, running <code>git config user.email "maria@company.com"</code> inside one work repository changes the email for that repository only.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: line endings on Windows
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Windows ends each line of a text file with two invisible characters (CRLF); Mac and Linux use one (LF). Git for Windows is normally set up (<code>core.autocrlf=true</code>) to convert between them automatically. That’s why Windows users sometimes see warnings like:</p>
+<pre><code>warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it</code></pre>
+<p>These warnings are harmless. You can ignore them.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="practice-questions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
+<section id="easy" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="easy">Easy</h3>
+<section id="question-1-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-1-write-the-command">Question 1 · Write the command</h4>
+<p>Write the command that shows whether Git is installed, and which version.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It prints something like <code>git version 2.56.0</code>. If Git isn’t installed, you get an error instead (or, on a Mac, an offer to install the Command Line Tools).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-multiple-choice">Question 2 · Multiple choice</h4>
+<p>Sam uses Windows and installed Git for Windows in <a href="./020200-installingAndOpeningBash-v001.html">Getting Bash on Your Computer</a>. What does he need to do to install Git?</p>
+<ol type="a">
+<li>Download Git separately from Git for Windows</li>
+<li>Nothing: Git for Windows is Git (plus Git Bash)</li>
+<li>Install Homebrew and run <code>brew install git</code></li>
+<li>Install the Apple Command Line Tools</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> Git for Windows installs Git together with Git Bash, so Git is already there; he can check with <code>git --version</code>. Options c and d are Mac methods.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-short-answer">Question 3 · Short answer</h4>
+<p>Why does Git need your name and email address?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Every commit records its <strong>author</strong> (name and email). Git uses your <code>user.name</code> and <code>user.email</code> settings for that, and GitHub uses the email to link your commits to your GitHub account.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-true-or-false">Question 4 · True or false</h4>
+<p>You must run <code>git config --global user.name "..."</code> again in every new repository.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> <code>--global</code> settings apply to all repositories for your user account on that computer. You set them <strong>once per computer</strong>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-matching" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-5-matching">Question 5 · Matching</h4>
+<p>Match each setting with what it controls.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Setting</th>
+<th></th>
+<th>Controls</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. <code>user.name</code></td>
+<td></td>
+<td>A. the editor Git opens for messages</td>
+</tr>
+<tr class="even">
+<td>2. <code>user.email</code></td>
+<td></td>
+<td>B. what <code>git pull</code> does when both sides have new commits</td>
+</tr>
+<tr class="odd">
+<td>3. <code>init.defaultBranch</code></td>
+<td></td>
+<td>C. the author name recorded in commits</td>
+</tr>
+<tr class="even">
+<td>4. <code>core.editor</code></td>
+<td></td>
+<td>D. the name of the first branch in new repositories</td>
+</tr>
+<tr class="odd">
+<td>5. <code>pull.rebase</code></td>
+<td></td>
+<td>E. the author email recorded in commits</td>
+</tr>
+</tbody>
+</table>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>1 → C, 2 → E, 3 → D, 4 → A, 5 → B.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-short-answer">Question 6 · Short answer</h4>
+<p>In nano, how do you save the file and how do you exit?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Save with <code>Ctrl+O</code> and then <code>Enter</code> (to confirm the file name); exit with <code>Ctrl+X</code>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="medium" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="medium">Medium</h3>
+<section id="question-7-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-write-the-command">Question 7 · Write the command</h4>
+<p>Write the commands Sam should run to set his name to <code>Sam Chen</code>, his email to his GitHub noreply address <code>12345678+samchen@users.noreply.github.com</code>, and the default branch name to <code>main</code>.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Sam Chen"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"12345678+samchen@users.noreply.github.com"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> init.defaultBranch main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-predict-the-output" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-predict-the-output">Question 8 · Predict the output</h4>
+<p>On a brand-new Mac account, Maria runs only these two commands:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Maria Lopez"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> init.defaultBranch main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What does <code>git config --global --list</code> print?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>user.name=Maria Lopez
+init.defaultbranch=main</code></pre>
+<p>Only the settings she made, in the order she made them, with the setting name shown in lowercase (<code>defaultbranch</code>).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-9-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-scenario">Question 9 · Scenario</h4>
+<p>Maria wants to make commits in public GitHub repositories without showing her personal email address. What should she do?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On github.com, go to <strong>Settings &gt; Emails</strong>, turn on <strong>Keep my email addresses private</strong>, and copy the noreply address shown there (it looks like <code>ID+USERNAME@users.noreply.github.com</code>). Then set it in Git:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"ID+USERNAME@users.noreply.github.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(using her own address). Her commits are still linked to her GitHub account.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-10-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-short-answer">Question 10 · Short answer</h4>
+<p>What does <code>--global</code> mean in <code>git config --global ...</code>? What happens if you run <code>git config user.email "..."</code> <strong>without</strong> <code>--global</code> inside a repository?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>--global</code> stores the setting for your user account on this computer (in <code>~/.gitconfig</code>), so it applies to all your repositories. Without <code>--global</code>, inside a repository, the setting is stored only for <strong>that</strong> repository (in <code>.git/config</code>) and overrides the global value there.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-11-read-the-output" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-read-the-output">Question 11 · Read the output</h4>
+<p>Maria runs <code>git config --global --list</code> and sees:</p>
+<pre><code>fatal: unable to read config file '/Users/maria/.gitconfig': No such file or directory</code></pre>
+<p>What does it mean, and what should she do?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The file where global settings are stored doesn’t exist yet, which means she hasn’t set any global settings. She should run the <code>git config --global</code> commands for <code>user.name</code>, <code>user.email</code>, <code>init.defaultBranch</code>, <code>core.editor</code>, and <code>pull.rebase</code>. The first one creates the file.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-12-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-scenario">Question 12 · Scenario</h4>
+<p>Sam typed <code>git commit</code> without <code>-m</code>, and his terminal filled with <code>~</code> symbols. Typing doesn’t seem to work normally. What happened, how does he get out, and how can he prevent it next time?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Git opened its editor, and on his computer that’s <strong>Vim</strong>. To get out, he presses <code>Esc</code>, types <code>:wq</code>, and presses <code>Enter</code>. (To write a message first, he presses <code>i</code>, types the message, then <code>Esc</code>, <code>:wq</code>, <code>Enter</code>.) To prevent it, he sets an easier editor:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> core.editor <span class="st">"nano"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or always uses <code>git commit -m "message"</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-13-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-13-short-answer">Question 13 · Short answer</h4>
+<p>Why is <code>pull.rebase false</code> useful even for someone who works alone?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Working alone from two computers (or editing on github.com) can still leave new commits on <strong>both</strong> sides. Without a pull setting, <code>git pull</code> then stops with “fatal: Need to specify how to reconcile divergent branches.” With <code>pull.rebase false</code>, Git merges the two sides automatically (see <a href="./030700-cloneAndPull-v001.html">Cloning and Pulling</a>).</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
+<section id="question-14-find-the-bug" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-14-find-the-bug">Question 14 · Find the bug</h4>
+<p>Maria typed:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name Maria Lopez</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There was no error, but her commits show the author as just <code>Maria</code>. Why? How does she fix it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Without quotes, Bash splits the name into two separate words, so Git receives <code>Maria</code> as the value and <code>Lopez</code> as an extra, unrelated argument. Only <code>Maria</code> is stored. Fix it with quotes:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Maria Lopez"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Commits she makes from now on show the full name. (Existing commits keep the old name.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-15-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-15-scenario">Question 15 · Scenario</h4>
+<p>Sam’s commits on GitHub show the author name, but they aren’t linked to his GitHub profile (no profile picture). <code>git config user.email</code> prints <code>sam@laptop.local</code>. What’s wrong, and how does he fix it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>GitHub links a commit to an account by its <strong>email</strong>, and <code>sam@laptop.local</code> isn’t an address on his GitHub account. He should set an email that is on his account (or his GitHub noreply address):</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"12345678+samchen@users.noreply.github.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>New commits will be linked to his profile. Commits he already made keep the old email.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-16-compare" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-16-compare">Question 16 · Compare</h4>
+<p>Explain the difference between system, global, and local Git settings, and which one wins if the same setting appears in more than one.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>System</strong>: for every user on the computer (for example, the choices made in the Git for Windows installer).</li>
+<li><strong>Global</strong>: for your user account, in all your repositories (<code>~/.gitconfig</code>, set with <code>--global</code>).</li>
+<li><strong>Local</strong>: for one repository only (<code>.git/config</code>, set without <code>--global</code> inside the repository).</li>
+</ul>
+<p>The most specific level wins: local overrides global, which overrides system.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-17-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-17-short-answer">Question 17 · Short answer</h4>
+<p>If you use VS Code as Git’s editor, the setting is <code>code --wait</code>, not just <code>code</code>. What could go wrong without <code>--wait</code>?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Without <code>--wait</code>, the <code>code</code> command opens the file and returns immediately, so Git thinks you’ve finished editing before you’ve typed anything. For a commit, Git then finds an empty message and cancels the commit (“Aborting commit due to empty commit message”). <code>--wait</code> makes Git wait until you close the file’s tab in VS Code.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-18-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-18-scenario">Question 18 · Scenario</h4>
+<p>Sam installed Git for Windows with <code>winget</code>, which accepts every installer default. When he runs <code>git init</code> in a new project, Git prints a long hint about the branch name <code>master</code>. Explain why, and what he should run so that this computer behaves like the rest of the class.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The installer’s default for the initial branch name is “Let Git decide”, which means <code>master</code>, and its default editor is Vim. Because winget skipped the installer screens, neither was changed. He should run the configuration commands from this page:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Sam Chen"</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"sam@example.com"</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> init.defaultBranch main</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> core.editor <span class="st">"nano"</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> pull.rebase false</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(For the repository he just created, <code>git branch -M main</code> renames the branch to <code>main</code>.)</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./030100-whatIsVersionControl-v001.html" class="pagination-link" aria-label="<yrChapterNumber>23. </yrChapterNumber> What Is Version Control? (Git vs. GitHub)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> What Is Version Control? (Git vs.&nbsp;GitHub)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./030300-yourFirstRepository-v001.html" class="pagination-link" aria-label="<yrChapterNumber>25. </yrChapterNumber> Your First Repository: init, status, add, commit">
+        <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>25. </yrchapternumber> Your First Repository: init, status, add, commit</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>
+/* yrAnswerToggles-v001
+ *
+ * Adds "Show all answers" / "Hide all answers" buttons to every page that
+ * contains practice-question answer callouts. An answer callout is any
+ * callout that has the class .yr-answer, for example:
+ *
+ *     ::: {.callout-tip .yr-answer collapse="true" icon="false"}
+ *     ## Suggested answer
+ *     ...
+ *     :::
+ *
+ * The buttons are inserted in two places:
+ *   1. directly below the page title
+ *   2. at the top of the practice questions section, i.e. right after
+ *        ## Practice Questions {#practice-questions .unnumbered}
+ *
+ * This file is included inline (include-after-body: file: ...) instead of
+ * with <script src="...">, so it works for pages in subfolders too.
+ * Pages without .yr-answer callouts (e.g. f26/yudkowskyBook-v001.qmd, which
+ * has its own buttons) are not affected.
+ */
+(function () {
+  function getAnswerCallouts() {
+    return Array.prototype.slice.call(document.querySelectorAll(".callout.yr-answer"));
+  }
+
+  function setCalloutExpanded(callout, expanded) {
+    var content = callout.querySelector(".callout-collapse");
+    var header = callout.querySelector(".callout-header");
+    if (!content) {
+      return;
+    }
+    if (window.bootstrap && window.bootstrap.Collapse) {
+      var instance = window.bootstrap.Collapse.getOrCreateInstance(content, { toggle: false });
+      if (expanded) {
+        instance.show();
+      } else {
+        instance.hide();
+      }
+    } else {
+      content.classList.toggle("show", expanded);
+    }
+    // Keep the arrow icon in sync (Quarto rotates it based on aria-expanded).
+    if (header) {
+      header.setAttribute("aria-expanded", expanded ? "true" : "false");
+      header.classList.toggle("collapsed", !expanded);
+    }
+  }
+
+  function setAllAnswers(expanded) {
+    getAnswerCallouts().forEach(function (callout) {
+      setCalloutExpanded(callout, expanded);
+    });
+  }
+
+  function makeButton(text, expanded) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "yr-answer-btn";
+    btn.textContent = text;
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+      setAllAnswers(expanded);
+    });
+    return btn;
+  }
+
+  function makeToolbar(extraClass, includeJumpLink, count) {
+    var bar = document.createElement("div");
+    bar.className = "yr-answer-toolbar " + extraClass;
+
+    var label = document.createElement("span");
+    label.className = "yr-answer-toolbar-label";
+    label.textContent = "Practice question answers (" + count + "):";
+    bar.appendChild(label);
+
+    bar.appendChild(makeButton("Show all answers", true));
+    bar.appendChild(makeButton("Hide all answers", false));
+
+    if (includeJumpLink && document.getElementById("practice-questions")) {
+      var link = document.createElement("a");
+      link.className = "yr-answer-jump";
+      link.href = "#practice-questions";
+      link.textContent = "Jump to practice questions ↓";
+      bar.appendChild(link);
+    }
+    return bar;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var count = getAnswerCallouts().length;
+    if (count === 0) {
+      return;
+    }
+
+    var titleBlock = document.getElementById("title-block-header");
+    if (titleBlock) {
+      titleBlock.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-top", true, count));
+    }
+
+    var section = document.getElementById("practice-questions");
+    if (section) {
+      var heading = section.querySelector("h2, h3");
+      if (heading) {
+        heading.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-section", false, count));
+      }
+    }
+  });
+})();
+</script>
+<script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>

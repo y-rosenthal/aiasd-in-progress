@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>30&nbsp; 30.  Browsers, Web Servers, and HTTP – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./040200-urlsDomainNamesAndIpAddresses-v001.html" rel="next">
+<link href="./030700-cloneAndPull-v001.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+<link rel="stylesheet" href="yrStyles-f26-v001.css">
+<link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./040100-browsersAndWebServers-v001.html">How the Web Works</a></li><li class="breadcrumb-item"><a href="./040100-browsersAndWebServers-v001.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> Browsers, Web Servers, and HTTP</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26/yudkowskyBook-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005100-whatIsAiSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> What Is AI Safety? Risks, Vocabulary, and Viewpoints</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005200-aiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> AI Security Incidents in the News (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005250-moreAiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> More AI Security Incidents: Hijacked Tools, Leaks, and Deepfakes (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005300-aiSafetyDebate-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Governments, Companies, and the AI Safety Debate (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005350-aiSafetyBeyondWashington-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> The AI Safety Debate Beyond Washington (2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Today</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010100-whatAiCanDoToday-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> What AI Can Do Today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010200-howLlmsWork-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> How Large Language Models Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010300-limitsRisksAndResponsibleUse-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Limits, Risks, and Responsible Use</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010400-aiAssistedDevelopment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> AI-Assisted Development: From Chatbots to Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010500-aiCodingToolsLandscape-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> The AI Coding Tool Landscape (Fall 2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Command Line (Bash)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020100-whatIsTheCommandLine-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> What Is the Command Line?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020200-installingAndOpeningBash-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>13. </yrchapternumber> Getting Bash on Your Computer (Mac and Windows)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020300-filesFoldersAndPaths-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>14. </yrchapternumber> Files, Folders, and Paths</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020400-navigatingPwdLsCd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Moving Around: pwd, ls, and cd</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020500-creatingAndDeleting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> Creating, Copying, Moving, and Deleting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020600-echoRedirectionAndViewing-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Writing to Files: echo, &gt;, &gt;&gt;, and cat</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020700-environmentVariables-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Environment Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020800-singleVsDoubleQuotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Single Quotes vs. Double Quotes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020900-gettingHelpAndShortcuts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>20. </yrchapternumber> Getting Help and Working Faster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021000-wildcardsPipesAndSearching-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>21. </yrchapternumber> Wildcards, Pipes, and Searching</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021100-bashScriptsAndAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title"><yrchapternumber>22. </yrchapternumber> Bash Scripts (and Using AI at the Command Line)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working on Your Own</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030100-whatIsVersionControl-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> What Is Version Control? (Git vs. GitHub)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030200-installingAndConfiguringGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Installing and Configuring Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030300-yourFirstRepository-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>25. </yrchapternumber> Your First Repository: init, status, add, commit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030400-historyAndUndo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title"><yrchapternumber>26. </yrchapternumber> Viewing History and Undoing Changes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030500-gitignoreAndSecrets-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title"><yrchapternumber>27. </yrchapternumber> .gitignore and Keeping Secrets Out of Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030600-githubRemotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><yrchapternumber>28. </yrchapternumber> Putting Your Repository on GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030700-cloneAndPull-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><yrchapternumber>29. </yrchapternumber> Cloning and Pulling (Working from Two Computers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">How the Web Works</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040100-browsersAndWebServers-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> Browsers, Web Servers, and HTTP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>31. </yrchapternumber> URLs, Domain Names, IP Addresses, and DNS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040300-htmlCssJavascriptAndDevTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>32. </yrchapternumber> HTML, CSS, JavaScript, and Browser Developer Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040400-whatHappensOnTheServer-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title"><yrchapternumber>33. </yrchapternumber> What Happens on the Server: Back Ends, Databases, and APIs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040500-webFrameworks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><yrchapternumber>34. </yrchapternumber> Web Frameworks and Meta-Frameworks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040600-apisKeysAndThirdPartyServices-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><yrchapternumber>35. </yrchapternumber> APIs, API Keys, and Third-Party Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040700-hostingAndDeployment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><yrchapternumber>36. </yrchapternumber> Hosting and Deployment: Getting Your App Online</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040800-architectingWithAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title"><yrchapternumber>37. </yrchapternumber> Putting It Together: Architecting a Web App with AI</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude: The Big Picture</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050100-claudeProductFamily-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title"><yrchapternumber>38. </yrchapternumber> The Claude Product Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050200-claudeModelsPlansAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><yrchapternumber>39. </yrchapternumber> Claude Models, Plans, and Usage Limits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050300-navigatingClaudeDocs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><yrchapternumber>40. </yrchapternumber> Navigating the Claude Documentation (and Keeping Up)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude Code Essentials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060100-installingClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><yrchapternumber>41. </yrchapternumber> Installing Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060200-firstSession-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title"><yrchapternumber>42. </yrchapternumber> Your First Claude Code Session</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060300-howClaudeCodeWorks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title"><yrchapternumber>43. </yrchapternumber> How Claude Code Works: The Agentic Loop and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060400-slashCommands-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title"><yrchapternumber>44. </yrchapternumber> Essential Slash Commands</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060500-permissionsModesAndSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title"><yrchapternumber>45. </yrchapternumber> Permissions, Modes, and Safety</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060600-claudeMdAndMemory-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title"><yrchapternumber>46. </yrchapternumber> CLAUDE.md and Memory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060700-dotClaudeFoldersAndSettings-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title"><yrchapternumber>47. </yrchapternumber> The .claude Folders and Settings Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060800-contextModelsEffortAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title"><yrchapternumber>48. </yrchapternumber> Context, Models, Effort, and Usage in Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060900-workingEffectively-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title"><yrchapternumber>49. </yrchapternumber> Working Effectively with Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./061000-claudeCodeBeyondTheTerminal-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Claude Code Beyond the Terminal</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Extending Claude Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070100-extendingOverview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><yrchapternumber>51. </yrchapternumber> Extending Claude Code: The Big Picture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070200-skills-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><yrchapternumber>52. </yrchapternumber> Skills</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070300-mcpServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><yrchapternumber>53. </yrchapternumber> MCP Servers: Connecting Claude to Other Tools and Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070400-browserAutomationMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title"><yrchapternumber>54. </yrchapternumber> Hands-On: Letting Claude Use a Browser (Playwright MCP and Chrome)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070500-supabaseMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title"><yrchapternumber>55. </yrchapternumber> Hands-On: The Supabase MCP Server</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070600-hooks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title"><yrchapternumber>56. </yrchapternumber> Hooks: Running Your Own Commands Automatically</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070700-subagents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title"><yrchapternumber>57. </yrchapternumber> Subagents (and Running Agents in Parallel)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070800-plugins-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title"><yrchapternumber>58. </yrchapternumber> Plugins and Marketplaces</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070900-mods-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title"><yrchapternumber>59. </yrchapternumber> Mods: Customizing Claude Code Itself</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working with Others</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080100-branchesAndMerging-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title"><yrchapternumber>60. </yrchapternumber> Branches and Merging</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080200-mergeConflicts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Merge Conflicts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080300-sharedRepositoriesAndForks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title"><yrchapternumber>62. </yrchapternumber> Sharing a Repository: Collaborators and Forks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080400-pullRequestsAndCodeReview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title"><yrchapternumber>63. </yrchapternumber> Pull Requests and Code Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080500-worktreesAndParallelAgents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title"><yrchapternumber>64. </yrchapternumber> Git Worktrees and Parallel AI Agents</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title"><yrchapternumber>65. </yrchapternumber> Tutorial - intro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001007-tutorial-supabase-projectArchitecture-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title"><yrchapternumber>66. </yrchapternumber> Project Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001100-tutorial-installNodeNpm-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title"><yrchapternumber>67. </yrchapternumber> Step 0: Install Node.js and npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001110-tutorial-cloneRepo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title"><yrchapternumber>68. </yrchapternumber> Step 1: Fork the repo and clone it</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001120-tutorial-installThePackages-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title"><yrchapternumber>69. </yrchapternumber> Step 2: Installing the Node.js packages with npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title"><yrchapternumber>70. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001140-tutorial-previewFrontEnd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title"><yrchapternumber>71. </yrchapternumber> Step 4 - Optional: Preview the Frontend</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><yrchapternumber>73. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001160-tutorial-googleOauth-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">74</span>&nbsp; <span class="chapter-title"><yrchapternumber>74. </yrchapternumber> Step 6: setup authentication (Google OAuth)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001170-tutorial-openAiApi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">75</span>&nbsp; <span class="chapter-title"><yrchapternumber>75. </yrchapternumber> Step 7: Set Up OpenAI API</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001180-tutorial-setupStripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">76</span>&nbsp; <span class="chapter-title"><yrchapternumber>76. </yrchapternumber> Step 8: Set Up Stripe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">77</span>&nbsp; <span class="chapter-title"><yrchapternumber>77. </yrchapternumber> Step 9: Set Up Supabase Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001200-tutorial-setupSupabaseStorage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">78</span>&nbsp; <span class="chapter-title"><yrchapternumber>78. </yrchapternumber> Step 10: Set Up Supabase Storage Bucket</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">79</span>&nbsp; <span class="chapter-title"><yrchapternumber>79. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001220-tutorial-runTheApplication-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">80</span>&nbsp; <span class="chapter-title"><yrchapternumber>80. </yrchapternumber> Step 12: Run the Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001230-tutorial-deployToProduction-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">81</span>&nbsp; <span class="chapter-title"><yrchapternumber>81. </yrchapternumber> Step 13: Deploy to Production</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001240-tutorial-extendTheFunctionality-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">82</span>&nbsp; <span class="chapter-title"><yrchapternumber>82. </yrchapternumber> Step 14: Extending the functionality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">83</span>&nbsp; <span class="chapter-title"><yrchapternumber>83. </yrchapternumber> Step 15: Automated Testing and Troubleshooting</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">84</span>&nbsp; <span class="chapter-title"><yrchapternumber>84. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">85</span>&nbsp; <span class="chapter-title"><yrchapternumber>85. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">86</span>&nbsp; <span class="chapter-title"><yrchapternumber>86. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">87</span>&nbsp; <span class="chapter-title"><yrchapternumber>87. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./990010-references-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#clients-and-servers" id="toc-clients-and-servers" class="nav-link active" data-scroll-target="#clients-and-servers"><span class="header-section-number">30.1</span> Clients and servers</a></li>
+  <li><a href="#front-end-and-back-end" id="toc-front-end-and-back-end" class="nav-link" data-scroll-target="#front-end-and-back-end"><span class="header-section-number">30.2</span> Front end and back end</a></li>
+  <li><a href="#http-how-browsers-and-servers-talk" id="toc-http-how-browsers-and-servers-talk" class="nav-link" data-scroll-target="#http-how-browsers-and-servers-talk"><span class="header-section-number">30.3</span> HTTP: how browsers and servers talk</a>
+  <ul class="collapse">
+  <li><a href="#status-codes" id="toc-status-codes" class="nav-link" data-scroll-target="#status-codes"><span class="header-section-number">30.3.1</span> Status codes</a></li>
+  <li><a href="#see-http-for-yourself-with-curl" id="toc-see-http-for-yourself-with-curl" class="nav-link" data-scroll-target="#see-http-for-yourself-with-curl"><span class="header-section-number">30.3.2</span> See HTTP for yourself with curl</a></li>
+  </ul></li>
+  <li><a href="#https-http-with-encryption" id="toc-https-http-with-encryption" class="nav-link" data-scroll-target="#https-http-with-encryption"><span class="header-section-number">30.4</span> HTTPS: HTTP with encryption</a></li>
+  <li><a href="#one-server-or-thousands" id="toc-one-server-or-thousands" class="nav-link" data-scroll-target="#one-server-or-thousands"><span class="header-section-number">30.5</span> One server or thousands?</a></li>
+  <li><a href="#localhost-a-server-on-your-own-computer" id="toc-localhost-a-server-on-your-own-computer" class="nav-link" data-scroll-target="#localhost-a-server-on-your-own-computer"><span class="header-section-number">30.6</span> localhost: a server on your own computer</a>
+  <ul class="collapse">
+  <li><a href="#try-it-run-a-tiny-web-server-optional" id="toc-try-it-run-a-tiny-web-server-optional" class="nav-link" data-scroll-target="#try-it-run-a-tiny-web-server-optional"><span class="header-section-number">30.6.1</span> Try it: run a tiny web server (optional)</a></li>
+  </ul></li>
+  <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
+  <ul class="collapse">
+  <li><a href="#easy" id="toc-easy" class="nav-link" data-scroll-target="#easy">Easy</a></li>
+  <li><a href="#medium" id="toc-medium" class="nav-link" data-scroll-target="#medium">Medium</a></li>
+  <li><a href="#hard" id="toc-hard" class="nav-link" data-scroll-target="#hard">Hard</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./040100-browsersAndWebServers-v001.html">How the Web Works</a></li><li class="breadcrumb-item"><a href="./040100-browsersAndWebServers-v001.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> Browsers, Web Servers, and HTTP</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> Browsers, Web Servers, and HTTP</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Every time you open a web page, two programs have a short conversation: your browser asks for something and a web server answers. This page explains who is talking, what they say to each other (HTTP), and how you will run a web server on your own computer while you build apps.</p>
+<section id="clients-and-servers" class="level2" data-number="30.1">
+<h2 data-number="30.1" class="anchored" data-anchor-id="clients-and-servers"><span class="header-section-number">30.1</span> Clients and servers</h2>
+<p>A website “lives” on a computer that is connected to the Internet and is always on. That computer is called a <strong>server</strong>. A program running on it, the <strong>web server program</strong>, waits for requests and answers them.</p>
+<p>Your <strong>browser</strong> (Chrome, Safari, Edge, Firefox…) is a <strong>client</strong>: a program that asks a server for something. When you visit a site, the browser asks the web server for the page, and the server sends back the files needed to show it: HTML, CSS, JavaScript and images (see <a href="./040300-htmlCssJavascriptAndDevTools-v001.html">HTML, CSS, JavaScript, and Browser Developer Tools</a>). The browser then draws the page on your screen.</p>
+<pre><code>   Your computer                            A computer on the Internet
+ +-----------------+                       +---------------------------+
+ |  Browser        |  ---- request ----&gt;   |  Web server program       |
+ |  (the client)   |  &lt;--- response ----   |  (the server)             |
+ +-----------------+                       +---------------------------+</code></pre>
+<p>Think of a restaurant: you (the client) order, the kitchen (the server) prepares exactly what you asked for, and one kitchen serves many tables at once. Note that “server” means both the <strong>computer</strong> and the <strong>program</strong> running on it; context tells you which.</p>
+</section>
+<section id="front-end-and-back-end" class="level2" data-number="30.2">
+<h2 data-number="30.2" class="anchored" data-anchor-id="front-end-and-back-end"><span class="header-section-number">30.2</span> Front end and back end</h2>
+<p>Developers split an app into two halves:</p>
+<ul>
+<li>The <strong>front end</strong> (also called the <strong>client side</strong>) is everything that runs in the user’s browser: the screens, buttons and forms.</li>
+<li>The <strong>back end</strong> (also called the <strong>server side</strong>) is everything that runs on servers: storing data, checking passwords, applying business rules, charging credit cards.</li>
+</ul>
+<p>You will see these terms constantly, often used loosely:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Means</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>client</td>
+<td>a program that asks for something</td>
+<td>your browser, a phone app, <code>curl</code></td>
+</tr>
+<tr class="even">
+<td>server</td>
+<td>a program that answers requests (or the computer it runs on)</td>
+<td>the program that runs amazon.com</td>
+</tr>
+<tr class="odd">
+<td>front end / client side</td>
+<td>the part of an app that runs in the browser</td>
+<td>HTML, CSS, JavaScript</td>
+</tr>
+<tr class="even">
+<td>back end / server side</td>
+<td>the part of an app that runs on servers</td>
+<td>the code that saves your order</td>
+</tr>
+<tr class="odd">
+<td>full stack</td>
+<td>front end and back end together</td>
+<td>“a full-stack web app”</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="http-how-browsers-and-servers-talk" class="level2" data-number="30.3">
+<h2 data-number="30.3" class="anchored" data-anchor-id="http-how-browsers-and-servers-talk"><span class="header-section-number">30.3</span> HTTP: how browsers and servers talk</h2>
+<p><strong>HTTP</strong> (HyperText Transfer Protocol) is the set of rules - a <strong>protocol</strong> - that browsers and web servers follow when they talk. Every exchange is one <strong>request</strong> followed by one <strong>response</strong>.</p>
+<p>A request contains:</p>
+<ul>
+<li>a <strong>method</strong> - what you want to do. The two you will see most:
+<ul>
+<li><strong>GET</strong>: “please send me this” (loading a page, clicking a link).</li>
+<li><strong>POST</strong>: “here is some data for you” (submitting a sign-up form, uploading a photo).</li>
+</ul></li>
+<li>a <strong>path</strong> - which page or file, e.g.&nbsp;<code>/about</code>.</li>
+<li><strong>headers</strong> - extra information, such as which site you want and which browser you are using.</li>
+<li>sometimes a <strong>body</strong> - the data being sent (for example, the form fields of a POST).</li>
+</ul>
+<p>A simplified request looks like this:</p>
+<pre><code>GET /about HTTP/1.1
+Host: www.example.com
+Accept: text/html</code></pre>
+<p>The response starts with a <strong>status code</strong> (did it work?), then headers (for example, what kind of content follows), then the body (the content itself):</p>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+
+&lt;!doctype html&gt;
+&lt;html&gt;
+  ...the page...
+&lt;/html&gt;</code></pre>
+<p>One page usually needs <strong>many</strong> requests. The first response is the HTML. The browser reads it, sees which CSS files, JavaScript files, images and fonts it needs, and requests each of those too. A busy shopping site can make more than a hundred requests to show a single page.</p>
+<section id="status-codes" class="level3" data-number="30.3.1">
+<h3 data-number="30.3.1" class="anchored" data-anchor-id="status-codes"><span class="header-section-number">30.3.1</span> Status codes</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>200</td>
+<td>OK</td>
+<td>Success: here is what you asked for</td>
+</tr>
+<tr class="even">
+<td>201</td>
+<td>Created</td>
+<td>Success: a new item was created (common after a POST)</td>
+</tr>
+<tr class="odd">
+<td>301, 302</td>
+<td>Moved</td>
+<td>Redirect: go to this other URL instead</td>
+</tr>
+<tr class="even">
+<td>400</td>
+<td>Bad Request</td>
+<td>The request didn’t make sense (for example, missing data)</td>
+</tr>
+<tr class="odd">
+<td>401</td>
+<td>Unauthorized</td>
+<td>You need to log in (or your key is missing or invalid)</td>
+</tr>
+<tr class="even">
+<td>403</td>
+<td>Forbidden</td>
+<td>The server knows who you are, but you are not allowed to do this</td>
+</tr>
+<tr class="odd">
+<td>404</td>
+<td>Not Found</td>
+<td>Nothing exists at this path</td>
+</tr>
+<tr class="even">
+<td>429</td>
+<td>Too Many Requests</td>
+<td>Slow down: you hit a rate limit</td>
+</tr>
+<tr class="odd">
+<td>500</td>
+<td>Internal Server Error</td>
+<td>The server’s code crashed or failed</td>
+</tr>
+<tr class="even">
+<td>503</td>
+<td>Service Unavailable</td>
+<td>The server is overloaded or down for maintenance</td>
+</tr>
+</tbody>
+</table>
+<p>The first digit tells you the family: <strong>2xx</strong> success, <strong>3xx</strong> redirect, <strong>4xx</strong> the client asked for something wrong, <strong>5xx</strong> the server failed. When something breaks, that digit tells you where to look first: a 404 usually means a wrong link or path; a 500 means a bug or crash in the back end.</p>
+</section>
+<section id="see-http-for-yourself-with-curl" class="level3" data-number="30.3.2">
+<h3 data-number="30.3.2" class="anchored" data-anchor-id="see-http-for-yourself-with-curl"><span class="header-section-number">30.3.2</span> See HTTP for yourself with curl</h3>
+<p><code>curl</code> is a command-line client: it sends HTTP requests from the terminal and prints the response. It comes with macOS and with Git Bash. The <code>-i</code> option (“include”) prints the status line and headers before the body:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-i</span> https://example.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output (shortened - yours will differ a little):</p>
+<pre><code>HTTP/2 200
+content-type: text/html; charset=utf-8
+server: cloudflare
+...
+
+&lt;!doctype html&gt;&lt;html lang=en&gt;&lt;head&gt;...&lt;title&gt;Example Domain&lt;/title&gt;...</code></pre>
+<ul>
+<li><code>HTTP/2 200</code> means HTTP version 2, status 200 (OK). You might see <code>HTTP/1.1 200 OK</code> instead - an older version of HTTP with the same meaning.</li>
+<li><code>content-type: text/html</code> says the body is an HTML page.</li>
+<li>After a blank line comes the body: the HTML your browser would have drawn. curl just prints it as text.</li>
+</ul>
+<p>To see only the status line and headers, use a capital <code>-I</code> instead.</p>
+</section>
+</section>
+<section id="https-http-with-encryption" class="level2" data-number="30.4">
+<h2 data-number="30.4" class="anchored" data-anchor-id="https-http-with-encryption"><span class="header-section-number">30.4</span> HTTPS: HTTP with encryption</h2>
+<p>Plain HTTP travels as readable text, so anyone along the way (for example, whoever runs the public Wi-Fi you are on) could read or change it. <strong>HTTPS</strong> is HTTP sent through an encrypted connection. It:</p>
+<ul>
+<li><strong>encrypts</strong> the traffic, so passwords, card numbers and cookies can’t be read or altered in transit, and</li>
+<li><strong>proves the server’s identity</strong> with a <strong>certificate</strong> issued by a trusted authority, so you know you are really talking to amazon.com.</li>
+</ul>
+<p>Today nearly every site uses HTTPS. Browsers mark plain-HTTP pages as “Not secure”, and many sites automatically redirect <code>http://</code> addresses to <code>https://</code>. Hosting services set up HTTPS for you (see <a href="./040700-hostingAndDeployment-v001.html">Hosting and Deployment</a>).</p>
+<p>HTTPS protects the <em>connection</em>, not the <em>content</em>: a scam site can have perfectly valid HTTPS.</p>
+</section>
+<section id="one-server-or-thousands" class="level2" data-number="30.5">
+<h2 data-number="30.5" class="anchored" data-anchor-id="one-server-or-thousands"><span class="header-section-number">30.5</span> One server or thousands?</h2>
+<p>A small website can run on one web server program on one computer. Large sites such as Google or Amazon run on thousands of computers in data centers around the world, yet your browser still sees “one website”. For learning and for building small apps, the one-server picture is all you need.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: How big sites look like one server
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>A <strong>load balancer</strong> is a “front door” that receives every request and passes it to one of many identical servers behind it. If one server fails, the others keep answering.</li>
+<li>A <strong>CDN</strong> (content delivery network) keeps copies of files - images, videos, CSS, JavaScript, sometimes whole pages - on servers in many cities. You get them from a nearby copy, which is faster. Cloudflare, Akamai, Amazon CloudFront and Fastly are well-known CDNs.</li>
+<li>A <strong>cache</strong> is a saved copy of something, kept so the same work doesn’t have to be repeated. CDNs, servers and your own browser all cache.</li>
+</ul>
+<p>This is why a big site’s address often leads to a computer owned by a CDN company, as you will see with <code>ping</code> and <code>nslookup</code> in <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html">URLs, Domain Names, IP Addresses, and DNS</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="localhost-a-server-on-your-own-computer" class="level2" data-number="30.6">
+<h2 data-number="30.6" class="anchored" data-anchor-id="localhost-a-server-on-your-own-computer"><span class="header-section-number">30.6</span> localhost: a server on your own computer</h2>
+<p>While you build an app, you run the web server on <strong>your own computer</strong>. The browser and the server are then on the same machine.</p>
+<ul>
+<li><strong>localhost</strong> is a special name that always means “this computer”. Only you can reach it; it is not on the public Internet.</li>
+<li>A <strong>port</strong> is a number that tells the computer <em>which program</em> should receive a request. One computer can run many server programs at once, each listening on its own port. If the computer’s address is a building’s street address, the port is the apartment number.</li>
+<li>Public websites use port 443 (HTTPS) or 80 (HTTP). Those are the defaults, so you never type them. Development servers use other ports, which you do type: <code>http://localhost:3000</code> (Next.js), <code>http://localhost:5173</code> (Vite), <code>http://localhost:8000</code> (Python’s built-in server).</li>
+</ul>
+<p>Things that will save you time later:</p>
+<ul>
+<li>A development server runs inside a terminal window and keeps running (you don’t get your prompt back). Press <code>Ctrl+C</code> in that window to stop it.</li>
+<li>If the server isn’t running - for example, you closed its terminal window - the browser says something like “This site can’t be reached”.</li>
+<li>Only one program can listen on a port at a time. Some tools then pick the next free port (for example 3001); others stop with an “address already in use” error.</li>
+<li>A <code>localhost</code> link only works on your own computer. To share your app, deploy it (see <a href="./040700-hostingAndDeployment-v001.html">Hosting and Deployment</a>).</li>
+</ul>
+<section id="try-it-run-a-tiny-web-server-optional" class="level3" data-number="30.6.1">
+<h3 data-number="30.6.1" class="anchored" data-anchor-id="try-it-run-a-tiny-web-server-optional"><span class="header-section-number">30.6.1</span> Try it: run a tiny web server (optional)</h3>
+<p>This needs Python, which you may have from a programming course. First create a folder with one web page in it:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/hello-server</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/hello-server</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"&lt;h1&gt;Hello from my own computer&lt;/h1&gt;"</span> <span class="op">&gt;</span> index.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then start Python’s built-in web server in that folder:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Windows (Git Bash)</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> http.server 8000 <span class="at">--bind</span> 127.0.0.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If macOS offers to install the “command line developer tools”, accept: they include <code>python3</code> (and Git).</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> http.server 8000 <span class="at">--bind</span> 127.0.0.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you get an error (or the Microsoft Store opens), try <code>py</code> instead of <code>python</code>. If neither works, Python isn’t installed - just read along.</p>
+</div>
+</div>
+</div>
+<p>The command keeps running. Open <code>http://localhost:8000</code> in your browser and you will see your heading. The terminal prints one line for each request it receives, something like this:</p>
+<pre><code>127.0.0.1 - - [06/Oct/2026 10:29:01] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [06/Oct/2026 10:29:01] code 404, message File not found
+127.0.0.1 - - [06/Oct/2026 10:29:01] "GET /favicon.ico HTTP/1.1" 404 -</code></pre>
+<p>The request came from <code>127.0.0.1</code> (your own computer), it was a <code>GET</code> for the path <code>/</code>, and the server answered <code>200</code>. Many browsers also ask for <code>/favicon.ico</code> (the little icon in the tab); this folder has none, so the answer is a harmless <code>404</code>. Try <code>http://localhost:8000/nope.html</code> to cause another 404. Finally, press <code>Ctrl+C</code> in the terminal (or close the window) and reload the page: the browser can no longer connect.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Only share what you mean to share
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This server hands out every file in the folder where you start it, so start it only inside a project folder - never in your home folder. The <code>--bind 127.0.0.1</code> part makes it reachable only from your own computer; without it, other people on the same network might be able to connect.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="practice-questions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
+<section id="easy" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="easy">Easy</h3>
+<section id="question-1-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-1-short-answer">Question 1 · Short answer</h4>
+<p>When you visit a website, which program is the <strong>client</strong> and which is the <strong>server</strong>?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Your <strong>browser</strong> is the client: it asks for the page. The <strong>web server program</strong> running on a computer somewhere on the Internet is the server: it answers the request and sends back the files needed to show the page.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-multiple-choice">Question 2 · Multiple choice</h4>
+<p>What is HTTP?</p>
+<ol type="a">
+<li>A programming language for building web pages</li>
+<li>The set of rules browsers and web servers follow to exchange requests and responses</li>
+<li>A program that stores a website’s data</li>
+<li>The address of a website</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> HTTP (HyperText Transfer Protocol) is a protocol: the rules for the request/response conversation. HTML, not HTTP, is the language for pages (a); data is stored by a database (c); a website’s address is its URL (d).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-matching" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-matching">Question 3 · Matching</h4>
+<p>Match each status code with its meaning.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Code</th>
+<th></th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 200</td>
+<td></td>
+<td>A. The server’s code crashed or failed</td>
+</tr>
+<tr class="even">
+<td>2. 301</td>
+<td></td>
+<td>B. Nothing exists at this path</td>
+</tr>
+<tr class="odd">
+<td>3. 404</td>
+<td></td>
+<td>C. Success</td>
+</tr>
+<tr class="even">
+<td>4. 500</td>
+<td></td>
+<td>D. Redirect: the page has moved to another URL</td>
+</tr>
+</tbody>
+</table>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>1 → C, 2 → D, 3 → B, 4 → A.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-true-or-false">Question 4 · True or false</h4>
+<p>The word “server” can mean either a computer or a program running on that computer.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>True.</strong> People say “server” for both the server computer and the web server program that runs on it. Context tells you which one is meant.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-5-multiple-choice">Question 5 · Multiple choice</h4>
+<p>Which of these is part of the <strong>front end</strong> of an online store?</p>
+<ol type="a">
+<li>The code that charges the customer’s credit card</li>
+<li>The database table that stores all orders</li>
+<li>The product page and “Add to cart” button shown in the browser</li>
+<li>The code that checks whether a password is correct</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>c.</strong> The front end is what runs in the user’s browser: the screens, buttons and forms. Charging cards (a), storing orders (b) and checking passwords (d) happen on servers, so they are part of the back end.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-short-answer">Question 6 · Short answer</h4>
+<p>What does <code>localhost</code> mean, and who can open a <code>localhost</code> address?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>localhost</code> always means “this computer”. Only the person using that computer can open a <code>localhost</code> address; it is not reachable from the public Internet.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-short-answer">Question 7 · Short answer</h4>
+<p>Name two things HTTPS adds compared to plain HTTP.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Encryption</strong>: data in transit (passwords, card numbers, cookies) can’t be read or changed by others on the network.</li>
+<li><strong>Proof of identity</strong>: the server shows a certificate from a trusted authority, so you know you are talking to the real site.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="medium" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="medium">Medium</h3>
+<section id="question-8-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-multiple-choice">Question 8 · Multiple choice</h4>
+<p>A user fills in a club sign-up form and clicks “Submit”. Which HTTP method is the browser most likely to use?</p>
+<ol type="a">
+<li>GET</li>
+<li>POST</li>
+<li>200</li>
+<li>HTTPS</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> POST is used to send data to the server, such as form fields. GET (a) asks for something without sending a body. 200 (c) is a status code, not a method, and HTTPS (d) is the encrypted version of HTTP, not a method.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-9-predict-the-output" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-predict-the-output">Question 9 · Predict the output</h4>
+<p>Maria runs this command:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-I</span> https://github.com/this-page-does-not-exist-xyz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What number do you expect to see on the first line of the output, and why?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>404</strong> (the first line will look like <code>HTTP/2 404</code>). The server is up and answered, but nothing exists at that path. <code>-I</code> prints only the status line and headers.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-10-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-scenario">Question 10 · Scenario</h4>
+<p>Your app shows an error page. In one case the status code is <strong>404</strong>; in another it is <strong>500</strong>. For each, say whether the problem is more likely on the client side (the request) or on the server side, and what you would check first.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>404 (4xx)</strong>: the request asked for something that doesn’t exist. Check the link or URL path for a typo, or whether the page/route was ever created.</li>
+<li><strong>500 (5xx)</strong>: the server failed while handling a valid request. Check the back-end code and the server’s logs for the error.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="question-11-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-short-answer">Question 11 · Short answer</h4>
+<p>Explain each part of the address <code>http://localhost:5173</code>.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>http://</code> - use plain HTTP (fine for a development server on your own computer).</li>
+<li><code>localhost</code> - the server is on this computer.</li>
+<li><code>5173</code> - the port: the request goes to whichever program is listening on port 5173 (Vite’s development server uses this port by default).</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="question-12-read-the-output" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-read-the-output">Question 12 · Read the output</h4>
+<p>While Python’s web server is running, the terminal prints:</p>
+<pre><code>127.0.0.1 - - [06/Oct/2026 10:31:12] "GET /about.html HTTP/1.1" 404 -</code></pre>
+<p>What happened?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A browser on the same computer (<code>127.0.0.1</code>) sent a GET request for the path <code>/about.html</code>. The server answered <strong>404 Not Found</strong> because there is no <code>about.html</code> file in the folder it is serving.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-13-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-13-multiple-choice">Question 13 · Multiple choice</h4>
+<p>Which statement about HTTPS is true?</p>
+<ol type="a">
+<li>A site that uses HTTPS is guaranteed to be honest and safe to buy from.</li>
+<li>HTTPS encrypts the data travelling between your browser and the server.</li>
+<li>HTTPS makes pages load without any requests.</li>
+<li>HTTPS is only needed on pages that show images.</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> HTTPS protects the connection. It says nothing about whether the site’s owner is honest (a) - scam sites use HTTPS too. Pages still need requests (c), and HTTPS matters for every page, especially ones with logins or payments (d).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-14-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-14-short-answer">Question 14 · Short answer</h4>
+<p>Why does loading a single web page usually involve many HTTP requests?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The first response is just the HTML. As the browser reads the HTML, it finds references to other files - CSS, JavaScript, images, fonts - and sends a separate request for each one.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
+<section id="question-15-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-15-scenario">Question 15 · Scenario</h4>
+<p>Maria starts her app’s development server, which says the app is available at <code>http://localhost:3000</code>. The app works. Later she closes that terminal window, reloads the page, and the browser says “This site can’t be reached”. What happened, and how does she fix it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The development server was a program running inside that terminal window. Closing the window stopped it, so nothing is listening on port 3000 any more and the browser can’t connect. She needs to open a terminal, <code>cd</code> into the project folder and start the server again (and leave that window open while she works).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-16-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-16-scenario">Question 16 · Scenario</h4>
+<p>Sam texts his friend the link <code>http://localhost:3000</code> so she can try his new app. She gets an error. Explain why, and what Sam would need to do instead.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>localhost</code> means “this computer” - on the friend’s phone it refers to her own phone, where Sam’s server isn’t running. A <code>localhost</code> address only works on the computer running the server. To share the app, Sam must deploy it to a server on the Internet (a hosting service) and send her that public URL.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-17-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-17-long-answer">Question 17 · Long answer</h4>
+<p>A site like Amazon handles millions of visitors at once, yet your browser behaves as if it talks to “one server”. Explain, in plain English, two techniques that make this possible.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Load balancers</strong>: one “front door” receives the requests and spreads them across many identical servers. If one server fails, the others keep answering, so visitors don’t notice.</li>
+<li><strong>CDNs (content delivery networks)</strong>: copies of files such as images, CSS and JavaScript are stored on servers in many cities, and each visitor gets them from a nearby copy. This is faster and takes load off the main servers.</li>
+</ul>
+<p>A good answer may also mention <strong>caching</strong> (saved copies so work isn’t repeated) and many data centers in different regions.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-18-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-18-scenario">Question 18 · Scenario</h4>
+<p>Sam already has one project’s development server running on port 3000. He starts a second project that also wants port 3000. What can happen, and what are two ways to deal with it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Only one program can listen on a port at a time. Depending on the tool, the second server either picks the next free port automatically (for example 3001 - read the terminal output to see which) or stops with an “address already in use” error. Sam can stop the first server with <code>Ctrl+C</code> in its terminal window, or start the second server on a different port.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-19-read-the-output" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-19-read-the-output">Question 19 · Read the output</h4>
+<p>Sam runs <code>curl -I http://amazon.com</code> (note: <code>http</code>, not <code>https</code>) and sees, among other lines:</p>
+<pre><code>HTTP/1.1 301 Moved Permanently
+Location: https://amazon.com/</code></pre>
+<p>What is the server telling him, and why do sites do this?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>301</code> is a redirect: “this address has moved permanently”, and the <code>Location</code> header says where to go instead - the same site over <strong>HTTPS</strong>. A browser follows the redirect automatically and requests <code>https://amazon.com/</code>; curl only shows it (add <code>-L</code> to make curl follow redirects). Sites do this so that anyone who types or clicks a plain <code>http://</code> address still ends up on the encrypted version.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-20-hands-on" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-20-hands-on">Question 20 · Hands-on</h4>
+<p>Run the tiny Python web server from this page. While it is running, open a <strong>second</strong> terminal window and run <code>curl -i http://localhost:8000/</code> and then <code>curl -i http://localhost:8000/missing.html</code>. Compare the first line of each response and the log lines that appear in the server’s window. Then stop the server and run the first <code>curl</code> command again. What changes?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>The first request returns a status line with <strong>200</strong> and your HTML as the body; the second returns <strong>404</strong>. (Python’s simple server answers with <code>HTTP/1.0</code>, an older version of HTTP.)</li>
+<li>Each request adds a log line in the server window, showing the method, the path and the status code - the same conversation seen from the server’s side.</li>
+<li>After you stop the server, <code>curl</code> fails with a “connection refused”-style error (“Failed to connect”), because no program is listening on port 8000.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./030700-cloneAndPull-v001.html" class="pagination-link" aria-label="<yrChapterNumber>29. </yrChapterNumber> Cloning and Pulling (Working from Two Computers)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><yrchapternumber>29. </yrchapternumber> Cloning and Pulling (Working from Two Computers)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html" class="pagination-link" aria-label="<yrChapterNumber>31. </yrChapterNumber> URLs, Domain Names, IP Addresses, and DNS">
+        <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>31. </yrchapternumber> URLs, Domain Names, IP Addresses, and DNS</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>
+/* yrAnswerToggles-v001
+ *
+ * Adds "Show all answers" / "Hide all answers" buttons to every page that
+ * contains practice-question answer callouts. An answer callout is any
+ * callout that has the class .yr-answer, for example:
+ *
+ *     ::: {.callout-tip .yr-answer collapse="true" icon="false"}
+ *     ## Suggested answer
+ *     ...
+ *     :::
+ *
+ * The buttons are inserted in two places:
+ *   1. directly below the page title
+ *   2. at the top of the practice questions section, i.e. right after
+ *        ## Practice Questions {#practice-questions .unnumbered}
+ *
+ * This file is included inline (include-after-body: file: ...) instead of
+ * with <script src="...">, so it works for pages in subfolders too.
+ * Pages without .yr-answer callouts (e.g. f26/yudkowskyBook-v001.qmd, which
+ * has its own buttons) are not affected.
+ */
+(function () {
+  function getAnswerCallouts() {
+    return Array.prototype.slice.call(document.querySelectorAll(".callout.yr-answer"));
+  }
+
+  function setCalloutExpanded(callout, expanded) {
+    var content = callout.querySelector(".callout-collapse");
+    var header = callout.querySelector(".callout-header");
+    if (!content) {
+      return;
+    }
+    if (window.bootstrap && window.bootstrap.Collapse) {
+      var instance = window.bootstrap.Collapse.getOrCreateInstance(content, { toggle: false });
+      if (expanded) {
+        instance.show();
+      } else {
+        instance.hide();
+      }
+    } else {
+      content.classList.toggle("show", expanded);
+    }
+    // Keep the arrow icon in sync (Quarto rotates it based on aria-expanded).
+    if (header) {
+      header.setAttribute("aria-expanded", expanded ? "true" : "false");
+      header.classList.toggle("collapsed", !expanded);
+    }
+  }
+
+  function setAllAnswers(expanded) {
+    getAnswerCallouts().forEach(function (callout) {
+      setCalloutExpanded(callout, expanded);
+    });
+  }
+
+  function makeButton(text, expanded) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "yr-answer-btn";
+    btn.textContent = text;
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+      setAllAnswers(expanded);
+    });
+    return btn;
+  }
+
+  function makeToolbar(extraClass, includeJumpLink, count) {
+    var bar = document.createElement("div");
+    bar.className = "yr-answer-toolbar " + extraClass;
+
+    var label = document.createElement("span");
+    label.className = "yr-answer-toolbar-label";
+    label.textContent = "Practice question answers (" + count + "):";
+    bar.appendChild(label);
+
+    bar.appendChild(makeButton("Show all answers", true));
+    bar.appendChild(makeButton("Hide all answers", false));
+
+    if (includeJumpLink && document.getElementById("practice-questions")) {
+      var link = document.createElement("a");
+      link.className = "yr-answer-jump";
+      link.href = "#practice-questions";
+      link.textContent = "Jump to practice questions ↓";
+      bar.appendChild(link);
+    }
+    return bar;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var count = getAnswerCallouts().length;
+    if (count === 0) {
+      return;
+    }
+
+    var titleBlock = document.getElementById("title-block-header");
+    if (titleBlock) {
+      titleBlock.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-top", true, count));
+    }
+
+    var section = document.getElementById("practice-questions");
+    if (section) {
+      var heading = section.querySelector("h2, h3");
+      if (heading) {
+        heading.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-section", false, count));
+      }
+    }
+  });
+})();
+</script>
+<script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>

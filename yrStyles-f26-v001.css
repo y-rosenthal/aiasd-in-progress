@@ -1,0 +1,104 @@
+/* yrStyles-f26-v001.css
+ *
+ * Styles added for the Fall 2026 edition of the book:
+ *   - "Show all answers" / "Hide all answers" toolbar (see yrAnswerToggles-v001.html)
+ *   - practice question headings and answer callouts
+ *   - "As of" datestamp badges for Claude-related material, e.g.
+ *       [As of Oct 6, 2026 · Official docs: [Skills](https://code.claude.com/docs/en/skills)]{.yr-asof}
+ */
+
+/* ---------- answer toolbar ---------- */
+
+.yr-answer-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.6rem 0 1.2rem 0;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #cfe3d4;
+  border-radius: 6px;
+  background: #f4faf6;
+  font-size: 0.85rem;
+}
+
+.yr-answer-toolbar-label {
+  font-weight: 600;
+  color: #2d6a3e;
+  margin-right: 0.2rem;
+}
+
+.yr-answer-btn {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid #2d6a3e;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #2d6a3e;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.yr-answer-btn:hover {
+  background: #e3f2e7;
+}
+
+.yr-answer-jump {
+  margin-left: auto;
+  font-size: 0.8rem;
+}
+
+/* ---------- practice questions ---------- */
+
+#practice-questions > h2 {
+  border-top: 3px solid #2d6a3e;
+  padding-top: 0.8rem;
+  margin-top: 2.5rem;
+}
+
+#practice-questions section.level3 > h3 {
+  margin-top: 1.8rem;
+  padding: 0.2rem 0.6rem;
+  border-left: 6px solid #6c757d;
+  background: #f6f6f6;
+}
+
+#practice-questions section#easy > h3   { border-left-color: #2e8b57; }
+#practice-questions section#medium > h3 { border-left-color: #d4a017; }
+#practice-questions section#hard > h3   { border-left-color: #c0392b; }
+#practice-questions section#challenge > h3 { border-left-color: #6f42c1; }
+
+#practice-questions h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.4rem;
+  color: #333333;
+}
+
+.callout.yr-answer {
+  margin-top: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.callout.yr-answer .callout-title-container {
+  font-weight: 600;
+}
+
+/* ---------- "As of" datestamp badges ---------- */
+
+.yr-asof {
+  display: inline-block;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: #4a4a6a;
+  background: #f3f1fb;
+  border: 1px solid #d9d3f2;
+  border-radius: 4px;
+  padding: 0.1rem 0.5rem;
+  margin: 0.1rem 0 0.4rem 0;
+}
+
+.yr-asof::before {
+  content: "\1F4C5\00a0"; /* calendar emoji + non-breaking space */
+}
