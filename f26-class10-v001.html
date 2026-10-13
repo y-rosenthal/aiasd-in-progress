@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Class 10: Starting the Full-Stack Web Application – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./f26/yudkowskyBook-v001.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+<link rel="stylesheet" href="yrStyles-f26-v001.css">
+<link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./f26-class10-v001.html">Class Meetings</a></li><li class="breadcrumb-item"><a href="./f26-class10-v001.html">Class 10: Starting the Full-Stack Web Application</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Class Meetings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Class 10: Starting the Full-Stack Web Application</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26/yudkowskyBook-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005100-whatIsAiSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> What Is AI Safety? Risks, Vocabulary, and Viewpoints</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005200-aiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> AI Security Incidents in the News (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005250-moreAiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> More AI Security Incidents: Hijacked Tools, Leaks, and Deepfakes (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005300-aiSafetyDebate-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Governments, Companies, and the AI Safety Debate (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005350-aiSafetyBeyondWashington-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> The AI Safety Debate Beyond Washington (2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Today</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010100-whatAiCanDoToday-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> What AI Can Do Today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010200-howLlmsWork-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> How Large Language Models Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010300-limitsRisksAndResponsibleUse-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Limits, Risks, and Responsible Use</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010400-aiAssistedDevelopment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> AI-Assisted Development: From Chatbots to Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010500-aiCodingToolsLandscape-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> The AI Coding Tool Landscape (Fall 2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Command Line (Bash)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020100-whatIsTheCommandLine-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> What Is the Command Line?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020200-installingAndOpeningBash-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>13. </yrchapternumber> Getting Bash on Your Computer (Mac and Windows)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020300-filesFoldersAndPaths-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>14. </yrchapternumber> Files, Folders, and Paths</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020400-navigatingPwdLsCd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Moving Around: pwd, ls, and cd</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020500-creatingAndDeleting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> Creating, Copying, Moving, and Deleting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020600-echoRedirectionAndViewing-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Writing to Files: echo, &gt;, &gt;&gt;, and cat</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020700-environmentVariables-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Environment Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020800-singleVsDoubleQuotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Single Quotes vs. Double Quotes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020900-gettingHelpAndShortcuts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>20. </yrchapternumber> Getting Help and Working Faster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021000-wildcardsPipesAndSearching-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>21. </yrchapternumber> Wildcards, Pipes, and Searching</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021100-bashScriptsAndAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title"><yrchapternumber>22. </yrchapternumber> Bash Scripts (and Using AI at the Command Line)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working on Your Own</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030100-whatIsVersionControl-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> What Is Version Control? (Git vs. GitHub)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030200-installingAndConfiguringGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Installing and Configuring Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030300-yourFirstRepository-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>25. </yrchapternumber> Your First Repository: init, status, add, commit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030400-historyAndUndo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title"><yrchapternumber>26. </yrchapternumber> Viewing History and Undoing Changes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030500-gitignoreAndSecrets-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title"><yrchapternumber>27. </yrchapternumber> .gitignore and Keeping Secrets Out of Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030600-githubRemotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><yrchapternumber>28. </yrchapternumber> Putting Your Repository on GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030700-cloneAndPull-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><yrchapternumber>29. </yrchapternumber> Cloning and Pulling (Working from Two Computers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">How the Web Works</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040100-browsersAndWebServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> Browsers, Web Servers, and HTTP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>31. </yrchapternumber> URLs, Domain Names, IP Addresses, and DNS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040300-htmlCssJavascriptAndDevTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>32. </yrchapternumber> HTML, CSS, JavaScript, and Browser Developer Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040400-whatHappensOnTheServer-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title"><yrchapternumber>33. </yrchapternumber> What Happens on the Server: Back Ends, Databases, and APIs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040500-webFrameworks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><yrchapternumber>34. </yrchapternumber> Web Frameworks and Meta-Frameworks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040600-apisKeysAndThirdPartyServices-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><yrchapternumber>35. </yrchapternumber> APIs, API Keys, and Third-Party Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040700-hostingAndDeployment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><yrchapternumber>36. </yrchapternumber> Hosting and Deployment: Getting Your App Online</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040800-architectingWithAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title"><yrchapternumber>37. </yrchapternumber> Putting It Together: Architecting a Web App with AI</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude: The Big Picture</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050100-claudeProductFamily-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title"><yrchapternumber>38. </yrchapternumber> The Claude Product Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050200-claudeModelsPlansAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><yrchapternumber>39. </yrchapternumber> Claude Models, Plans, and Usage Limits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050300-navigatingClaudeDocs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><yrchapternumber>40. </yrchapternumber> Navigating the Claude Documentation (and Keeping Up)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude Code Essentials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060100-installingClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><yrchapternumber>41. </yrchapternumber> Installing Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060200-firstSession-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title"><yrchapternumber>42. </yrchapternumber> Your First Claude Code Session</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060300-howClaudeCodeWorks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title"><yrchapternumber>43. </yrchapternumber> How Claude Code Works: The Agentic Loop and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060400-slashCommands-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title"><yrchapternumber>44. </yrchapternumber> Essential Slash Commands</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060500-permissionsModesAndSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title"><yrchapternumber>45. </yrchapternumber> Permissions, Modes, and Safety</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060600-claudeMdAndMemory-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title"><yrchapternumber>46. </yrchapternumber> CLAUDE.md and Memory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060700-dotClaudeFoldersAndSettings-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title"><yrchapternumber>47. </yrchapternumber> The .claude Folders and Settings Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060800-contextModelsEffortAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title"><yrchapternumber>48. </yrchapternumber> Context, Models, Effort, and Usage in Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060900-workingEffectively-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title"><yrchapternumber>49. </yrchapternumber> Working Effectively with Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./061000-claudeCodeBeyondTheTerminal-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Claude Code Beyond the Terminal</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Extending Claude Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070100-extendingOverview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><yrchapternumber>51. </yrchapternumber> Extending Claude Code: The Big Picture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070200-skills-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><yrchapternumber>52. </yrchapternumber> Skills</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070300-mcpServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><yrchapternumber>53. </yrchapternumber> MCP Servers: Connecting Claude to Other Tools and Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070400-browserAutomationMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title"><yrchapternumber>54. </yrchapternumber> Hands-On: Letting Claude Use a Browser (Playwright MCP and Chrome)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070500-supabaseMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title"><yrchapternumber>55. </yrchapternumber> Hands-On: The Supabase MCP Server</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070600-hooks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title"><yrchapternumber>56. </yrchapternumber> Hooks: Running Your Own Commands Automatically</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070700-subagents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title"><yrchapternumber>57. </yrchapternumber> Subagents (and Running Agents in Parallel)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070800-plugins-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title"><yrchapternumber>58. </yrchapternumber> Plugins and Marketplaces</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070900-mods-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title"><yrchapternumber>59. </yrchapternumber> Mods: Customizing Claude Code Itself</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working with Others</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080100-branchesAndMerging-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title"><yrchapternumber>60. </yrchapternumber> Branches and Merging</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080200-mergeConflicts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Merge Conflicts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080300-sharedRepositoriesAndForks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title"><yrchapternumber>62. </yrchapternumber> Sharing a Repository: Collaborators and Forks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080400-pullRequestsAndCodeReview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title"><yrchapternumber>63. </yrchapternumber> Pull Requests and Code Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080500-worktreesAndParallelAgents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title"><yrchapternumber>64. </yrchapternumber> Git Worktrees and Parallel AI Agents</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title"><yrchapternumber>65. </yrchapternumber> Tutorial - intro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001007-tutorial-supabase-projectArchitecture-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title"><yrchapternumber>66. </yrchapternumber> Project Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001100-tutorial-installNodeNpm-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title"><yrchapternumber>67. </yrchapternumber> Step 0: Install Node.js and npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001110-tutorial-cloneRepo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title"><yrchapternumber>68. </yrchapternumber> Step 1: Fork the repo and clone it</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001120-tutorial-installThePackages-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title"><yrchapternumber>69. </yrchapternumber> Step 2: Installing the Node.js packages with npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title"><yrchapternumber>70. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001140-tutorial-previewFrontEnd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title"><yrchapternumber>71. </yrchapternumber> Step 4 - Optional: Preview the Frontend</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><yrchapternumber>73. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001160-tutorial-googleOauth-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">74</span>&nbsp; <span class="chapter-title"><yrchapternumber>74. </yrchapternumber> Step 6: setup authentication (Google OAuth)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001170-tutorial-openAiApi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">75</span>&nbsp; <span class="chapter-title"><yrchapternumber>75. </yrchapternumber> Step 7: Set Up OpenAI API</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001180-tutorial-setupStripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">76</span>&nbsp; <span class="chapter-title"><yrchapternumber>76. </yrchapternumber> Step 8: Set Up Stripe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">77</span>&nbsp; <span class="chapter-title"><yrchapternumber>77. </yrchapternumber> Step 9: Set Up Supabase Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001200-tutorial-setupSupabaseStorage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">78</span>&nbsp; <span class="chapter-title"><yrchapternumber>78. </yrchapternumber> Step 10: Set Up Supabase Storage Bucket</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">79</span>&nbsp; <span class="chapter-title"><yrchapternumber>79. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001220-tutorial-runTheApplication-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">80</span>&nbsp; <span class="chapter-title"><yrchapternumber>80. </yrchapternumber> Step 12: Run the Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001230-tutorial-deployToProduction-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">81</span>&nbsp; <span class="chapter-title"><yrchapternumber>81. </yrchapternumber> Step 13: Deploy to Production</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001240-tutorial-extendTheFunctionality-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">82</span>&nbsp; <span class="chapter-title"><yrchapternumber>82. </yrchapternumber> Step 14: Extending the functionality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">83</span>&nbsp; <span class="chapter-title"><yrchapternumber>83. </yrchapternumber> Step 15: Automated Testing and Troubleshooting</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">84</span>&nbsp; <span class="chapter-title"><yrchapternumber>84. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">85</span>&nbsp; <span class="chapter-title"><yrchapternumber>85. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">86</span>&nbsp; <span class="chapter-title"><yrchapternumber>86. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">87</span>&nbsp; <span class="chapter-title"><yrchapternumber>87. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./990010-references-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#where-this-fits" id="toc-where-this-fits" class="nav-link active" data-scroll-target="#where-this-fits">Where this fits</a></li>
+  <li><a href="#what-you-need-accounts-and-costs" id="toc-what-you-need-accounts-and-costs" class="nav-link" data-scroll-target="#what-you-need-accounts-and-costs">What you need: accounts and costs</a></li>
+  <li><a href="#download-the-setup-worksheet" id="toc-download-the-setup-worksheet" class="nav-link" data-scroll-target="#download-the-setup-worksheet">Download the setup worksheet</a></li>
+  <li><a href="#your-workspace-vs-code-and-claude-code" id="toc-your-workspace-vs-code-and-claude-code" class="nav-link" data-scroll-target="#your-workspace-vs-code-and-claude-code">Your workspace: VS Code and Claude Code</a></li>
+  <li><a href="#using-claude-code-without-running-out-of-usage" id="toc-using-claude-code-without-running-out-of-usage" class="nav-link" data-scroll-target="#using-claude-code-without-running-out-of-usage">Using Claude Code without running out of usage</a></li>
+  <li><a href="#the-prompt-to-start-with" id="toc-the-prompt-to-start-with" class="nav-link" data-scroll-target="#the-prompt-to-start-with">The prompt to start with</a></li>
+  <li><a href="#the-steps" id="toc-the-steps" class="nav-link" data-scroll-target="#the-steps">The steps</a>
+  <ul class="collapse">
+  <li><a href="#step-a-install-the-tools" id="toc-step-a-install-the-tools" class="nav-link" data-scroll-target="#step-a-install-the-tools">Step A: Install the tools</a></li>
+  <li><a href="#step-b-get-the-code-onto-your-computer" id="toc-step-b-get-the-code-onto-your-computer" class="nav-link" data-scroll-target="#step-b-get-the-code-onto-your-computer">Step B: Get the code onto your computer</a></li>
+  <li><a href="#step-c-supabase-project-and-the-front-end" id="toc-step-c-supabase-project-and-the-front-end" class="nav-link" data-scroll-target="#step-c-supabase-project-and-the-front-end">Step C: Supabase project and the front end</a></li>
+  <li><a href="#step-d-sign-in-with-google" id="toc-step-d-sign-in-with-google" class="nav-link" data-scroll-target="#step-d-sign-in-with-google">Step D: Sign in with Google</a></li>
+  <li><a href="#step-e-openai-api-key-with-a-5-limit" id="toc-step-e-openai-api-key-with-a-5-limit" class="nav-link" data-scroll-target="#step-e-openai-api-key-with-a-5-limit">Step E: OpenAI API key, with a $5 limit</a></li>
+  <li><a href="#step-f-stripe-in-test-mode" id="toc-step-f-stripe-in-test-mode" class="nav-link" data-scroll-target="#step-f-stripe-in-test-mode">Step F: Stripe, in test mode</a></li>
+  <li><a href="#step-g-create-the-database" id="toc-step-g-create-the-database" class="nav-link" data-scroll-target="#step-g-create-the-database">Step G: Create the database</a></li>
+  <li><a href="#step-h-deploy-the-edge-functions-and-the-stripe-webhook" id="toc-step-h-deploy-the-edge-functions-and-the-stripe-webhook" class="nav-link" data-scroll-target="#step-h-deploy-the-edge-functions-and-the-stripe-webhook">Step H: Deploy the Edge Functions and the Stripe webhook</a></li>
+  <li><a href="#step-i-try-the-app" id="toc-step-i-try-the-app" class="nav-link" data-scroll-target="#step-i-try-the-app">Step I: Try the app</a></li>
+  <li><a href="#step-j-save-your-work-to-github" id="toc-step-j-save-your-work-to-github" class="nav-link" data-scroll-target="#step-j-save-your-work-to-github">Step J: Save your work to GitHub</a></li>
+  <li><a href="#step-k-put-the-app-online-with-vercel" id="toc-step-k-put-the-app-online-with-vercel" class="nav-link" data-scroll-target="#step-k-put-the-app-online-with-vercel">Step K: Put the app online with Vercel</a></li>
+  <li><a href="#optional-run-the-automated-tests" id="toc-optional-run-the-automated-tests" class="nav-link" data-scroll-target="#optional-run-the-automated-tests">Optional: Run the automated tests</a></li>
+  </ul></li>
+  <li><a href="#where-docker-fits" id="toc-where-docker-fits" class="nav-link" data-scroll-target="#where-docker-fits">Where Docker fits</a></li>
+  <li><a href="#if-you-dont-finish-today" id="toc-if-you-dont-finish-today" class="nav-link" data-scroll-target="#if-you-dont-finish-today">If you don’t finish today</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./f26-class10-v001.html">Class Meetings</a></li><li class="breadcrumb-item"><a href="./f26-class10-v001.html">Class 10: Starting the Full-Stack Web Application</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Class 10: Starting the Full-Stack Web Application</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>Tuesday, October 13, 2026</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About the “Class Meetings” section
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This section has one page for each meeting of our class this semester. Each page lists the date, the topic, and what we did, with links to the chapters that explain the material. Use it to review, or to catch up on a class you missed.</p>
+</div>
+</div>
+<p><strong>Topic:</strong> We start building the full-stack “task app” from the <a href="https://www.youtube.com/watch?v=Q4rXmxQ1AUM">tutorial video</a>. I demonstrate each step at the front of the room while you do the same steps on your own laptop, with Claude Code as your guide. You won’t finish today. Pick up where you left off at home or in our next class, as I’ll announce.</p>
+<section id="where-this-fits" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-fits">Where this fits</h2>
+<p>This project is the first of three:</p>
+<ol type="1">
+<li><strong>Build the app from the video</strong> (starting today). The code is already written; your job is to set up the services it depends on, run it on your computer, and put it online.</li>
+<li><strong>Change it.</strong> You’ll make a significant change to the app’s database and update the app to match.</li>
+<li><strong>Build your own.</strong> You’ll build an app for your own business idea from scratch, using the same architecture (Next.js, Supabase and Vercel).</li>
+</ol>
+<p>The tutorial chapters, starting with <a href="./001000-tutorial-supabase-nextjs-v001.html">Tutorial - intro</a> and <a href="./001007-tutorial-supabase-projectArchitecture-v001.html">Project Architecture</a>, explain each piece in more depth. This page is the checklist to follow. Where it differs from those chapters, follow this page: the chapters were written for an older version of these services and are being updated.</p>
+</section>
+<section id="what-you-need-accounts-and-costs" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-need-accounts-and-costs">What you need: accounts and costs</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Service</th>
+<th>What the app uses it for</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GitHub</td>
+<td>Stores your copy of the code</td>
+<td>Free</td>
+</tr>
+<tr class="even">
+<td>Claude (Pro plan)</td>
+<td>Claude Code, your guide</td>
+<td>You already have it</td>
+</tr>
+<tr class="odd">
+<td>Supabase</td>
+<td>Database, user logins, image storage, Edge Functions</td>
+<td>Free plan</td>
+</tr>
+<tr class="even">
+<td>Google Cloud</td>
+<td>“Sign in with Google”</td>
+<td>Free</td>
+</tr>
+<tr class="odd">
+<td>OpenAI API</td>
+<td>Suggests a label for each new task</td>
+<td><strong>About $5, prepaid (required)</strong></td>
+</tr>
+<tr class="even">
+<td>Stripe</td>
+<td>Subscription payments, in <strong>test mode</strong> (fake card numbers, no real money)</td>
+<td>Free</td>
+</tr>
+<tr class="odd">
+<td>Vercel</td>
+<td>Puts the app online at the end</td>
+<td>Free (Hobby plan)</td>
+</tr>
+</tbody>
+</table>
+<p>The OpenAI charge is the only real cost. Step E shows you how to make sure you can never spend more than the $5 you put in.</p>
+</section>
+<section id="download-the-setup-worksheet" class="level2">
+<h2 class="anchored" data-anchor-id="download-the-setup-worksheet">Download the setup worksheet</h2>
+<p><a href="taskApp-setupWorksheet-v001.xlsx" download="">Download the Task App Setup Worksheet (Excel)</a></p>
+<p>You will collect about 25 IDs, web addresses and keys from these websites. The worksheet keeps them in one place. It opens in Excel, Numbers or LibreOffice. It has three sheets:</p>
+<ul>
+<li><strong>Start Here</strong> explains the workbook and its safety rules.</li>
+<li><strong>My Info</strong> has one row per item. Fill in the <strong>yellow</strong> cells as you go through the steps below. The <em>Example</em> column shows what each value looks like (the examples are fake), <em>Where to find it</em> tells you where on the website to look, and <em>Where you use it</em> tells you where it goes next. <strong>Gray</strong> cells fill themselves in: for example, once you type your Supabase project ref, the worksheet builds your Supabase URL and your Google callback URL. Type <code>Yes</code> in the <em>Done?</em> column as you finish each row.</li>
+<li><strong>Commands</strong> builds, from your values, the exact lines you copy: the lines of your <code>.env.local</code> file, the terminal commands with your own keys in them, the SQL for one Supabase step, and the addresses you paste into Google, Stripe, Supabase and Vercel. Until a line’s values are filled in, it says “(fill in … on My Info first)”. Copy one cell at a time.</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The worksheet holds secret keys
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Anyone with your secret keys can use your accounts, and the OpenAI key can cost you money. Save the worksheet in your <code>Documents</code> folder, <strong>not</strong> inside the project folder, so Git can never upload it to GitHub. Don’t email it, post it, or show it while sharing your screen. Account passwords don’t go in it; keep those in your browser’s password manager.</p>
+</div>
+</div>
+</section>
+<section id="your-workspace-vs-code-and-claude-code" class="level2">
+<h2 class="anchored" data-anchor-id="your-workspace-vs-code-and-claude-code">Your workspace: VS Code and Claude Code</h2>
+<p><span class="yr-asof">As of Oct 13, 2026 · Official docs: <a href="https://code.claude.com/docs/en/vs-code">Use Claude Code in VS Code</a></span></p>
+<p>We’ll use <strong>VS Code</strong>, a free code editor, with the <strong>Claude Code extension</strong>. One window shows:</p>
+<ul>
+<li>the project’s files on the left, so you can open <code>.env.local</code> and paste keys into it yourself;</li>
+<li>the Claude Code panel, where you chat with Claude and see each change it proposes;</li>
+<li>a terminal at the bottom (<strong>Terminal &gt; New Terminal</strong>), where you can run commands such as <code>npm run dev</code> yourself.</li>
+</ul>
+<p>If you prefer, you can run <code>claude</code> in a separate terminal window next to VS Code instead. It is the same Claude Code, and both share your conversation history (<a href="./061000-claudeCodeBeyondTheTerminal-v001.html">Claude Code Beyond the Terminal</a>).</p>
+</section>
+<section id="using-claude-code-without-running-out-of-usage" class="level2">
+<h2 class="anchored" data-anchor-id="using-claude-code-without-running-out-of-usage">Using Claude Code without running out of usage</h2>
+<p><span class="yr-asof">As of Oct 13, 2026 · Official docs: <a href="https://code.claude.com/docs/en/costs">Manage costs effectively</a> · <a href="https://code.claude.com/docs/en/model-config">Model configuration</a> · <a href="https://support.claude.com/en/articles/15424964-claude-fable-models-on-your-plan">Claude Fable models on your plan</a></span></p>
+<p>The Pro plan has a usage limit that resets every five hours, plus a weekly limit. This project takes many steps, so spend your usage wisely:</p>
+<ul>
+<li><strong>Use Sonnet.</strong> On Pro, Claude Code’s default model is Opus 5.5, which uses up your limit faster. Type <code>/model sonnet</code> at the start of each session. Sonnet 5.5 handles every step of this project.</li>
+<li><strong>Switch to Opus only when you’re stuck.</strong> If Sonnet fails to fix the same error twice, try <code>/model opus</code> for that problem, then switch back.</li>
+<li><strong>Haiku</strong> (<code>/model haiku</code>) is the cheapest. It’s fine for quick questions such as “what does this error mean?”</li>
+<li><strong>Never use Fable</strong> on the Pro plan. Fable isn’t included in Pro; it is billed separately as extra usage. Don’t turn on extra usage (usage credits).</li>
+<li><strong>Keep effort at <code>medium</code></strong> (the default). Check it with <code>/effort</code>.</li>
+<li><strong>Check your usage</strong> with <code>/usage</code>. It shows how much of your five-hour and weekly limits you’ve used and when they reset.</li>
+<li><strong>Start fresh between big steps.</strong> <code>/clear</code> empties the conversation, so Claude doesn’t re-read a long history with every message. Your progress is safe in the <code>SETUP-PROGRESS.md</code> file (see the prompt below).</li>
+<li><strong>Don’t paste huge error logs.</strong> Paste the last 20 or so lines, or tell Claude to look at the terminal output itself.</li>
+<li><strong>Read before you approve.</strong> When Claude asks permission to run a command, read what it is about to do (<a href="./060500-permissionsModesAndSafety-v001.html">Permissions, Modes, and Safety</a>).</li>
+</ul>
+<p>More details are in <a href="./060800-contextModelsEffortAndUsage-v001.html">Context, Models, Effort, and Usage in Claude Code</a>.</p>
+</section>
+<section id="the-prompt-to-start-with" class="level2">
+<h2 class="anchored" data-anchor-id="the-prompt-to-start-with">The prompt to start with</h2>
+<p>Once the project is open in VS Code (Step B5 below), start Claude, switch to <strong>plan mode</strong> (type <code>/plan</code>, or press <code>Shift+Tab</code> until the mode says <em>plan</em>), and paste this prompt. Change “I’m on a Mac” if you use Windows. In plan mode, Claude reads the project and proposes a plan without changing anything; review the plan, then approve it.</p>
+<pre class="text"><code>I'm a business student with no programming background. This folder is my fork
+of github.com/pixegami/task-app, the finished code from a tutorial video. It
+uses Next.js for the web pages; Supabase for the database, login, file storage
+and Edge Functions; Google for "Sign in with Google"; the OpenAI API for
+automatic task labels; Stripe in test mode for payments; and, at the end,
+Vercel to put the app online. I'm on a Mac.
+
+My course notes list the steps in order, with corrections to older
+instructions: https://y-rosenthal.github.io/aiasd-in-progress/f26-class10-v001.html
+Read them, and follow their order. Steps A and B are already done.
+
+How to work with me:
+- First read README.md and the project files. Explain in plain English how the
+  pieces fit together, then show the remaining steps as a numbered checklist.
+- Do one step at a time. Before each command, tell me in a sentence or two
+  what it does and why. Ask before anything that deletes files, changes my
+  accounts, or costs money.
+- When a step needs a website (Supabase, Google Cloud, OpenAI, Stripe,
+  Vercel), stop. Tell me exactly what to click and what to copy, and wait
+  until I say I'm done.
+- I'll paste secret keys into files myself. Never ask me to paste a key into
+  this chat, never print a key, and never commit one to Git. Check that
+  .env.local is ignored by Git.
+- Don't use Docker. We use a hosted Supabase project.
+- After each step, check that it worked before moving on. If something fails,
+  explain the error in plain English and fix it with me.
+- Don't change the app's features, and don't deploy to Vercel until everything
+  works on my computer and I say so.
+- Save these working rules in a CLAUDE.md file in this folder, so you follow
+  them in every session. Keep our checklist and what's done in
+  SETUP-PROGRESS.md (no secrets in either file).</code></pre>
+<p><strong>Next time</strong> (a new session, or after <code>/clear</code>), start with:</p>
+<pre class="text"><code>We're continuing the task-app setup. Read SETUP-PROGRESS.md and my course
+notes at https://y-rosenthal.github.io/aiasd-in-progress/f26-class10-v001.html,
+check that the finished steps still work, and continue with the next step.</code></pre>
+<p>Claude follows the rules in <code>CLAUDE.md</code> automatically in every session (<a href="./060600-claudeMdAndMemory-v001.html">CLAUDE.md and Memory</a>).</p>
+</section>
+<section id="the-steps" class="level2">
+<h2 class="anchored" data-anchor-id="the-steps">The steps</h2>
+<p>Steps A and B you do yourself, so that the project is on your computer before you start Claude. From Step C on, Claude walks you through each step; the notes here tell you what to expect and where the older chapters are wrong.</p>
+<section id="step-a-install-the-tools" class="level3">
+<h3 class="anchored" data-anchor-id="step-a-install-the-tools">Step A: Install the tools</h3>
+<p>You should already have a GitHub account, Git and Claude Code from earlier classes. If not, open the boxes below. Node.js and VS Code are probably new.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A1. GitHub account (you should have this already)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Go to <a href="https://github.com">github.com</a> and click <strong>Sign up</strong>. Use an email address you check. See <a href="./030600-githubRemotes-v001.html">Putting Your Repository on GitHub</a>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A2. Git and a Bash terminal (you should have these already)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Check in a terminal:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you see a version number, you’re set. If not, follow <a href="./020200-installingAndOpeningBash-v001.html">Getting Bash on Your Computer (Mac and Windows)</a> and <a href="./030200-installingAndConfiguringGit-v001.html">Installing and Configuring Git</a>. On Windows, installing Git for Windows also gives you <strong>Git Bash</strong>, the terminal we use.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A3. Claude Code (you should have this already)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Check in a terminal:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If it isn’t installed, follow <a href="./060100-installingClaudeCode-v001.html">Installing Claude Code</a>. Sign in with your Claude Pro account, not with an API key.</p>
+</div>
+</div>
+</div>
+<p><strong>A4. Node.js.</strong> The app is written in JavaScript, and <strong>Node.js</strong> runs JavaScript on your computer. Installing it also installs <strong>npm</strong>, the tool that downloads the app’s building blocks (packages). Check whether you have it:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you see <code>v20</code> or higher, skip ahead. Otherwise go to <a href="https://nodejs.org/en/download">nodejs.org</a>, download the <strong>LTS</strong> installer for your computer, and run it. Then close the terminal, open a new one, and check again with <code>node --version</code> and <code>npm --version</code>. More in <a href="./001100-tutorial-installNodeNpm-v001.html">Step 0: Install Node.js and npm</a>.</p>
+<p><strong>A5. VS Code and the Claude Code extension.</strong></p>
+<ol type="1">
+<li>Download VS Code from <a href="https://code.visualstudio.com">code.visualstudio.com</a> and install it.</li>
+<li>In VS Code, open the Extensions view (<code>Cmd+Shift+X</code> on a Mac, <code>Ctrl+Shift+X</code> on Windows), search for <strong>Claude Code</strong>, and install the one published by <strong>Anthropic</strong>. A Claude icon appears; click it and sign in with your Claude account.</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Windows (Git Bash)</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Nothing else to set up. VS Code’s terminal uses zsh, like the Terminal app.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Make Git Bash VS Code’s terminal: <strong>Terminal &gt; New Terminal</strong>, then click the small arrow next to the <strong>+</strong> at the top right of the terminal and choose <strong>Select Default Profile &gt; Git Bash</strong>. Close that terminal and open a new one.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-b-get-the-code-onto-your-computer" class="level3">
+<h3 class="anchored" data-anchor-id="step-b-get-the-code-onto-your-computer">Step B: Get the code onto your computer</h3>
+<p><strong>B1. Fork the repository.</strong> A <strong>fork</strong> is your own copy of someone else’s GitHub repository, stored in <em>your</em> GitHub account. You can change your fork freely; the original stays untouched. (The name comes from “a fork in the road”: the two copies start the same and then go their own ways.) Forks are explained in <a href="./080300-sharedRepositoriesAndForks-v001.html">Sharing a Repository: Collaborators and Forks</a>.</p>
+<ol type="1">
+<li>Sign in to GitHub and go to <a href="https://github.com/pixegami/task-app">github.com/pixegami/task-app</a>.</li>
+<li>Click <strong>Fork</strong> (top right), then <strong>Create fork</strong>.</li>
+<li>You land on your fork, at <code>https://github.com/YOUR-USERNAME/task-app</code>. Type your GitHub username into the worksheet’s <em>My Info</em> sheet.</li>
+</ol>
+<p><strong>B2. Clone your fork.</strong> <strong>Cloning</strong> downloads a copy of a GitHub repository to your computer. We keep code projects in a folder named <code>projects</code> in your home folder. Don’t use <code>Documents</code> or <code>Desktop</code>: on many computers iCloud or OneDrive syncs those folders, and syncing the thousands of files a Node.js project contains causes problems.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/projects</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Copy the <code>git clone</code> line from the worksheet’s <em>Commands</em> sheet (it has your username in it), or type it with your own username:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YOUR-USERNAME/task-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>B3. Open the project in VS Code.</strong> <strong>File &gt; Open Folder</strong>, choose <code>projects/task-app</code> in your home folder, and click <strong>Open</strong> (click <strong>Yes, I trust the authors</strong> if asked).</p>
+<p><strong>B4. Install the packages.</strong> Open VS Code’s terminal (<strong>Terminal &gt; New Terminal</strong>). It starts in the project folder. Run:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It takes a minute or two and creates a <code>node_modules</code> folder. Warnings about “deprecated” packages and “vulnerabilities” are normal. Don’t run <code>npm audit fix --force</code>: it upgrades packages to versions this code doesn’t work with. More in <a href="./001120-tutorial-installThePackages-v001.html">Step 2: Installing the Node.js packages with npm</a>.</p>
+<p><strong>B5. Start Claude.</strong> Click the Claude icon in VS Code (or run <code>claude</code> in the terminal), type <code>/model sonnet</code>, switch to plan mode, and paste the prompt from <a href="#the-prompt-to-start-with">The prompt to start with</a>.</p>
+</section>
+<section id="step-c-supabase-project-and-the-front-end" class="level3">
+<h3 class="anchored" data-anchor-id="step-c-supabase-project-and-the-front-end">Step C: Supabase project and the front end</h3>
+<p><strong>Supabase</strong> gives the app a PostgreSQL database, user logins, file storage and Edge Functions (small programs that run on Supabase’s servers).</p>
+<ol type="1">
+<li><strong>Preview the front end.</strong> Claude creates your <code>.env.local</code> file from <code>.env.example</code> and runs <code>npm run dev</code>. Open <a href="http://localhost:3000">http://localhost:3000</a> to see the home page. Login doesn’t work yet. Stop the server with <code>Ctrl+C</code> in the terminal. (See <a href="./001140-tutorial-previewFrontEnd-v001.html">Step 4 - Optional: Preview the Frontend</a>.)</li>
+<li><strong>Create the project.</strong> At <a href="https://supabase.com">supabase.com</a>, sign up (<strong>Continue with GitHub</strong> is easiest) and click <strong>New project</strong>. Name it <code>task-app</code>, click <strong>Generate a password</strong> and save the password in the worksheet, pick the region closest to you, and click <strong>Create new project</strong>. It takes a couple of minutes.</li>
+<li><strong>Record your project ref, URL and publishable key</strong> in the worksheet. New projects have a <strong>publishable key</strong> (it starts with <code>sb_publishable_</code>). The older chapters call it the “anon public” key; it goes in the same place.</li>
+<li><strong>Fill in <code>.env.local</code>.</strong> Open it in VS Code and replace the two values with the two <code>.env.local</code> lines from the worksheet’s <em>Commands</em> sheet. Save the file.</li>
+<li><strong>Connect the CLI.</strong> The <strong>Supabase CLI</strong> is a command-line tool that comes with the project’s packages, so you run it with <code>npx supabase ...</code>. Claude runs <code>npx supabase login</code> (a browser window opens; approve it) and <code>npx supabase link --project-ref YOUR-PROJECT-REF</code> (it may ask for the database password from your worksheet). See <a href="./001155-tutorial-supabaseCli-v001.html">Step 5a: Supabase CLI command</a>. Don’t run <code>npx supabase start</code>: that runs Supabase locally and needs Docker (see the deeper dive at the end).</li>
+<li><strong>Two auth settings</strong> in the Supabase dashboard:
+<ul>
+<li><strong>Authentication &gt; Sign In / Providers &gt; Email</strong>: turn off <strong>Confirm email</strong>, so test accounts work without clicking an email link.</li>
+<li><strong>Authentication &gt; URL Configuration</strong>: set <strong>Site URL</strong> to <code>http://localhost:3000</code> and add the redirect URL <code>http://localhost:3000/**</code>.</li>
+</ul></li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Don’t sign in to the app yet
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every new user automatically gets a Stripe customer record. Signing up before Step F is finished fails.</p>
+</div>
+</div>
+</section>
+<section id="step-d-sign-in-with-google" class="level3">
+<h3 class="anchored" data-anchor-id="step-d-sign-in-with-google">Step D: Sign in with Google</h3>
+<p>Follow <a href="./001160-tutorial-googleOauth-v001.html">Step 6: setup authentication (Google OAuth)</a>, with these corrections, since Google’s screens have changed:</p>
+<ol type="1">
+<li>At <a href="https://console.cloud.google.com">console.cloud.google.com</a>, create a project (for example <code>task-app-yourname</code>).</li>
+<li>In the menu, open <strong>Google Auth Platform &gt; Branding</strong> and click <strong>Get started</strong>. Enter an app name (for example <code>Task App</code>) and your email, choose <strong>External</strong> as the audience, enter your email as the contact, agree to the policy, and click <strong>Create</strong>.</li>
+<li>Under <strong>Clients</strong>, click <strong>Create client</strong>, choose <strong>Web application</strong>, and add:
+<ul>
+<li><strong>Authorized JavaScript origins:</strong> <code>http://localhost:3000</code></li>
+<li><strong>Authorized redirect URIs:</strong> your Google callback URL from the worksheet (<code>https://YOUR-PROJECT-REF.supabase.co/auth/v1/callback</code>) Then click <strong>Create</strong>.</li>
+</ul></li>
+<li>Copy the <strong>Client ID</strong> and <strong>Client secret</strong> into the worksheet right away. Google shows the full secret only this once.</li>
+<li>In Supabase, go to <strong>Authentication &gt; Sign In / Providers</strong> (on some screens just <strong>Providers</strong>), open <strong>Google</strong>, turn it on, paste the client ID and secret, and save.</li>
+</ol>
+<p>Your Google app stays in “Testing” status, and that’s fine: an app that asks only for a user’s name and email doesn’t need Google’s review, and anyone with a Google account can sign in. Google says changes can take from a few minutes to a few hours to take effect, so if Google sign-in fails right away, try again later.</p>
+</section>
+<section id="step-e-openai-api-key-with-a-5-limit" class="level3">
+<h3 class="anchored" data-anchor-id="step-e-openai-api-key-with-a-5-limit">Step E: OpenAI API key, with a $5 limit</h3>
+<p>The app sends each new task’s title to OpenAI and gets back a label such as “work” or “shopping”. It uses a small, cheap model (<code>gpt-4o-mini</code>): one label costs a tiny fraction of a cent, so $5 lasts far longer than this course. The steps below make sure you can’t spend more than that.</p>
+<ol type="1">
+<li>Sign up at <a href="https://platform.openai.com">platform.openai.com</a> (this is the API platform; a ChatGPT subscription does not include API use). Creating your first API key requires a phone number that can receive a text message.</li>
+<li><strong>Buy $5 of credit.</strong> Click the gear icon (<strong>Settings</strong>), open <strong>Billing</strong>, click <strong>Add payment details</strong>, and change the amount to <strong>$5</strong> (the minimum; the default is $10). <strong>Before you confirm, turn off “Use auto-reload”</strong>, which starts out on. With auto-reload off, OpenAI never charges your card again on its own, and when the credit is used up, requests stop working.</li>
+<li><strong>Create a project</strong> named <code>task-app</code> from the project menu at the top left.</li>
+<li><strong>Set a hard spend limit.</strong> In the project’s settings, go to <strong>Limits &gt; Spend &gt; Edit spend limit</strong>, enter a monthly limit of <code>5</code>, turn on <strong>Enforce a hard limit</strong>, and save. With the hard limit on, OpenAI refuses the project’s requests once it reaches the limit (there can be a small delay). OpenAI also emails you when spending reaches the limit.</li>
+<li><strong>Create an API key</strong> inside the project: <strong>API keys &gt; Create new secret key</strong>. Copy it into the worksheet immediately; OpenAI shows it only once.</li>
+<li>Claude gives the key to your Edge Functions with the <code>npx supabase secrets set OPENAI_API_KEY=...</code> line from the worksheet. You can run it yourself in the terminal, so the key never goes into the chat.</li>
+</ol>
+<p>More background in <a href="./001170-tutorial-openAiApi-v001.html">Step 7: Set Up OpenAI API</a> (skip its instructions for Supabase secrets; use the worksheet line).</p>
+</section>
+<section id="step-f-stripe-in-test-mode" class="level3">
+<h3 class="anchored" data-anchor-id="step-f-stripe-in-test-mode">Step F: Stripe, in test mode</h3>
+<p><strong>Stripe</strong> handles the app’s monthly “Premium” subscription. Everything here is in <strong>test mode</strong> (Stripe calls it a <em>sandbox</em>): no real money moves, and you pay with test card numbers.</p>
+<ol type="1">
+<li>Sign up at <a href="https://dashboard.stripe.com">dashboard.stripe.com</a>. A new account starts in a sandbox. Do every Stripe step in the <strong>same</strong> sandbox.</li>
+<li><strong>API keys:</strong> on the dashboard’s home page, or at <a href="https://dashboard.stripe.com/apikeys">dashboard.stripe.com/apikeys</a>, copy the <strong>publishable key</strong> (<code>pk_test_...</code>) and the <strong>secret key</strong> (<code>sk_test_...</code>) into the worksheet.</li>
+<li><strong>Product:</strong> in <strong>Product catalog</strong>, click <strong>Add product</strong>. Name it <code>TaskMaster Premium</code>, choose <strong>Recurring</strong> and <strong>Monthly</strong>, enter a price (for example $10), and click <strong>Add product</strong>. Open the product, click the price, and copy its ID (<code>price_...</code>) into the worksheet.</li>
+<li><strong>Customer portal:</strong> open <a href="https://dashboard.stripe.com/settings/billing/portal">dashboard.stripe.com/settings/billing/portal</a> and click <strong>Save</strong>, so the app’s “Manage subscription” button works. For class demos, set cancellations to happen <strong>immediately</strong>, so a cancelled subscription switches the app back to the free plan right away.</li>
+<li><strong>Vault:</strong> in the Supabase dashboard, open <strong>SQL Editor</strong>, paste the Vault line from the worksheet’s <em>Commands</em> sheet, and click <strong>Run</strong>. It stores your Stripe secret key in Supabase <strong>Vault</strong>, an encrypted store for secrets, under the name <code>stripe</code>. The database uses it to create a Stripe customer for each new user.</li>
+<li><strong>Secrets for the Edge Functions:</strong> run the <code>STRIPE_SECRET_KEY</code> and <code>STRIPE_PRICE_ID</code> lines from the worksheet in the terminal.</li>
+</ol>
+<p>The webhook comes in Step H, once the functions are deployed.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Corrections to the older Stripe chapter
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="./001180-tutorial-setupStripe-v001.html">Step 8: Set Up Stripe</a> puts the price ID in <code>.env.local</code>, but the app never reads it from there. The price ID must be a Supabase secret named <code>STRIPE_PRICE_ID</code> (step 6 above), and the Vault step (step 5) is missing from that chapter.</p>
+</div>
+</div>
+</section>
+<section id="step-g-create-the-database" class="level3">
+<h3 class="anchored" data-anchor-id="step-g-create-the-database">Step G: Create the database</h3>
+<p>Claude runs:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase db push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This applies the project’s <strong>migrations</strong>: the files in <code>supabase/migrations</code> that create the tables (profiles, tasks, usage tracking), the security rules, the <code>task-attachments</code> storage bucket for images, and the Stripe connection. In the Supabase dashboard, <strong>Table Editor</strong> now shows the tables and <strong>Storage</strong> shows the bucket. See <a href="./001190-tutorial-setupSupabaseDatabase-v001.html">Step 9: Set Up Supabase Database</a>.</p>
+<p>Skip the manual steps in <a href="./001200-tutorial-setupSupabaseStorage-v001.html">Step 10: Set Up Supabase Storage Bucket</a>: the migration already created the bucket, and the chapter’s bucket name (<code>task-images</code>) is wrong.</p>
+</section>
+<section id="step-h-deploy-the-edge-functions-and-the-stripe-webhook" class="level3">
+<h3 class="anchored" data-anchor-id="step-h-deploy-the-edge-functions-and-the-stripe-webhook">Step H: Deploy the Edge Functions and the Stripe webhook</h3>
+<ol type="1">
+<li><p>Claude deploys the three functions. The folder names use hyphens (the older chapter, <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html">Step 11</a>, gets them wrong):</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-task-with-ai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-stripe-session</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>--no-verify-jwt</code> lets Stripe call the webhook function without a Supabase login. (The function checks Stripe’s signature instead.)</p></li>
+<li><p><strong>Create the webhook in Stripe.</strong> A <strong>webhook</strong> is a web address that Stripe calls to tell your app that something happened, such as “this customer paid”. Open <a href="https://dashboard.stripe.com/webhooks">dashboard.stripe.com/webhooks</a> and click <strong>Create an event destination</strong>:</p>
+<ul>
+<li>Events from: <strong>Your account</strong>.</li>
+<li>Payload style: <strong>Snapshot</strong>. Stripe suggests “Thin”, but this app’s code only understands Snapshot events.</li>
+<li>Events: <code>checkout.session.completed</code> and <code>customer.subscription.deleted</code> (the two the code handles; the README also lists <code>customer.subscription.updated</code>, which does no harm).</li>
+<li>Destination type: <strong>Webhook endpoint</strong>.</li>
+<li>Endpoint URL: your Stripe webhook URL from the worksheet (<code>https://YOUR-PROJECT-REF.supabase.co/functions/v1/stripe-webhook</code>).</li>
+</ul></li>
+<li><p>On the destination’s page, click <strong>Reveal</strong> next to the <strong>signing secret</strong> (<code>whsec_...</code>), copy it into the worksheet, and run the worksheet’s <code>STRIPE_WEBHOOK_SECRET</code> line in the terminal.</p></li>
+</ol>
+<p>Stripe may show an event as delivered even when the app rejected it (the function always answers “OK”). If an upgrade doesn’t show up in the app, look at the <code>stripe-webhook</code> logs in the Supabase dashboard under <strong>Edge Functions</strong>.</p>
+</section>
+<section id="step-i-try-the-app" class="level3">
+<h3 class="anchored" data-anchor-id="step-i-try-the-app">Step I: Try the app</h3>
+<p>Claude starts the app with <code>npm run dev</code>. At <a href="http://localhost:3000">http://localhost:3000</a>:</p>
+<ol type="1">
+<li>Sign up with an email and password, or sign in with Google.</li>
+<li>Create a task. After a moment, an AI label appears.</li>
+<li>Open the task and attach an image.</li>
+<li>On your profile page, upgrade to Premium. Pay with the test card <code>4242 4242 4242 4242</code>, any future expiration date (such as 12/34), and any three-digit CVC. Your plan changes to Premium.</li>
+<li>Click the button to manage your subscription, and look at Stripe’s customer portal.</li>
+</ol>
+<p>If something fails, tell Claude exactly what you clicked and what you saw. Claude can read the server output in the terminal, and the Edge Function logs are in the Supabase dashboard under <strong>Edge Functions</strong>. See <a href="./001220-tutorial-runTheApplication-v001.html">Step 12: Run the Application</a>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If the AI label or the upgrade fails
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This code was written in early 2025, when Supabase projects used the older <code>anon</code> and <code>service_role</code> keys. Supabase is replacing them with publishable and secret keys, and new projects may not have the older ones. If creating a task or upgrading fails, open the function’s logs in the Supabase dashboard (<strong>Edge Functions</strong>), and tell Claude what they say and that your project uses Supabase’s new API keys.</p>
+</div>
+</div>
+</section>
+<section id="step-j-save-your-work-to-github" class="level3">
+<h3 class="anchored" data-anchor-id="step-j-save-your-work-to-github">Step J: Save your work to GitHub</h3>
+<p>Ask Claude to commit your changes and push them to your fork, or do it yourself:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Make sure <code>.env.local</code> is <strong>not</strong> in the list (it should be ignored). Then:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Set up the task app"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>See <a href="./030500-gitignoreAndSecrets-v001.html">.gitignore and Keeping Secrets Out of Git</a>.</p>
+</section>
+<section id="step-k-put-the-app-online-with-vercel" class="level3">
+<h3 class="anchored" data-anchor-id="step-k-put-the-app-online-with-vercel">Step K: Put the app online with Vercel</h3>
+<p>Only after everything works on your computer.</p>
+<ol type="1">
+<li>At <a href="https://vercel.com">vercel.com</a>, sign up with <strong>Continue with GitHub</strong> (the free <strong>Hobby</strong> plan).</li>
+<li><strong>Add New &gt; Project</strong>, and import your <code>task-app</code> repository.</li>
+<li>Before you deploy, open <strong>Environment Variables</strong> and add <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> with the values from the worksheet. Don’t add any secret keys. Without the URL the build fails. If you add or change a variable later, redeploy: changes apply only to new deployments.</li>
+<li>Click <strong>Deploy</strong>. When it finishes, copy your app’s address (<code>https://....vercel.app</code>) into the worksheet.</li>
+<li>In Supabase, <strong>Authentication &gt; URL Configuration</strong>: change <strong>Site URL</strong> to your Vercel address and add the redirect URL <code>https://YOUR-APP.vercel.app/**</code> (keep the localhost one).</li>
+<li>In Google Cloud, add your Vercel address to the client’s <strong>Authorized JavaScript origins</strong>. The redirect URI stays the Supabase callback URL, and Stripe needs no changes.</li>
+</ol>
+<p>From now on, every <code>git push</code> to your fork makes Vercel deploy the new version automatically. See <a href="./001230-tutorial-deployToProduction-v001.html">Step 13: Deploy to Production</a> and <a href="./040700-hostingAndDeployment-v001.html">Hosting and Deployment</a>.</p>
+</section>
+<section id="optional-run-the-automated-tests" class="level3">
+<h3 class="anchored" data-anchor-id="optional-run-the-automated-tests">Optional: Run the automated tests</h3>
+<p>The project includes <strong>integration tests</strong>: programs that sign up test users, create tasks and check the subscription logic against your real Supabase project. To run them, create <code>.env.test.local</code> (in the project folder) with the six lines from the worksheet’s <em>Commands</em> sheet, then run <code>npm test</code>. The tests need your Supabase <strong>secret key</strong>, which bypasses all security rules: put it only in <code>.env.test.local</code>. See <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html">Step 15: Automated Testing and Troubleshooting</a>, but note that its file names are wrong: the file is <code>.env.test.local</code>, and the test files end in <code>.test.ts</code>.</p>
+</section>
+</section>
+<section id="where-docker-fits" class="level2">
+<h2 class="anchored" data-anchor-id="where-docker-fits">Where Docker fits</h2>
+<p>You don’t need Docker for this project, but you’ll hear about it.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: Docker, and running Supabase on your own computer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Docker</strong> packages a program together with everything it needs (the right versions of its language, libraries and settings) into a <strong>container</strong> that runs the same way on any computer. A <strong>container image</strong> is the packaged program; a container is a running copy of it (<a href="./040700-hostingAndDeployment-v001.html">Hosting and Deployment</a> introduces the idea).</p>
+<p>In this project, everything that runs on a server runs on someone else’s computers: Supabase hosts the database and Edge Functions, and Vercel hosts the website. That is why you don’t need Docker.</p>
+<p>Professional teams often also run a complete copy of Supabase on their own laptops, to experiment without touching the real project. The Supabase CLI does this with <code>npx supabase start</code>, which downloads Supabase’s container images and runs them in Docker: a local database, local logins, local storage, and a local dashboard at <code>http://localhost:54323</code>. To try it, install <strong>Docker Desktop</strong> (free for personal and educational use), start it, and run <code>npx supabase start</code> in the project folder. Docker Desktop needs a fairly recent computer and several GB of disk space, which is why it isn’t required in this course.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="if-you-dont-finish-today" class="level2">
+<h2 class="anchored" data-anchor-id="if-you-dont-finish-today">If you don’t finish today</h2>
+<p>That’s expected. Continue at home, or in our next class if I say so. Start a new Claude session with the “Next time” prompt above. If you run out of Claude usage, <code>/usage</code> shows when your limit resets.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="About This Website">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About This Website</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./f26/yudkowskyBook-v001.html" class="pagination-link" aria-label="<yrChapterNumber>1. </yrChapterNumber> The AI book that’s freaking out national security advisors">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>
+/* yrAnswerToggles-v001
+ *
+ * Adds "Show all answers" / "Hide all answers" buttons to every page that
+ * contains practice-question answer callouts. An answer callout is any
+ * callout that has the class .yr-answer, for example:
+ *
+ *     ::: {.callout-tip .yr-answer collapse="true" icon="false"}
+ *     ## Suggested answer
+ *     ...
+ *     :::
+ *
+ * The buttons are inserted in two places:
+ *   1. directly below the page title
+ *   2. at the top of the practice questions section, i.e. right after
+ *        ## Practice Questions {#practice-questions .unnumbered}
+ *
+ * This file is included inline (include-after-body: file: ...) instead of
+ * with <script src="...">, so it works for pages in subfolders too.
+ * Pages without .yr-answer callouts (e.g. f26/yudkowskyBook-v001.qmd, which
+ * has its own buttons) are not affected.
+ */
+(function () {
+  function getAnswerCallouts() {
+    return Array.prototype.slice.call(document.querySelectorAll(".callout.yr-answer"));
+  }
+
+  function setCalloutExpanded(callout, expanded) {
+    var content = callout.querySelector(".callout-collapse");
+    var header = callout.querySelector(".callout-header");
+    if (!content) {
+      return;
+    }
+    if (window.bootstrap && window.bootstrap.Collapse) {
+      var instance = window.bootstrap.Collapse.getOrCreateInstance(content, { toggle: false });
+      if (expanded) {
+        instance.show();
+      } else {
+        instance.hide();
+      }
+    } else {
+      content.classList.toggle("show", expanded);
+    }
+    // Keep the arrow icon in sync (Quarto rotates it based on aria-expanded).
+    if (header) {
+      header.setAttribute("aria-expanded", expanded ? "true" : "false");
+      header.classList.toggle("collapsed", !expanded);
+    }
+  }
+
+  function setAllAnswers(expanded) {
+    getAnswerCallouts().forEach(function (callout) {
+      setCalloutExpanded(callout, expanded);
+    });
+  }
+
+  function makeButton(text, expanded) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "yr-answer-btn";
+    btn.textContent = text;
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+      setAllAnswers(expanded);
+    });
+    return btn;
+  }
+
+  function makeToolbar(extraClass, includeJumpLink, count) {
+    var bar = document.createElement("div");
+    bar.className = "yr-answer-toolbar " + extraClass;
+
+    var label = document.createElement("span");
+    label.className = "yr-answer-toolbar-label";
+    label.textContent = "Practice question answers (" + count + "):";
+    bar.appendChild(label);
+
+    bar.appendChild(makeButton("Show all answers", true));
+    bar.appendChild(makeButton("Hide all answers", false));
+
+    if (includeJumpLink && document.getElementById("practice-questions")) {
+      var link = document.createElement("a");
+      link.className = "yr-answer-jump";
+      link.href = "#practice-questions";
+      link.textContent = "Jump to practice questions ↓";
+      bar.appendChild(link);
+    }
+    return bar;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var count = getAnswerCallouts().length;
+    if (count === 0) {
+      return;
+    }
+
+    var titleBlock = document.getElementById("title-block-header");
+    if (titleBlock) {
+      titleBlock.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-top", true, count));
+    }
+
+    var section = document.getElementById("practice-questions");
+    if (section) {
+      var heading = section.querySelector("h2, h3");
+      if (heading) {
+        heading.insertAdjacentElement("afterend", makeToolbar("yr-answer-toolbar-section", false, count));
+      }
+    }
+  });
+})();
+</script>
+<script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>
