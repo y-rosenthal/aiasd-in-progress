@@ -978,6 +978,7 @@ About the “Class Meetings” section
 <li><strong>My Info</strong> has one row per item. Fill in the <strong>yellow</strong> cells as you go through the steps below. The <em>Example</em> column shows what each value looks like (the examples are fake), <em>Where to find it</em> tells you where on the website to look, and <em>Where you use it</em> tells you where it goes next. <strong>Gray</strong> cells fill themselves in: for example, once you type your Supabase project ref, the worksheet builds your Supabase URL and your Google callback URL. Type <code>Yes</code> in the <em>Done?</em> column as you finish each row.</li>
 <li><strong>Commands</strong> builds, from your values, the exact lines you copy: the lines of your <code>.env.local</code> file, the terminal commands with your own keys in them, the SQL for one Supabase step, and the addresses you paste into Google, Stripe, Supabase and Vercel. Until a line’s values are filled in, it says “(fill in … on My Info first)”. Copy one cell at a time.</li>
 </ul>
+<p>Step B1 below tells you where to keep the worksheet.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -988,7 +989,7 @@ The worksheet holds secret keys
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Anyone with your secret keys can use your accounts, and the OpenAI key can cost you money. Save the worksheet in your <code>Documents</code> folder, <strong>not</strong> inside the project folder, so Git can never upload it to GitHub. Don’t email it, post it, or show it while sharing your screen. Account passwords don’t go in it; keep those in your browser’s password manager.</p>
+<p>Anyone with your secret keys can use your accounts, and the OpenAI key can cost you money. Keep the worksheet in the <code>full-stack-demo-app</code> folder, next to the <code>taskApp-2026</code> code folder and <strong>not</strong> inside it (Step B1), so Git can never upload it to GitHub. Don’t email it, post it, or show it while sharing your screen. Account passwords don’t go in it; keep those in your browser’s password manager.</p>
 </div>
 </div>
 </section>
@@ -1022,7 +1023,7 @@ The worksheet holds secret keys
 </section>
 <section id="the-prompt-to-start-with" class="level2">
 <h2 class="anchored" data-anchor-id="the-prompt-to-start-with">The prompt to start with</h2>
-<p>Once the project is open in VS Code (Step B5 below), start Claude, switch to <strong>plan mode</strong> (type <code>/plan</code>, or press <code>Shift+Tab</code> until the mode says <em>plan</em>), and paste this prompt. Change “I’m on a Mac” if you use Windows. In plan mode, Claude reads the project and proposes a plan without changing anything; review the plan, then approve it.</p>
+<p>Once the project is open in VS Code (Step B6 below), start Claude, switch to <strong>plan mode</strong> (type <code>/plan</code>, or press <code>Shift+Tab</code> until the mode says <em>plan</em>), and paste this prompt. Change “I’m on a Mac” if you use Windows. In plan mode, Claude reads the project and proposes a plan without changing anything; review the plan, then approve it.</p>
 <pre class="text"><code>I'm a business student with no programming background. This folder is my fork
 of github.com/pixegami/task-app, the finished code from a tutorial video. It
 uses Next.js for the web pages; Supabase for the database, login, file storage
@@ -1140,25 +1141,34 @@ A3. Claude Code (you should have this already)
 </section>
 <section id="step-b-get-the-code-onto-your-computer" class="level3">
 <h3 class="anchored" data-anchor-id="step-b-get-the-code-onto-your-computer">Step B: Get the code onto your computer</h3>
-<p><strong>B1. Fork the repository.</strong> A <strong>fork</strong> is your own copy of someone else’s GitHub repository, stored in <em>your</em> GitHub account. You can change your fork freely; the original stays untouched. (The name comes from “a fork in the road”: the two copies start the same and then go their own ways.) Forks are explained in <a href="./080300-sharedRepositoriesAndForks-v001.html">Sharing a Repository: Collaborators and Forks</a>.</p>
+<p><strong>B1. Make a folder for this project.</strong> Keep everything for this project in one folder, <code>full-stack-demo-app</code>, inside a folder named <code>projects</code> in your home folder:</p>
+<pre><code>~/projects/full-stack-demo-app/
+├── taskApp-setupWorksheet-v001.xlsx    your worksheet: not in Git
+└── taskApp-2026/                       the code: your Git repository (Step B3)</code></pre>
+<p>The worksheet sits <em>next to</em> the repository, not inside it. Git tracks only the files inside <code>taskApp-2026</code>, so it can never upload your keys to GitHub. And Claude Code, which works inside <code>taskApp-2026</code>, can’t open the worksheet unless you give it permission. Don’t use <code>Documents</code> or <code>Desktop</code> for code projects: on many computers iCloud or OneDrive syncs those folders, and syncing the thousands of files in a Node.js project causes problems.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/projects/full-stack-demo-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Move the worksheet there from your Downloads folder:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ~/Downloads/taskApp-setupWorksheet-v001.xlsx ~/projects/full-stack-demo-app/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If your browser saved it under a slightly different name (for example with <code>(1)</code> at the end), drag it into the folder in Finder or File Explorer instead. From now on, open the worksheet from <code>projects/full-stack-demo-app</code> in your home folder.</p>
+<p><strong>B2. Fork the repository.</strong> A <strong>fork</strong> is your own copy of someone else’s GitHub repository, stored in <em>your</em> GitHub account. You can change your fork freely; the original stays untouched. (The name comes from “a fork in the road”: the two copies start the same and then go their own ways.) Forks are explained in <a href="./080300-sharedRepositoriesAndForks-v001.html">Sharing a Repository: Collaborators and Forks</a>.</p>
 <ol type="1">
 <li>Sign in to GitHub and go to <a href="https://github.com/pixegami/task-app">github.com/pixegami/task-app</a>.</li>
-<li>Click <strong>Fork</strong> (top right), then <strong>Create fork</strong>.</li>
-<li>You land on your fork, at <code>https://github.com/YOUR-USERNAME/task-app</code>. Type your GitHub username into the worksheet’s <em>My Info</em> sheet.</li>
+<li>Click <strong>Fork</strong> (top right). On the “Create a new fork” page, change the <strong>Repository name</strong> to <code>taskApp-2026</code>, then click <strong>Create fork</strong>.</li>
+<li>You land on your fork, at <code>https://github.com/YOUR-USERNAME/taskApp-2026</code>. Type your GitHub username into the worksheet’s <em>My Info</em> sheet.</li>
 </ol>
-<p><strong>B2. Clone your fork.</strong> <strong>Cloning</strong> downloads a copy of a GitHub repository to your computer. We keep code projects in a folder named <code>projects</code> in your home folder. Don’t use <code>Documents</code> or <code>Desktop</code>: on many computers iCloud or OneDrive syncs those folders, and syncing the thousands of files a Node.js project contains causes problems.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/projects</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>B3. Clone your fork.</strong> <strong>Cloning</strong> downloads a copy of a GitHub repository to your computer. Go to your project folder:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Copy the <code>git clone</code> line from the worksheet’s <em>Commands</em> sheet (it has your username in it), or type it with your own username:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YOUR-USERNAME/task-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>B3. Open the project in VS Code.</strong> <strong>File &gt; Open Folder</strong>, choose <code>projects/task-app</code> in your home folder, and click <strong>Open</strong> (click <strong>Yes, I trust the authors</strong> if asked).</p>
-<p><strong>B4. Install the packages.</strong> Open VS Code’s terminal (<strong>Terminal &gt; New Terminal</strong>). It starts in the project folder. Run:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YOUR-USERNAME/taskApp-2026</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This creates the folder <code>taskApp-2026</code> inside <code>full-stack-demo-app</code>.</p>
+<p><strong>B4. Open the project in VS Code.</strong> <strong>File &gt; Open Folder</strong>, choose <code>projects/full-stack-demo-app/taskApp-2026</code> in your home folder, and click <strong>Open</strong> (click <strong>Yes, I trust the authors</strong> if asked). Open <code>taskApp-2026</code> itself, not <code>full-stack-demo-app</code>, so that VS Code and Claude Code work inside the repository.</p>
+<p><strong>B5. Install the packages.</strong> Open VS Code’s terminal (<strong>Terminal &gt; New Terminal</strong>). It starts in the project folder. Run:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It takes a minute or two and creates a <code>node_modules</code> folder. Warnings about “deprecated” packages and “vulnerabilities” are normal. Don’t run <code>npm audit fix --force</code>: it upgrades packages to versions this code doesn’t work with. More in <a href="./001120-tutorial-installThePackages-v001.html">Step 2: Installing the Node.js packages with npm</a>.</p>
 <p>Then update one package, the <strong>Supabase CLI</strong> (used from Step C on):</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-D</span> supabase@latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-D</span> supabase@latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The project pins an early-2025 version of the CLI that can deploy Edge Functions only with Docker, and that may not work with new Supabase projects. Current versions deploy without Docker.</p>
-<p><strong>B5. Start Claude.</strong> Click the Claude icon in VS Code (or run <code>claude</code> in the terminal), type <code>/model sonnet</code>, switch to plan mode, and paste the prompt from <a href="#the-prompt-to-start-with">The prompt to start with</a>.</p>
+<p><strong>B6. Start Claude.</strong> Click the Claude icon in VS Code (or run <code>claude</code> in the terminal), type <code>/model sonnet</code>, switch to plan mode, and paste the prompt from <a href="#the-prompt-to-start-with">The prompt to start with</a>.</p>
 </section>
 <section id="step-c-supabase-project-and-the-front-end" class="level3">
 <h3 class="anchored" data-anchor-id="step-c-supabase-project-and-the-front-end">Step C: Supabase project and the front end</h3>
@@ -1247,7 +1257,7 @@ Corrections to the older Stripe chapter
 <section id="step-g-create-the-database" class="level3">
 <h3 class="anchored" data-anchor-id="step-g-create-the-database">Step G: Create the database</h3>
 <p>Claude runs:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase db push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase db push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This applies the project’s <strong>migrations</strong>: the files in <code>supabase/migrations</code> that create the tables (profiles, tasks, usage tracking), the security rules, the <code>task-attachments</code> storage bucket for images, and the Stripe connection. In the Supabase dashboard, <strong>Table Editor</strong> now shows the tables and <strong>Storage</strong> shows the bucket. See <a href="./001190-tutorial-setupSupabaseDatabase-v001.html">Step 9: Set Up Supabase Database</a>.</p>
 <p>Skip the manual steps in <a href="./001200-tutorial-setupSupabaseStorage-v001.html">Step 10: Set Up Supabase Storage Bucket</a>: the migration already created the bucket, and the chapter’s bucket name (<code>task-images</code>) is wrong.</p>
 </section>
@@ -1255,9 +1265,9 @@ Corrections to the older Stripe chapter
 <h3 class="anchored" data-anchor-id="step-h-deploy-the-edge-functions-and-the-stripe-webhook">Step H: Deploy the Edge Functions and the Stripe webhook</h3>
 <ol type="1">
 <li><p>Claude deploys the three functions. The folder names use hyphens (the older chapter, <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html">Step 11</a>, gets them wrong):</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-task-with-ai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-stripe-session</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-task-with-ai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-stripe-session</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>--no-verify-jwt</code> lets Stripe call the webhook function without a Supabase login. (The function checks Stripe’s signature instead.) In the dashboard, this is the switch <strong>Verify JWT with legacy secret</strong> under <strong>Edge Functions &gt; stripe-webhook &gt; Details</strong>; it should be off.</p></li>
 <li><p><strong>Create the webhook in Stripe.</strong> A <strong>webhook</strong> is a web address that Stripe calls to tell your app that something happened, such as “this customer paid”. Open <a href="https://dashboard.stripe.com/webhooks">dashboard.stripe.com/webhooks</a> and click <strong>Create an event destination</strong>:</p>
 <ul>
@@ -1303,11 +1313,11 @@ If the AI label or the upgrade fails
 <section id="step-j-save-your-work-to-github" class="level3">
 <h3 class="anchored" data-anchor-id="step-j-save-your-work-to-github">Step J: Save your work to GitHub</h3>
 <p>Ask Claude to commit your changes and push them to your fork, or do it yourself:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Make sure <code>.env.local</code> is <strong>not</strong> in the list (it should be ignored). Then:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Set up the task app"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Set up the task app"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>See <a href="./030500-gitignoreAndSecrets-v001.html">.gitignore and Keeping Secrets Out of Git</a>.</p>
 </section>
 <section id="step-k-put-the-app-online-with-vercel" class="level3">
@@ -1315,7 +1325,7 @@ If the AI label or the upgrade fails
 <p>Only after everything works on your computer.</p>
 <ol type="1">
 <li>At <a href="https://vercel.com">vercel.com</a>, sign up with <strong>Continue with GitHub</strong> (the free <strong>Hobby</strong> plan).</li>
-<li><strong>Add New &gt; Project</strong>, and import your <code>task-app</code> repository.</li>
+<li><strong>Add New &gt; Project</strong>, and import your <code>taskApp-2026</code> repository.</li>
 <li>Before you deploy, open <strong>Environment Variables</strong> and add <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> with the values from the worksheet. Don’t add any secret keys. Without the URL the build fails. If you add or change a variable later, redeploy: changes apply only to new deployments.</li>
 <li>Click <strong>Deploy</strong>. When it finishes, copy your app’s address (<code>https://....vercel.app</code>) into the worksheet.</li>
 <li>In Supabase, <strong>Authentication &gt; URL Configuration</strong>: change <strong>Site URL</strong> to your Vercel address and add the redirect URL <code>https://YOUR-APP.vercel.app/**</code> (keep the localhost one).</li>
