@@ -845,7 +845,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#what-you-need-accounts-and-costs" id="toc-what-you-need-accounts-and-costs" class="nav-link" data-scroll-target="#what-you-need-accounts-and-costs">What you need: accounts and costs</a></li>
   <li><a href="#download-the-setup-worksheet" id="toc-download-the-setup-worksheet" class="nav-link" data-scroll-target="#download-the-setup-worksheet">Download the setup worksheet</a></li>
   <li><a href="#your-workspace-vs-code-and-claude-code" id="toc-your-workspace-vs-code-and-claude-code" class="nav-link" data-scroll-target="#your-workspace-vs-code-and-claude-code">Your workspace: VS Code and Claude Code</a></li>
-  <li><a href="#where-to-type-commands-the-terminal" id="toc-where-to-type-commands-the-terminal" class="nav-link" data-scroll-target="#where-to-type-commands-the-terminal">Where to type commands: the terminal</a></li>
+  <li><a href="#where-to-type-commands-the-terminal" id="toc-where-to-type-commands-the-terminal" class="nav-link" data-scroll-target="#where-to-type-commands-the-terminal">Where to type commands: the terminal</a>
+  <ul class="collapse">
+  <li><a href="#reading-a-command" id="toc-reading-a-command" class="nav-link" data-scroll-target="#reading-a-command">Reading a command</a></li>
+  <li><a href="#the-terminal-inside-vs-code" id="toc-the-terminal-inside-vs-code" class="nav-link" data-scroll-target="#the-terminal-inside-vs-code">The terminal inside VS Code</a></li>
+  </ul></li>
   <li><a href="#vs-codes-command-palette" id="toc-vs-codes-command-palette" class="nav-link" data-scroll-target="#vs-codes-command-palette">VS Code’s Command Palette</a></li>
   <li><a href="#using-claude-code-without-running-out-of-usage" id="toc-using-claude-code-without-running-out-of-usage" class="nav-link" data-scroll-target="#using-claude-code-without-running-out-of-usage">Using Claude Code without running out of usage</a></li>
   <li><a href="#the-prompt-to-start-with" id="toc-the-prompt-to-start-with" class="nav-link" data-scroll-target="#the-prompt-to-start-with">The prompt to start with</a></li>
@@ -1018,8 +1022,12 @@ The worksheet holds secret keys
 <li><p>Lines that start with <code>/</code>, such as <code>/model sonnet</code>, are <strong>Claude Code commands</strong>. Type them in Claude’s chat box too, not in the terminal.</p></li>
 <li><p>When a step says <strong>“Claude runs”</strong> a command, Claude types it in the terminal for you after asking your permission. You don’t type it.</p></li>
 <li><p><code>Ctrl+C</code> in a terminal <strong>stops</strong> the command that is running (for example the app’s server). It’s <code>Ctrl+C</code> on every computer, including Macs.</p></li>
+<li><p>If Claude is running in a terminal window, that window is busy with Claude. To type a command yourself, open a second terminal (a new window or tab), or ask Claude to run the command for you.</p></li>
+<li><p>Commands for the app itself (from Step B5 on) must run in the app’s folder, <code>taskApp-2026</code>. The prompt shows which folder you’re in. If it doesn’t end in <code>taskApp-2026</code>, type this first:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app/taskApp-2026</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>cd</code> means “change directory”: go into a folder. After <code>cd</code>, the following commands run in that folder.</p></li>
 </ul>
-<p>You can use two kinds of terminal. Until the project is open in VS Code (Step B4), use the terminal app. After that, use VS Code’s terminal: it opens in the project folder.</p>
+<p>You can use two kinds of terminal: your computer’s terminal app, and the terminal built into VS Code (described after these tabs). Until VS Code is installed (Step A5), use the terminal app.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
@@ -1047,20 +1055,65 @@ The worksheet holds secret keys
 </div>
 </div>
 </div>
+<section id="reading-a-command" class="level3">
+<h3 class="anchored" data-anchor-id="reading-a-command">Reading a command</h3>
+<p>Don’t just copy commands: on this page each one is explained piece by piece, so you know what you’re asking your computer to do. Every command has the same parts. Take this one, from Step 0:</p>
+<pre><code>mkdir -p ~/projects/full-stack-demo-app</code></pre>
+<ul>
+<li><strong>The first word is the command</strong>, the program to run. <code>mkdir</code> is short for “make directory” (a <strong>directory</strong> is a folder).</li>
+<li><strong>Words that start with <code>-</code> or <code>--</code> are options</strong>: they change how the command works. <code>-p</code> tells <code>mkdir</code> to also make any missing folders on the way (here, <code>projects</code>), and not to complain if the folder already exists.</li>
+<li><strong>The rest are arguments</strong>: what the command works on. Here, the folder to make.</li>
+<li><strong>Spaces separate the pieces.</strong> That’s why our folder and file names have no spaces in them.</li>
+<li><strong><code>~</code> means your home folder</strong>: <code>/Users/maria</code> on Maria’s Mac, <code>/c/Users/sam</code> in Sam’s Git Bash on Windows, and <code>/home/</code> followed by your user name on Linux.</li>
+<li><strong><code>/</code> separates folder names.</strong> <code>~/projects/full-stack-demo-app</code> means the folder <code>full-stack-demo-app</code>, inside <code>projects</code>, inside your home folder. That is a <strong>path</strong>: directions to a folder or file.</li>
+<li><strong>Capital letters matter.</strong> <code>taskApp-2026</code> and <code>taskapp-2026</code> are different names.</li>
+</ul>
+<p>Tip: type the first few letters of a folder or file name and press <code>Tab</code>. The shell finishes the name for you, with no typos.</p>
+</section>
+<section id="the-terminal-inside-vs-code" class="level3">
+<h3 class="anchored" data-anchor-id="the-terminal-inside-vs-code">The terminal inside VS Code</h3>
+<p>VS Code has a terminal built in, at the bottom of its window, so you can type commands right next to your files and Claude. To open one, use any of these:</p>
+<ul>
+<li>the menu <strong>Terminal &gt; New Terminal</strong>;</li>
+<li>the keys <code>Ctrl+`</code> (<code>Ctrl</code> and the backtick key, usually to the left of <code>1</code>; it’s <code>Ctrl</code> on every computer, including Macs). The same keys hide and show the terminal panel;</li>
+<li>the Command Palette: <code>Terminal: Create New Terminal</code> (see the next section).</li>
+</ul>
+<p>It is <strong>not</strong> a different kind of terminal. It runs the same shell as your terminal app, and every command on this page works the same way in both:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Linux</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>VS Code’s terminal runs <strong>zsh</strong>, the same shell as the Terminal app. The prompt ends in <code>%</code>.</p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>VS Code’s terminal runs <strong>Git Bash</strong>, the same as the Git Bash app, once you make Git Bash its default in Step A5. (Until then it runs PowerShell.) The label at the right side of the terminal panel says <strong>bash</strong>.</p>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>VS Code’s terminal runs <strong>Bash</strong>, the same shell as the Terminal app.</p>
+</div>
+</div>
+</div>
+<p>A few things to know:</p>
+<ul>
+<li>A new terminal starts in the folder that is open in VS Code. For this project that’s <code>full-stack-demo-app</code> (Step B4), so type <code>cd taskApp-2026</code> before commands for the app.</li>
+<li>The <strong>+</strong> button at the top right of the terminal panel opens another terminal, for example one for the app’s server and one for your own commands. The trash-can icon closes a terminal.</li>
+<li>Paste with <code>Cmd+V</code> on a Mac, <code>Ctrl+V</code> on Windows, and <code>Ctrl+Shift+V</code> on Linux.</li>
+</ul>
+</section>
 </section>
 <section id="vs-codes-command-palette" class="level2">
 <h2 class="anchored" data-anchor-id="vs-codes-command-palette">VS Code’s Command Palette</h2>
 <p>The <strong>Command Palette</strong> is a search box for every command in VS Code, so you don’t have to hunt through menus. Open it with the keys for your computer:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Linux</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <p>Press <code>Cmd+Shift+P</code>, or choose <strong>View &gt; Command Palette</strong>.</p>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <p>Press <code>Ctrl+Shift+P</code>, or choose <strong>View &gt; Command Palette</strong>.</p>
 </div>
-<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
 <p>Press <code>Ctrl+Shift+P</code>, or choose <strong>View &gt; Command Palette</strong>.</p>
 </div>
 </div>
@@ -1079,7 +1132,7 @@ The worksheet holds secret keys
 </thead>
 <tbody>
 <tr class="odd">
-<td>Open the project folder</td>
+<td>Open the <code>full-stack-demo-app</code> folder</td>
 <td><code>File: Open Folder</code></td>
 </tr>
 <tr class="even">
@@ -1112,7 +1165,7 @@ The worksheet holds secret keys
 <li><strong>Never use Fable</strong> on the Pro plan. Fable isn’t included in Pro; it is billed separately as extra usage. Don’t turn on extra usage (usage credits).</li>
 <li><strong>Keep effort at <code>medium</code></strong> (the default). Check it with <code>/effort</code>.</li>
 <li><strong>Check your usage</strong> with <code>/usage</code>. It shows how much of your five-hour and weekly limits you’ve used and when they reset.</li>
-<li><strong>Start fresh between big steps.</strong> <code>/clear</code> empties the conversation, so Claude doesn’t re-read a long history with every message. Your progress is safe in the <code>SETUP-PROGRESS.md</code> file (see the prompt below).</li>
+<li><strong>Start fresh between big steps.</strong> <code>/clear</code> empties the conversation, so Claude doesn’t re-read a long history with every message. Your progress is safe in <code>checklist.md</code> (see the prompt below).</li>
 <li><strong>Don’t paste huge error logs.</strong> Paste the last 20 or so lines, or tell Claude to look at the terminal output itself.</li>
 <li><strong>Read before you approve.</strong> When Claude asks permission to run a command, read what it is about to do (<a href="./060500-permissionsModesAndSafety-v001.html" target="_blank">Permissions, Modes, and Safety</a>).</li>
 </ul>
@@ -1120,61 +1173,100 @@ The worksheet holds secret keys
 </section>
 <section id="the-prompt-to-start-with" class="level2">
 <h2 class="anchored" data-anchor-id="the-prompt-to-start-with">The prompt to start with</h2>
-<p>Once the project is open in VS Code (Step B6 below), start Claude, switch to <strong>plan mode</strong> (type <code>/plan</code>, or press <code>Shift+Tab</code> until the mode says <em>plan</em>), and paste this prompt into Claude’s chat box. In plan mode, Claude reads the project and proposes a plan without changing anything; review the plan, then approve it. First change the last line of the prompt’s first paragraph to match your computer:</p>
+<p><strong>Do this first, before any of the steps.</strong> Claude guides you through everything on this page, from installing the tools to putting the app online.</p>
+<ol type="1">
+<li><p><strong>Open a terminal</strong>: the Terminal app on a Mac or Linux, Git Bash on Windows (see <a href="#where-to-type-commands-the-terminal">Where to type commands</a>).</p></li>
+<li><p><strong>Make the project folder and go into it.</strong> Type each command and press <code>Enter</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/projects/full-stack-demo-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What the pieces mean (more in <a href="#reading-a-command">Reading a command</a>):</p>
+<ul>
+<li><code>mkdir -p ~/projects/full-stack-demo-app</code>: <code>mkdir</code> (“make directory”) makes a folder. <code>-p</code> also makes the missing folder <code>projects</code> on the way, and doesn’t complain if the folders already exist. The last part is the path of the folder to make.</li>
+<li><code>cd ~/projects/full-stack-demo-app</code>: <code>cd</code> (“change directory”) goes into that folder, so the next commands run there. Your prompt now shows <code>full-stack-demo-app</code>.</li>
+</ul></li>
+<li><p><strong>Start Claude Code</strong> in that folder:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>claude</code> starts Claude Code. It works in the folder you’re in, which is why you <code>cd</code> into the project folder first. If you get “command not found”, install Claude Code first (Step A3 below), then come back here.</p></li>
+<li><p>In Claude’s chat box, type <code>/model sonnet</code> and press <code>Enter</code>.</p></li>
+<li><p><strong>Paste the prompt</strong> below into Claude’s chat box and press <code>Enter</code>. First change the line <code>I'm on a Mac.</code> to match your computer:</p></li>
+</ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Linux</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p>Keep <code>I'm on a Mac.</code></p>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <p>Change it to <code>I'm on Windows, and I use Git Bash.</code></p>
 </div>
-<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
 <p>Change it to <code>I'm on Linux.</code></p>
 </div>
 </div>
 </div>
-<pre class="text"><code>I'm a business student with no programming background. This folder is my fork
-of github.com/pixegami/task-app, the finished code from a tutorial video. It
+<pre class="text"><code>I'm a business student with no programming background, starting my course's
+full-stack web app project. We're in the folder ~/projects/full-stack-demo-app,
+which I just created. I'm on a Mac.
+
+The project: get the "task app" from a tutorial video running, first on my
+computer and then online. Its code is at github.com/pixegami/task-app. I'll
+fork it on GitHub with the name taskApp-2026 and clone it into this folder. It
 uses Next.js for the web pages; Supabase for the database, login, file storage
 and Edge Functions; Google for "Sign in with Google"; the OpenAI API for
-automatic task labels; Stripe in test mode for payments; and, at the end,
-Vercel to put the app online. I'm on a Mac.
+automatic task labels; Stripe in test mode for payments; and Vercel to put the
+app online.
 
-My course notes list the steps in order, with corrections to older
-instructions: https://y-rosenthal.github.io/aiasd-in-progress/f26-class10-v001.html
-Read them, and follow their order. Steps A and B are already done.
+My course notes list every step in order, starting with installing the tools,
+with corrections to older instructions:
+https://y-rosenthal.github.io/aiasd-in-progress/f26-class10-v001.html
+Read them and follow their order. Assume nothing is done yet: check each step
+before you skip it.
+
+First, create two files in this folder (not inside taskApp-2026):
+- CLAUDE.md, with the rules under "How to work with me" below, so you follow
+  them in every session.
+- checklist.md, a Markdown checklist of every step and sub-step in my course
+  notes ("- [ ]" for each), followed by a "Notes and issues" section and a
+  "History" section. Update it as soon as each step is done: check its box,
+  add the date, and add a line to History. In "Notes and issues", record
+  anything I'll need to know later: problems we hit and how we fixed them,
+  settings that take time to take effect, things to check.
+Then show me the checklist, and start with the first unchecked step.
 
 How to work with me:
-- First read README.md and the project files. Explain in plain English how the
-  pieces fit together, then show the remaining steps as a numbered checklist.
 - Do one step at a time. Before each command, tell me in a sentence or two
   what it does and why. Ask before anything that deletes files, changes my
   accounts, or costs money.
-- When a step needs a website (Supabase, Google Cloud, OpenAI, Stripe,
-  Vercel), stop. Tell me exactly what to click and what to copy, and wait
-  until I say I'm done.
-- I'll paste secret keys into files myself. Never ask me to paste a key into
-  this chat, never print a key, and never commit one to Git. Check that
-  .env.local is ignored by Git.
+- When a step needs a website (GitHub, Supabase, Google Cloud, OpenAI,
+  Stripe, Vercel) or installing a program, stop. Tell me exactly what to
+  click and what to copy, and wait until I say I'm done.
+- I paste secret keys into files and websites myself. Never ask me to paste a
+  key into this chat, never print a key, never commit one to Git, and never
+  put one in CLAUDE.md or checklist.md. Never open my worksheet file
+  (taskApp-setupWorksheet-v001.xlsx): it holds my keys.
+- Run commands for the app inside the taskApp-2026 folder.
 - Don't use Docker. We use a hosted Supabase project.
 - After each step, check that it worked before moving on. If something fails,
-  explain the error in plain English and fix it with me.
+  explain the error in plain English, fix it with me, and note it in
+  checklist.md.
 - Don't change the app's features, and don't deploy to Vercel until everything
   works on my computer and I say so.
-- Save these working rules in a CLAUDE.md file in this folder, so you follow
-  them in every session. Keep our checklist and what's done in
-  SETUP-PROGRESS.md (no secrets in either file).</code></pre>
-<p><strong>Next time</strong> (a new session, or after <code>/clear</code>), start with:</p>
-<pre class="text"><code>We're continuing the task-app setup. Read SETUP-PROGRESS.md and my course
-notes at https://y-rosenthal.github.io/aiasd-in-progress/f26-class10-v001.html,
-check that the finished steps still work, and continue with the next step.</code></pre>
-<p>Claude follows the rules in <code>CLAUDE.md</code> automatically in every session (<a href="./060600-claudeMdAndMemory-v001.html" target="_blank">CLAUDE.md and Memory</a>).</p>
+- Keep checklist.md up to date as we go, not just at the end.</code></pre>
+<p>Claude then reads this page, creates two files in <code>full-stack-demo-app</code>, shows you the checklist, and starts with Step A:</p>
+<ul>
+<li><strong><code>CLAUDE.md</code></strong> holds the working rules. Claude Code reads it automatically at the start of every session in this folder (<a href="./060600-claudeMdAndMemory-v001.html" target="_blank">CLAUDE.md and Memory</a>).</li>
+<li><strong><code>checklist.md</code></strong> is your running checklist and history: every step on this page with a box that Claude checks off as you finish it, plus notes about problems you hit and anything to remember. Open it any time to see where you are (in VS Code, click it in the file list).</li>
+</ul>
+<p>Both files sit in <code>full-stack-demo-app</code>, next to the code folder, so they’re never uploaded to GitHub. Follow Claude’s instructions; the steps below are the same ones, so you can see what’s coming.</p>
+<p><strong>Next time</strong> (a new session, after <code>/clear</code>, or when you switch from the terminal to VS Code’s Claude panel), start Claude in <code>full-stack-demo-app</code> again (in a terminal, <code>cd ~/projects/full-stack-demo-app</code>, then <code>claude</code>; or open that folder in VS Code and click the Claude icon), type <code>/model sonnet</code>, and paste:</p>
+<pre class="text"><code>We're continuing my full-stack task app project. Read checklist.md and my
+course notes at https://y-rosenthal.github.io/aiasd-in-progress/f26-class10-v001.html,
+check that the finished steps still work, and continue with the next unchecked
+step.</code></pre>
 </section>
 <section id="the-steps" class="level2">
 <h2 class="anchored" data-anchor-id="the-steps">The steps</h2>
-<p>Steps A and B you do yourself, so that the project is on your computer before you start Claude. From Step C on, Claude walks you through each step; the notes here tell you what to expect and where the older chapters are wrong.</p>
+<p>With the prompt above, Claude walks you through these steps in order. It runs most commands for you, after asking your permission, and stops whenever you need to install a program or do something on a website. Each command is shown here so you can see what is happening, or type it yourself if you prefer. The notes also tell you where the older tutorial chapters are wrong.</p>
 <section id="step-a-install-the-tools" class="level3">
 <h3 class="anchored" data-anchor-id="step-a-install-the-tools">Step A: Install the tools</h3>
 <p>You should already have a GitHub account, Git and Claude Code from earlier classes. If not, open the boxes below. Node.js and VS Code are probably new.</p>
@@ -1207,20 +1299,21 @@ A2. Git and a Bash terminal (you should have these already)
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Open a terminal (see <a href="#where-to-type-commands-the-terminal">Where to type commands</a>), type this command, and press <code>Enter</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you see a version number (such as <code>git version 2.47.1</code>), you’re set. If not:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>git</code> is the program, and the option <code>--version</code> asks it to print its version number and stop. Most programs understand <code>--version</code>, so it’s a quick way to check whether a program is installed. If you see a version number (such as <code>git version 2.47.1</code>), you’re set. If not:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Linux</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <p>The Terminal app is already on your Mac. When you run <code>git --version</code> without Git, macOS offers to install the <strong>Command Line Tools</strong>, which include Git. Click <strong>Install</strong>, wait, and run <code>git --version</code> again.</p>
 </div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <p>Download and install <strong>Git for Windows</strong> from <a href="https://gitforwindows.org" target="_blank">gitforwindows.org</a>. It also installs <strong>Git Bash</strong>, the terminal we use.</p>
 </div>
-<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
 <p>Install Git with your system’s package manager. On Ubuntu or Debian, type this in the Terminal app (it asks for your password):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>sudo</code> runs the command as the computer’s administrator (that’s why it asks for your password). <code>apt</code> is the program that installs software on Ubuntu and Debian, <code>install</code> tells it what to do, and <code>git</code> is what to install.</p>
 </div>
 </div>
 </div>
@@ -1241,22 +1334,32 @@ A3. Claude Code (you should have this already)
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In a terminal, type this command and press <code>Enter</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you see a version number, you’re set. If you get “command not found”, install it:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>claude --version</code> asks Claude Code for its version number. If you see one, you’re set. If you get “command not found” (the shell found no program named <code>claude</code>), install it:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">Linux</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
-<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <p>In the Terminal app, type:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What the pieces mean:</p>
+<ul>
+<li><code>curl</code> downloads whatever is at a web address.</li>
+<li><code>-fsSL</code> is four options run together: <code>-f</code> fail if the download fails, <code>-s</code> silent (no progress bar), <code>-S</code> but still show errors, <code>-L</code> follow the address if the website redirects it.</li>
+<li><code>https://claude.ai/install.sh</code> is the address of Anthropic’s install script, a small program written in Bash.</li>
+<li><code>|</code> (the <strong>pipe</strong>) passes what <code>curl</code> downloaded straight to the next command, instead of showing it on the screen.</li>
+<li><code>bash</code> runs it. So: “download the installer and run it”.</li>
+</ul>
 </div>
-<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <p>This is the one command on this page that does <strong>not</strong> go in Git Bash. Open <strong>PowerShell</strong> (Start menu, type <code>PowerShell</code>, press <code>Enter</code>) and type:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">irm</span> https<span class="op">://</span>claude<span class="op">.</span><span class="fu">ai</span><span class="op">/</span>install<span class="op">.</span><span class="fu">ps1</span> <span class="op">|</span> <span class="fu">iex</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">irm</span> https<span class="op">://</span>claude<span class="op">.</span><span class="fu">ai</span><span class="op">/</span>install<span class="op">.</span><span class="fu">ps1</span> <span class="op">|</span> <span class="fu">iex</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is the PowerShell version of the Mac and Linux command: <code>irm</code> (short for Invoke-RestMethod) downloads the installer from the web address, the pipe <code>|</code> passes it on, and <code>iex</code> (Invoke-Expression) runs it.</p>
 </div>
-<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
 <p>In the Terminal app, type:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>curl</code> downloads the installer from the web address (<code>-fsSL</code> makes it quiet, stop on errors, and follow redirects), the pipe <code>|</code> passes it on, and <code>bash</code> runs it. So: “download the installer and run it”. (The Mac tab explains each piece.)</p>
 </div>
 </div>
 </div>
@@ -1265,45 +1368,45 @@ A3. Claude Code (you should have this already)
 </div>
 </div>
 <p><strong>A4. Node.js.</strong> The app is written in JavaScript, and <strong>Node.js</strong> runs JavaScript on your computer. Installing it also installs <strong>npm</strong>, the tool that downloads the app’s building blocks (packages). To check whether you have it, open a terminal (see <a href="#where-to-type-commands-the-terminal">Where to type commands</a>), type this command, and press <code>Enter</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If it prints <code>v20</code> or a higher number (such as <code>v24.10.0</code>), skip to Step A5. If it prints “command not found”, or a lower number, install Node.js from its <a href="https://nodejs.org/en/download" target="_blank">download page</a>. Choose the <strong>LTS</strong> version (long-term support, the stable one):</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Linux</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
-<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <p>Download the <strong>macOS Installer (.pkg)</strong>, double-click it, and click through the installer.</p>
 </div>
-<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <p>Download the <strong>Windows Installer (.msi)</strong>, double-click it, and click through the installer with its default choices.</p>
 </div>
-<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
 <p>The download page shows commands for installing Node.js on Linux (with a tool called <strong>nvm</strong>). Copy them into the Terminal app one at a time. Your system’s own package manager may offer only an old version of Node.js.</p>
 </div>
 </div>
 </div>
 <p>Then <strong>close the terminal and open a new one</strong> (a terminal that was already open doesn’t see the new program), and type these two commands, pressing <code>Enter</code> after each:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Both should print a version number. More in <a href="./001100-tutorial-installNodeNpm-v001.html" target="_blank">Step 0: Install Node.js and npm</a>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>node</code> is Node.js and <code>npm</code> is its package manager; <code>--version</code> asks each one for its version number. Both should print one. More in <a href="./001100-tutorial-installNodeNpm-v001.html" target="_blank">Step 0: Install Node.js and npm</a>.</p>
 <p><strong>A5. VS Code and the Claude Code extension.</strong> Download VS Code from <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a>, then:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">Linux</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
-<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <ol type="1">
 <li>Open the downloaded file, drag <strong>Visual Studio Code</strong> into your <strong>Applications</strong> folder, and open it from there (or press <code>Cmd+Space</code> and type <code>Visual Studio Code</code>).</li>
 <li>Open the Extensions view with <code>Cmd+Shift+X</code>.</li>
 <li>Nothing else to set up: VS Code’s terminal uses zsh, like the Terminal app.</li>
 </ol>
 </div>
-<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <ol type="1">
 <li>Run the downloaded installer and keep its default choices.</li>
 <li>Open the Extensions view with <code>Ctrl+Shift+X</code>.</li>
 <li>Make Git Bash VS Code’s terminal: open the Command Palette (<code>Ctrl+Shift+P</code>), type <code>Terminal: Select Default Profile</code>, press <code>Enter</code>, and choose <strong>Git Bash</strong>. Then open a new terminal (<strong>Terminal &gt; New Terminal</strong>) and check that the label at the right of the terminal panel says <strong>bash</strong>.</li>
 </ol>
 </div>
-<div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
+<div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
 <ol type="1">
 <li>Download the <strong>.deb</strong> file (Ubuntu, Debian) or the <strong>.rpm</strong> file (Fedora, Red Hat) and open it with your software installer.</li>
 <li>Open the Extensions view with <code>Ctrl+Shift+X</code>.</li>
@@ -1316,26 +1419,27 @@ A3. Claude Code (you should have this already)
 </section>
 <section id="step-b-get-the-code-onto-your-computer" class="level3">
 <h3 class="anchored" data-anchor-id="step-b-get-the-code-onto-your-computer">Step B: Get the code onto your computer</h3>
-<p><strong>B1. Make a folder for this project.</strong> Keep everything for this project in one folder, <code>full-stack-demo-app</code>, inside a folder named <code>projects</code> in your home folder:</p>
+<p><strong>B1. Keep everything in one folder.</strong> You made the folder <code>~/projects/full-stack-demo-app</code> when you started Claude. Everything for this project goes in it:</p>
 <pre><code>~/projects/full-stack-demo-app/
-├── taskApp-setupWorksheet-v001.xlsx    your worksheet: not in Git
+├── CLAUDE.md                           Claude's working rules (Claude writes it)
+├── checklist.md                        your checklist and history (Claude updates it)
+├── taskApp-setupWorksheet-v001.xlsx    your worksheet: never in Git
 └── taskApp-2026/                       the code: your Git repository (Step B3)</code></pre>
-<p>The worksheet sits <em>next to</em> the repository, not inside it. Git tracks only the files inside <code>taskApp-2026</code>, so it can never upload your keys to GitHub. And Claude Code, which works inside <code>taskApp-2026</code>, can’t open the worksheet unless you give it permission. Don’t use <code>Documents</code> or <code>Desktop</code> for code projects: on many computers iCloud or OneDrive syncs those folders, and syncing the thousands of files in a Node.js project causes problems.</p>
-<p>To make the folders, open a terminal (the Terminal app on a Mac or Linux, Git Bash on Windows), type this command, and press <code>Enter</code>. <code>mkdir -p</code> makes the folder <code>projects</code> (if you don’t have it yet) and <code>full-stack-demo-app</code> inside it:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/projects/full-stack-demo-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then move the worksheet there from your Downloads folder. In the same terminal, type:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ~/Downloads/taskApp-setupWorksheet-v001.xlsx ~/projects/full-stack-demo-app/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Git tracks only the files inside <code>taskApp-2026</code>, so it can never upload your worksheet’s keys to GitHub. Claude works in <code>full-stack-demo-app</code>, so it could open the worksheet; the prompt tells it never to. Don’t use <code>Documents</code> or <code>Desktop</code> for code projects: on many computers iCloud or OneDrive syncs those folders, and syncing the thousands of files in a Node.js project causes problems.</p>
+<p>Move the worksheet there from your Downloads folder. Claude can run this for you, or type it in a second terminal:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ~/Downloads/taskApp-setupWorksheet-v001.xlsx ~/projects/full-stack-demo-app/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>mv</code> (“move”) moves a file. It takes two arguments: first the file to move (the worksheet, in the <code>Downloads</code> folder in your home folder), then where to put it (your project folder). The <code>/</code> at the end makes it clear that the destination is a folder.</p>
 <p>If you get “No such file or directory”, your browser probably saved the file under a slightly different name (for example with <code>(1)</code> at the end). Move it with the mouse instead:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false">Linux</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
-<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <p>In <strong>Finder</strong>, open your <strong>Downloads</strong> folder and drag the worksheet into the <code>projects</code> &gt; <code>full-stack-demo-app</code> folder in your home folder (in Finder, <strong>Go &gt; Home</strong> opens your home folder). Open it with Excel or Numbers.</p>
 </div>
-<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
 <p>In <strong>File Explorer</strong>, open <strong>Downloads</strong> and drag the worksheet into <code>C:\Users\YOUR-NAME\projects\full-stack-demo-app</code>. Open it with Excel.</p>
 </div>
-<div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
+<div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
 <p>In the <strong>Files</strong> app, open <strong>Downloads</strong> and drag the worksheet into the <code>projects</code> &gt; <code>full-stack-demo-app</code> folder in your home folder. Open it with LibreOffice Calc.</p>
 </div>
 </div>
@@ -1347,19 +1451,27 @@ A3. Claude Code (you should have this already)
 <li>Click <strong>Fork</strong> (top right). On the “Create a new fork” page, change the <strong>Repository name</strong> to <code>taskApp-2026</code>, then click <strong>Create fork</strong>.</li>
 <li>You land on your fork, at <code>https://github.com/YOUR-USERNAME/taskApp-2026</code>. Type your GitHub username into the worksheet’s <em>My Info</em> sheet.</li>
 </ol>
-<p><strong>B3. Clone your fork.</strong> <strong>Cloning</strong> downloads a copy of a GitHub repository to your computer. In the terminal, go to your project folder by typing this command and pressing <code>Enter</code> (<code>cd</code> means “change directory”, that is, go to a folder):</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>B3. Clone your fork.</strong> <strong>Cloning</strong> downloads a copy of a GitHub repository to your computer. Claude can run these two commands for you. To type them yourself, go to your project folder in a terminal by typing this command and pressing <code>Enter</code> (<code>cd</code> means “change directory”, that is, go to a folder):</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then, in the same terminal, run the <code>git clone</code> command. Copy it from the worksheet’s <em>Commands</em> sheet (it has your username in it), or type it with your own GitHub username in place of <code>YOUR-USERNAME</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YOUR-USERNAME/taskApp-2026</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This creates the folder <code>taskApp-2026</code> inside <code>full-stack-demo-app</code>.</p>
-<p><strong>B4. Open the project in VS Code.</strong> In VS Code, choose <strong>File &gt; Open Folder</strong> (or Command Palette: <code>File: Open Folder</code>), choose <code>projects/full-stack-demo-app/taskApp-2026</code> in your home folder, and click <strong>Open</strong> (click <strong>Yes, I trust the authors</strong> if asked). Open <code>taskApp-2026</code> itself, not <code>full-stack-demo-app</code>, so that VS Code and Claude Code work inside the repository.</p>
-<p><strong>B5. Install the packages.</strong> From here on, type commands in <strong>VS Code’s terminal</strong>. Open it with <strong>Terminal &gt; New Terminal</strong> (or Command Palette: <code>Terminal: Create New Terminal</code>). It opens at the bottom of the window, already in the project folder: the prompt shows <code>taskApp-2026</code>. On Windows, check that it says <strong>bash</strong> at the right (Step A5). Type this command and press <code>Enter</code>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>It takes a minute or two and creates a <code>node_modules</code> folder. Warnings about “deprecated” packages and “vulnerabilities” are normal. Don’t run <code>npm audit fix --force</code>: it upgrades packages to versions this code doesn’t work with. More in <a href="./001120-tutorial-installThePackages-v001.html" target="_blank">Step 2: Installing the Node.js packages with npm</a>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YOUR-USERNAME/taskApp-2026</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>git clone</code> copies a repository from GitHub to your computer: all its files and their whole history. The argument is your fork’s web address. Git makes a new folder named after the repository, so this creates the folder <code>taskApp-2026</code> inside <code>full-stack-demo-app</code>. The copy remembers where it came from, so later <code>git push</code> knows where to upload your changes.</p>
+<p><strong>B4. Open the project in VS Code.</strong> In VS Code, choose <strong>File &gt; Open Folder</strong> (or Command Palette: <code>File: Open Folder</code>), choose <code>projects/full-stack-demo-app</code> in your home folder, and click <strong>Open</strong> (click <strong>Yes, I trust the authors</strong> if asked). Open <code>full-stack-demo-app</code>, not <code>taskApp-2026</code>: then VS Code shows your code, <code>checklist.md</code> and <code>CLAUDE.md</code> together, and Claude in VS Code reads <code>CLAUDE.md</code> from that folder.</p>
+<p><strong>B5. Install the packages.</strong> Claude runs these commands for you. To type them yourself, use <strong>VS Code’s terminal</strong> from here on (see <a href="#the-terminal-inside-vs-code">The terminal inside VS Code</a>): open it with <strong>Terminal &gt; New Terminal</strong>. It starts in <code>full-stack-demo-app</code>, so first go into the app’s folder:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> taskApp-2026</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here <code>cd</code> gets just the folder’s name, not a full path starting with <code>~</code>: the shell looks for <code>taskApp-2026</code> inside the folder you’re already in. On Windows, check that the terminal panel says <strong>bash</strong> at the right (Step A5). Then type this command and press <code>Enter</code>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>npm install</code> reads the file <code>package.json</code>, the app’s list of the packages it needs, and downloads every one of them (and the packages <em>they</em> need) into a folder named <code>node_modules</code>. The file <code>package-lock.json</code> records the exact version of each package, so everyone who installs gets the same versions. It takes a minute or two. Warnings about “deprecated” packages and “vulnerabilities” are normal. Don’t run <code>npm audit fix --force</code>: it upgrades packages to versions this code doesn’t work with. More in <a href="./001120-tutorial-installThePackages-v001.html" target="_blank">Step 2: Installing the Node.js packages with npm</a>.</p>
 <p>Then update one package, the <strong>Supabase CLI</strong> (used from Step C on). In the same terminal, type:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-D</span> supabase@latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The project pins an early-2025 version of the CLI that can deploy Edge Functions only with Docker, and that may not work with new Supabase projects. Current versions deploy without Docker.</p>
-<p><strong>B6. Start Claude.</strong> Click the Claude icon in VS Code to open the Claude Code panel. (Or, if you prefer Claude in the terminal, type <code>claude</code> in VS Code’s terminal and press <code>Enter</code>.) In Claude’s chat box, type <code>/model sonnet</code> and press <code>Enter</code>, switch to plan mode, and paste the prompt from <a href="#the-prompt-to-start-with">The prompt to start with</a>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-D</span> supabase@latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What the pieces mean:</p>
+<ul>
+<li><code>npm install</code> installs a package, this time just one.</li>
+<li><code>-D</code> saves it as a <strong>development dependency</strong>: a tool you use while building the app, not part of the app itself. (It’s short for <code>--save-dev</code>.)</li>
+<li><code>supabase@latest</code> is the package’s name, <code>supabase</code>, and <code>@latest</code> asks for its newest version. npm updates <code>package.json</code> and <code>package-lock.json</code> to match.</li>
+</ul>
+<p>Why: the project pins an early-2025 version of the CLI that can deploy Edge Functions only with Docker, and that may not work with new Supabase projects. Current versions deploy without Docker.</p>
+<p><strong>B6. Optional: move to Claude in VS Code.</strong> You can keep using Claude in the terminal for the whole project. If you’d rather have Claude in VS Code, next to your files: in the terminal where Claude runs, type <code>/exit</code>. Then, in VS Code (with <code>full-stack-demo-app</code> open), click the Claude icon to open the Claude Code panel, type <code>/model sonnet</code>, and paste the <strong>Next time</strong> prompt from <a href="#the-prompt-to-start-with">The prompt to start with</a>. Claude picks up where you left off, thanks to <code>checklist.md</code>.</p>
 </section>
 <section id="step-c-supabase-project-and-the-front-end" class="level3">
 <h3 class="anchored" data-anchor-id="step-c-supabase-project-and-the-front-end">Step C: Supabase project and the front end</h3>
@@ -1368,8 +1480,8 @@ A3. Claude Code (you should have this already)
 <li><strong>Preview the front end.</strong> Claude creates your <code>.env.local</code> file from <code>.env.example</code> and runs <code>npm run dev</code>. Open <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> to see the home page. Login doesn’t work yet. Then stop the server: click in VS Code’s terminal and press <code>Ctrl+C</code> (<code>Ctrl</code>, not <code>Cmd</code>, also on a Mac). (See <a href="./001140-tutorial-previewFrontEnd-v001.html" target="_blank">Step 4 - Optional: Preview the Frontend</a>.)</li>
 <li><strong>Create the project.</strong> At <a href="https://supabase.com" target="_blank">supabase.com</a>, sign up (<strong>Continue with GitHub</strong> is easiest) and click <strong>New project</strong>. Name it <code>task-app</code>, click <strong>Generate a password</strong> and save the password in the worksheet, pick the region closest to you, and click <strong>Create new project</strong>. It takes a couple of minutes.</li>
 <li><strong>Record your project ref, URL and publishable key</strong> in the worksheet. They are under <strong>Project Settings &gt; API Keys</strong>, and the <strong>Connect</strong> button at the top of the dashboard shows them too. New projects have a <strong>publishable key</strong> (it starts with <code>sb_publishable_</code>). The older chapters call it the “anon public” key; it goes in the same place. (If your project also has a “Legacy” tab with an <code>anon</code> key, use the publishable key anyway.)</li>
-<li><strong>Fill in <code>.env.local</code>.</strong> Open it in VS Code and replace the two values with the two <code>.env.local</code> lines from the worksheet’s <em>Commands</em> sheet. Save the file.</li>
-<li><strong>Connect the CLI.</strong> The <strong>Supabase CLI</strong> is a command-line tool that comes with the project’s packages, so you run it with <code>npx supabase ...</code>. Claude runs <code>npx supabase login</code> in the terminal (a browser window opens; approve it) and <code>npx supabase link --project-ref YOUR-PROJECT-REF</code> (it may ask for the database password from your worksheet). Skip the README’s <code>supabase init</code>: the project already has its <code>supabase/config.toml</code> file, so <code>init</code> fails. See <a href="./001155-tutorial-supabaseCli-v001.html" target="_blank">Step 5a: Supabase CLI command</a>. Don’t run <code>npx supabase start</code>: that runs Supabase locally and needs Docker (see the deeper dive at the end).</li>
+<li><strong>Fill in <code>.env.local</code>.</strong> In VS Code’s file list, open <code>taskApp-2026/.env.local</code> and replace the two values with the two <code>.env.local</code> lines from the worksheet’s <em>Commands</em> sheet. Save the file.</li>
+<li><strong>Connect the CLI.</strong> The <strong>Supabase CLI</strong> is a command-line tool that comes with the project’s packages, so you run it with <code>npx supabase ...</code>: <code>npx</code> runs a program from the project’s own packages (in <code>node_modules</code>), and <code>supabase</code> is the program. Claude runs <code>npx supabase login</code> in the terminal (a browser window opens; approve it) and <code>npx supabase link --project-ref YOUR-PROJECT-REF</code> (it may ask for the database password from your worksheet). In those commands, <code>login</code> signs the CLI in to your Supabase account; <code>link</code> connects this folder to your project; and the option <code>--project-ref</code> names the project, followed by your project ref. Skip the README’s <code>supabase init</code>: the project already has its <code>supabase/config.toml</code> file, so <code>init</code> fails. See <a href="./001155-tutorial-supabaseCli-v001.html" target="_blank">Step 5a: Supabase CLI command</a>. Don’t run <code>npx supabase start</code>: that runs Supabase locally and needs Docker (see the deeper dive at the end).</li>
 <li><strong>Two auth settings</strong> in the Supabase dashboard:
 <ul>
 <li><strong>Authentication &gt; Sign In / Providers</strong>, in the <strong>User Signups</strong> section: turn off <strong>Confirm email</strong>, so test accounts work without clicking an email link.</li>
@@ -1415,7 +1527,12 @@ Don’t sign in to the app yet
 <li><strong>Create a project</strong> named <code>task-app</code> from the project menu at the top left.</li>
 <li><strong>Set a hard spend limit.</strong> In the project’s settings, go to <strong>Limits &gt; Spend &gt; Edit spend limit</strong>, enter a monthly limit of <code>5</code>, turn on <strong>Enforce a hard limit</strong>, and save. With the hard limit on, OpenAI refuses the project’s requests once it reaches the limit (there can be a small delay). OpenAI also emails you when spending reaches the limit.</li>
 <li><strong>Create an API key</strong> inside the project: <strong>API keys &gt; Create new secret key</strong>. Copy it into the worksheet immediately; OpenAI shows it only once.</li>
-<li>Give the key to your Edge Functions yourself, so the key never goes into Claude’s chat: copy the <code>npx supabase secrets set OPENAI_API_KEY=...</code> line from the worksheet’s <em>Commands</em> sheet, paste it into VS Code’s terminal, and press <code>Enter</code>.</li>
+<li>Give the key to your Edge Functions yourself, so the key never goes into Claude’s chat: copy the <code>npx supabase secrets set OPENAI_API_KEY=...</code> line from the worksheet’s <em>Commands</em> sheet, paste it into VS Code’s terminal (in the <code>taskApp-2026</code> folder), and press <code>Enter</code>. What the pieces mean:
+<ul>
+<li><code>npx supabase</code> runs the Supabase CLI, as in Step C.</li>
+<li><code>secrets set</code> stores a <strong>secret</strong>, a named value that your Edge Functions can read on Supabase’s servers but that never appears in your code or on GitHub.</li>
+<li><code>OPENAI_API_KEY=sk-proj-...</code> is the secret’s name, then <code>=</code>, then its value: your key. There are no spaces around the <code>=</code>. The function’s code reads the key by this name.</li>
+</ul></li>
 </ol>
 <p>More background in <a href="./001170-tutorial-openAiApi-v001.html" target="_blank">Step 7: Set Up OpenAI API</a> (skip its instructions for Supabase secrets; use the worksheet line).</p>
 </section>
@@ -1427,8 +1544,8 @@ Don’t sign in to the app yet
 <li><strong>API keys:</strong> on the dashboard’s home page, or at <a href="https://dashboard.stripe.com/apikeys" target="_blank">dashboard.stripe.com/apikeys</a>, copy the <strong>publishable key</strong> (<code>pk_test_...</code>) and the <strong>secret key</strong> (<code>sk_test_...</code>) into the worksheet.</li>
 <li><strong>Product:</strong> in <strong>Product catalog</strong>, click <strong>Add product</strong>. Name it <code>TaskMaster Premium</code>, choose <strong>Recurring</strong> and <strong>Monthly</strong>, enter a price (for example $10), and click <strong>Add product</strong>. Open the product, click the price, and copy its ID (<code>price_...</code>) into the worksheet.</li>
 <li><strong>Customer portal:</strong> open <a href="https://dashboard.stripe.com/settings/billing/portal" target="_blank">dashboard.stripe.com/settings/billing/portal</a> and click <strong>Save</strong>, so the app’s “Manage subscription” button works. For class demos, set cancellations to happen <strong>immediately</strong>, so a cancelled subscription switches the app back to the free plan right away.</li>
-<li><strong>Vault:</strong> in the Supabase dashboard, open <strong>SQL Editor</strong>, paste the Vault line from the worksheet’s <em>Commands</em> sheet, and click <strong>Run</strong>. It stores your Stripe secret key in Supabase <strong>Vault</strong>, an encrypted store for secrets, under the name <code>stripe</code>. The database uses it to create a Stripe customer for each new user.</li>
-<li><strong>Secrets for the Edge Functions:</strong> copy the <code>STRIPE_SECRET_KEY</code> line from the worksheet’s <em>Commands</em> sheet, paste it into VS Code’s terminal, and press <code>Enter</code>. Do the same with the <code>STRIPE_PRICE_ID</code> line.</li>
+<li><strong>Vault:</strong> in the Supabase dashboard, open <strong>SQL Editor</strong>, paste the Vault line from the worksheet’s <em>Commands</em> sheet, and click <strong>Run</strong>. This is SQL, the language of databases, not a terminal command: <code>select vault.create_secret('sk_test_...', 'stripe');</code> calls the function <code>create_secret</code> in Supabase’s <code>vault</code>, with two values in quotes: your secret key and the name to store it under. It stores your Stripe secret key in Supabase <strong>Vault</strong>, an encrypted store for secrets, under the name <code>stripe</code>. The database uses it to create a Stripe customer for each new user.</li>
+<li><strong>Secrets for the Edge Functions:</strong> copy the <code>STRIPE_SECRET_KEY</code> line from the worksheet’s <em>Commands</em> sheet, paste it into VS Code’s terminal (in the <code>taskApp-2026</code> folder), and press <code>Enter</code>. Do the same with the <code>STRIPE_PRICE_ID</code> line.</li>
 </ol>
 <p>The webhook comes in Step H, once the functions are deployed.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -1448,18 +1565,18 @@ Corrections to the older Stripe chapter
 <section id="step-g-create-the-database" class="level3">
 <h3 class="anchored" data-anchor-id="step-g-create-the-database">Step G: Create the database</h3>
 <p>Claude runs this command in the terminal for you (it asks your permission first; you don’t type it):</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase db push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This applies the project’s <strong>migrations</strong>: the files in <code>supabase/migrations</code> that create the tables (profiles, tasks, usage tracking), the security rules, the <code>task-attachments</code> storage bucket for images, and the Stripe connection. In the Supabase dashboard, <strong>Table Editor</strong> now shows the tables and <strong>Storage</strong> shows the bucket. See <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" target="_blank">Step 9: Set Up Supabase Database</a>.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase db push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>npx supabase</code> runs the Supabase CLI, and <code>db push</code> means “send my database changes up to my Supabase project” (<code>db</code> for database, <code>push</code> for upload). It applies the project’s <strong>migrations</strong>: the files in <code>supabase/migrations</code> that create the tables (profiles, tasks, usage tracking), the security rules, the <code>task-attachments</code> storage bucket for images, and the Stripe connection. In the Supabase dashboard, <strong>Table Editor</strong> now shows the tables and <strong>Storage</strong> shows the bucket. See <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" target="_blank">Step 9: Set Up Supabase Database</a>.</p>
 <p>Skip the manual steps in <a href="./001200-tutorial-setupSupabaseStorage-v001.html" target="_blank">Step 10: Set Up Supabase Storage Bucket</a>: the migration already created the bucket, and the chapter’s bucket name (<code>task-images</code>) is wrong.</p>
 </section>
 <section id="step-h-deploy-the-edge-functions-and-the-stripe-webhook" class="level3">
 <h3 class="anchored" data-anchor-id="step-h-deploy-the-edge-functions-and-the-stripe-webhook">Step H: Deploy the Edge Functions and the Stripe webhook</h3>
 <ol type="1">
 <li><p>Claude deploys the three functions by running these commands in the terminal for you (you don’t type them). The folder names use hyphens (the older chapter, <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" target="_blank">Step 11</a>, gets them wrong):</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-task-with-ai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-stripe-session</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>--no-verify-jwt</code> lets Stripe call the webhook function without a Supabase login. (The function checks Stripe’s signature instead.) In the dashboard, this is the switch <strong>Verify JWT with legacy secret</strong> under <strong>Edge Functions &gt; stripe-webhook &gt; Details</strong>; it should be off.</p></li>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-task-with-ai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-stripe-session</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In each command, <code>functions deploy</code> uploads one Edge Function, named by the argument after it (the name of its folder in <code>supabase/functions</code>), to Supabase’s servers, where it runs. The option <code>--no-verify-jwt</code> on the last one lets Stripe call the webhook function without a Supabase login. (The function checks Stripe’s signature instead.) In the dashboard, this is the switch <strong>Verify JWT with legacy secret</strong> under <strong>Edge Functions &gt; stripe-webhook &gt; Details</strong>; it should be off.</p></li>
 <li><p><strong>Create the webhook in Stripe.</strong> A <strong>webhook</strong> is a web address that Stripe calls to tell your app that something happened, such as “this customer paid”. Open <a href="https://dashboard.stripe.com/webhooks" target="_blank">dashboard.stripe.com/webhooks</a> and click <strong>Create an event destination</strong>:</p>
 <ul>
 <li>Events from: <strong>Your account</strong>.</li>
@@ -1468,13 +1585,13 @@ Corrections to the older Stripe chapter
 <li>Destination type: <strong>Webhook endpoint</strong>.</li>
 <li>Endpoint URL: your Stripe webhook URL from the worksheet (<code>https://YOUR-PROJECT-REF.supabase.co/functions/v1/stripe-webhook</code>).</li>
 </ul></li>
-<li><p>On the destination’s page, click <strong>Reveal</strong> next to the <strong>signing secret</strong> (<code>whsec_...</code>) and copy it into the worksheet. Then copy the worksheet’s <code>STRIPE_WEBHOOK_SECRET</code> line, paste it into VS Code’s terminal, and press <code>Enter</code>.</p></li>
+<li><p>On the destination’s page, click <strong>Reveal</strong> next to the <strong>signing secret</strong> (<code>whsec_...</code>) and copy it into the worksheet. Then copy the worksheet’s <code>STRIPE_WEBHOOK_SECRET</code> line, paste it into VS Code’s terminal (in the <code>taskApp-2026</code> folder), and press <code>Enter</code>.</p></li>
 </ol>
 <p>Stripe may show an event as delivered even when the app rejected it (the function always answers “OK”). If an upgrade doesn’t show up in the app, look at the <code>stripe-webhook</code> logs in the Supabase dashboard under <strong>Edge Functions</strong>.</p>
 </section>
 <section id="step-i-try-the-app" class="level3">
 <h3 class="anchored" data-anchor-id="step-i-try-the-app">Step I: Try the app</h3>
-<p>Claude starts the app by running <code>npm run dev</code> in the terminal. (To start it yourself, type <code>npm run dev</code> in VS Code’s terminal and press <code>Enter</code>; stop it with <code>Ctrl+C</code>.) At <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>:</p>
+<p>Claude starts the app by running <code>npm run dev</code> in the terminal. (To start it yourself, type <code>npm run dev</code> in VS Code’s terminal, in the <code>taskApp-2026</code> folder, and press <code>Enter</code>; stop it with <code>Ctrl+C</code>.) <code>npm run</code> runs a script listed in <code>package.json</code>, and <code>dev</code> is the script that starts Next.js’s development server: a web server on your own computer, at the address <code>localhost:3000</code> (<code>localhost</code> means “this computer”, and 3000 is the <strong>port</strong>, a numbered door on your computer that the server listens at). It keeps running, and updates the page when the code changes, until you stop it. At <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>:</p>
 <ol type="1">
 <li>Sign up with an email and password, or sign in with Google.</li>
 <li>Create a task. After a moment, an AI label appears.</li>
@@ -1503,12 +1620,18 @@ If the AI label or the upgrade fails
 </section>
 <section id="step-j-save-your-work-to-github" class="level3">
 <h3 class="anchored" data-anchor-id="step-j-save-your-work-to-github">Step J: Save your work to GitHub</h3>
-<p>Ask Claude to commit your changes and push them to your fork, or do it yourself: type each of these commands in VS Code’s terminal, pressing <code>Enter</code> after each one. First:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Make sure <code>.env.local</code> is <strong>not</strong> in the list (it should be ignored). Then:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Set up the task app"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ask Claude to commit your changes and push them to your fork, or do it yourself: type each of these commands in VS Code’s terminal, in the <code>taskApp-2026</code> folder, pressing <code>Enter</code> after each one. First:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>git status</code> lists the files you changed or added since your last commit, and changes nothing. Make sure <code>.env.local</code> is <strong>not</strong> in the list: it holds your keys, and the project’s <code>.gitignore</code> file tells Git to ignore it. Then:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Set up the task app"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What they do:</p>
+<ul>
+<li><code>git add -A</code> chooses which changes go into your next commit: <code>add</code> stages changes, and <code>-A</code> (all) includes every changed, new and deleted file.</li>
+<li><code>git commit -m "Set up the task app"</code> saves those changes as a <strong>commit</strong>, a snapshot in your project’s history. <code>-m</code> gives the commit its message, in quotes; write one that says what you did.</li>
+<li><code>git push</code> uploads your new commits to your fork on GitHub.</li>
+</ul>
 <p>See <a href="./030500-gitignoreAndSecrets-v001.html" target="_blank">.gitignore and Keeping Secrets Out of Git</a>.</p>
 </section>
 <section id="step-k-put-the-app-online-with-vercel" class="level3">
@@ -1526,7 +1649,7 @@ If the AI label or the upgrade fails
 </section>
 <section id="optional-run-the-automated-tests" class="level3">
 <h3 class="anchored" data-anchor-id="optional-run-the-automated-tests">Optional: Run the automated tests</h3>
-<p>The project includes <strong>integration tests</strong>: programs that sign up test users, create tasks and check the subscription logic against your real Supabase project. To run them, create <code>.env.test.local</code> (in the project folder) with the six lines from the worksheet’s <em>Commands</em> sheet, then type <code>npm test</code> in VS Code’s terminal and press <code>Enter</code>. The tests need your Supabase <strong>secret key</strong>, which bypasses all security rules: put it only in <code>.env.test.local</code>. See <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" target="_blank">Step 15: Automated Testing and Troubleshooting</a>, but note that its file names are wrong: the file is <code>.env.test.local</code>, and the test files end in <code>.test.ts</code>.</p>
+<p>The project includes <strong>integration tests</strong>: programs that sign up test users, create tasks and check the subscription logic against your real Supabase project. To run them, create <code>.env.test.local</code> (in the <code>taskApp-2026</code> folder) with the six lines from the worksheet’s <em>Commands</em> sheet, then type <code>npm test</code> in VS Code’s terminal (in the <code>taskApp-2026</code> folder) and press <code>Enter</code>. (<code>npm test</code> runs the <code>test</code> script in <code>package.json</code>, which runs the tests with a testing tool named Jest.) The tests need your Supabase <strong>secret key</strong>, which bypasses all security rules: put it only in <code>.env.test.local</code>. See <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" target="_blank">Step 15: Automated Testing and Troubleshooting</a>, but note that its file names are wrong: the file is <code>.env.test.local</code>, and the test files end in <code>.test.ts</code>.</p>
 </section>
 </section>
 <section id="where-docker-fits" class="level2">
@@ -1548,20 +1671,20 @@ Deeper dive: Docker, and running Supabase on your own computer
 <p>In this project, everything that runs on a server runs on someone else’s computers: Supabase hosts the database and Edge Functions, and Vercel hosts the website. That is why you don’t need Docker.</p>
 <p>Professional teams often also run a complete copy of Supabase on their own laptops, to experiment without touching the real project. The Supabase CLI does this with <code>npx supabase start</code>, which downloads Supabase’s container images and runs them in Docker: a local database, local logins, local storage, and a local dashboard at <code>http://localhost:54323</code>. To try it:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false">Linux</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-3" role="tab" aria-controls="tabset-10-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
-<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <p>Install <strong>Docker Desktop for Mac</strong> from <a href="https://www.docker.com/products/docker-desktop/" target="_blank">docker.com</a> and start it.</p>
 </div>
-<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <p>Install <strong>Docker Desktop for Windows</strong> from <a href="https://www.docker.com/products/docker-desktop/" target="_blank">docker.com</a> and start it. It may ask you to turn on WSL 2, a Windows feature it needs.</p>
 </div>
-<div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
+<div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
 <p>Install <strong>Docker Engine</strong> with your system’s package manager (see <a href="https://docs.docker.com/engine/install/" target="_blank">docs.docker.com</a>), or Docker Desktop for Linux.</p>
 </div>
 </div>
 </div>
-<p>Then type <code>npx supabase start</code> in VS Code’s terminal, in the project folder. Docker needs a fairly recent computer and several GB of disk space, which is why it isn’t required in this course. Docker Desktop is free for personal and educational use.</p>
+<p>Then type <code>npx supabase start</code> in VS Code’s terminal, in the <code>taskApp-2026</code> folder (<code>start</code> starts the local copy of Supabase; <code>npx supabase stop</code> stops it). Docker needs a fairly recent computer and several GB of disk space, which is why it isn’t required in this course. Docker Desktop is free for personal and educational use.</p>
 </div>
 </div>
 </div>
