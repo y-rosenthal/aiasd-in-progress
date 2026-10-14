@@ -931,7 +931,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="permission-modes" class="level2" data-number="45.2">
 <h2 data-number="45.2" class="anchored" data-anchor-id="permission-modes"><span class="header-section-number">45.2</span> Permission modes</h2>
-<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/permission-modes">Choose a permission mode</a></span></p>
+<p><span class="yr-asof">As of Oct 14, 2026 · Official docs: <a href="https://code.claude.com/docs/en/permission-modes">Choose a permission mode</a></span></p>
 <p>A <strong>permission mode</strong> sets what Claude may do without asking; the status bar under the prompt box shows the current mode.</p>
 <table class="caption-top table">
 <colgroup>
@@ -982,6 +982,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>Starting mode.</strong> Current versions start interactive sessions in <code>auto</code> mode unless your settings say otherwise. Choose another with a flag, such as <code>claude --permission-mode manual</code>.</li>
 <li><strong>Switching.</strong> <code>Shift+Tab</code> cycles through the modes. From auto, the first press goes to Manual, then <code>acceptEdits</code>, then <code>plan</code>, then back to auto. <code>dontAsk</code> never appears in the cycle, and <code>bypassPermissions</code> only appears if you enabled it when starting.</li>
+<li><strong>In VS Code.</strong> Click the mode indicator at the bottom of Claude’s prompt box. The extension uses its own names: <strong>Manual</strong> (<code>default</code>), <strong>Edit automatically</strong> (<code>acceptEdits</code>), <strong>Plan</strong>, <strong>Auto</strong>, and <strong>Bypass permissions</strong>. A new conversation starts in the mode you picked last, if that was Manual, Edit automatically, or Auto.</li>
 <li><strong>Plan mode.</strong> Enter it with <code>Shift+Tab</code> or by starting a message with <code>/plan</code>. When the plan is ready, Claude asks whether to approve it and continue in auto mode, approve it and review each edit yourself, or keep planning.</li>
 </ul>
 <p><strong>Auto mode</strong> uses a separate AI model, the <strong>classifier</strong>, which reviews each action that isn’t a simple read or an edit inside your working directory, and blocks the ones that go beyond what you asked for, reach unknown systems, or look like they were triggered by hostile text Claude read. In the docs’ own words, auto mode “reduces permission prompts but does not guarantee safety.”</p>
@@ -1020,8 +1021,8 @@ Deeper dive: What auto mode blocks and allows by default
 </section>
 <section id="inside-and-outside-your-project-folder" class="level2" data-number="45.4">
 <h2 data-number="45.4" class="anchored" data-anchor-id="inside-and-outside-your-project-folder"><span class="header-section-number">45.4</span> Inside and outside your project folder</h2>
-<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/permissions">Configure permissions</a> · <a href="https://code.claude.com/docs/en/permission-modes">Choose a permission mode</a> · <a href="https://code.claude.com/docs/en/security">Security</a></span></p>
-<p>The folder you start in is the <strong>working directory</strong>. You can give Claude more folders with <code>claude --add-dir ../shared</code> at startup, <code>/add-dir</code> during a session, or the <code>additionalDirectories</code> setting.</p>
+<p><span class="yr-asof">As of Oct 14, 2026 · Official docs: <a href="https://code.claude.com/docs/en/permissions">Configure permissions</a> · <a href="https://code.claude.com/docs/en/permission-modes">Choose a permission mode</a> · <a href="https://code.claude.com/docs/en/security">Security</a></span></p>
+<p>The folder you start in is the <strong>working directory</strong>. You can give Claude more folders with <code>claude --add-dir ../shared</code> at startup, <code>/add-dir</code> during a session, or the <code>additionalDirectories</code> setting. An added folder gives Claude access to its files, but not its <code>CLAUDE.md</code> or most of its settings. To move the whole session to another folder instead, type <code>/cd</code> and the folder’s path: Claude keeps the conversation, loads that folder’s <code>CLAUDE.md</code> and settings, and first asks you to trust the folder if you haven’t worked in it before.</p>
 <p>The working directory is a permission boundary, not a wall: Claude Code runs with your account’s access, so Claude can look for files elsewhere. Say Maria starts Claude in <code>~/projects/budget-app</code> and asks about a spreadsheet stored in <code>~/Documents/finance</code>:</p>
 <ul>
 <li>In <strong>Manual</strong> mode, Claude Code asks before each read or edit outside the working directory.</li>
@@ -1609,12 +1610,15 @@ Suggested answer
 </div>
 </div>
 </section>
-</section>
-<section id="challenge" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="challenge">Challenge</h3>
-<section id="question-21-hands-on" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-21-hands-on">Question 21 · Hands-on</h4>
-<p>Clone or download a small public repository into a scratch folder. Run <code>git status</code> and note the result. Start <code>claude --permission-mode plan --tools "Read,Grep,Glob"</code> and ask Claude to explain the repository. Exit and run <code>git status</code> again. Then start a normal session, press <code>Shift+Tab</code> repeatedly, and write down every mode label you see.</p>
+<section id="question-21-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-21-multiple-choice">Question 21 · Multiple choice</h4>
+<p>Sam started Claude Code in <code>~/projects/budget-app</code>. Now he wants to keep the same conversation but work in <code>~/projects/full-stack-demo-app</code>, with that folder’s <code>CLAUDE.md</code> rules. What should he type in Claude’s prompt box?</p>
+<ol type="a">
+<li><code>/add-dir ~/projects/full-stack-demo-app</code></li>
+<li><code>/cd ~/projects/full-stack-demo-app</code></li>
+<li><code>cd ~/projects/full-stack-demo-app</code></li>
+<li><code>/clear</code></li>
+</ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1626,6 +1630,29 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> <code>/cd</code> moves the session to the new folder: Claude keeps the conversation and loads the new folder’s <code>CLAUDE.md</code> and settings. <code>/add-dir</code> (a) only gives Claude access to the folder’s files, without its <code>CLAUDE.md</code>. A plain <code>cd</code> typed in the prompt box (c) is just a message to Claude, not a Claude Code command. <code>/clear</code> (d) empties the conversation, the opposite of what Sam wants.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="challenge" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="challenge">Challenge</h3>
+<section id="question-22-hands-on" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-22-hands-on">Question 22 · Hands-on</h4>
+<p>Clone or download a small public repository into a scratch folder. Run <code>git status</code> and note the result. Start <code>claude --permission-mode plan --tools "Read,Grep,Glob"</code> and ask Claude to explain the repository. Exit and run <code>git status</code> again. Then start a normal session, press <code>Shift+Tab</code> repeatedly, and write down every mode label you see.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A good report shows that <code>git status</code> was clean before and after the read-only session (no tool that could change files was available), summarizes Claude’s explanation of the repository (architecture, main folders, entry points, how to run it), and lists the labels from cycling with <code>Shift+Tab</code>, typically <code>⏵⏵ auto mode on</code>, <code>⏸ manual mode on</code>, <code>⏵⏵ accept edits on</code>, and <code>⏸ plan mode on</code>. It may also mention any first-time prompts, such as the folder trust question.</p>
 </div>

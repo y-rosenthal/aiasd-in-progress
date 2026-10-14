@@ -852,7 +852,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#vs-codes-command-palette" id="toc-vs-codes-command-palette" class="nav-link" data-scroll-target="#vs-codes-command-palette">VS Code’s Command Palette</a></li>
   <li><a href="#using-claude-code-without-running-out-of-usage" id="toc-using-claude-code-without-running-out-of-usage" class="nav-link" data-scroll-target="#using-claude-code-without-running-out-of-usage">Using Claude Code without running out of usage</a></li>
-  <li><a href="#the-prompt-to-start-with" id="toc-the-prompt-to-start-with" class="nav-link" data-scroll-target="#the-prompt-to-start-with">The prompt to start with</a></li>
+  <li><a href="#the-prompt-to-start-with" id="toc-the-prompt-to-start-with" class="nav-link" data-scroll-target="#the-prompt-to-start-with">The prompt to start with</a>
+  <ul class="collapse">
+  <li><a href="#when-claude-asks-permission" id="toc-when-claude-asks-permission" class="nav-link" data-scroll-target="#when-claude-asks-permission">When Claude asks permission</a></li>
+  </ul></li>
   <li><a href="#the-steps" id="toc-the-steps" class="nav-link" data-scroll-target="#the-steps">The steps</a>
   <ul class="collapse">
   <li><a href="#step-a-install-the-tools" id="toc-step-a-install-the-tools" class="nav-link" data-scroll-target="#step-a-install-the-tools">Step A: Install the tools</a></li>
@@ -1167,7 +1170,7 @@ The worksheet holds secret keys
 <li><strong>Check your usage</strong> with <code>/usage</code>. It shows how much of your five-hour and weekly limits you’ve used and when they reset.</li>
 <li><strong>Start fresh between big steps.</strong> <code>/clear</code> empties the conversation, so Claude doesn’t re-read a long history with every message. Your progress is safe in <code>checklist.md</code> (see the prompt below).</li>
 <li><strong>Don’t paste huge error logs.</strong> Paste the last 20 or so lines, or tell Claude to look at the terminal output itself.</li>
-<li><strong>Read before you approve.</strong> When Claude asks permission to run a command, read what it is about to do (<a href="./060500-permissionsModesAndSafety-v001.html" target="_blank">Permissions, Modes, and Safety</a>).</li>
+<li><strong>Read before you approve.</strong> When Claude asks permission to run a command, read what it is about to do, and usually answer plain <strong>Yes</strong> (<a href="#when-claude-asks-permission">When Claude asks permission</a>; <a href="./060500-permissionsModesAndSafety-v001.html" target="_blank">Permissions, Modes, and Safety</a>).</li>
 </ul>
 <p>More details are in <a href="./060800-contextModelsEffortAndUsage-v001.html" target="_blank">Context, Models, Effort, and Usage in Claude Code</a>.</p>
 </section>
@@ -1185,8 +1188,12 @@ The worksheet holds secret keys
 <li><code>cd ~/projects/full-stack-demo-app</code>: <code>cd</code> (“change directory”) goes into that folder, so the next commands run there. Your prompt now shows <code>full-stack-demo-app</code>.</li>
 </ul></li>
 <li><p><strong>Start Claude Code</strong> in that folder:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>claude</code> starts Claude Code. It works in the folder you’re in, which is why you <code>cd</code> into the project folder first. If you get “command not found”, install Claude Code first (Step A3 below), then come back here.</p></li>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> manual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>claude</code> starts Claude Code. It works in the folder you’re in, which is why you <code>cd</code> into the project folder first. If you get “command not found”, install Claude Code first (Step A3 below), then come back here.</li>
+<li><code>--permission-mode manual</code> starts Claude in <strong>Manual mode</strong>: Claude asks before it runs each command or changes a file, so you see every command before it runs. The line under Claude’s chat box says <strong>manual mode on</strong>. Without this option, Claude starts in <strong>auto mode</strong> and runs most commands without asking.</li>
+</ul>
+<p>See <a href="#when-claude-asks-permission">When Claude asks permission</a> below for which answer to choose.</p></li>
 <li><p>In Claude’s chat box, type <code>/model sonnet</code> and press <code>Enter</code>.</p></li>
 <li><p><strong>Paste the prompt</strong> below into Claude’s chat box and press <code>Enter</code>. First change the line <code>I'm on a Mac.</code> to match your computer:</p></li>
 </ol>
@@ -1258,11 +1265,61 @@ How to work with me:
 <li><strong><code>checklist.md</code></strong> is your running checklist and history: every step on this page with a box that Claude checks off as you finish it, plus notes about problems you hit and anything to remember. Open it any time to see where you are (in VS Code, click it in the file list).</li>
 </ul>
 <p>Both files sit in <code>full-stack-demo-app</code>, next to the code folder, so they’re never uploaded to GitHub. Follow Claude’s instructions; the steps below are the same ones, so you can see what’s coming.</p>
-<p><strong>Next time</strong> (a new session, after <code>/clear</code>, or when you switch from the terminal to VS Code’s Claude panel), start Claude in <code>full-stack-demo-app</code> again (in a terminal, <code>cd ~/projects/full-stack-demo-app</code>, then <code>claude</code>; or open that folder in VS Code and click the Claude icon), type <code>/model sonnet</code>, and paste:</p>
+<section id="when-claude-asks-permission" class="level3">
+<h3 class="anchored" data-anchor-id="when-claude-asks-permission">When Claude asks permission</h3>
+<p>In Manual mode, Claude stops before each command and asks “Do you want to proceed?” Read the command and Claude’s explanation, then choose an answer with the arrow keys and press <code>Enter</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Answer</th>
+<th>What it does</th>
+<th>Use it?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Yes</strong></td>
+<td>Runs this command once. Claude asks again next time.</td>
+<td><strong>Yes, choose this one</strong> while you’re learning.</td>
+</tr>
+<tr class="even">
+<td><strong>Yes, and don’t ask again for: …</strong></td>
+<td>Runs it, and saves a rule so that the commands the prompt names (for example <code>npm test *</code>) run without asking, in this project, from now on.</td>
+<td>Only for harmless commands you’ve already approved several times.</td>
+</tr>
+<tr class="odd">
+<td><strong>Yes, and switch to auto mode</strong></td>
+<td>Runs it, and switches to auto mode: for the rest of the session, most commands run without asking.</td>
+<td><strong>No.</strong> You’d stop seeing the commands.</td>
+</tr>
+<tr class="even">
+<td><strong>No</strong></td>
+<td>Doesn’t run it. You can type what Claude should do instead.</td>
+<td>When you’re unsure; ask Claude to explain first.</td>
+</tr>
+</tbody>
+</table>
+<p>When Claude wants to create or change a file, it shows you the change and asks the same way. There, “don’t ask again” allows all file changes, but only until the session ends.</p>
+<ul>
+<li><strong>Don’t press <code>Shift+Tab</code> in Claude’s chat box.</strong> It switches to the next mode (Manual, then accept edits, then plan, then auto). If the line under the chat box no longer says <strong>manual mode on</strong>, press <code>Shift+Tab</code> until it does.</li>
+<li>More about permissions, the modes, and the rules Claude saves: <a href="./060500-permissionsModesAndSafety-v001.html#why-claude-code-asks-permission" target="_blank">Permissions, Modes, and Safety</a>.</li>
+</ul>
+<p><strong>Next time</strong> (a new session, after <code>/clear</code>, or when you switch from the terminal to VS Code’s Claude panel), start Claude in <code>full-stack-demo-app</code> again, type <code>/model sonnet</code>, and paste the prompt below. To start Claude:</p>
+<ul>
+<li><strong>In a terminal:</strong> <code>cd ~/projects/full-stack-demo-app</code>, then <code>claude --permission-mode manual</code>. Each new session in the terminal starts in auto mode unless you add <code>--permission-mode manual</code>.</li>
+<li><strong>In VS Code:</strong> open the <code>full-stack-demo-app</code> folder, click the Claude icon, and check the mode indicator at the bottom of Claude’s prompt box. If it doesn’t say <strong>Manual</strong>, click it and choose <strong>Manual</strong>. VS Code remembers that choice for your next conversations.</li>
+</ul>
+<p>The prompt:</p>
 <pre class="text"><code>We're continuing my full-stack task app project. Read checklist.md and my
 course notes at https://y-rosenthal.github.io/aiasd-in-progress/f26-class10-v001.html,
 check that the finished steps still work, and continue with the next unchecked
 step.</code></pre>
+</section>
 </section>
 <section id="the-steps" class="level2">
 <h2 class="anchored" data-anchor-id="the-steps">The steps</h2>
@@ -1471,7 +1528,7 @@ A3. Claude Code (you should have this already)
 <li><code>supabase@latest</code> is the package’s name, <code>supabase</code>, and <code>@latest</code> asks for its newest version. npm updates <code>package.json</code> and <code>package-lock.json</code> to match.</li>
 </ul>
 <p>Why: the project pins an early-2025 version of the CLI that can deploy Edge Functions only with Docker, and that may not work with new Supabase projects. Current versions deploy without Docker.</p>
-<p><strong>B6. Optional: move to Claude in VS Code.</strong> You can keep using Claude in the terminal for the whole project. If you’d rather have Claude in VS Code, next to your files: in the terminal where Claude runs, type <code>/exit</code>. Then, in VS Code (with <code>full-stack-demo-app</code> open), click the Claude icon to open the Claude Code panel, type <code>/model sonnet</code>, and paste the <strong>Next time</strong> prompt from <a href="#the-prompt-to-start-with">The prompt to start with</a>. Claude picks up where you left off, thanks to <code>checklist.md</code>.</p>
+<p><strong>B6. Optional: move to Claude in VS Code.</strong> You can keep using Claude in the terminal for the whole project. If you’d rather have Claude in VS Code, next to your files: in the terminal where Claude runs, type <code>/exit</code>. Then, in VS Code (with <code>full-stack-demo-app</code> open), click the Claude icon to open the Claude Code panel, set the mode indicator at the bottom of Claude’s prompt box to <strong>Manual</strong>, type <code>/model sonnet</code>, and paste the <strong>Next time</strong> prompt from <a href="#the-prompt-to-start-with">The prompt to start with</a>. Claude picks up where you left off, thanks to <code>checklist.md</code>.</p>
 </section>
 <section id="step-c-supabase-project-and-the-front-end" class="level3">
 <h3 class="anchored" data-anchor-id="step-c-supabase-project-and-the-front-end">Step C: Supabase project and the front end</h3>
