@@ -806,9 +806,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#create-storage-bucket" id="toc-create-storage-bucket" class="nav-link active" data-scroll-target="#create-storage-bucket"><span class="header-section-number">78.0.1</span> Create Storage Bucket</a></li>
-  <li><a href="#configure-bucket-settings" id="toc-configure-bucket-settings" class="nav-link" data-scroll-target="#configure-bucket-settings"><span class="header-section-number">78.0.2</span> Configure Bucket Settings</a></li>
-  <li><a href="#set-storage-policies" id="toc-set-storage-policies" class="nav-link" data-scroll-target="#set-storage-policies"><span class="header-section-number">78.0.3</span> Set Storage Policies</a></li>
+  <li><a href="#the-migration-already-created-the-bucket" id="toc-the-migration-already-created-the-bucket" class="nav-link active" data-scroll-target="#the-migration-already-created-the-bucket"><span class="header-section-number">78.0.1</span> The Migration Already Created the Bucket</a></li>
+  <li><a href="#what-the-migration-set-up" id="toc-what-the-migration-set-up" class="nav-link" data-scroll-target="#what-the-migration-set-up"><span class="header-section-number">78.0.2</span> What the Migration Set Up</a></li>
+  <li><a href="#check-it-in-the-dashboard" id="toc-check-it-in-the-dashboard" class="nav-link" data-scroll-target="#check-it-in-the-dashboard"><span class="header-section-number">78.0.3</span> Check It in the Dashboard</a></li>
   <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
   <ul class="collapse">
   <li><a href="#easy" id="toc-easy" class="nav-link" data-scroll-target="#easy">Easy</a></li>
@@ -840,27 +840,31 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>You’ll store task images in Supabase Storage.</p>
-<section id="create-storage-bucket" class="level3" data-number="78.0.1">
-<h3 data-number="78.0.1" class="anchored" data-anchor-id="create-storage-bucket"><span class="header-section-number">78.0.1</span> Create Storage Bucket</h3>
-<ol type="1">
-<li>In Supabase dashboard, go to <strong>Storage → Buckets</strong>.</li>
-<li>Click <strong>New bucket</strong>.</li>
-<li>Name it <code>task-images</code> (or whatever your code expects).</li>
-<li>For this tutorial, set the bucket to <strong>Public</strong>.</li>
-<li>Create the bucket.</li>
-</ol>
+<p>You’ll store task images in Supabase Storage, in a <strong>bucket</strong>: a named container for files, like a top-level folder in a cloud drive.</p>
+<section id="the-migration-already-created-the-bucket" class="level3" data-number="78.0.1">
+<h3 data-number="78.0.1" class="anchored" data-anchor-id="the-migration-already-created-the-bucket"><span class="header-section-number">78.0.1</span> The Migration Already Created the Bucket</h3>
+<p>You don’t create the bucket by hand. The migration <code>supabase/migrations/3_init_storage_schema.sql</code>, which ran when you ran <code>npx supabase db push</code> in <a href="./001190-tutorial-setupSupabaseDatabase-v001.html">Step 9</a>, already created it, with its settings and policies. The bucket is named <code>task-attachments</code>, the name the app’s code uses.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Don’t create a <code>task-images</code> bucket
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Earlier versions of this page told you to create a bucket named <code>task-images</code>. The app never uses a bucket with that name. If you created one, you can delete it.</p>
+</div>
+</div>
 </section>
-<section id="configure-bucket-settings" class="level3" data-number="78.0.2">
-<h3 data-number="78.0.2" class="anchored" data-anchor-id="configure-bucket-settings"><span class="header-section-number">78.0.2</span> Configure Bucket Settings</h3>
-<p><strong>File size limit:</strong></p>
+<section id="what-the-migration-set-up" class="level3" data-number="78.0.2">
+<h3 data-number="78.0.2" class="anchored" data-anchor-id="what-the-migration-set-up"><span class="header-section-number">78.0.2</span> What the Migration Set Up</h3>
+<p><strong>Bucket settings:</strong></p>
 <ul>
-<li>Decide on an appropriate max file size (e.g., 1 MB).</li>
-<li>Enforce this in your upload UI and/or server-side logic.</li>
-</ul>
-<p><strong>Allowed file types:</strong></p>
-<ul>
-<li>Restrict to images:
+<li><strong>Public:</strong> anyone who has an image’s URL can view it (simpler for tutorials). For production, consider a private bucket with signed URLs, links that work only for a limited time.</li>
+<li><strong>File size limit:</strong> 1 MB. Supabase refuses larger files, whatever the upload page does. (An upload page can also check the size first, to give a friendly message before the file is sent.)</li>
+<li><strong>Allowed file types:</strong> images only:
 <ul>
 <li><code>image/jpeg</code></li>
 <li><code>image/png</code></li>
@@ -868,27 +872,22 @@ ul.task-list li input[type="checkbox"] {
 <li><code>image/webp</code></li>
 </ul></li>
 </ul>
-<p><strong>Access settings:</strong></p>
+<p><strong>Storage policies</strong> (rules that Supabase checks on every request):</p>
 <ul>
-<li>Public bucket:
-<ul>
-<li>Anyone with the URL can view the image (simpler for tutorials).</li>
-</ul></li>
-<li>For production:
-<ul>
-<li>Consider a private bucket + signed URLs for more control.</li>
-</ul></li>
+<li>Anyone can view the files.</li>
+<li>Signed-in users can upload files, but only into a folder named after their own user ID. The app saves each image under a path that starts with the uploader’s ID.</li>
+<li>Signed-in users can delete files only in their own folder.</li>
 </ul>
+<p>The migration also deletes a task’s image from storage when the task is deleted.</p>
 </section>
-<section id="set-storage-policies" class="level3" data-number="78.0.3">
-<h3 data-number="78.0.3" class="anchored" data-anchor-id="set-storage-policies"><span class="header-section-number">78.0.3</span> Set Storage Policies</h3>
-<p>In the <strong>Policies</strong> section for your <code>task-images</code> bucket, ensure:</p>
-<ul>
-<li>Authenticated users can upload files (e.g., policy: if <code>auth.role() = 'authenticated'</code>).</li>
-<li>Anyone can read files (for public tutorials).</li>
-<li>Users can delete only their own images (e.g., match <code>user_id</code> in metadata/path).</li>
-</ul>
-<p>You can either: - Use the provided migration policies, or - Create them via the Supabase dashboard policy builder.</p>
+<section id="check-it-in-the-dashboard" class="level3" data-number="78.0.3">
+<h3 data-number="78.0.3" class="anchored" data-anchor-id="check-it-in-the-dashboard"><span class="header-section-number">78.0.3</span> Check It in the Dashboard</h3>
+<ol type="1">
+<li>In the Supabase dashboard, open <strong>Storage</strong>. You should see the <code>task-attachments</code> bucket, marked as public.</li>
+<li>Open the bucket’s settings (its <strong>Edit</strong> option) to see the size limit and the allowed file types.</li>
+<li>Open the storage <strong>Policies</strong> page to see the three policies.</li>
+</ol>
+<p>If the bucket is missing, <code>npx supabase db push</code> didn’t finish. Run it again and read its output for errors.</p>
 </section>
 <section id="practice-questions" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
@@ -897,32 +896,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="question-1-short-answer" class="level4 unnumbered unlisted">
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-1-short-answer">Question 1 · Short answer</h4>
 <p>What is a Supabase Storage <strong>bucket</strong>, and what does this app keep in it?</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>A bucket is a named container for files in Supabase Storage - think of it as a top-level folder in a cloud drive. This app keeps the <strong>images that users attach to their tasks</strong> in it.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-2-multiple-choice" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-multiple-choice">Question 2 · Multiple choice</h4>
-<p>The page tells you to make the bucket <strong>Public</strong>. What does that setting mean?</p>
-<ol type="a">
-<li>Anyone on the internet can upload files to the bucket</li>
-<li>Anyone who has a file’s URL can view that file</li>
-<li>Anyone can delete files from the bucket</li>
-<li>Only the user who uploaded a file can view it</li>
-</ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -935,7 +908,33 @@ Suggested answer
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>b.</strong> “Public” is about <em>viewing</em>: anyone who has a file’s URL can open it without signing in. Uploading (a) and deleting (c) are still controlled by the bucket’s policies - on this page, only signed-in users can upload, and users can delete only their own images. Option d describes a private setup, which the page suggests considering for production.</p>
+<p>A bucket is a named container for files in Supabase Storage - think of it as a top-level folder in a cloud drive. This app keeps the <strong>images that users attach to their tasks</strong> in it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-multiple-choice">Question 2 · Multiple choice</h4>
+<p>The migration makes the bucket <strong>Public</strong>. What does that setting mean?</p>
+<ol type="a">
+<li>Anyone on the internet can upload files to the bucket</li>
+<li>Anyone who has a file’s URL can view that file</li>
+<li>Anyone can delete files from the bucket</li>
+<li>Only the user who uploaded a file can view it</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> “Public” is about <em>viewing</em>: anyone who has a file’s URL can open it without signing in. Uploading (a) and deleting (c) are still controlled by the bucket’s policies - here, only signed-in users can upload, and users can delete only their own images. Option d describes a private setup, which the page suggests considering for production.</p>
 </div>
 </div>
 </div>
@@ -950,26 +949,6 @@ Suggested answer
 <li><code>celebration.gif</code></li>
 </ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>c.</strong> A PDF is not an image, so it is not on the allowed list. JPEG (a), PNG (b) and GIF (d) images are all allowed. Labels such as <code>image/png</code> are called <strong>MIME types</strong>: a standard way of naming what kind of data a file contains.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-4-true-or-false" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-true-or-false">Question 4 · True or false</h4>
-<p>The only way to create the storage policies is to click through the policy builder in the Supabase dashboard.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -981,7 +960,27 @@ Suggested answer
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>False.</strong> The page gives two options: use the policies that come with the project’s <strong>migration</strong> files (the SQL files in <code>supabase/migrations/</code>), or create them with the dashboard’s policy builder.</p>
+<p><strong>c.</strong> A PDF is not an image, so it is not on the allowed list. JPEG (a), PNG (b) and GIF (d) images are all allowed. Labels such as <code>image/png</code> are called <strong>MIME types</strong>: a standard way of naming what kind of data a file contains.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-true-or-false">Question 4 · True or false</h4>
+<p>You have to create the storage bucket and its policies by hand in the Supabase dashboard before the app can store images.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> The project’s migration <code>3_init_storage_schema.sql</code> (one of the SQL files in <code>supabase/migrations/</code>) creates the bucket, its settings and its policies when you run <code>npx supabase db push</code>. In the dashboard you only check that they are there.</p>
 </div>
 </div>
 </div>
@@ -1029,27 +1028,6 @@ Suggested answer
 </tbody>
 </table>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>1 → C, 2 → D, 3 → A, 4 → B.</p>
-<p>A <strong>signed URL</strong> is a link to one private file that works only for a limited time. That is why a private bucket gives you more control.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-6-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-short-answer">Question 6 · Short answer</h4>
-<p>The page says to give the bucket the name “your code expects”. Why must the bucket’s name match the name used in the code, and what happens if it doesn’t?</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -1061,14 +1039,15 @@ Suggested answer
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The app finds the bucket <strong>by its name</strong>: the code says, in effect, “upload this file to the bucket called X” and “show the image stored in bucket X”. If your bucket’s name is different (even by one character), the app is asking for a bucket that doesn’t exist, so uploads fail (typically with a “Bucket not found” error) and images don’t appear. To find the name the code expects, search the project’s code and its migration files (<code>supabase/migrations/</code>) for the bucket name.</p>
+<p>1 → C, 2 → D, 3 → A, 4 → B.</p>
+<p>A <strong>signed URL</strong> is a link to one private file that works only for a limited time. That is why a private bucket gives you more control.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-7-scenario" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-scenario">Question 7 · Scenario</h4>
-<p>Maria tries to attach a 3 MB photo of a whiteboard (a PNG file) to one of her tasks. The bucket’s size limit is 1 MB. What should happen? Is this a bug?</p>
+<section id="question-6-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-short-answer">Question 6 · Short answer</h4>
+<p>Earlier versions of this page told students to create a bucket named <code>task-images</code> by hand, but the app’s code uses a bucket named <code>task-attachments</code>. Why must the bucket’s name match the name used in the code, and what happens if it doesn’t?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1081,14 +1060,14 @@ Suggested answer
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The upload should be <strong>rejected</strong>, ideally with a clear error message, and the photo should not be saved. That is not a bug - it’s the size limit doing its job. Maria can shrink or compress the photo to under 1 MB and try again. (The next step, “Run the Application”, asks you to test exactly this.)</p>
+<p>The app finds the bucket <strong>by its name</strong>: the code says, in effect, “upload this file to the bucket called X” and “show the image stored in bucket X”. If your bucket’s name is different (even by one character), the app is asking for a bucket that doesn’t exist, so uploads fail (typically with a “Bucket not found” error) and images don’t appear. A student who created only <code>task-images</code> would have an empty bucket the app never uses. To find the name the code expects, search the project’s code and its migration files (<code>supabase/migrations/</code>) for the bucket name.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-8-scenario" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-scenario">Question 8 · Scenario</h4>
-<p>When a signed-in user tries to upload an image from the app, the upload fails with an error like “new row violates row-level security policy”. Based on this page, what is most likely missing, and how could you fix it?</p>
+<section id="question-7-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-scenario">Question 7 · Scenario</h4>
+<p>Maria tries to attach a 3 MB photo of a whiteboard (a PNG file) to one of her tasks. The bucket’s size limit is 1 MB. What should happen? Is this a bug?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1101,17 +1080,14 @@ Suggested answer
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The <strong>upload policy</strong> - the rule that allows authenticated (signed-in) users to add files to the bucket - is missing or wrong. Supabase checks the bucket’s policies on every upload and refuses anything they don’t allow. Fix it by adding the upload policy, either from the project’s migration policies or with the dashboard’s policy builder. It is also worth confirming that the user really is signed in.</p>
+<p>The upload should be <strong>rejected</strong>, ideally with a clear error message, and the photo should not be saved. That is not a bug - it’s the size limit doing its job. Maria can shrink or compress the photo to under 1 MB and try again. (The next step, “Run the Application”, asks you to test exactly this.)</p>
 </div>
 </div>
 </div>
 </section>
-</section>
-<section id="hard" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
-<section id="question-9-long-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-long-answer">Question 9 · Long answer</h4>
-<p>The page says to enforce the file-size limit “in your upload UI and/or server-side logic”. Explain what each of these two places adds, and why a check <strong>only</strong> in the upload page (the UI) is not enough.</p>
+<section id="question-8-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-scenario">Question 8 · Scenario</h4>
+<p>When a signed-in user tries to upload an image from the app, the upload fails with an error like “new row violates row-level security policy”. Based on this page, what is most likely missing, and how could you fix it?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1123,6 +1099,29 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <strong>upload policy</strong> - the rule that allows signed-in users to add files to the bucket, in their own folder - is missing, or the upload doesn’t match it. Supabase checks the bucket’s policies on every upload and refuses anything they don’t allow. Check the storage <strong>Policies</strong> page in the dashboard. If the policies are missing, the migration didn’t run completely: run <code>npx supabase db push</code> again and read its output. It is also worth confirming that the user really is signed in.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
+<section id="question-9-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-long-answer">Question 9 · Long answer</h4>
+<p>A file-size limit can be enforced in the upload page (the UI) and on the server (here, the bucket’s own 1 MB limit in Supabase). Explain what each of these two places adds, and why a check <strong>only</strong> in the upload page is not enough.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li>A check in the <strong>UI</strong> (the upload page in the browser) gives instant, friendly feedback (“File must be under 1 MB”) before the file is even sent.</li>
@@ -1137,26 +1136,6 @@ Suggested answer
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-scenario">Question 10 · Scenario</h4>
 <p>Suppose the app saves each image under a path that starts with the uploader’s user ID, for example <code>maria-user-id/whiteboard.png</code> (in real life the ID is a long random string). Explain how a delete policy can use that path so that Sam cannot delete Maria’s image.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>When someone asks to delete a file, the policy compares <strong>the first folder in the file’s path</strong> with <strong>the user ID of the person making the request</strong> (Supabase knows who is signed in). Maria’s image is stored under her ID, so when Sam - signed in with a different ID - tries to delete it, the two don’t match and Supabase refuses. When Maria deletes it, they match and the delete is allowed. This is the “match <code>user_id</code> in … path” idea from the page.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-11-compare" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-compare">Question 11 · Compare</h4>
-<p>The page calls a public bucket “simpler for tutorials” but suggests a private bucket with signed URLs for production. Imagine the app adds a feature where employees upload photos of <strong>expense receipts</strong>. Which option would you choose, and why? Mention one downside of your choice.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -1167,6 +1146,26 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When someone asks to delete a file, the policy compares <strong>the first folder in the file’s path</strong> with <strong>the user ID of the person making the request</strong> (Supabase knows who is signed in). Maria’s image is stored under her ID, so when Sam - signed in with a different ID - tries to delete it, the two don’t match and Supabase refuses. When Maria deletes it, they match and the delete is allowed. This is how the migration’s delete policy works.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-11-compare" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-compare">Question 11 · Compare</h4>
+<p>The page calls a public bucket “simpler for tutorials” but suggests a private bucket with signed URLs for production. Imagine the app adds a feature where employees upload photos of <strong>expense receipts</strong>. Which option would you choose, and why? Mention one downside of your choice.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A <strong>private bucket with signed URLs</strong>. Receipts can contain sensitive information (names, amounts, the last digits of a card). In a public bucket, anyone who gets hold of an image’s URL - for example from a forwarded email - can view it without signing in. With a private bucket, the app first checks who is asking and then hands out a signed URL that stops working after a short time.</p>
 <p>Downside: more work. The app has to create a signed URL every time it shows an image, and old links stop working once they expire. For harmless images in a class project, a public bucket is fine.</p>

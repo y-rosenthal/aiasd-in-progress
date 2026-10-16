@@ -844,7 +844,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-three-functions" id="toc-the-three-functions" class="nav-link active" data-scroll-target="#the-three-functions"><span class="header-section-number">79.0.1</span> The Three Functions</a></li>
   <li><a href="#deploy-the-functions" id="toc-deploy-the-functions" class="nav-link" data-scroll-target="#deploy-the-functions"><span class="header-section-number">79.0.2</span> Deploy the Functions</a></li>
   <li><a href="#verify-deployment" id="toc-verify-deployment" class="nav-link" data-scroll-target="#verify-deployment"><span class="header-section-number">79.0.3</span> Verify Deployment</a></li>
-  <li><a href="#configure-stripe-webhook" id="toc-configure-stripe-webhook" class="nav-link" data-scroll-target="#configure-stripe-webhook"><span class="header-section-number">79.0.4</span> Configure Stripe Webhook</a></li>
+  <li><a href="#jwt-verification-for-stripe-webhook" id="toc-jwt-verification-for-stripe-webhook" class="nav-link" data-scroll-target="#jwt-verification-for-stripe-webhook"><span class="header-section-number">79.0.4</span> JWT verification for <code>stripe-webhook</code></a></li>
   <li><a href="#update-stripe-webhook-url" id="toc-update-stripe-webhook-url" class="nav-link" data-scroll-target="#update-stripe-webhook-url"><span class="header-section-number">79.0.5</span> Update Stripe Webhook URL</a></li>
   <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
   <ul class="collapse">
@@ -877,103 +877,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Edge Functions are serverless handlers for AI, billing, and webhooks.</p>
-<p><strong>Location in project:</strong> <code>supabase/functions/</code></p>
+<p>Edge Functions are small back-end programs that run on Supabase’s servers. This app has three: one for AI labels, one for Stripe payments, and one for Stripe’s webhook.</p>
+<p><strong>Location in project:</strong> <code>supabase/functions/</code>, one folder per function. The folder’s name is the function’s name, and it is the name you use when you deploy it.</p>
 <section id="the-three-functions" class="level3" data-number="79.0.1">
 <h3 data-number="79.0.1" class="anchored" data-anchor-id="the-three-functions"><span class="header-section-number">79.0.1</span> The Three Functions</h3>
-<section id="createtaskwithai" class="level4">
-<h4 class="anchored" data-anchor-id="createtaskwithai">1. <code>createTaskWithAI</code></h4>
+<section id="create-task-with-ai" class="level4">
+<h4 class="anchored" data-anchor-id="create-task-with-ai">1. <code>create-task-with-ai</code></h4>
 <p>Used to:</p>
 <ul>
-<li>Accept task input (e.g., title, description).</li>
-<li>Call OpenAI using <code>OPENAI_API_KEY</code>.</li>
-<li>Generate or refine a label.</li>
-<li>Insert/update the task row in the <code>tasks</code> table.</li>
+<li>Check which signed-in user is calling (from the user’s JWT, a signed “ID badge” that the app sends along).</li>
+<li>Save the new task in the <code>tasks</code> table.</li>
+<li>Ask OpenAI for a label (using the secret <code>OPENAI_API_KEY</code>) and save the label with the task.</li>
 </ul>
-<p>This function typically: - Validates the user (via JWT). - Checks subscription status if needed (e.g., premium-only features).</p>
 </section>
-<section id="createstripesession" class="level4">
-<h4 class="anchored" data-anchor-id="createstripesession">2. <code>createStripeSession</code></h4>
-<p>Used to:</p>
+<section id="create-stripe-session" class="level4">
+<h4 class="anchored" data-anchor-id="create-stripe-session">2. <code>create-stripe-session</code></h4>
+<p>Used when the user clicks the subscription button in the app:</p>
 <ul>
-<li>Create Stripe Checkout sessions for new subscriptions.</li>
-<li>Return a customer portal link if the user already has a subscription.</li>
-<li>Redirect users to Stripe when they click “Manage Subscription”.</li>
+<li>For a free user, it creates a Stripe <strong>Checkout</strong> session (Stripe’s payment page) for the price in the secret <code>STRIPE_PRICE_ID</code>.</li>
+<li>For a premium user, it returns a link to Stripe’s <strong>customer portal</strong>, where the user can manage or cancel the subscription.</li>
 </ul>
-<p>It uses <code>STRIPE_SECRET_KEY</code> and price IDs to build sessions.</p>
+<p>It uses the secrets <code>STRIPE_SECRET_KEY</code> and <code>STRIPE_PRICE_ID</code>.</p>
 </section>
 <section id="stripe-webhook" class="level4">
 <h4 class="anchored" data-anchor-id="stripe-webhook">3. <code>stripe-webhook</code></h4>
 <p>Used to:</p>
 <ul>
 <li>Receive event notifications from Stripe.</li>
-<li>Verify the webhook signature using <code>STRIPE_WEBHOOK_SECRET</code>.</li>
-<li>Sync subscription status (e.g., set <code>user_subscriptions.status = 'active'</code>).</li>
-<li>Handle cancellations, renewals, and trial endings.</li>
+<li>Verify each event’s signature using <code>STRIPE_WEBHOOK_SECRET</code>.</li>
+<li>Update the user’s row in the <code>profiles</code> table: <code>checkout.session.completed</code> sets <code>subscription_plan</code> to <code>premium</code>, and <code>customer.subscription.deleted</code> sets it back to <code>free</code>. The code ignores every other event.</li>
 </ul>
 <p>This function is called directly by Stripe, so it doesn’t use user JWTs.</p>
 </section>
 </section>
 <section id="deploy-the-functions" class="level3" data-number="79.0.2">
 <h3 data-number="79.0.2" class="anchored" data-anchor-id="deploy-the-functions"><span class="header-section-number">79.0.2</span> Deploy the Functions</h3>
-<p>From your project root, deploy each function with the Supabase CLI:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Deploy the AI task creation function</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> functions deploy createTaskWithAI</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Deploy the Stripe session function</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> functions deploy createStripeSession</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Deploy the webhook function</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> functions deploy stripe-webhook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>After deploying, the CLI will output function URLs like:</p>
-<pre class="text"><code>https://[your-project-ref].supabase.co/functions/v1/createTaskWithAI</code></pre>
-<p>Keep these handy for testing or local development.</p>
+<p>From the project root (the folder that contains the <code>supabase/</code> folder), deploy each function with the Supabase CLI. Run one command at a time:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-task-with-ai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-stripe-session</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>npx supabase</code> runs the Supabase CLI from the project’s own packages (see <a href="./001155-tutorial-supabaseCli-v001.html">Step 5a</a>).</li>
+<li><code>functions deploy</code> uploads one function, named by the folder name that follows it. The names use hyphens: the app calls the functions at URLs built from these exact names.</li>
+<li><code>--no-verify-jwt</code> (only for <code>stripe-webhook</code>) turns off JWT verification for that function. The next section explains why.</li>
+</ul>
+<p>Each function’s URL has this form:</p>
+<pre class="text"><code>https://[your-project-ref].supabase.co/functions/v1/create-task-with-ai</code></pre>
 </section>
 <section id="verify-deployment" class="level3" data-number="79.0.3">
 <h3 data-number="79.0.3" class="anchored" data-anchor-id="verify-deployment"><span class="header-section-number">79.0.3</span> Verify Deployment</h3>
 <ol type="1">
-<li>In Supabase dashboard, open <strong>Edge Functions</strong>.</li>
+<li>In the Supabase dashboard, open <strong>Edge Functions</strong>.</li>
 <li>Confirm you see:
 <ul>
-<li><code>createTaskWithAI</code></li>
-<li><code>createStripeSession</code></li>
+<li><code>create-task-with-ai</code></li>
+<li><code>create-stripe-session</code></li>
 <li><code>stripe-webhook</code></li>
 </ul></li>
-<li>Click each function:
-<ul>
-<li>Check the <strong>Logs</strong> tab for any runtime errors.</li>
-<li>Trigger test requests (e.g., via <code>curl</code> or a REST client) if needed.</li>
-</ul></li>
+<li>Click a function to see its details. Its <strong>Logs</strong> tab shows runtime errors and the messages the code prints.</li>
 </ol>
 </section>
-<section id="configure-stripe-webhook" class="level3" data-number="79.0.4">
-<h3 data-number="79.0.4" class="anchored" data-anchor-id="configure-stripe-webhook"><span class="header-section-number">79.0.4</span> Configure Stripe Webhook</h3>
-<p><code>stripe-webhook</code> must accept unauthenticated calls from Stripe.</p>
-<ol type="1">
-<li>In Supabase dashboard, click the <code>stripe-webhook</code> function.</li>
-<li>Go to the <strong>Details</strong> tab.</li>
-<li>Find <strong>Function configuration</strong> (or <strong>Settings</strong>).</li>
-<li>Disable <strong>Enforce JWT verification</strong> for this function.</li>
-<li>Save the changes.</li>
-</ol>
-<p><strong>Why?</strong> Stripe does not send JWTs; the function instead authenticates via <code>STRIPE_WEBHOOK_SECRET</code>.</p>
+<section id="jwt-verification-for-stripe-webhook" class="level3" data-number="79.0.4">
+<h3 data-number="79.0.4" class="anchored" data-anchor-id="jwt-verification-for-stripe-webhook"><span class="header-section-number">79.0.4</span> JWT verification for <code>stripe-webhook</code></h3>
+<p><code>stripe-webhook</code> must accept calls from Stripe, which don’t carry a Supabase JWT. The <code>--no-verify-jwt</code> option above turns JWT verification off for that function only.</p>
+<p>To check it, click <code>stripe-webhook</code> in the dashboard and open its <strong>Details</strong> tab. The JWT verification switch should be off. (Its label has changed over time; it starts with “Verify JWT” or “Enforce JWT”.) If it is on, turn it off and save, or deploy the function again with <code>--no-verify-jwt</code>.</p>
+<p>Another way, which every later deploy remembers: add these two lines to <code>supabase/config.toml</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[functions.stripe-webhook]</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">verify_jwt</span> <span class="op">=</span> <span class="cn">false</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Why is this safe?</strong> Stripe doesn’t send JWTs. Instead, it signs every event, and the function checks that signature with <code>STRIPE_WEBHOOK_SECRET</code>.</p>
 </section>
 <section id="update-stripe-webhook-url" class="level3" data-number="79.0.5">
 <h3 data-number="79.0.5" class="anchored" data-anchor-id="update-stripe-webhook-url"><span class="header-section-number">79.0.5</span> Update Stripe Webhook URL</h3>
 <p>Now point Stripe to your deployed function.</p>
 <ol type="1">
-<li><p>In Stripe Dashboard, go to <strong>Developers → Webhooks</strong>.</p></li>
-<li><p>Click your webhook endpoint.</p></li>
-<li><p>Update the <strong>Endpoint URL</strong> to:</p>
+<li><p>In the Stripe Dashboard, open <a href="https://dashboard.stripe.com/webhooks">Workbench &gt; Webhooks</a>.</p></li>
+<li><p>Click the event destination you created in Step 8.</p></li>
+<li><p>Edit the destination and change its <strong>Endpoint URL</strong> to:</p>
 <pre class="text"><code>https://[your-project-ref].supabase.co/functions/v1/stripe-webhook</code></pre></li>
-<li><p>Save the endpoint.</p></li>
-<li><p>Use the <strong>Send test event</strong> button in Stripe to verify that your function:</p>
-<ul>
-<li>Receives the event.</li>
-<li>Validates the signature.</li>
-<li>Updates your database correctly.</li>
-</ul></li>
+<li><p>Save.</p></li>
 </ol>
+<p>You test the webhook in <a href="./001220-tutorial-runTheApplication-v001.html">Step 12</a> by buying a subscription with a test card. Afterwards:</p>
+<ul>
+<li>The destination’s page in Stripe lists the events Stripe sent.</li>
+<li>The <code>stripe-webhook</code> logs in Supabase show <code>Received event: checkout.session.completed</code>.</li>
+<li>In the Supabase <strong>Table Editor</strong>, your row in <code>profiles</code> has <code>subscription_plan</code> set to <code>premium</code>.</li>
+</ul>
+<p>Stripe can also send test events (with <code>stripe trigger</code> in the Stripe CLI), but those events create a new test customer who isn’t linked to any of your app’s users, so they don’t change your database.</p>
+<p>Stripe may show an event as delivered even when the function rejected it: the function always answers “OK”. If an upgrade doesn’t appear in the app, read the <code>stripe-webhook</code> logs in Supabase.</p>
 </section>
 <section id="practice-questions" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
@@ -1051,7 +1041,7 @@ Suggested answer
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>1 → B, 2 → D, 3 → A.</p>
-<p>C is not an edge function’s job: images are stored in the Supabase Storage bucket you set up in the previous step.</p>
+<p>C is not an edge function’s job: images are stored in the Supabase Storage bucket from the previous step.</p>
 </div>
 </div>
 </div>
@@ -1120,8 +1110,8 @@ Suggested answer
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Run it from the <strong>project root</strong> - the top-level folder of the project, which contains the <code>supabase/</code> folder. This tutorial runs the Supabase CLI through <code>npx</code>; if you installed the CLI another way, type <code>supabase functions deploy stripe-webhook</code> instead.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Run it from the <strong>project root</strong> - the top-level folder of the project, which contains the <code>supabase/</code> folder. <code>--no-verify-jwt</code> keeps JWT verification off for this function, so Stripe can call it. This tutorial runs the Supabase CLI through <code>npx</code>; if you installed the CLI another way, leave out <code>npx</code>.</p>
 </div>
 </div>
 </div>
@@ -1269,7 +1259,7 @@ Suggested answer
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>You forgot to <strong>turn off JWT verification</strong> for <code>stripe-webhook</code>. Stripe’s requests carry no JWT, so Supabase answers “401 Unauthorized” before your function’s code runs. Fix: in the Supabase dashboard, open the <code>stripe-webhook</code> function, go to its <strong>Details</strong> tab, switch off JWT verification in the function configuration, and save. (The exact wording of this switch in the dashboard may differ slightly from the page.)</p>
+<p>You forgot to <strong>turn off JWT verification</strong> for <code>stripe-webhook</code>, for example by deploying it without <code>--no-verify-jwt</code>. Stripe’s requests carry no JWT, so Supabase answers “401 Unauthorized” before your function’s code runs. Fix: deploy it again with <code>npx supabase functions deploy stripe-webhook --no-verify-jwt</code>, or switch off JWT verification on the function’s <strong>Details</strong> tab in the Supabase dashboard.</p>
 </div>
 </div>
 </div>
@@ -1300,7 +1290,7 @@ Suggested answer
 <ul>
 <li><strong>A.</strong> Change the endpoint URL in Stripe to the deployed <code>stripe-webhook</code> URL</li>
 <li><strong>B.</strong> Deploy the three functions with the Supabase CLI</li>
-<li><strong>C.</strong> Turn off JWT verification for <code>stripe-webhook</code></li>
+<li><strong>C.</strong> Check that JWT verification is off for <code>stripe-webhook</code></li>
 <li><strong>D.</strong> Check in the Supabase dashboard that all three functions appear, and look at their logs</li>
 </ul>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
@@ -1316,7 +1306,7 @@ Suggested answer
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>B → D → C → A.</p>
-<p>Deploying (B) has to come first: until a function is deployed, there is nothing to check (D), no setting to switch off (C) and no URL to give Stripe (A).</p>
+<p>Deploying (B) has to come first: until a function is deployed, there is nothing to check (D and C) and no URL to give Stripe (A).</p>
 </div>
 </div>
 </div>

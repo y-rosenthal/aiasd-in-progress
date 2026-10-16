@@ -888,10 +888,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Add all required environment variables:
 <ul>
 <li><code>NEXT_PUBLIC_SUPABASE_URL</code></li>
-<li><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></li>
-<li><code>NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code></li>
-<li>any other <code>NEXT_PUBLIC_...</code> or server-side variables.</li>
-</ul></li>
+<li><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> (its value is your Supabase publishable key, as in <code>.env.local</code>)</li>
+</ul>
+These two are all the app needs. Don’t add your Supabase secret key: the app doesn’t use it, and it must never get a <code>NEXT_PUBLIC_</code> name.</li>
 </ul></li>
 <li>Deploy the app.</li>
 </ol>
@@ -912,7 +911,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="81.0.2" class="anchored" data-anchor-id="update-environment-variables-for-production"><span class="header-section-number">81.0.2</span> Update Environment Variables for Production</h3>
 <p>For the production instance, make sure to:</p>
 <ul>
-<li>Use your <strong>production Supabase project URL and anon/service keys</strong>.</li>
+<li>Use your <strong>production Supabase project’s URL and publishable key</strong>.</li>
 <li>Switch Stripe from <strong>test mode</strong> to <strong>live mode</strong> when ready:
 <ul>
 <li>Replace <code>pk_test_...</code> and <code>sk_test_...</code> with <code>pk_live_...</code> / <code>sk_live_...</code>.</li>
@@ -1043,7 +1042,7 @@ Suggested answer
 <p>Variables whose names start with <code>NEXT_PUBLIC_</code> are built into the JavaScript that is sent to every visitor’s browser. Which of these values must <strong>never</strong> go into a <code>NEXT_PUBLIC_</code> variable?</p>
 <ol type="a">
 <li>The Supabase project URL</li>
-<li>The Supabase anon key</li>
+<li>The Supabase publishable key (<code>sb_publishable_...</code>)</li>
 <li>The Stripe publishable key (<code>pk_...</code>)</li>
 <li>The Stripe secret key (<code>sk_...</code>)</li>
 </ol>
@@ -1059,7 +1058,7 @@ Suggested answer
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>d.</strong> Anyone who visits your site can read a <code>NEXT_PUBLIC_</code> value. The Supabase URL (a), the anon key (b) and the publishable key (c) are designed to be safe in the browser. The secret key gives full access to your Stripe account (for example, issuing refunds or reading customer data), so it must stay on a server. In this project it is stored as a Supabase secret that the edge functions use.</p>
+<p><strong>d.</strong> Anyone who visits your site can read a <code>NEXT_PUBLIC_</code> value. The Supabase URL (a), the Supabase publishable key (b) and the Stripe publishable key (c) are designed to be safe in the browser. The secret key gives full access to your Stripe account (for example, issuing refunds or reading customer data), so it must stay on a server. In this project it is stored as a Supabase secret that the edge functions use.</p>
 </div>
 </div>
 </div>
@@ -1180,7 +1179,7 @@ Suggested answer
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Bigger teams usually keep <strong>separate Supabase projects</strong>: one (or more) for development and testing, and one for production that holds real users’ data. Each project has its own URL and keys, so <code>.env.local</code> points at the development project while Vercel points at the production project. With a single project, your Vercel variables simply use the same URL and anon key as <code>.env.local</code>.</p>
+<p>Bigger teams usually keep <strong>separate Supabase projects</strong>: one (or more) for development and testing, and one for production that holds real users’ data. Each project has its own URL and keys, so <code>.env.local</code> points at the development project while Vercel points at the production project. With a single project, your Vercel variables simply use the same URL and publishable key as <code>.env.local</code>.</p>
 <p>The risk: everything you do while developing - creating junk test tasks, running automated tests, trying out a new migration - happens in the same database that real users rely on. A broken experiment can break or clutter the live app.</p>
 </div>
 </div>

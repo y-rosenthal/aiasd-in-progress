@@ -886,32 +886,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Automated tests help ensure everything works after changes.</p>
 <section id="integration-tests" class="level3" data-number="83.0.1">
 <h3 data-number="83.0.1" class="anchored" data-anchor-id="integration-tests"><span class="header-section-number">83.0.1</span> Integration Tests</h3>
-<p>The project includes integration tests that talk to your real Supabase project (usually in a separate test environment).</p>
+<p>The project includes integration tests in <code>tests/integration/</code>. They talk to your real Supabase project and your Stripe sandbox: they create test users, tasks and payments there. Use a test project, not one with real users.</p>
+<p>The test files end in <code>.test.ts</code> (for example <code>2_auth.test.ts</code>). The test runner, Jest, runs only files whose names end that way.</p>
 </section>
 <section id="set-up-test-environment" class="level3" data-number="83.0.2">
 <h3 data-number="83.0.2" class="anchored" data-anchor-id="set-up-test-environment"><span class="header-section-number">83.0.2</span> Set Up Test Environment</h3>
 <ol type="1">
-<li><p>Copy the example environment file:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> example.env tests/.env.test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Fill in the file with:</p>
-<ul>
-<li>Supabase test project URL and keys.</li>
-<li>Test Stripe keys (if required).</li>
-<li>Any other secrets needed for tests.</li>
-</ul></li>
-<li><p>Keep the test env separate from production credentials.</p></li>
+<li><p>In the project root, copy the example environment file to a new file named <code>.env.test.local</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> .env.example .env.test.local</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>cp</code> copies the first file to the second. The tests read their settings from <code>.env.test.local</code> in the project root. Like <code>.env.local</code>, it is ignored by Git, so your keys stay off GitHub.</p></li>
+<li><p>Fill in all six variables:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>NEXT_PUBLIC_SUPABASE_URL</code></td>
+<td>Your Supabase project URL</td>
+</tr>
+<tr class="even">
+<td><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></td>
+<td>Your Supabase publishable key (<code>sb_publishable_...</code>; older projects: the <code>anon</code> key)</td>
+</tr>
+<tr class="odd">
+<td><code>SUPABASE_SERVICE_KEY</code></td>
+<td>Your Supabase secret key (<code>sb_secret_...</code>; older projects: the <code>service_role</code> key)</td>
+</tr>
+<tr class="even">
+<td><code>STRIPE_SECRET_KEY</code></td>
+<td>Your Stripe sandbox secret key (<code>sk_test_...</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>STRIPE_PRICE_ID</code></td>
+<td>Your price’s ID (<code>price_...</code>)</td>
+</tr>
+<tr class="even">
+<td><code>STRIPE_WEBHOOK_SECRET</code></td>
+<td>Your webhook’s signing secret (<code>whsec_...</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>The Supabase secret key can read and change everything in your project, so it goes only in this file, never in <code>.env.local</code> or in a <code>NEXT_PUBLIC_</code> variable of the app.</p></li>
+<li><p>Keep the test settings separate from production credentials.</p></li>
 </ol>
 </section>
 <section id="run-tests" class="level3" data-number="83.0.3">
 <h3 data-number="83.0.3" class="anchored" data-anchor-id="run-tests"><span class="header-section-number">83.0.3</span> Run Tests</h3>
 <p><strong>Run all tests:</strong></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Run a specific test file:</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> test <span class="at">--</span> tests/integration/specific-test.spec.ts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>npm test</code> runs the project’s <code>test</code> script, which starts Jest.</p>
+<p><strong>Run one test file:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> test tests/integration/2_auth.test.ts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you see failures due to cold starts or timeouts:</p>
 <ul>
 <li>Run the tests again.</li>
-<li>Check that your Edge Functions are deployed and reachable from the test environment.</li>
+<li>Check that your Edge Functions are deployed and reachable.</li>
 </ul>
 <hr>
 </section>
@@ -949,7 +986,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="edge-functions-failing" class="level3" data-number="83.1.3">
 <h3 data-number="83.1.3" class="anchored" data-anchor-id="edge-functions-failing"><span class="header-section-number">83.1.3</span> Edge Functions Failing</h3>
 <ul>
-<li>Check that all required secrets are set (<code>OPENAI_API_KEY</code>, <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET</code>).</li>
+<li>Check that all required secrets are set (<code>OPENAI_API_KEY</code>, <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_PRICE_ID</code>, <code>STRIPE_WEBHOOK_SECRET</code>). <code>npx supabase secrets list</code> shows their names.</li>
 <li>In Supabase:
 <ul>
 <li>Open <strong>Edge Functions → Logs</strong> to see runtime errors.</li>
@@ -966,13 +1003,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>It must match the function URL exactly (including <code>https</code>).</li>
 </ul></li>
 <li>Ensure the <strong>Signing secret</strong> in Supabase matches the current secret shown in Stripe.</li>
-<li>Use Stripe’s <strong>Send test event</strong> to debug.</li>
+<li>Buy a subscription with a test card, then read the <code>stripe-webhook</code> logs in Supabase (see <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html">Step 11</a>).</li>
 </ul>
 </section>
 <section id="database-errors" class="level3" data-number="83.1.5">
 <h3 data-number="83.1.5" class="anchored" data-anchor-id="database-errors"><span class="header-section-number">83.1.5</span> Database Errors</h3>
 <ul>
-<li>Ensure <code>supabase db push</code> ran successfully without errors.</li>
+<li>Ensure <code>npx supabase db push</code> ran successfully without errors.</li>
 <li>Check that RLS policies allow the operation you’re trying.</li>
 <li>Confirm that the user is authenticated when performing actions that require auth.</li>
 <li>Inspect Supabase logs or use the SQL editor to run queries manually.</li>
@@ -1065,7 +1102,7 @@ Suggested answer
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>False.</strong> The tests create, change and delete real records (users, tasks, files) in whatever project they are pointed at. That is why the page says the integration tests usually run against a separate test environment, and that the test settings should be kept separate from production credentials.</p>
+<p><strong>False.</strong> The tests create, change and delete real records (users, tasks, payments) in whatever project they are pointed at. That is why the page says to use a test project, not one with real users, and to keep the test settings separate from production credentials.</p>
 </div>
 </div>
 </div>
@@ -1088,8 +1125,8 @@ Suggested answer
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> test <span class="at">--</span> tests/integration/3_storage.test.ts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>--</code> tells npm to pass everything after it on to the test tool, instead of treating it as an option for npm itself.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> test tests/integration/3_storage.test.ts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>npm passes the file name on to the test tool, Jest, which then runs only that file. (<code>npm test -- tests/integration/3_storage.test.ts</code> works too: the <code>--</code> tells npm that everything after it is for the test tool, not for npm.)</p>
 </div>
 </div>
 </div>
@@ -1109,7 +1146,7 @@ Suggested answer
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A <strong>cold start</strong>: an edge function that hasn’t been used for a while needs a moment to start up, so the first request can be slow enough to hit the test’s time limit. On the second run the function is already “warm” and answers quickly. The page suggests running the tests again, and checking that your edge functions are deployed and reachable from the test environment.</p>
+<p>A <strong>cold start</strong>: an edge function that hasn’t been used for a while needs a moment to start up, so the first request can be slow enough to hit the test’s time limit. On the second run the function is already “warm” and answers quickly. The page suggests running the tests again, and checking that your edge functions are deployed and reachable.</p>
 </div>
 </div>
 </div>

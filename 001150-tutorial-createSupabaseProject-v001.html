@@ -915,36 +915,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Edit the .env.local file. It currently looks like this:</li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You will need a .env.local file for local dev server (localhost)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># You will need a .env.test.local file for running the integration tests.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the those files, and add the following variables.</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The local files are ignored by default.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># In .env.local and .env.test.local:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_URL</span><span class="op">=</span><span class="st">"https://XXXX.supabase.co"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_ANON_KEY</span><span class="op">=</span><span class="st">"XXXX"</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># In addition to that, you also need .env.test.local with these variables:</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="va">SUPABASE_SERVICE_KEY</span><span class="op">=</span><span class="st">"XXXX"</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="va">STRIPE_SECRET_KEY</span><span class="op">=</span><span class="st">"sk_test_XXX"</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="va">STRIPE_PRICE_ID</span><span class="op">=</span><span class="st">"price_XXX"</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="va">STRIPE_WEBHOOK_SECRET</span><span class="op">=</span><span class="st">"whsec_XXX"</span><span class="kw">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="text"><code># You will need a .env.local file for local dev server (localhost)
+# You will need a .env.test.local file for running the integration tests.
+
+# Create the those files, and add the following variables.
+# The local files are ignored by default.
+
+# In .env.local and .env.test.local:
+NEXT_PUBLIC_SUPABASE_URL="https://XXXX.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="XXXX"
+
+# In addition to that, you also need .env.test.local with these variables:
+SUPABASE_SERVICE_KEY="XXXX"
+STRIPE_SECRET_KEY="sk_test_XXX"
+STRIPE_PRICE_ID="price_XXX"
+STRIPE_WEBHOOK_SECRET="whsec_XXX"</code></pre>
 <ol start="2" type="1">
 <li><p>Delete the bottom few lines and top few lines so that the file now looks like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .env.local and .env.test.local:</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_URL</span><span class="op">=</span><span class="st">"https://XXXX.supabase.co"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_ANON_KEY</span><span class="op">=</span><span class="st">"XXXX"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<pre class="text"><code># In .env.local and .env.test.local:
+NEXT_PUBLIC_SUPABASE_URL="https://XXXX.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="XXXX"</code></pre></li>
 <li><p>Go to Project Settings (Gear button at bottom left of screen) → Data API</p>
 <p><a href="images/supabase-000100-settings.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/supabase-000100-settings.png" class="img-fluid" width="300"></a> Copy the URL.<br>
 Modify the following line in the .env.local file to reflect the URL that you copied.</p>
 <pre><code>NEXT_PUBLIC_SUPABASE_URL="https://XXXX.supabase.co"</code></pre></li>
-<li><p>Click on the <code>API Keys</code> section.<br>
-Copy the <code>anon public</code> key.</p>
-<p><a href="images/supabase-000200-anonPublicKey.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/supabase-000200-anonPublicKey.png" class="img-fluid" width="300"></a></p>
-<p>Modify the following line in the .env.local file to reflect the URL that you copied.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_ANON_KEY</span><span class="op">=</span><span class="st">"XXXX"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Click on the <code>API Keys</code> section. On the <strong>Publishable and secret API keys</strong> tab, copy the <strong>publishable key</strong> (it starts with <code>sb_publishable_</code>).</p>
+<p>Modify the following line in the .env.local file to reflect the key that you copied.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_ANON_KEY</span><span class="op">=</span><span class="st">"XXXX"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The variable keeps its old name, <code>..._ANON_KEY</code>, because that is the name the app’s code reads. Only the value is new.</p>
+<p>(The <strong>Connect</strong> button at the top of the dashboard also shows your URL and publishable key, ready to copy.)</p></li>
 </ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Publishable key, not the “anon” key
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Supabase is replacing its older API keys. The <strong>publishable key</strong> (<code>sb_publishable_...</code>) replaces the <code>anon</code> key, and the <strong>secret key</strong> (<code>sb_secret_...</code>) replaces the <code>service_role</code> key. Supabase plans to retire the old keys by the end of 2026. Older videos and pages, including the tutorial video, copy the “anon public” key from the <strong>Legacy anon, service_role API keys</strong> tab. Use the publishable key instead; it goes in the same place. If your project has no publishable key yet, create one on the API Keys page.</p>
+<p>The publishable key is safe to put in a web page: it only allows what your database’s security rules allow. The secret key can read and change everything, so it must never go into <code>.env.local</code> or into any variable whose name starts with <code>NEXT_PUBLIC_</code>.</p>
+</div>
+</div>
 </section>
 <section id="practice-questions" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
@@ -960,26 +974,6 @@ Copy the <code>anon public</code> key.</p>
 <li>Processing credit card payments</li>
 </ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>d.</strong> Supabase gives you a database, authentication, file storage and edge functions. Payments are not a Supabase feature; in this project they are handled by a separate service, Stripe. Options a, b and c are all on the page’s list.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-2-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-short-answer">Question 2 · Short answer</h4>
-<p>What are Supabase <strong>edge functions</strong>?</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -991,14 +985,14 @@ Suggested answer
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Small pieces of code that run on servers close to your users (on Supabase’s servers, not in the user’s browser). In task-app, edge functions do jobs such as asking the OpenAI API to pick a tag for a task and talking to Stripe.</p>
+<p><strong>d.</strong> Supabase gives you a database, authentication, file storage and edge functions. Payments are not a Supabase feature; in this project they are handled by a separate service, Stripe. Options a, b and c are all on the page’s list.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-3-true-or-false" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-true-or-false">Question 3 · True or false</h4>
-<p>In this tutorial, you install and run your own copy of the Supabase server on your computer.</p>
+<section id="question-2-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-short-answer">Question 2 · Short answer</h4>
+<p>What are Supabase <strong>edge functions</strong>?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1011,14 +1005,14 @@ Suggested answer
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>False.</strong> The tutorial uses <strong>remote</strong> Supabase only: Supabase runs the server online, and you set it up through your browser. Running Supabase locally is mainly for advanced developers.</p>
+<p>Small pieces of code that run on servers close to your users (on Supabase’s servers, not in the user’s browser). In task-app, edge functions do jobs such as asking the OpenAI API to pick a tag for a task and talking to Stripe.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-4-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-short-answer">Question 4 · Short answer</h4>
-<p>When you create a new Supabase project, which three things does this page say you need to choose or set?</p>
+<section id="question-3-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-true-or-false">Question 3 · True or false</h4>
+<p>In this tutorial, you install and run your own copy of the Supabase server on your computer.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1030,6 +1024,26 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> The tutorial uses <strong>remote</strong> Supabase only: Supabase runs the server online, and you set it up through your browser. Running Supabase locally is mainly for advanced developers.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-short-answer">Question 4 · Short answer</h4>
+<p>When you create a new Supabase project, which three things does this page say you need to choose or set?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>A project name.</li>
@@ -1053,26 +1067,6 @@ Suggested answer
 <li>Whichever region is listed first in the menu</li>
 </ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>b.</strong> The page says to choose the region closest to your users. Data that travels a shorter distance arrives faster, so the app responds more quickly. Where you, the developer, are located (a) matters less than where your users are, and the region does make a difference (c). The order of the menu (d) means nothing.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-6-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-short-answer">Question 6 · Short answer</h4>
-<p>Give two reasons why a developer might run Supabase <strong>locally</strong> (on their own computer) instead of using only the remote version.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -1083,6 +1077,26 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> The page says to choose the region closest to your users. Data that travels a shorter distance arrives faster, so the app responds more quickly. Where you, the developer, are located (a) matters less than where your users are, and the region does make a difference (c). The order of the menu (d) means nothing.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-short-answer">Question 6 · Short answer</h4>
+<p>Give two reasons why a developer might run Supabase <strong>locally</strong> (on their own computer) instead of using only the remote version.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>To test everything on their own computer before uploading it to the Internet.</li>
@@ -1097,27 +1111,6 @@ Suggested answer
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-fill-in-the-blank">Question 7 · Fill in the blank</h4>
 <p>Your Supabase project URL is <code>https://qzvbnmtrewplkjhgfdsa.supabase.co</code>. Write the complete line in <code>.env.local</code> that stores it.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<pre><code>NEXT_PUBLIC_SUPABASE_URL="https://qzvbnmtrewplkjhgfdsa.supabase.co"</code></pre>
-<p>Keep the variable name and the quotes exactly as they are, and replace the whole placeholder <code>https://XXXX.supabase.co</code> with your real URL.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-8-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-short-answer">Question 8 · Short answer</h4>
-<p>The original file also contains <code>SUPABASE_SERVICE_KEY</code>, <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_PRICE_ID</code> and <code>STRIPE_WEBHOOK_SECRET</code>. According to the comments in the file, why can you delete those lines from <code>.env.local</code>?</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -1129,14 +1122,15 @@ Suggested answer
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><code>.env.local</code> is used by the local development server, which only needs the two <code>NEXT_PUBLIC_SUPABASE_...</code> lines. The other variables are only needed in a separate file, <code>.env.test.local</code>, which is used for running the project’s integration tests.</p>
+<pre><code>NEXT_PUBLIC_SUPABASE_URL="https://qzvbnmtrewplkjhgfdsa.supabase.co"</code></pre>
+<p>Keep the variable name and the quotes exactly as they are, and replace the whole placeholder <code>https://XXXX.supabase.co</code> with your real URL.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-9-true-or-false" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-true-or-false">Question 9 · True or false</h4>
-<p>Even though your project is a Git repository, it is OK to type your real Supabase values into <code>.env.local</code>.</p>
+<section id="question-8-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-short-answer">Question 8 · Short answer</h4>
+<p>The original file also contains <code>SUPABASE_SERVICE_KEY</code>, <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_PRICE_ID</code> and <code>STRIPE_WEBHOOK_SECRET</code>. According to the comments in the file, why can you delete those lines from <code>.env.local</code>?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1148,6 +1142,26 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>.env.local</code> is used by the local development server, which only needs the two <code>NEXT_PUBLIC_SUPABASE_...</code> lines. The other variables are only needed in a separate file, <code>.env.test.local</code>, which is used for running the project’s integration tests.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-9-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-true-or-false">Question 9 · True or false</h4>
+<p>Even though your project is a Git repository, it is OK to type your real Supabase values into <code>.env.local</code>.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>True.</strong> As the comment in the file says, the “local” env files are ignored by default: the project’s <code>.gitignore</code> file lists them, so Git never commits them. That is exactly why real values go into <code>.env.local</code> and not into <code>.env.example</code>, which is committed. Still, treat the file as private.</p>
 </div>
@@ -1164,26 +1178,6 @@ Suggested answer
 NEXT_PUBLIC_SUPABASE_ANON_KEY="XXXX"</code></pre>
 <p>What went wrong, and how does he fix it?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>He never replaced the placeholders that came from the example file, so the app is trying to reach a Supabase project that doesn’t exist. He needs to copy his own project’s URL and key from his Supabase dashboard into these two lines and save the file. Restarting the development server (<code>npm run dev</code>) makes sure the app picks up the new values.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-11-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-short-answer">Question 11 · Short answer</h4>
-<p>The page tells you to save your database password securely. Why is this password so important? Give two reasons.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -1194,6 +1188,26 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>He never replaced the placeholders that came from the example file, so the app is trying to reach a Supabase project that doesn’t exist. He needs to copy his own project’s URL and key from his Supabase dashboard into these two lines and save the file. Restarting the development server (<code>npm run dev</code>) makes sure the app picks up the new values.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-11-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-short-answer">Question 11 · Short answer</h4>
+<p>The page tells you to save your database password securely. Why is this password so important? Give two reasons.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>You’ll need it later in the tutorial, so you must be able to find it again.</li>
@@ -1207,7 +1221,7 @@ Suggested answer
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-true-or-false">Question 12 · True or false</h4>
 <p>Two classmates clone the same task-app repository from GitHub. Because the Supabase project URL is stored in the repository, both copies of the app automatically use the same Supabase project.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1216,7 +1230,7 @@ Suggested answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>False.</strong> The repository only contains <code>.env.example</code>, with placeholders such as <code>https://XXXX.supabase.co</code>. Each student creates their own Supabase project and puts its URL in their own <code>.env.local</code>. That file is ignored by Git, so it never goes into the repository, and each copy of the app talks to its own project.</p>
 </div>

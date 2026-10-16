@@ -847,6 +847,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#create-a-product" id="toc-create-a-product" class="nav-link" data-scroll-target="#create-a-product"><span class="header-section-number">76.3.1</span> Create a Product</a></li>
   <li><a href="#get-webhook-signing-secret" id="toc-get-webhook-signing-secret" class="nav-link" data-scroll-target="#get-webhook-signing-secret"><span class="header-section-number">76.3.2</span> Get Webhook Signing Secret</a></li>
+  <li><a href="#store-the-secret-key-in-supabase-vault" id="toc-store-the-secret-key-in-supabase-vault" class="nav-link" data-scroll-target="#store-the-secret-key-in-supabase-vault"><span class="header-section-number">76.3.3</span> Store the Secret Key in Supabase Vault</a></li>
+  <li><a href="#set-up-the-customer-portal" id="toc-set-up-the-customer-portal" class="nav-link" data-scroll-target="#set-up-the-customer-portal"><span class="header-section-number">76.3.4</span> Set Up the Customer Portal</a></li>
   </ul></li>
   <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
   <ul class="collapse">
@@ -879,85 +881,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Stripe will handle subscriptions and billing. You’ll run in Test Mode while developing.</p>
+<p>Stripe will handle subscriptions and billing. While you develop, you work in a Stripe <strong>sandbox</strong> (Stripe’s test environment; older pages call it “test mode”).</p>
 <section id="create-stripe-account" class="level2" data-number="76.1">
 <h2 data-number="76.1" class="anchored" data-anchor-id="create-stripe-account"><span class="header-section-number">76.1</span> Create Stripe Account</h2>
 <ol type="1">
 <li>Go to <a href="https://stripe.com" class="uri">https://stripe.com</a>.</li>
 <li>Sign up for a new account or log in.</li>
 </ol>
-<!-- YR - old info
-3. In the dashboard, toggle **View test data** or **Test Mode** on (usually top-right).
-4. Confirm the dashboard now shows “Test data” so you don’t charge real cards.
--->
 </section>
 <section id="the-stripe-sandbox" class="level2" data-number="76.2">
 <h2 data-number="76.2" class="anchored" data-anchor-id="the-stripe-sandbox"><span class="header-section-number">76.2</span> The Stripe Sandbox</h2>
-<p>When you first start using Stripe you will be in “Sandbox” mode. This means that real cards are never charged. However, you can use “fake” credit cards (see below) to make sure that your code works.</p>
+<p>A new Stripe account starts in a sandbox. In a sandbox, real cards are never charged and no real money moves. Instead, you pay with test card numbers (see <a href="./001220-tutorial-runTheApplication-v001.html">Step 12</a>) to make sure that your code works. Do every Stripe step in this chapter in the <strong>same</strong> sandbox: keys, products and webhooks from one sandbox don’t work in another.</p>
 </section>
 <section id="get-api-keys" class="level2" data-number="76.3">
 <h2 data-number="76.3" class="anchored" data-anchor-id="get-api-keys"><span class="header-section-number">76.3</span> Get API Keys</h2>
-<p>Click on the “Home” menu (you should be there when you start).</p>
-<p>The API keys should be listed (search for API on the page).</p>
-<!-- YR OLD STUFF
-
-1. In the Stripe Dashboard, go to **Developers → API keys**.
-2. Under **Standard keys**, copy:
-   - **Publishable key** (starts with `pk_test_`)
-   - **Secret key** (starts with `sk_test_`)
-
--->
-<ol type="1">
-<li><p>Add the publishable key to your Next.js environment:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .env.local</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</span><span class="op">=</span>your-publishable-key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Store the secret key in Supabase (for Edge Functions):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set STRIPE_SECRET_KEY=your-secret-key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>If you have a separate dev/prod project, repeat this setup per environment (we do not in this tutorial).</p></li>
-</ol>
+<p>The keys are on the dashboard’s <strong>Home</strong> page, and on the <a href="https://dashboard.stripe.com/apikeys">API keys</a> page. A sandbox has two:</p>
+<ul>
+<li><p>The <strong>publishable key</strong> (starts with <code>pk_test_</code>) is meant for code that runs in a browser. This app never calls Stripe from the browser, so it doesn’t use this key; you can ignore it.</p></li>
+<li><p>The <strong>secret key</strong> (starts with <code>sk_test_</code>) can do anything with your Stripe account. It must stay on servers. Store it as a Supabase secret, so the Edge Functions can use it:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set STRIPE_SECRET_KEY=sk_test_...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>If you have separate development and production projects, repeat this setup for each one (we do not in this tutorial).</p>
 <section id="create-a-product" class="level3" data-number="76.3.1">
 <h3 data-number="76.3.1" class="anchored" data-anchor-id="create-a-product"><span class="header-section-number">76.3.1</span> Create a Product</h3>
 <ol type="1">
-<li><p>In Stripe dashboard, go to <strong>Product Catalog</strong> &gt; <strong>All Products</strong>.</p></li>
-<li><p>Click <strong>+ Create product</strong>.</p></li>
+<li><p>In the Stripe Dashboard, go to <strong>Product catalog</strong> (it may be under <strong>More</strong>).</p></li>
+<li><p>Click <strong>+ Add product</strong>.</p></li>
 <li><p>Fill in:</p>
 <ul>
-<li><strong>Name</strong> (e.g., “Pro Plan”)</li>
+<li><strong>Name</strong> (e.g., “TaskMaster Premium”)</li>
 <li>Optional description and image.</li>
 </ul></li>
-<li><p>Under <strong>Pricing</strong>, create a price:</p>
+<li><p>Under the price, choose:</p>
 <ul>
 <li><strong>Recurring</strong></li>
 <li>Billing period: <strong>Monthly</strong></li>
 <li>Amount: e.g., <code>$10</code></li>
 </ul></li>
-<li><p>Save the product and its price.</p></li>
-<li><p>Copy the <strong>Price ID</strong> (e.g., <code>price_12345...</code>).</p></li>
-<li><p>Add the Price ID to your app’s config (e.g., environment variable or constants file), for example: .env.local</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_STRIPE_PRICE_ID</span><span class="op">=</span>your-price-id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Click <strong>Add product</strong> to save the product and its price.</p></li>
+<li><p>Open the product, click the price, and copy its <strong>Price ID</strong> (it starts with <code>price_</code>).</p></li>
+<li><p>Store the Price ID as a Supabase secret named <code>STRIPE_PRICE_ID</code>. The <code>create-stripe-session</code> Edge Function reads it from there when it creates a checkout page:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set STRIPE_PRICE_ID=price_...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Not in <code>.env.local</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Earlier versions of this page put the Price ID (and the publishable key) in <code>.env.local</code> as <code>NEXT_PUBLIC_STRIPE_PRICE_ID</code>. The app’s code never reads those variables, so checkout fails. The Price ID must be the Supabase secret <code>STRIPE_PRICE_ID</code>.</p>
+</div>
+</div>
 </section>
 <section id="get-webhook-signing-secret" class="level3" data-number="76.3.2">
 <h3 data-number="76.3.2" class="anchored" data-anchor-id="get-webhook-signing-secret"><span class="header-section-number">76.3.2</span> Get Webhook Signing Secret</h3>
 <p>You’ll use a webhook to let Stripe notify your app about subscription changes.</p>
 <ol type="1">
-<li><p>Go to <strong>Developers → Webhooks</strong> in Stripe.</p></li>
-<li><p>Click <strong>+ Add endpoint</strong>.</p></li>
-<li><p>For now, you can use a temporary URL (you’ll update it later), such as: <code>https://mybogusurl.com/</code> <!--
-   - a local tunneling URL from `stripe listen` or `ngrok`, **or**
-   - leave it blank until your Supabase function URL is known.
---></p></li>
-<li><p>Under <strong>Select events to send</strong>, add:</p>
+<li><p>Open <a href="https://dashboard.stripe.com/webhooks">Workbench &gt; Webhooks</a> in the Stripe Dashboard and click <strong>Create an event destination</strong>.</p></li>
+<li><p>Choose:</p>
+<ul>
+<li>Events from: <strong>Your account</strong>.</li>
+<li>Payload style: <strong>Snapshot</strong>. Stripe recommends “Thin”, but this app’s code only understands Snapshot events.</li>
+</ul></li>
+<li><p>Select these events:</p>
 <ul>
 <li><code>checkout.session.completed</code></li>
-<li><code>customer.subscription.updated</code></li>
 <li><code>customer.subscription.deleted</code></li>
-</ul></li>
-<li><p>Save the endpoint.</p></li>
-<li><p>Stripe will show a <strong>Signing secret</strong> (e.g., <code>whsec_...</code>). Copy it.</p></li>
+</ul>
+<p>(The code handles only these two. The tutorial repository’s README also lists <code>customer.subscription.updated</code>; adding it does no harm.)</p></li>
+<li><p>Click <strong>Continue</strong> and choose <strong>Webhook endpoint</strong> as the destination type.</p></li>
+<li><p>Click <strong>Continue</strong>. The real endpoint URL, your Supabase Edge Function, doesn’t exist yet, so for now enter a temporary URL such as <code>https://mybogusurl.com/</code>. You’ll change it in <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html">Step 11</a>.</p></li>
+<li><p>Create the destination. On its settings page, find the <strong>signing secret</strong> (it starts with <code>whsec_</code>), click <strong>Reveal secret</strong>, and copy it.</p></li>
 <li><p>Store it as a Supabase secret:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">supabase</span> secrets set STRIPE_WEBHOOK_SECRET=your-webhook-secret</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ol>
+</section>
+<section id="store-the-secret-key-in-supabase-vault" class="level3" data-number="76.3.3">
+<h3 data-number="76.3.3" class="anchored" data-anchor-id="store-the-secret-key-in-supabase-vault"><span class="header-section-number">76.3.3</span> Store the Secret Key in Supabase Vault</h3>
+<p>When someone signs up for the app, the database itself creates a Stripe customer for them. (Migration <code>7_init_stripe_integration.sql</code>, which you run in <a href="./001190-tutorial-setupSupabaseDatabase-v001.html">Step 9</a>, sets this up.) To talk to Stripe, the database needs your Stripe secret key. It reads the key from <strong>Supabase Vault</strong>, an encrypted store for secrets inside your database, under the name <code>stripe</code>.</p>
+<ol type="1">
+<li><p>In the Supabase dashboard, open <strong>SQL Editor</strong>.</p></li>
+<li><p>Paste this line, with your own secret key in place of <code>sk_test_...</code>, and click <strong>Run</strong>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> vault.create_secret(<span class="st">'sk_test_...'</span>, <span class="st">'stripe'</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is SQL, the language of databases, not a terminal command. It calls the function <code>create_secret</code> in Supabase’s <code>vault</code>, with two values: your secret key and the name to store it under. (The tutorial repository’s README does the same with an <code>insert into vault.secrets ...</code> command.)</p></li>
+</ol>
+<p>Do this before anyone signs up for the app. Without the key in Vault, creating a new user’s profile fails, so sign-up fails.</p>
+</section>
+<section id="set-up-the-customer-portal" class="level3" data-number="76.3.4">
+<h3 data-number="76.3.4" class="anchored" data-anchor-id="set-up-the-customer-portal"><span class="header-section-number">76.3.4</span> Set Up the Customer Portal</h3>
+<p>The app’s subscription button sends premium users to Stripe’s <strong>customer portal</strong>, a Stripe page where they can update their payment method or cancel. In a sandbox, the portal doesn’t work until you save its settings once.</p>
+<ol type="1">
+<li>Open the <a href="https://dashboard.stripe.com/settings/billing/portal">customer portal settings</a> in the Stripe Dashboard (in the same sandbox).</li>
+<li>Look over the options (letting customers cancel is on by default) and click <strong>Save</strong>.</li>
+</ol>
+<p>By default, a cancelled subscription stays active until the end of the billing period. Only then does Stripe send <code>customer.subscription.deleted</code>, and the app moves the user back to the free plan.</p>
 </section>
 </section>
 <section id="practice-questions" class="level2 unnumbered">
@@ -967,26 +988,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="question-1-true-or-false" class="level4 unnumbered unlisted">
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-1-true-or-false">Question 1 · True or false</h4>
 <p>While you work in the Stripe sandbox, real credit cards are charged.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>False.</strong> In the sandbox, real cards are never charged. You test your code with fake test credit card numbers instead.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-2-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-short-answer">Question 2 · Short answer</h4>
-<p>In your own words, what is a <strong>webhook</strong>, and what does task-app use one for?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -999,20 +1000,14 @@ Suggested answer
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A webhook is a web address (URL) that you give to Stripe so that Stripe can notify your app automatically when something happens: Stripe sends a message to that address. task-app uses it so that Stripe can tell the app about subscription changes, such as a completed checkout or a cancelled subscription.</p>
+<p><strong>False.</strong> In the sandbox, real cards are never charged. You test your code with fake test credit card numbers instead.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-3-multiple-choice" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-multiple-choice">Question 3 · Multiple choice</h4>
-<p>Which Stripe value does the page put in <code>.env.local</code> (under a <code>NEXT_PUBLIC_</code> name) for the Next.js app?</p>
-<ol type="a">
-<li>The secret key</li>
-<li>The publishable key</li>
-<li>The webhook signing secret</li>
-<li>Your Stripe account password</li>
-</ol>
+<section id="question-2-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-short-answer">Question 2 · Short answer</h4>
+<p>In your own words, what is a <strong>webhook</strong>, and what does task-app use one for?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1025,7 +1020,33 @@ Suggested answer
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>b.</strong> The publishable key is designed to be public, so it is safe to use in code that runs in the browser. The secret key (a) and the webhook signing secret (c) are stored as Supabase secrets instead, and your account password (d) never goes into any project file.</p>
+<p>A webhook is a web address (URL) that you give to Stripe so that Stripe can notify your app automatically when something happens: Stripe sends a message to that address. task-app uses it so that Stripe can tell the app about subscription changes, such as a completed checkout or a cancelled subscription.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-multiple-choice">Question 3 · Multiple choice</h4>
+<p>Where does the page store the <strong>Price ID</strong> of your subscription price?</p>
+<ol type="a">
+<li>In <code>.env.local</code>, as <code>NEXT_PUBLIC_STRIPE_PRICE_ID</code></li>
+<li>As a Supabase secret named <code>STRIPE_PRICE_ID</code></li>
+<li>In the Google Cloud Console</li>
+<li>Nowhere: Stripe picks the price automatically</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> The <code>create-stripe-session</code> Edge Function reads the Price ID from the Supabase secret <code>STRIPE_PRICE_ID</code> when it creates a checkout page. The app’s code never reads a <code>NEXT_PUBLIC_STRIPE_PRICE_ID</code> variable (a), so a Price ID stored there is ignored and checkout fails. Google (c) has nothing to do with payments, and Stripe can’t guess which of your prices to charge (d).</p>
 </div>
 </div>
 </div>
@@ -1070,7 +1091,7 @@ Suggested answer
 </tbody>
 </table>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1079,7 +1100,7 @@ Suggested answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>1 → C, 2 → D, 3 → A, 4 → B.</p>
 </div>
@@ -1093,7 +1114,7 @@ Suggested answer
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-5-write-the-command">Question 5 · Write the command</h4>
 <p>Stripe shows you the signing secret <code>whsec_9f8e7d</code>. Write the command that stores it as a Supabase secret named <code>STRIPE_WEBHOOK_SECRET</code>.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1102,7 +1123,7 @@ Suggested answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_9f8e7d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Remember that in this tutorial every Supabase CLI command starts with <code>npx supabase</code>.</p>
@@ -1120,7 +1141,7 @@ Suggested answer
 <li>One-off, $120</li>
 </ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1129,7 +1150,7 @@ Suggested answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>b.</strong> A subscription needs a <strong>recurring</strong> price, and monthly billing at $10 matches the plan. One-off prices (a, d) charge only once, and a yearly billing period (c) charges once a year.</p>
 </div>
@@ -1171,26 +1192,6 @@ Suggested answer
 </tbody>
 </table>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>1 → B, 2 → C, 3 → A.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-8-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-short-answer">Question 8 · Short answer</h4>
-<p>Why is it fine to enter a made-up address such as <code>https://mybogusurl.com/</code> when you first create the webhook?</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -1202,14 +1203,15 @@ Suggested answer
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The real address, the Supabase Edge Function that will receive Stripe’s messages, doesn’t exist yet. You need the signing secret now, so you create the webhook with a temporary URL and replace it later, once the function is deployed. Until then, Stripe’s notifications go nowhere useful.</p>
+<p>1 → B, 2 → C, 3 → A.</p>
+<p>Task-app’s webhook code acts only on 1 and 3: it upgrades the user to premium after a checkout, and moves them back to free when the subscription ends.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-9-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-short-answer">Question 9 · Short answer</h4>
-<p>When a user clicks to upgrade to the Pro Plan, how does Stripe know what to charge them? What role does the Price ID play?</p>
+<section id="question-8-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-short-answer">Question 8 · Short answer</h4>
+<p>Why is it fine to enter a made-up address such as <code>https://mybogusurl.com/</code> when you first create the webhook?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1221,6 +1223,26 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The real address, the Supabase Edge Function that will receive Stripe’s messages, doesn’t exist yet. You need the signing secret now, so you create the webhook with a temporary URL and replace it later, once the function is deployed. Until then, Stripe’s notifications go nowhere useful.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-9-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-short-answer">Question 9 · Short answer</h4>
+<p>When a user clicks to upgrade to the Pro Plan, how does Stripe know what to charge them? What role does the Price ID play?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>When the app starts a Stripe checkout, it tells Stripe which price the customer is buying by sending the Price ID (for example, <code>price_12345...</code>). That ID points to the price you created (recurring, monthly, $10), so Stripe knows how much to charge and how often.</p>
 </div>
@@ -1234,26 +1256,6 @@ Suggested answer
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-scenario">Question 10 · Scenario</h4>
 <p>While testing, you complete Stripe’s checkout page successfully, but task-app still shows you on the free plan. The webhook endpoint in Stripe still points to <code>https://mybogusurl.com/</code>. Explain what is going on and how to fix it.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>task-app finds out about a completed payment through the webhook (the <code>checkout.session.completed</code> event). Stripe is sending that message to the made-up address, so the app never hears about the payment and never upgrades you. Fix: update the webhook endpoint in Stripe to the real URL of your deployed webhook Edge Function, and make sure that the endpoint’s signing secret is the one stored in <code>STRIPE_WEBHOOK_SECRET</code>.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-11-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-short-answer">Question 11 · Short answer</h4>
-<p>Why does Stripe give each webhook a signing secret? What could happen if the app accepted webhook messages without checking it?</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -1265,14 +1267,14 @@ Suggested answer
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A webhook address is a public URL, so anyone could send messages to it. Stripe signs every message using the signing secret, and your function uses the same secret to check that the message really came from Stripe and wasn’t changed. Without that check, an attacker could send a fake “checkout completed” message and get the paid plan for free.</p>
+<p>task-app finds out about a completed payment through the webhook (the <code>checkout.session.completed</code> event). Stripe is sending that message to the made-up address, so the app never hears about the payment and never upgrades you. Fix: update the webhook endpoint in Stripe to the real URL of your deployed webhook Edge Function, and make sure that the endpoint’s signing secret is the one stored in <code>STRIPE_WEBHOOK_SECRET</code>.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-12-long-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-long-answer">Question 12 · Long answer</h4>
-<p>The page mentions repeating this setup for each environment if you have separate development and production setups. Suppose task-app goes live and starts charging real customers. What has to be set up again, and why?</p>
+<section id="question-11-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-short-answer">Question 11 · Short answer</h4>
+<p>Why does Stripe give each webhook a signing secret? What could happen if the app accepted webhook messages without checking it?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1285,13 +1287,73 @@ Suggested answer
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>A webhook address is a public URL, so anyone could send messages to it. Stripe signs every message using the signing secret, and your function uses the same secret to check that the message really came from Stripe and wasn’t changed. Without that check, an attacker could send a fake “checkout completed” message and get the paid plan for free.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-12-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-long-answer">Question 12 · Long answer</h4>
+<p>The page mentions repeating this setup for each environment if you have separate development and production setups. Suppose task-app goes live and starts charging real customers. What has to be set up again, and why?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Real payments happen in Stripe’s live mode, which is completely separate from the sandbox. You need:</p>
 <ul>
-<li>the live publishable key and secret key,</li>
+<li>the live secret key,</li>
 <li>the product and its price created again for live use (with a new Price ID),</li>
 <li>a live webhook endpoint that points to your function, with its own signing secret.</li>
 </ul>
-<p>Then you update your app’s settings (<code>.env.local</code> or your hosting settings) and the Supabase secrets with these live values. Sandbox keys and IDs can’t be used for real payments.</p>
+<p>Then you update the Supabase secrets (<code>STRIPE_SECRET_KEY</code>, <code>STRIPE_PRICE_ID</code> and <code>STRIPE_WEBHOOK_SECRET</code>) with these live values. Sandbox keys and IDs can’t be used for real payments.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-13-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-13-scenario">Question 13 · Scenario</h4>
+<p>You finished Steps 8 to 12, but every new sign-up fails with a database error. You notice that you skipped the section “Store the Secret Key in Supabase Vault”. Why does a missing Stripe key break <strong>sign-up</strong>, of all things, and how do you fix it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When a user signs up, the database creates their profile, and a trigger then creates a Stripe customer for them. To reach Stripe, the database reads the secret key from Supabase Vault under the name <code>stripe</code>. With no key there, the trigger fails, so the profile isn’t created and the sign-up fails. Fix: in the Supabase <strong>SQL Editor</strong>, run <code>select vault.create_secret('sk_test_...', 'stripe');</code> with your secret key, then sign up again.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-14-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-14-short-answer">Question 14 · Short answer</h4>
+<p>A premium user clicks the app’s subscription button and gets an error instead of Stripe’s customer portal. Checkout worked fine earlier. What did you most likely skip?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Saving the <strong>customer portal settings</strong> in the Stripe Dashboard. Checkout and the portal are separate Stripe features: checkout works without any portal settings, but in a sandbox Stripe can’t open the portal until you have saved its settings once.</p>
 </div>
 </div>
 </div>
