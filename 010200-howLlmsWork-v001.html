@@ -920,9 +920,9 @@ The model's guesses for the next word (made-up numbers):
 <p>That sounds simple, but to predict text well across millions of books, websites, and programs, a model has to pick up grammar, facts, styles, reasoning patterns, and how code works. That’s why LLMs can seem to understand (whether they “really” do is debated).</p>
 <section id="tokens" class="level3" data-number="8.3.1">
 <h3 data-number="8.3.1" class="anchored" data-anchor-id="tokens"><span class="header-section-number">8.3.1</span> Tokens</h3>
-<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://platform.claude.com/docs/en/models/overview">Claude models overview</a></span></p>
+<p><span class="yr-asof">As of Oct 16, 2026 · Official docs: <a href="https://platform.claude.com/docs/en/models/overview">Claude models overview</a></span></p>
 <p>LLMs don’t read letters or whole words. Before the model sees your text, a program called a <strong>tokenizer</strong> splits it into <strong>tokens</strong>: a common word is often a single token, while a longer or rarer word is split into pieces. Spaces, punctuation, and digits count too. Each company uses its own tokenizer, so the same text can be a different number of tokens on different models.</p>
-<p>As a rule of thumb, Anthropic’s docs say 1 million tokens is roughly 555,000 English words on the newest Claude models (about 750,000 on older ones, such as Claude Haiku 4.5). So in English, a token averages a bit more than half a word. Tokens matter because:</p>
+<p>As a rule of thumb, Anthropic’s docs say 1 million tokens is roughly 555,000 English words on the newest Claude models (about 750,000 on models older than Claude Opus 4.7). So in English, a token averages a bit more than half a word. Tokens matter because:</p>
 <ul>
 <li><strong>Prices</strong> for using models through an API are quoted per million tokens.</li>
 <li><strong>Limits</strong>, such as how much text a model can consider at once, are counted in tokens.</li>
@@ -995,21 +995,26 @@ Deeper dive: Temperature
 </section>
 <section id="multimodal-models" class="level2" data-number="8.6">
 <h2 data-number="8.6" class="anchored" data-anchor-id="multimodal-models"><span class="header-section-number">8.6</span> Multimodal models</h2>
-<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://platform.claude.com/docs/en/models/overview">Claude models overview</a></span></p>
+<p><span class="yr-asof">As of Oct 16, 2026 · Official docs: <a href="https://platform.claude.com/docs/en/models/overview">Claude models overview</a></span></p>
 <p>A <strong>multimodal</strong> model handles more than one kind of data. All current Claude models accept text and images as input and produce text. Some other models, such as Google’s Gemini 3.8 Flash, also accept audio and video. Creating images, video, or speech is usually done by separate, specialized models. As a developer, you can paste a screenshot (an error message, a page that looks wrong, a design sketch) and ask the AI about it.</p>
 </section>
 <section id="what-a-model-knows-training-data-vs.-context-window" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="what-a-model-knows-training-data-vs.-context-window"><span class="header-section-number">8.7</span> What a model knows: training data vs.&nbsp;context window</h2>
-<p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://platform.claude.com/docs/en/models/overview">Claude models overview</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">Context windows</a></span></p>
+<p><span class="yr-asof">As of Oct 16, 2026 · Official docs: <a href="https://platform.claude.com/docs/en/models/overview">Claude models overview</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">Context windows</a></span></p>
 <p>An LLM has two very different kinds of “memory”.</p>
 <section id="long-term-memory-frozen-at-the-knowledge-cutoff" class="level3" data-number="8.7.1">
 <h3 data-number="8.7.1" class="anchored" data-anchor-id="long-term-memory-frozen-at-the-knowledge-cutoff"><span class="header-section-number">8.7.1</span> Long-term memory: frozen at the knowledge cutoff</h3>
-<p>What a model learned in training is stored in its weights and stops at the <strong>knowledge cutoff</strong>, the date its training data ends. Anthropic lists a “reliable knowledge cutoff” for each model: June 2026 for its newest models, February 2025 for Claude Haiku 4.5. A model knows little about later events and software versions, and may confidently describe an <em>old</em> version of a fast-changing tool (including Claude Code itself). Apps work around this with web search or documents you paste in.</p>
+<p>What a model learned in training is stored in its weights and stops at the <strong>knowledge cutoff</strong>, the date its training data ends. Anthropic lists a “reliable knowledge cutoff” for each model: June 2026 for all its current models, and earlier dates for older ones (February 2025 for Claude Haiku 4.5). A model knows little about later events and software versions, and may confidently describe an <em>old</em> version of a fast-changing tool (including Claude Code itself). Apps work around this with web search or documents you paste in.</p>
 </section>
 <section id="working-memory-the-context-window" class="level3" data-number="8.7.2">
 <h3 data-number="8.7.2" class="anchored" data-anchor-id="working-memory-the-context-window"><span class="header-section-number">8.7.2</span> Working memory: the context window</h3>
 <p>The <strong>context window</strong> is the maximum amount of text, measured in tokens, that the model can consider at once. It holds everything for the current request: hidden instructions from the app (the <strong>system prompt</strong>), the conversation so far, files, tool results, and the model’s own output, including its thinking.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Model (as of October 2026)</th>
@@ -1019,12 +1024,12 @@ Deeper dive: Temperature
 </thead>
 <tbody>
 <tr class="odd">
-<td>Claude Fable 5.1, Opus 5.5, Sonnet 5.5</td>
+<td>Claude Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5</td>
 <td>1M tokens</td>
 <td>555,000 words</td>
 </tr>
 <tr class="even">
-<td>Claude Haiku 4.5</td>
+<td>Claude Haiku 4.5 (an older model)</td>
 <td>200K tokens</td>
 <td>150,000 words</td>
 </tr>
