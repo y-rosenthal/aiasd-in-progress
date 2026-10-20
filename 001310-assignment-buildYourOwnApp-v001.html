@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>90&nbsp; 90.  Project 3: Build Your Own App – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./000010-topics-v001.html" rel="next">
+<link href="./001300-assignment-changeTheDatabase-v001.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+<link rel="stylesheet" href="yrStyles-f26-v001.css">
+<link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building a ‘full-stack’ web application</a></li><li class="breadcrumb-item"><a href="./001310-assignment-buildYourOwnApp-v001.html"><span class="chapter-number">90</span>&nbsp; <span class="chapter-title"><yrchapternumber>90. </yrchapternumber> Project 3: Build Your Own App</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Class Meetings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Class 10: Starting the Full-Stack Web Application</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26/yudkowskyBook-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005100-whatIsAiSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> What Is AI Safety? Risks, Vocabulary, and Viewpoints</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005200-aiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> AI Security Incidents in the News (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005250-moreAiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> More AI Security Incidents: Hijacked Tools, Leaks, and Deepfakes (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005300-aiSafetyDebate-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Governments, Companies, and the AI Safety Debate (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005350-aiSafetyBeyondWashington-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> The AI Safety Debate Beyond Washington (2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Today</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010100-whatAiCanDoToday-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> What AI Can Do Today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010200-howLlmsWork-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> How Large Language Models Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010300-limitsRisksAndResponsibleUse-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Limits, Risks, and Responsible Use</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010350-legalAndEthicalQuestions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> Legal and Ethical Questions About AI</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010400-aiAssistedDevelopment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> AI-Assisted Development: From Chatbots to Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010500-aiCodingToolsLandscape-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> The AI Coding Tool Landscape (Fall 2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Command Line (Bash)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020100-whatIsTheCommandLine-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>13. </yrchapternumber> What Is the Command Line?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020200-installingAndOpeningBash-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>14. </yrchapternumber> Getting Bash on Your Computer (Mac and Windows)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020300-filesFoldersAndPaths-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Files, Folders, and Paths</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020400-navigatingPwdLsCd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> Moving Around: pwd, ls, and cd</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020500-creatingAndDeleting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Creating, Copying, Moving, and Deleting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020600-echoRedirectionAndViewing-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Writing to Files: echo, &gt;, &gt;&gt;, and cat</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020700-environmentVariables-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Environment Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020800-singleVsDoubleQuotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>20. </yrchapternumber> Single Quotes vs. Double Quotes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020900-gettingHelpAndShortcuts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>21. </yrchapternumber> Getting Help and Working Faster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021000-wildcardsPipesAndSearching-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title"><yrchapternumber>22. </yrchapternumber> Wildcards and Pipes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021020-searchingCountingAndSorting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> Searching, Counting, and Sorting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021050-comparingFilesWithDiff-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Comparing Files with diff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021100-bashScriptsAndAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>25. </yrchapternumber> Bash Scripts (and Using AI at the Command Line)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working on Your Own</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030100-whatIsVersionControl-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title"><yrchapternumber>26. </yrchapternumber> What Is Version Control? (Git vs. GitHub)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030200-installingAndConfiguringGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title"><yrchapternumber>27. </yrchapternumber> Installing and Configuring Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030300-yourFirstRepository-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><yrchapternumber>28. </yrchapternumber> Your First Repository: init, status, add, commit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030400-historyAndUndo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><yrchapternumber>29. </yrchapternumber> Viewing History and Undoing Changes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030500-gitignoreAndSecrets-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> .gitignore and Keeping Secrets Out of Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030600-githubRemotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>31. </yrchapternumber> Putting Your Repository on GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030700-cloneAndPull-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>32. </yrchapternumber> Cloning and Pulling (Working from Two Computers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">How the Web Works</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040100-browsersAndWebServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title"><yrchapternumber>33. </yrchapternumber> Browsers, Web Servers, and HTTP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><yrchapternumber>34. </yrchapternumber> URLs, Domain Names, IP Addresses, and DNS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040300-htmlCssJavascriptAndDevTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><yrchapternumber>35. </yrchapternumber> HTML, CSS, JavaScript, and Browser Developer Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040400-whatHappensOnTheServer-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><yrchapternumber>36. </yrchapternumber> What Happens on the Server: Back Ends, Databases, and APIs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040500-webFrameworks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title"><yrchapternumber>37. </yrchapternumber> Web Frameworks and Meta-Frameworks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040600-apisKeysAndThirdPartyServices-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title"><yrchapternumber>38. </yrchapternumber> APIs, API Keys, and Third-Party Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040700-hostingAndDeployment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><yrchapternumber>39. </yrchapternumber> Hosting and Deployment: Getting Your App Online</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040800-architectingWithAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><yrchapternumber>40. </yrchapternumber> Putting It Together: Architecting a Web App with AI</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude: The Big Picture</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050100-claudeProductFamily-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><yrchapternumber>41. </yrchapternumber> The Claude Product Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050200-claudeModelsPlansAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title"><yrchapternumber>42. </yrchapternumber> Claude Models, Plans, and Usage Limits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050300-navigatingClaudeDocs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title"><yrchapternumber>43. </yrchapternumber> Navigating the Claude Documentation (and Keeping Up)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude Code Essentials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060100-installingClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title"><yrchapternumber>44. </yrchapternumber> Installing Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060200-firstSession-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title"><yrchapternumber>45. </yrchapternumber> Your First Claude Code Session</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060300-howClaudeCodeWorks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title"><yrchapternumber>46. </yrchapternumber> How Claude Code Works: The Agentic Loop and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060400-slashCommands-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title"><yrchapternumber>47. </yrchapternumber> Essential Slash Commands</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060500-permissionsModesAndSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title"><yrchapternumber>48. </yrchapternumber> Permissions, Modes, and Safety</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060600-claudeMdAndMemory-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title"><yrchapternumber>49. </yrchapternumber> CLAUDE.md and Memory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060700-dotClaudeFoldersAndSettings-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> The .claude Folders and Settings Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060800-contextModelsEffortAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><yrchapternumber>51. </yrchapternumber> Context, Models, Effort, and Usage in Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060900-workingEffectively-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><yrchapternumber>52. </yrchapternumber> Working Effectively with Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./061000-claudeCodeBeyondTheTerminal-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><yrchapternumber>53. </yrchapternumber> Claude Code Beyond the Terminal</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Extending Claude Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070100-extendingOverview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title"><yrchapternumber>54. </yrchapternumber> Extending Claude Code: The Big Picture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070200-skills-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title"><yrchapternumber>55. </yrchapternumber> Skills</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070300-mcpServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title"><yrchapternumber>56. </yrchapternumber> MCP Servers: Connecting Claude to Other Tools and Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070400-browserAutomationMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title"><yrchapternumber>57. </yrchapternumber> Hands-On: Letting Claude Use a Browser (Playwright MCP and Chrome)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070500-supabaseMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title"><yrchapternumber>58. </yrchapternumber> Hands-On: The Supabase MCP Server</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070600-hooks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title"><yrchapternumber>59. </yrchapternumber> Hooks: Running Your Own Commands Automatically</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070700-subagents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title"><yrchapternumber>60. </yrchapternumber> Subagents (and Running Agents in Parallel)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070800-plugins-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Plugins and Marketplaces</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070900-mods-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title"><yrchapternumber>62. </yrchapternumber> Mods: Customizing Claude Code Itself</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working with Others</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080100-branchesAndMerging-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title"><yrchapternumber>63. </yrchapternumber> Branches and Merging</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080200-mergeConflicts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title"><yrchapternumber>64. </yrchapternumber> Merge Conflicts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080300-sharedRepositoriesAndForks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title"><yrchapternumber>65. </yrchapternumber> Sharing a Repository: Collaborators and Forks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080400-pullRequestsAndCodeReview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title"><yrchapternumber>66. </yrchapternumber> Pull Requests and Code Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080450-aiInThePullRequestWorkflow-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title"><yrchapternumber>67. </yrchapternumber> AI in the Pull Request Workflow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080500-worktreesAndParallelAgents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title"><yrchapternumber>68. </yrchapternumber> Git Worktrees and Parallel AI Agents</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title"><yrchapternumber>69. </yrchapternumber> Tutorial - intro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001007-tutorial-supabase-projectArchitecture-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title"><yrchapternumber>70. </yrchapternumber> Project Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001008-tutorial-withClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title"><yrchapternumber>71. </yrchapternumber> Following the Tutorial with Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001100-tutorial-installNodeNpm-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Step 0: Install Node.js and npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001110-tutorial-cloneRepo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><yrchapternumber>73. </yrchapternumber> Step 1: Fork the repo and clone it</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001120-tutorial-installThePackages-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">74</span>&nbsp; <span class="chapter-title"><yrchapternumber>74. </yrchapternumber> Step 2: Installing the Node.js packages with npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">75</span>&nbsp; <span class="chapter-title"><yrchapternumber>75. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001140-tutorial-previewFrontEnd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">76</span>&nbsp; <span class="chapter-title"><yrchapternumber>76. </yrchapternumber> Step 4 - Optional: Preview the Frontend</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">77</span>&nbsp; <span class="chapter-title"><yrchapternumber>77. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">78</span>&nbsp; <span class="chapter-title"><yrchapternumber>78. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001160-tutorial-googleOauth-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">79</span>&nbsp; <span class="chapter-title"><yrchapternumber>79. </yrchapternumber> Step 6: setup authentication (Google OAuth)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001170-tutorial-openAiApi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">80</span>&nbsp; <span class="chapter-title"><yrchapternumber>80. </yrchapternumber> Step 7: Set Up OpenAI API</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001180-tutorial-setupStripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">81</span>&nbsp; <span class="chapter-title"><yrchapternumber>81. </yrchapternumber> Step 8: Set Up Stripe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">82</span>&nbsp; <span class="chapter-title"><yrchapternumber>82. </yrchapternumber> Step 9: Set Up Supabase Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001200-tutorial-setupSupabaseStorage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">83</span>&nbsp; <span class="chapter-title"><yrchapternumber>83. </yrchapternumber> Step 10: Set Up Supabase Storage Bucket</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">84</span>&nbsp; <span class="chapter-title"><yrchapternumber>84. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001220-tutorial-runTheApplication-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">85</span>&nbsp; <span class="chapter-title"><yrchapternumber>85. </yrchapternumber> Step 12: Run the Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001230-tutorial-deployToProduction-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">86</span>&nbsp; <span class="chapter-title"><yrchapternumber>86. </yrchapternumber> Step 13: Deploy to Production</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001240-tutorial-extendTheFunctionality-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">87</span>&nbsp; <span class="chapter-title"><yrchapternumber>87. </yrchapternumber> Step 14: Extending the functionality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">88</span>&nbsp; <span class="chapter-title"><yrchapternumber>88. </yrchapternumber> Step 15: Automated Testing and Troubleshooting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001300-assignment-changeTheDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">89</span>&nbsp; <span class="chapter-title"><yrchapternumber>89. </yrchapternumber> Project 2: Change the Task App's Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001310-assignment-buildYourOwnApp-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">90</span>&nbsp; <span class="chapter-title"><yrchapternumber>90. </yrchapternumber> Project 3: Build Your Own App</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">91</span>&nbsp; <span class="chapter-title"><yrchapternumber>91. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">92</span>&nbsp; <span class="chapter-title"><yrchapternumber>92. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">93</span>&nbsp; <span class="chapter-title"><yrchapternumber>93. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">94</span>&nbsp; <span class="chapter-title"><yrchapternumber>94. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./990010-references-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals"><span class="header-section-number">90.1</span> Goals</a></li>
+  <li><a href="#choose-and-scope-your-idea" id="toc-choose-and-scope-your-idea" class="nav-link" data-scroll-target="#choose-and-scope-your-idea"><span class="header-section-number">90.2</span> Choose and scope your idea</a></li>
+  <li><a href="#the-starter-template" id="toc-the-starter-template" class="nav-link" data-scroll-target="#the-starter-template"><span class="header-section-number">90.3</span> The starter template</a></li>
+  <li><a href="#start-claude-code-with-this-prompt" id="toc-start-claude-code-with-this-prompt" class="nav-link" data-scroll-target="#start-claude-code-with-this-prompt"><span class="header-section-number">90.4</span> Start Claude Code with this prompt</a></li>
+  <li><a href="#what-the-spec-is-for" id="toc-what-the-spec-is-for" class="nav-link" data-scroll-target="#what-the-spec-is-for"><span class="header-section-number">90.5</span> What the spec is for</a></li>
+  <li><a href="#milestones" id="toc-milestones" class="nav-link" data-scroll-target="#milestones"><span class="header-section-number">90.6</span> Milestones</a></li>
+  <li><a href="#deliverables" id="toc-deliverables" class="nav-link" data-scroll-target="#deliverables"><span class="header-section-number">90.7</span> Deliverables</a></li>
+  <li><a href="#grading" id="toc-grading" class="nav-link" data-scroll-target="#grading"><span class="header-section-number">90.8</span> Grading</a></li>
+  <li><a href="#rules" id="toc-rules" class="nav-link" data-scroll-target="#rules"><span class="header-section-number">90.9</span> Rules</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">90.10</span> Key takeaways</a></li>
+  <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
+  <ul class="collapse">
+  <li><a href="#easy" id="toc-easy" class="nav-link" data-scroll-target="#easy">Easy</a></li>
+  <li><a href="#medium" id="toc-medium" class="nav-link" data-scroll-target="#medium">Medium</a></li>
+  <li><a href="#hard" id="toc-hard" class="nav-link" data-scroll-target="#hard">Hard</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./001000-tutorial-supabase-nextjs-v001.html">Building a ‘full-stack’ web application</a></li><li class="breadcrumb-item"><a href="./001310-assignment-buildYourOwnApp-v001.html"><span class="chapter-number">90</span>&nbsp; <span class="chapter-title"><yrchapternumber>90. </yrchapternumber> Project 3: Build Your Own App</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">90</span>&nbsp; <span class="chapter-title"><yrchapternumber>90. </yrchapternumber> Project 3: Build Your Own App</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Draft: not yet approved
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This page is a draft for the instructor. The milestones, dates, deliverables and grading may change before the project is assigned.</p>
+</div>
+</div>
+<p>In this final project you build a web app for your own business idea, from scratch, with Claude Code as your partner. You use the same architecture as the task app from <a href="./f26-class10-v001.html">Class 10</a>: Next.js, Supabase, GitHub and Vercel. In <a href="./001300-assignment-changeTheDatabase-v001.html">Project 2: Change the Task App’s Database</a> you changed an app that already existed; now you design one yourself.</p>
+<section id="goals" class="level2" data-number="90.1">
+<h2 data-number="90.1" class="anchored" data-anchor-id="goals"><span class="header-section-number">90.1</span> Goals</h2>
+<p>By the end, you will have turned a business idea into a short written <strong>spec</strong>, designed a small database with rules that keep each user’s data private, built and tested the app on your computer, put it online, and directed an AI coding agent through a real project while checking its work. The point is a <strong>small app that works</strong>, that you understand and can explain.</p>
+</section>
+<section id="choose-and-scope-your-idea" class="level2" data-number="90.2">
+<h2 data-number="90.2" class="anchored" data-anchor-id="choose-and-scope-your-idea"><span class="header-section-number">90.2</span> Choose and scope your idea</h2>
+<p>Pick a problem that a real small business, club or freelancer has. Then cut it down until it fits in a few weeks. A good project has:</p>
+<ul>
+<li><strong>one main workflow</strong>: the one thing a user comes to the app to do, from start to finish;</li>
+<li><strong>2-3 tables</strong> of your own in the database (the user accounts come with Supabase);</li>
+<li><strong>one kind of user</strong>, who signs in and sees only their own data.</li>
+</ul>
+<p>Some ideas that fit:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Idea</th>
+<th>Tables</th>
+<th>Main workflow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Booking for a hair salon</td>
+<td><code>services</code>, <code>appointments</code></td>
+<td>A customer picks a service and a time, and sees their upcoming appointments</td>
+</tr>
+<tr class="even">
+<td>Invoice tracker for a freelancer</td>
+<td><code>clients</code>, <code>invoices</code></td>
+<td>Add a client, create an invoice, mark it paid, see what’s still owed</td>
+</tr>
+<tr class="odd">
+<td>Inventory for a small café</td>
+<td><code>items</code>, <code>stock_counts</code></td>
+<td>Record today’s count of each item, and see which items are running low</td>
+</tr>
+<tr class="even">
+<td>Resale tracker for a thrift seller</td>
+<td><code>items</code>, <code>sales</code></td>
+<td>Add an item with its cost, record the sale, see the profit per month</td>
+</tr>
+<tr class="odd">
+<td>Dues for a student club</td>
+<td><code>members</code>, <code>payments</code></td>
+<td>Add members, record who paid, list who still owes dues</td>
+</tr>
+</tbody>
+</table>
+<p>Signs that an idea is too big: two kinds of users (buyers and sellers), chat, maps, a phone app, real money, or several outside services. Keep those for “version 2” in your spec.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Start smaller than you think
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Your first version is your <strong>MVP</strong> (minimum viable product): the smallest app that does the main workflow. Get it working and online first. Add extras only after that. See <a href="./040800-architectingWithAi-v001.html#start-small-the-mvp">Putting It Together: Architecting a Web App with AI</a>.</p>
+</div>
+</div>
+</section>
+<section id="the-starter-template" class="level2" data-number="90.3">
+<h2 data-number="90.3" class="anchored" data-anchor-id="the-starter-template"><span class="header-section-number">90.3</span> The starter template</h2>
+<p><span class="yr-asof">As of Oct 16, 2026 · Official docs: <a href="https://supabase.com/docs/guides/getting-started/quickstarts/nextjs">Use Supabase with Next.js</a> · <a href="https://github.com/vercel/next.js/tree/canary/examples/with-supabase">The with-supabase example</a></span></p>
+<p>You don’t start from an empty folder. Supabase and Next.js publish an official <strong>starter template</strong>: a small, working Next.js app that is already connected to Supabase, with sign-up, login and password-reset pages (email and password). Supabase’s guide creates it with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> create-next-app@latest my-app <span class="at">-e</span> with-supabase</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>npx create-next-app@latest</code> downloads and runs the newest version of Next.js’s app creator.</li>
+<li><code>my-app</code> is the name of the new folder for your app’s code. Use your app’s name, in lowercase with dashes, for example <code>salon-booking</code>.</li>
+<li><code>-e with-supabase</code> means “start from the example named <code>with-supabase</code>”.</li>
+</ul>
+<p>The command also makes the folder a Git repository, with a first commit. The app needs two settings, which go in a file named <code>.env.local</code>: <code>NEXT_PUBLIC_SUPABASE_URL</code> (your project’s URL) and <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> (your project’s publishable key). The template’s <code>.gitignore</code> already keeps <code>.env.local</code> out of Git. (Older guides call the key <code>..._ANON_KEY</code>; see <a href="./020700-environmentVariables-v001.html">Environment Variables</a> and <a href="./030500-gitignoreAndSecrets-v001.html">.gitignore and Keeping Secrets Out of Git</a>.)</p>
+<p>Claude runs these commands for you, after asking your permission. The template changes over time, so the prompt below tells Claude to check Supabase’s guide first.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: Why every <code>NEXT_PUBLIC_</code> value is public
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Next.js copies the value of every variable whose name starts with <code>NEXT_PUBLIC_</code> into the JavaScript that it sends to the browser. Anyone can read it there. That is fine for the Supabase URL and the publishable key, because Row Level Security decides what that key may do. A secret key, such as an OpenAI or Stripe key, must never go in a <code>NEXT_PUBLIC_</code> variable. It belongs only on a server: in a Supabase Edge Function’s secrets, as the task app does, or in a Vercel variable without the prefix. See <a href="./040600-apisKeysAndThirdPartyServices-v001.html">APIs, API Keys, and Third-Party Services</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="start-claude-code-with-this-prompt" class="level2" data-number="90.4">
+<h2 data-number="90.4" class="anchored" data-anchor-id="start-claude-code-with-this-prompt"><span class="header-section-number">90.4</span> Start Claude Code with this prompt</h2>
+<p><span class="yr-asof">As of Oct 16, 2026 · Official docs: <a href="https://code.claude.com/docs/en/permission-modes">Choose a permission mode</a> · <a href="https://code.claude.com/docs/en/model-config">Model configuration</a> · <a href="https://code.claude.com/docs/en/memory">How Claude remembers your project</a></span></p>
+<p>Work the same way as in Class 10. Open a terminal (Git Bash on Windows) and type each command, pressing <code>Enter</code> after each one:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/projects/final-project</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/final-project</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> manual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In Manual mode, Claude asks before it runs each command or changes a file. In Claude’s chat box, type <code>/model sonnet</code> and press <code>Enter</code>: Sonnet handles this project and uses up your Pro plan’s limit more slowly than the default model (see <a href="./060800-contextModelsEffortAndUsage-v001.html">Context, Models, Effort, and Usage in Claude Code</a>).</p>
+<p>Then paste the prompt for your computer. First replace the text in square brackets with your idea:</p>
+<!-- The prompt is repeated in each tab; change all copies together. -->
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Linux</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<pre class="text"><code>I'm on a Mac.
+
+I'm a business student with no programming background, starting my course's
+final project: a small web app for my own business idea, built from scratch.
+We're in the folder ~/projects/final-project, which I just created.
+
+My idea: [two or three sentences: who uses the app, what problem it solves,
+and the one main thing they do in it].
+
+The assignment, with its milestones and rules, is here. Read it first:
+https://y-rosenthal.github.io/aiasd-in-progress/001310-assignment-buildYourOwnApp-v001.html
+
+Use the same architecture as the task app from my class: Next.js for the web
+pages, Supabase for the database and login, GitHub for the code, and Vercel
+to put the app online. Start from the official starter template
+(npx create-next-app@latest my-app -e with-supabase, with my app's name
+instead of my-app), inside this folder. Check the current command and setup
+steps in Supabase's guide before you use them:
+https://supabase.com/docs/guides/getting-started/quickstarts/nextjs
+Don't add Google sign-in, OpenAI or Stripe unless I ask for them later.
+
+First, create two files in this folder (not inside the app's folder):
+- CLAUDE.md, with the rules under "How to work with me" below, so you follow
+  them in every session.
+- checklist.md, a Markdown checklist ("- [ ]" for each item) of the five
+  milestones on the assignment page and the steps for each, followed by a
+  "Notes and issues" section and a "History" section. Update it as soon as
+  each step is done: check its box, add the date, and add a line to History.
+
+Then, before any code, help me write a short spec, docs/spec.md in the app's
+folder: the problem and who has it, 3-5 user stories, the tables with their
+columns and who may see each row, the pages, what is out of scope for now,
+and how we'll test that it works. Ask me questions one at a time. Show me the
+draft and wait for my approval before you build anything.
+
+How to work with me:
+- Do one step at a time. Before each command, tell me in a sentence or two
+  what it does and why. Ask before anything that deletes files, changes my
+  accounts, or costs money.
+- When a step needs a website (GitHub, Supabase, Vercel) or installing a
+  program, stop. Tell me exactly what to click and what to copy, and wait
+  until I say I'm done.
+- I paste secret keys into .env.local and into websites myself. Never ask me
+  to paste a key into this chat, never open or print .env.local, never commit
+  a key, and never put one in CLAUDE.md, checklist.md or any file Git tracks.
+  Never put a secret key in a NEXT_PUBLIC_ variable.
+- Change the database only with migration files in supabase/migrations,
+  applied with the Supabase CLI; never change tables in the Supabase
+  dashboard. Turn on Row Level Security for every table, with policies so
+  each user sees and changes only their own rows.
+- Build the smallest version that works first. Don't add anything that isn't
+  in the spec without asking me.
+- After each step, check that it worked. Test everything on my computer
+  (npm run dev) before we deploy, and don't deploy until I say so. If
+  something fails, explain the error in plain English, fix it with me, and
+  note it in checklist.md.
+- Commit after each step that works, with a clear message. Before each
+  commit, run git status and check that no .env file is in it.
+- Don't use Docker. We use a hosted Supabase project.
+- Keep checklist.md up to date as we go, not just at the end.</code></pre>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<pre class="text"><code>I'm on Windows, and I use Git Bash.
+
+I'm a business student with no programming background, starting my course's
+final project: a small web app for my own business idea, built from scratch.
+We're in the folder ~/projects/final-project, which I just created.
+
+My idea: [two or three sentences: who uses the app, what problem it solves,
+and the one main thing they do in it].
+
+The assignment, with its milestones and rules, is here. Read it first:
+https://y-rosenthal.github.io/aiasd-in-progress/001310-assignment-buildYourOwnApp-v001.html
+
+Use the same architecture as the task app from my class: Next.js for the web
+pages, Supabase for the database and login, GitHub for the code, and Vercel
+to put the app online. Start from the official starter template
+(npx create-next-app@latest my-app -e with-supabase, with my app's name
+instead of my-app), inside this folder. Check the current command and setup
+steps in Supabase's guide before you use them:
+https://supabase.com/docs/guides/getting-started/quickstarts/nextjs
+Don't add Google sign-in, OpenAI or Stripe unless I ask for them later.
+
+First, create two files in this folder (not inside the app's folder):
+- CLAUDE.md, with the rules under "How to work with me" below, so you follow
+  them in every session.
+- checklist.md, a Markdown checklist ("- [ ]" for each item) of the five
+  milestones on the assignment page and the steps for each, followed by a
+  "Notes and issues" section and a "History" section. Update it as soon as
+  each step is done: check its box, add the date, and add a line to History.
+
+Then, before any code, help me write a short spec, docs/spec.md in the app's
+folder: the problem and who has it, 3-5 user stories, the tables with their
+columns and who may see each row, the pages, what is out of scope for now,
+and how we'll test that it works. Ask me questions one at a time. Show me the
+draft and wait for my approval before you build anything.
+
+How to work with me:
+- Do one step at a time. Before each command, tell me in a sentence or two
+  what it does and why. Ask before anything that deletes files, changes my
+  accounts, or costs money.
+- When a step needs a website (GitHub, Supabase, Vercel) or installing a
+  program, stop. Tell me exactly what to click and what to copy, and wait
+  until I say I'm done.
+- I paste secret keys into .env.local and into websites myself. Never ask me
+  to paste a key into this chat, never open or print .env.local, never commit
+  a key, and never put one in CLAUDE.md, checklist.md or any file Git tracks.
+  Never put a secret key in a NEXT_PUBLIC_ variable.
+- Change the database only with migration files in supabase/migrations,
+  applied with the Supabase CLI; never change tables in the Supabase
+  dashboard. Turn on Row Level Security for every table, with policies so
+  each user sees and changes only their own rows.
+- Build the smallest version that works first. Don't add anything that isn't
+  in the spec without asking me.
+- After each step, check that it worked. Test everything on my computer
+  (npm run dev) before we deploy, and don't deploy until I say so. If
+  something fails, explain the error in plain English, fix it with me, and
+  note it in checklist.md.
+- Commit after each step that works, with a clear message. Before each
+  commit, run git status and check that no .env file is in it.
+- Don't use Docker. We use a hosted Supabase project.
+- Keep checklist.md up to date as we go, not just at the end.</code></pre>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<pre class="text"><code>I'm on Linux.
+
+I'm a business student with no programming background, starting my course's
+final project: a small web app for my own business idea, built from scratch.
+We're in the folder ~/projects/final-project, which I just created.
+
+My idea: [two or three sentences: who uses the app, what problem it solves,
+and the one main thing they do in it].
+
+The assignment, with its milestones and rules, is here. Read it first:
+https://y-rosenthal.github.io/aiasd-in-progress/001310-assignment-buildYourOwnApp-v001.html
+
+Use the same architecture as the task app from my class: Next.js for the web
+pages, Supabase for the database and login, GitHub for the code, and Vercel
+to put the app online. Start from the official starter template
+(npx create-next-app@latest my-app -e with-supabase, with my app's name
+instead of my-app), inside this folder. Check the current command and setup
+steps in Supabase's guide before you use them:
+https://supabase.com/docs/guides/getting-started/quickstarts/nextjs
+Don't add Google sign-in, OpenAI or Stripe unless I ask for them later.
+
+First, create two files in this folder (not inside the app's folder):
+- CLAUDE.md, with the rules under "How to work with me" below, so you follow
+  them in every session.
+- checklist.md, a Markdown checklist ("- [ ]" for each item) of the five
+  milestones on the assignment page and the steps for each, followed by a
+  "Notes and issues" section and a "History" section. Update it as soon as
+  each step is done: check its box, add the date, and add a line to History.
+
+Then, before any code, help me write a short spec, docs/spec.md in the app's
+folder: the problem and who has it, 3-5 user stories, the tables with their
+columns and who may see each row, the pages, what is out of scope for now,
+and how we'll test that it works. Ask me questions one at a time. Show me the
+draft and wait for my approval before you build anything.
+
+How to work with me:
+- Do one step at a time. Before each command, tell me in a sentence or two
+  what it does and why. Ask before anything that deletes files, changes my
+  accounts, or costs money.
+- When a step needs a website (GitHub, Supabase, Vercel) or installing a
+  program, stop. Tell me exactly what to click and what to copy, and wait
+  until I say I'm done.
+- I paste secret keys into .env.local and into websites myself. Never ask me
+  to paste a key into this chat, never open or print .env.local, never commit
+  a key, and never put one in CLAUDE.md, checklist.md or any file Git tracks.
+  Never put a secret key in a NEXT_PUBLIC_ variable.
+- Change the database only with migration files in supabase/migrations,
+  applied with the Supabase CLI; never change tables in the Supabase
+  dashboard. Turn on Row Level Security for every table, with policies so
+  each user sees and changes only their own rows.
+- Build the smallest version that works first. Don't add anything that isn't
+  in the spec without asking me.
+- After each step, check that it worked. Test everything on my computer
+  (npm run dev) before we deploy, and don't deploy until I say so. If
+  something fails, explain the error in plain English, fix it with me, and
+  note it in checklist.md.
+- Commit after each step that works, with a clear message. Before each
+  commit, run git status and check that no .env file is in it.
+- Don't use Docker. We use a hosted Supabase project.
+- Keep checklist.md up to date as we go, not just at the end.</code></pre>
+</div>
+</div>
+</div>
+<p>Your folders end up like this:</p>
+<pre><code>~/projects/final-project/
+    CLAUDE.md          the working rules (never uploaded)
+    checklist.md       your progress and notes (never uploaded)
+    salon-booking/     your app: the Git repository you push to GitHub
+        docs/spec.md
+        supabase/migrations/
+        README.md
+        .env.local     your keys (Git ignores it)</code></pre>
+<p><strong>Next time</strong> (a new session, or after <code>/clear</code>), start Claude in <code>~/projects/final-project</code> the same way, type <code>/model sonnet</code>, and paste:</p>
+<pre class="text"><code>We're continuing my final project. Read checklist.md, docs/spec.md and the
+assignment page, check that the finished steps still work, and continue with
+the next unchecked step.</code></pre>
+<p>The usage tips from Class 10 apply here too: use Sonnet, <code>/clear</code> between big steps, and check <code>/usage</code> (see <a href="./f26-class10-v001.html#using-claude-code-without-running-out-of-usage">Using Claude Code without running out of usage</a>).</p>
+</section>
+<section id="what-the-spec-is-for" class="level2" data-number="90.5">
+<h2 data-number="90.5" class="anchored" data-anchor-id="what-the-spec-is-for"><span class="header-section-number">90.5</span> What the spec is for</h2>
+<p>A <strong>spec</strong>, or <strong>PRD</strong> (product requirements document), is a short description of what the app must do, written before the code. It is one or two pages, not a novel. It matters even more with an AI:</p>
+<ul>
+<li>Claude reads it in every session, so it builds what you decided, not what it guesses.</li>
+<li>When Claude suggests a feature that isn’t in the spec, you can say no.</li>
+<li>Its “how we’ll test it” list tells you when you’re done.</li>
+</ul>
+<p>If you change your mind, change the spec first, then the code. An example spec is in <a href="./010400-aiAssistedDevelopment-v001.html#vibe-coding-vs.-ai-assisted-engineering">AI-Assisted Development: From Chatbots to Coding Agents</a>.</p>
+</section>
+<section id="milestones" class="level2" data-number="90.6">
+<h2 data-number="90.6" class="anchored" data-anchor-id="milestones"><span class="header-section-number">90.6</span> Milestones</h2>
+<p>The instructor will announce the due dates.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Milestone</th>
+<th>What you do</th>
+<th>What’s due</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1. Proposal and spec</strong></td>
+<td>Choose and scope your idea. Write <code>docs/spec.md</code> with Claude. Create the app from the starter and run it on your computer. Push it to a new GitHub repository.</td>
+<td>A one-paragraph proposal (approved by the instructor before you build), the repository link, and the spec in it</td>
+</tr>
+<tr class="even">
+<td><strong>2. Database and sign-in</strong></td>
+<td>Create a Supabase project (the same settings as <a href="./f26-class10-v001.html#step-c-supabase-project-and-the-front-end">Class 10, Step C</a>). Write migrations for your 2-3 tables, with RLS policies, and push them with the Supabase CLI. Check that sign-up and login work.</td>
+<td>Migrations in <code>supabase/migrations</code>, and a note in the README on how you tested that one user can’t see another user’s rows</td>
+</tr>
+<tr class="odd">
+<td><strong>3. Core feature</strong></td>
+<td>Build the main workflow, end to end, on your computer. Test it with made-up data and at least two test accounts.</td>
+<td>The workflow working on <code>localhost</code>, with a commit for each working step</td>
+</tr>
+<tr class="even">
+<td><strong>4. Deploy</strong></td>
+<td>Put the app on Vercel, add the two <code>NEXT_PUBLIC_</code> variables, and update Supabase’s Site URL and redirect URLs (<a href="./f26-class10-v001.html#step-k-put-the-app-online-with-vercel">Class 10, Step K</a>). Test it again online with a new account.</td>
+<td>The live Vercel URL</td>
+</tr>
+<tr class="odd">
+<td><strong>5. Final demo</strong></td>
+<td>Finish the README and write your reflection. Show the app in class.</td>
+<td>Everything in the next section, and a 3-5 minute demo</td>
+</tr>
+</tbody>
+</table>
+<p>Test RLS on purpose: sign up as two users (one in a private browser window), add rows as each, and check that neither sees the other’s rows. RLS is explained in <a href="./001190-tutorial-setupSupabaseDatabase-v001.html">Step 9: Set Up Supabase Database</a>.</p>
+<p><strong>Optional extras</strong>, only after milestone 4 works: “Sign in with Google” (Class 10, Step D), an AI feature with the OpenAI API (Step E, with the same $5 limit), or payments with Stripe in <strong>test mode</strong> (Step F). Add each one to your spec first.</p>
+</section>
+<section id="deliverables" class="level2" data-number="90.7">
+<h2 data-number="90.7" class="anchored" data-anchor-id="deliverables"><span class="header-section-number">90.7</span> Deliverables</h2>
+<p>Submit these by the final deadline:</p>
+<ol type="1">
+<li><strong>The GitHub repository link.</strong> The instructor must be able to see it (make it public, or add the instructor as a collaborator).</li>
+<li><strong>The live Vercel URL</strong>, with a test account the instructor can use (a made-up email and password, written in your submission, not in the repository).</li>
+<li><strong><code>README.md</code></strong>, replacing the starter’s README: what the app does and for whom, the live URL, the tables, how to run it, and how you tested it.</li>
+<li><strong><code>docs/spec.md</code></strong>, updated to match what you built.</li>
+<li><strong><code>docs/reflection.md</code></strong> (400-600 words, in your own words): how you worked with Claude, <strong>one thing the AI got wrong</strong> and how you noticed and fixed it, and what you would do differently.</li>
+</ol>
+</section>
+<section id="grading" class="level2" data-number="90.8">
+<h2 data-number="90.8" class="anchored" data-anchor-id="grading"><span class="header-section-number">90.8</span> Grading</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Spec: clear problem, users, user stories, scope, tests</td>
+<td>10%</td>
+</tr>
+<tr class="even">
+<td>Database: sensible tables, migrations, RLS policies that work</td>
+<td>20%</td>
+</tr>
+<tr class="odd">
+<td>Core workflow works, locally and online</td>
+<td>25%</td>
+</tr>
+<tr class="even">
+<td>Deployment on Vercel, with the right settings</td>
+<td>10%</td>
+</tr>
+<tr class="odd">
+<td>Security: no secrets in the repository or in <code>NEXT_PUBLIC_</code> variables, only made-up data</td>
+<td>10%</td>
+</tr>
+<tr class="even">
+<td>Git history (small commits with clear messages) and README</td>
+<td>10%</td>
+</tr>
+<tr class="odd">
+<td>Reflection, including what the AI got wrong</td>
+<td>10%</td>
+</tr>
+<tr class="even">
+<td>Final demo: you can explain how your app works</td>
+<td>5%</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>100%</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rules" class="level2" data-number="90.9">
+<h2 data-number="90.9" class="anchored" data-anchor-id="rules"><span class="header-section-number">90.9</span> Rules</h2>
+<ul>
+<li><strong>AI use is expected.</strong> Use Claude Code for code, commands and explanations.</li>
+<li><strong>You are responsible for the code.</strong> You approve every change, so be ready to explain any part of your app in the demo.</li>
+<li><strong>No real secrets in the repository.</strong> Keys go in <code>.env.local</code> and on the websites only. If a key ever reaches GitHub, tell the instructor and create a new key right away: deleting the file doesn’t remove it from Git’s history.</li>
+<li><strong>No real customer data.</strong> Use made-up names, emails and numbers, even if your idea comes from a real business.</li>
+<li><strong>Stay on free plans.</strong> The free Supabase plan allows only a few active projects, so you may have to pause your task-app project.</li>
+</ul>
+</section>
+<section id="key-takeaways" class="level2" data-number="90.10">
+<h2 data-number="90.10" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">90.10</span> Key takeaways</h2>
+<ul>
+<li>Small and working beats big and broken: one workflow, 2-3 tables, one kind of user.</li>
+<li>Write the spec first. It keeps you and Claude building the same thing.</li>
+<li>Every table gets RLS, and you test it with two accounts.</li>
+<li>Secret keys never go in the chat, in Git, or in a <code>NEXT_PUBLIC_</code> variable.</li>
+<li>Test on your computer first, then deploy, then test again online.</li>
+</ul>
+</section>
+<section id="practice-questions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
+<section id="easy" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="easy">Easy</h3>
+<section id="question-1-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-1-short-answer">Question 1 · Short answer</h4>
+<p>What is a spec (PRD), and name three things that go in this project’s spec.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A spec, or product requirements document, is a short description of what the app must do, written before the code. Any three of: the problem and who has it; 3-5 user stories; the tables, their columns and who may see each row; the pages; what is out of scope for now; how you’ll test that it works.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-multiple-choice">Question 2 · Multiple choice</h4>
+<p>Which project idea is best scoped for this assignment?</p>
+<ol type="a">
+<li>A marketplace where landlords list apartments and students message them</li>
+<li>A tracker where a freelancer adds clients, creates invoices and marks them paid</li>
+<li>A phone app that shows nearby food trucks on a map</li>
+<li>A store that takes real credit-card payments for three different kinds of users</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b.</strong> It has one kind of user, one main workflow and two tables (<code>clients</code>, <code>invoices</code>). The marketplace (a) has two kinds of users and messaging; the food-truck app (c) is a phone app with maps; the store (d) has real money and several kinds of users. All three are signs the idea is too big.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-true-or-false">Question 3 · True or false</h4>
+<p>Because the starter template’s <code>.gitignore</code> excludes <code>.env.local</code>, it’s fine to paste your keys into Claude’s chat box so Claude can fill in the file.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> <code>.gitignore</code> only keeps the file out of Git. Anything you paste into the chat becomes part of the conversation, which is sent to Anthropic’s servers and saved in the session history. You paste keys into <code>.env.local</code> yourself; Claude only tells you where they go.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-matching" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-matching">Question 4 · Matching</h4>
+<p>Match each file to its job.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. <code>CLAUDE.md</code></td>
+<td>A. Your app’s keys, on your computer only</td>
+</tr>
+<tr class="even">
+<td>2. <code>checklist.md</code></td>
+<td>B. What the app must do, agreed before coding</td>
+</tr>
+<tr class="odd">
+<td>3. <code>docs/spec.md</code></td>
+<td>C. The working rules Claude reads at the start of every session</td>
+</tr>
+<tr class="even">
+<td>4. <code>.env.local</code></td>
+<td>D. Your progress, notes on problems, and history</td>
+</tr>
+</tbody>
+</table>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>1 → C, 2 → D, 3 → B, 4 → A.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="medium" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="medium">Medium</h3>
+<section id="question-5-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-5-short-answer">Question 5 · Short answer</h4>
+<p>What does each part of <code>npx create-next-app@latest salon-booking -e with-supabase</code> do?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>npx create-next-app@latest</code> downloads and runs the newest version of Next.js’s app creator. <code>salon-booking</code> is the name of the new folder for the app’s code. <code>-e with-supabase</code> starts from the official example named <code>with-supabase</code>, which is already connected to Supabase and has sign-up and login pages. The command also makes the folder a Git repository with a first commit.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-scenario">Question 6 · Scenario</h4>
+<p>Maria’s app needs an OpenAI key. Claude suggests adding <code>NEXT_PUBLIC_OPENAI_KEY</code> to Vercel. What should she say, and why?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>No.&nbsp;Next.js copies every <code>NEXT_PUBLIC_</code> variable into the JavaScript it sends to the browser, where anyone can read it, and an OpenAI key can cost her money. A secret key belongs only on a server: in a Supabase Edge Function’s secrets (as the task app does) or in a Vercel variable without the <code>NEXT_PUBLIC_</code> prefix. The prompt’s rule “never put a secret key in a <code>NEXT_PUBLIC_</code> variable” covers this.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-scenario">Question 7 · Scenario</h4>
+<p>Sam’s café app has a <code>stock_counts</code> table. How should he test that its RLS policies work?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Sign up as two different test users, for example one in a normal window and one in a private window. Add rows as each user, then check that each user sees only their own rows and can’t change the other’s. A good answer also says he uses made-up data, and writes down in the README how he tested it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-multiple-choice">Question 8 · Multiple choice</h4>
+<p>Halfway through, Sam wants to add a new column to his <code>appointments</code> table. What should he do?</p>
+<ol type="a">
+<li>Add the column in the Supabase dashboard’s Table Editor</li>
+<li>Ask Claude to change the table directly in the database</li>
+<li>Update the spec, then have Claude write a new migration and apply it with the Supabase CLI</li>
+<li>Delete the Supabase project and start over</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>c.</strong> The spec should match what he builds, and every database change goes through a migration file, so the change is recorded in Git and can be applied again. Changing tables in the dashboard (a) or directly (b) bypasses the migrations, so the files no longer describe the real database. Starting over (d) is unnecessary.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
+<section id="question-9-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-long-answer">Question 9 · Long answer</h4>
+<p>Why does the project require you to test on your computer before deploying to Vercel, and to test again after deploying?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On your computer (<code>npm run dev</code>), changes show up in seconds, errors appear in your terminal where Claude can read them, and nobody else sees a broken app. Fixing a problem there is faster and cheaper than on a live site. Deploying adds new things that can go wrong: Vercel’s environment variables, Supabase’s Site URL and redirect URLs, and the production build. So you test again online, with a new account, to catch problems that exist only there. A good answer separates “does my code work?” from “is the online setup right?”</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-10-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-scenario">Question 10 · Scenario</h4>
+<p>Maria’s spec says “users can book appointments”. In the middle of milestone 3, Claude offers to add reminder emails, a loyalty-points system and an admin dashboard “to make the app more complete”. What should she do, and how does the spec help?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Say no for now, and ask Claude to finish the main workflow. The spec defines what she agreed to build, and those features aren’t in it, so they would add work, new bugs and usage before her MVP works. If she wants one later, she adds it to the spec first (perhaps under “version 2”), after milestone 4. Her prompt also tells Claude not to add anything that isn’t in the spec without asking.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-11-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-scenario">Question 11 · Scenario</h4>
+<p>Sam notices that a commit he pushed to GitHub yesterday contains his <code>.env</code> file with a Supabase secret key. He deletes the file and pushes again. Is the problem solved? What should he do?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>No.&nbsp;Deleting the file creates a new commit, but the old commit, with the key in it, is still in the repository’s history on GitHub, where anyone who can see the repository can find it. He should create a new secret key in Supabase right away so the old one stops working, tell the instructor, and make sure <code>.gitignore</code> excludes the file. To prevent it, check <code>git status</code> before every commit, as the prompt tells Claude to do.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-12-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-long-answer">Question 12 · Long answer</h4>
+<p>The rules say “You are responsible for the code.” Why does that matter when an AI wrote most of it, and what habits from this page help you meet it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The AI can make mistakes: wrong commands, missing RLS policies, a key in the wrong place, features nobody asked for. You approved each change, you publish the app, and its users trust you with their data, so the mistakes are yours. Habits that help: Manual mode, reading each command before you approve it; asking Claude to explain each step; a spec that you can check the app against; migrations and RLS tests; testing locally and online; small commits that are easy to undo; and the reflection, which makes you notice what the AI got wrong.</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./001300-assignment-changeTheDatabase-v001.html" class="pagination-link" aria-label="<yrChapterNumber>89. </yrChapterNumber> Project 2: Change the Task App's Database">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">89</span>&nbsp; <span class="chapter-title"><yrchapternumber>89. </yrchapternumber> Project 2: Change the Task App’s Database</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./000010-topics-v001.html" class="pagination-link" aria-label="<yrChapterNumber>91. </yrChapterNumber> TOPICS (ignore this section - it is just for me to develop the book)">
+        <span class="nav-page-text"><span class="chapter-number">91</span>&nbsp; <span class="chapter-title"><yrchapternumber>91. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<style>
+/* yrCollapsibles-v003: styles for collapsible callouts and their
+ * Expand/Collapse, Expand All and Collapse All buttons. See the comment in the
+ * script below. (Replaces yrCollapsibles-v002.html, whose Expand/Collapse
+ * button looked like the other two.) */
+
+/* ---------- explanation boxes (.yr-explain) ---------- */
+.callout.yr-explain {
+  margin-top: 0.4rem;
+  margin-bottom: 0.9rem;
+  border-left-color: #b7791f !important;
+  background: #fffaf0;
+}
+.callout.yr-explain .callout-header {
+  background: #fdf0d5 !important;
+}
+.callout.yr-explain .callout-title-container {
+  font-weight: 600;
+  color: #7b4a12;
+}
+.callout.yr-explain .callout-title-container::before {
+  content: "\1F4A1\00a0"; /* light bulb + non-breaking space */
+}
+.callout.yr-explain .callout-body-container {
+  font-size: 0.95em;
+}
+
+/* ---------- every collapsible callout ---------- */
+.yr-collapse-buttons {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-left: 0.6rem;
+  vertical-align: middle;
+}
+.yr-collapse-btn {
+  font-size: 0.75rem;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.3;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid #adb5bd;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #495057;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.yr-collapse-btn:hover {
+  background: #e9ecef;
+}
+.callout.yr-explain .yr-collapse-btn {
+  border-color: #b7791f;
+  color: #7b4a12;
+}
+.callout.yr-explain .yr-collapse-btn:hover {
+  background: #fdf0d5;
+}
+
+/* Expand/Collapse is the main button: filled with a darker shade of the
+ * callout's own color (dark enough for white text), so it stands out from
+ * Expand All / Collapse All. */
+.callout { --yr-collapse-accent: #495057; }
+.callout.callout-note { --yr-collapse-accent: #1a6bc4; }
+.callout.callout-tip { --yr-collapse-accent: #2c7a12; }
+.callout.callout-warning { --yr-collapse-accent: #c04a00; }
+.callout.callout-caution { --yr-collapse-accent: #9a6400; }
+.callout.callout-important { --yr-collapse-accent: #d0002e; }
+.callout.yr-explain { --yr-collapse-accent: #99620f; }
+.callout .yr-collapse-btn.yr-collapse-btn-main {
+  background: var(--yr-collapse-accent);
+  border-color: var(--yr-collapse-accent);
+  color: #ffffff;
+  font-weight: 600;
+}
+.callout .yr-collapse-btn.yr-collapse-btn-main:hover {
+  background: var(--yr-collapse-accent);
+  filter: brightness(0.85);
+}
+</style>
+<script>
+/* yrCollapsibles-v003
+ *
+ * Makes every collapsible callout on every page easy to recognize and to
+ * open, whatever its kind (explanations, screenshots, deeper dives, practice
+ * question answers, ...). A callout is collapsible when it has collapse="true"
+ * or collapse="false":
+ *
+ *     ::: {.callout-note collapse="true"}
+ *     ## Deeper dive: ...
+ *     ...
+ *     :::
+ *
+ * For each such callout, three buttons go at the end of the clickable
+ * heading's text:
+ *   - "Expand/Collapse" opens or closes this callout, like clicking the
+ *     heading itself (which still works). It is filled with the callout's
+ *     color, so it stands out from the other two;
+ *   - "Expand All" / "Collapse All" open or close every collapsible callout on
+ *     the page, and keep the clicked heading where it was on the screen.
+ * So don't write "click here" in a callout's title: the buttons show that it
+ * opens.
+ *
+ * It also styles the explanation boxes (.yr-explain): collapsed callouts for
+ * the "why" behind a step, with their own colors and a light bulb:
+ *
+ *     ::: {.callout-note .yr-explain collapse="true" icon="false"}
+ *     ## Why? What is an organization?
+ *     ...
+ *     :::
+ *
+ * Included inline (include-after-body: file: ...) so it works for pages in
+ * subfolders too. Pages without collapsible callouts are not affected.
+ * The practice-question toolbar (Show all answers / Hide all answers,
+ * yrAnswerToggles-v001.html) is separate and still works.
+ */
+(function () {
+  function collapsibleCallouts() {
+    var main = document.querySelector("main") || document.body;
+    return Array.prototype.filter.call(main.querySelectorAll(".callout"), function (callout) {
+      return callout.querySelector(":scope > .callout-collapse") &&
+             callout.querySelector(":scope > .callout-header");
+    });
+  }
+
+  // Without Bootstrap's animation, so the page height changes at once and the
+  // clicked heading can be kept in place. Bootstrap reads the state from the
+  // "show" class, so clicking a heading afterwards still works.
+  function setCalloutExpanded(callout, expanded) {
+    var content = callout.querySelector(":scope > .callout-collapse");
+    var header = callout.querySelector(":scope > .callout-header");
+    content.classList.remove("collapsing");
+    content.style.height = "";
+    content.classList.toggle("show", expanded);
+    header.setAttribute("aria-expanded", expanded ? "true" : "false");
+    header.classList.toggle("collapsed", !expanded);
+  }
+
+  // expand: "toggle" (this callout), "true" or "false" (every callout).
+  function makeButton(text, expand) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = expand === "toggle" ? "yr-collapse-btn yr-collapse-btn-main" : "yr-collapse-btn";
+    btn.setAttribute("data-yr-expand", expand);
+    btn.textContent = text;
+    return btn;
+  }
+
+  // The buttons are inside the clickable heading, and Bootstrap handles
+  // heading clicks on the document in the capture phase, before a button's
+  // own listener. So the clicks are handled here, on the window (which comes
+  // first). Expand/Collapse is let through, so Bootstrap toggles the callout
+  // exactly as for a click on the heading; the other buttons are stopped
+  // before they reach Bootstrap.
+  window.addEventListener("click", function (event) {
+    var btn = event.target.closest && event.target.closest(".yr-collapse-btn");
+    if (!btn || btn.getAttribute("data-yr-expand") === "toggle") {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    var expanded = btn.getAttribute("data-yr-expand") === "true";
+    var header = btn.closest(".callout-header");
+    var before = header.getBoundingClientRect().top;
+    collapsibleCallouts().forEach(function (callout) {
+      setCalloutExpanded(callout, expanded);
+    });
+    window.scrollBy(0, header.getBoundingClientRect().top - before);
+  }, true);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    collapsibleCallouts().forEach(function (callout) {
+      var header = callout.querySelector(":scope > .callout-header");
+      var title = header.querySelector(".callout-title-container");
+      if (!title || title.querySelector(".yr-collapse-buttons")) {
+        return;
+      }
+
+      var buttons = document.createElement("span");
+      buttons.className = "yr-collapse-buttons";
+      buttons.appendChild(makeButton("Expand/Collapse", "toggle"));
+      buttons.appendChild(makeButton("Expand All", "true"));
+      buttons.appendChild(makeButton("Collapse All", "false"));
+      title.appendChild(buttons);
+    });
+  });
+})();
+</script>
+<!--
+  yrNewTabLinks-v001.html (Fall 2026)
+  Included via include-after-body in _quarto.yml.
+  In the page's main content, links that go to another page (another chapter or
+  another website) open in a new browser tab, so students keep their place.
+  Not changed: links to a section of the same page, image lightboxes, download
+  links, and Quarto's own navigation (sidebar, table of contents, previous/next).
+-->
+<script>
+(function () {
+  function yrNewTabLinks() {
+    var here = location.origin + location.pathname;
+    document.querySelectorAll('main a[href]').forEach(function (a) {
+      if (a.closest('nav, .sidebar, #TOC, .page-navigation')) return;
+      if (a.classList.contains('lightbox') || a.classList.contains('anchorjs-link')) return;
+      if (a.hasAttribute('download') || a.hasAttribute('target')) return;
+      var href = a.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || /^(javascript|mailto|tel):/i.test(href)) return;
+      var url;
+      try { url = new URL(a.href); } catch (e) { return; }
+      if (url.origin + url.pathname === here) return; // a section of this page
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', ((a.getAttribute('rel') || '') + ' noopener').trim());
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', yrNewTabLinks);
+  } else {
+    yrNewTabLinks();
+  }
+})();
+</script>
+<style>
+/* yrWaysTabs-v002: styles for "ways" tabsets (.panel-tabset .yr-ways) and
+ * their Show all / Show as tabs buttons. See the comment in the script below.
+ * The buttons look like the Expand/Collapse button of yrCollapsibles-v003.html.
+ * (The book has no dark theme, so there are no dark-mode colors.)
+ * (Replaces yrWaysTabs-v001.html, whose single button sat at the far right
+ * of the tab bar and read "Show as tabs" above all the ways.) */
+
+/* ---------- tabs mode: "Show all" right after the last tab ---------- */
+/* The script places the button's bar right after the last tab, on that tab's
+ * row; the tab bar keeps room for it at the right, so it always fits. Without
+ * the script's measurements, it sits at the right end of the first row. */
+.panel-tabset.yr-ways {
+  position: relative;
+  scroll-margin-top: 4rem; /* room above it when the page scrolls back to it */
+}
+.panel-tabset.yr-ways > .nav-tabs {
+  padding-right: 6.5rem;
+}
+.yr-ways-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2.8rem; /* the height of a tab, so the button is centered on it */
+  display: flex;
+  align-items: center;
+}
+.yr-ways-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.3;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--yr-ways-accent, #1a6bc4);
+  border-radius: 4px;
+  background: var(--yr-ways-accent, #1a6bc4);
+  color: #ffffff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.yr-ways-btn:hover {
+  filter: brightness(0.85);
+}
+.yr-ways-title,
+.yr-ways-pane-bar {
+  display: none;
+}
+
+/* ---------- Show all mode: every tab's content, one after another ---------- */
+/* !important because Quarto's Bootstrap sets both displays with !important
+ * (.nav:not(.nav-hidden) and .tab-content > .tab-pane:not(.active)). */
+.panel-tabset.yr-ways.yr-ways-all > .nav-tabs,
+.panel-tabset.yr-ways.yr-ways-all > .yr-ways-bar {
+  display: none !important;
+}
+/* No border or padding around the whole set: only each way has a box. */
+.panel-tabset.yr-ways.yr-ways-all > .tab-content {
+  border: none;
+  padding: 0;
+}
+.panel-tabset.yr-ways.yr-ways-all > .tab-content > .tab-pane {
+  display: block !important;
+  background: var(--yr-ways-bg);
+  border-left: 4px solid var(--yr-ways-accent);
+  border-radius: 4px;
+  padding: 0.5rem 0.9rem 0.1rem;
+  margin-bottom: 0.6rem;
+}
+.panel-tabset.yr-ways.yr-ways-all > .tab-content > .tab-pane > .yr-ways-title {
+  display: block;
+  font-weight: 600;
+  color: var(--yr-ways-accent);
+}
+.panel-tabset.yr-ways.yr-ways-all > .tab-content > .tab-pane > .yr-ways-pane-bar {
+  display: block;
+  margin: 0.2rem 0 0.5rem;
+}
+
+/* Each way gets its own light background, with a darker shade of the same
+ * color for its left edge, title and button (6 colors, then they repeat). */
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+1) { --yr-ways-bg: #e8f1fb; --yr-ways-accent: #1a6bc4; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+2) { --yr-ways-bg: #eaf5e4; --yr-ways-accent: #2c7a12; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+3) { --yr-ways-bg: #fdf3e1; --yr-ways-accent: #99620f; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+4) { --yr-ways-bg: #f1ebfa; --yr-ways-accent: #6f42c1; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+5) { --yr-ways-bg: #e3f4f4; --yr-ways-accent: #0f6f6f; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+6) { --yr-ways-bg: #fbe9ec; --yr-ways-accent: #b0283f; }
+</style>
+<script>
+/* yrWaysTabs-v002
+ *
+ * Tabsets for several ways to do the same thing. Mark the tabset with the
+ * extra class .yr-ways, and name each tab by what the student clicks:
+ *
+ *     ::: {.panel-tabset .yr-ways}
+ *     ## From the Overview page
+ *     ...
+ *     ## From the Clients menu
+ *     ...
+ *     :::
+ *
+ * The tabset starts as normal tabs (the first one open). A "Show all" button
+ * right after the last tab shows every tab's content one after another
+ * instead, each in its own light color with its tab's name as a title, so
+ * students can see all the ways at once. Under each title is a "Show as
+ * tabs" button: it switches back to tabs, with that way's tab open, and
+ * scrolls back to the tabset if it is no longer on the screen.
+ *
+ * The choice is not remembered: every page load starts as tabs. Only .yr-ways
+ * tabsets get the buttons; the Mac / Windows / Linux tabsets (group="os") are
+ * not affected, and Quarto itself remembers their choice across pages.
+ *
+ * Included inline (include-after-body: file: ...) so it works for pages in
+ * subfolders too. Pages without .yr-ways tabsets are not affected.
+ */
+(function () {
+  function makeButton(text, title) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "yr-ways-btn";
+    btn.textContent = text;
+    btn.title = title;
+    return btn;
+  }
+
+  // Show all. Focus moves to the first way's "Show as tabs" button, because
+  // the clicked button is hidden now.
+  function showAll(tabset) {
+    tabset.classList.add("yr-ways-all");
+    var first = tabset.querySelector(":scope > .tab-content > .tab-pane > .yr-ways-pane-bar > .yr-ways-btn");
+    if (first) {
+      first.focus({ preventScroll: true });
+    }
+  }
+
+  // Puts the "Show all" bar right after the last tab, on that tab's row,
+  // with a gap (1.2rem) so it isn't taken for another tab. Run again whenever
+  // the tab bar changes size (window width, fonts, back from Show all).
+  function placeShowAll(tabset, tabs, bar) {
+    var items = tabs.querySelectorAll(":scope > .nav-item");
+    if (!items.length || tabset.classList.contains("yr-ways-all")) {
+      return;
+    }
+    var last = items[items.length - 1].getBoundingClientRect();
+    var box = tabset.getBoundingClientRect();
+    var gap = 1.2 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    bar.style.right = "auto";
+    bar.style.left = (last.right - box.left + gap) + "px";
+    bar.style.top = (last.top - box.top) + "px";
+    bar.style.height = last.height + "px";
+  }
+
+  // Back to tabs, with this way's tab open (clicking the tab lets Bootstrap
+  // and Quarto do their usual work). If the tabset's top is then off the
+  // screen, the page scrolls back to it, so the student isn't left below it.
+  function showTabs(tabset, tab) {
+    tabset.classList.remove("yr-ways-all");
+    tab.click();
+    // Quarto's tabs can't always take the focus; then the Show all button does.
+    tab.focus({ preventScroll: true });
+    if (document.activeElement !== tab) {
+      tabset.querySelector(":scope > .yr-ways-bar > .yr-ways-btn").focus({ preventScroll: true });
+    }
+    var top = tabset.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight - 80) {
+      tabset.scrollIntoView({ block: "start" });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var main = document.querySelector("main") || document.body;
+    main.querySelectorAll(".panel-tabset.yr-ways").forEach(function (tabset) {
+      var tabs = tabset.querySelector(":scope > .nav-tabs");
+      var content = tabset.querySelector(":scope > .tab-content");
+      if (!tabs || !content || tabset.querySelector(":scope > .yr-ways-bar")) {
+        return;
+      }
+
+      // For each way, a title (the tab's own text, so they always match) and
+      // a "Show as tabs" button under it, both shown only in Show all mode.
+      tabs.querySelectorAll("a.nav-link").forEach(function (tab) {
+        var pane = document.getElementById(tab.getAttribute("aria-controls"));
+        if (!pane) {
+          return;
+        }
+        var title = document.createElement("div");
+        title.className = "yr-ways-title";
+        title.textContent = tab.textContent;
+        var paneBar = document.createElement("div");
+        paneBar.className = "yr-ways-pane-bar";
+        var back = makeButton("Show as tabs", "Show these ways as tabs again, with this one open");
+        back.addEventListener("click", function () {
+          showTabs(tabset, tab);
+        });
+        paneBar.appendChild(back);
+        pane.insertBefore(paneBar, pane.firstChild);
+        pane.insertBefore(title, paneBar);
+      });
+
+      // "Show all" goes after the tab bar (so it comes after the tabs when
+      // tabbing with the keyboard, and stays out of Bootstrap's tab list);
+      // placeShowAll puts it on the screen right after the last tab.
+      var bar = document.createElement("div");
+      bar.className = "yr-ways-bar";
+      var btn = makeButton("Show all", "Show all the ways at once");
+      btn.addEventListener("click", function () {
+        showAll(tabset);
+      });
+      bar.appendChild(btn);
+      tabset.insertBefore(bar, content);
+      var place = function () { placeShowAll(tabset, tabs, bar); };
+      place();
+      if (window.ResizeObserver) {
+        new ResizeObserver(place).observe(tabs);
+      }
+      window.addEventListener("load", place);
+    });
+  });
+})();
+</script>
+<style>
+/* yrLinkTargetHighlight-v001: the soft amber background that briefly marks
+ * the target of a link to a section (page.html#id). See the comment in the
+ * script below. */
+
+/* The animated amount of amber, from 1 down to 0. Registering it lets the
+ * browser fade it smoothly (browsers without @property simply switch it off
+ * half-way through). */
+@property --yr-target-alpha {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@keyframes yr-target-fade {
+  0%, 25% { --yr-target-alpha: 1; }
+  100% { --yr-target-alpha: 0; }
+}
+
+/* The amber is solid for the first part of the target (its heading and the
+ * first screenful or so) and then fades downward, so a long section isn't
+ * painted all the way down. Only the background changes, so nothing on the
+ * page moves. */
+.yr-link-target {
+  --yr-target-alpha: 0;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255 210 80 / calc(0.45 * var(--yr-target-alpha))) 0,
+    rgb(255 210 80 / calc(0.45 * var(--yr-target-alpha))) 50vh,
+    rgb(255 210 80 / 0) 80vh
+  );
+  border-radius: 4px;
+  animation: yr-target-fade 3.5s ease-out forwards;
+}
+/* A section has no box of its own, so it also gets a little amber at the
+ * sides; the negative side margins cancel the padding, so its text stays put.
+ * (Callouts and figures keep their own borders where they are.) */
+section.yr-link-target {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Reduced motion: no fade; the amber is shown as it is, and the script
+ * removes it after a short while. */
+@media (prefers-reduced-motion: reduce) {
+  .yr-link-target {
+    animation: none;
+    --yr-target-alpha: 1;
+  }
+}
+</style>
+<script>
+/* yrLinkTargetHighlight-v001
+ *
+ * When a student follows a link to a section of a page, for example
+ *
+ *     [Origins, and URI vs URL](040200-urlsDomainNamesAndIpAddresses-v001.qmd#url-origin)
+ *
+ * the target first appears with a soft amber background that fades out over
+ * about 3.5 seconds, so the eye goes to the right part of the page. This
+ * happens when a page opens with #id in its address, when a link on the same
+ * page is clicked (also the table of contents, or the same link again), and
+ * on Back / Forward to a #id.
+ *
+ * The target is the element with that id. For a heading, Quarto puts the id
+ * on the <section> that holds the heading and its text, so the whole section
+ * is marked (solid at the top, fading out after the first screenful). An id
+ * on a callout, figure or span marks just that element.
+ *
+ * Not marked: footnotes and their back links, code-line anchors, hidden
+ * elements, and anything that is not a link to an id (tabs, collapsible
+ * callouts, the table of contents following the scrolling).
+ * Scrolling is left to the browser and Quarto, which keep the heading clear
+ * of the fixed header. With "reduce motion" turned on in the computer's
+ * settings, the amber is shown without a fade for 2 seconds.
+ *
+ * Included inline (include-after-body: file: ...) so it works for pages in
+ * subfolders too.
+ */
+(function () {
+  var FADE_MS = 3500;
+  var STILL_MS = 2000; // with reduced motion
+  var current = null;
+  var timer = null;
+
+  function targetFor(hash) {
+    if (!hash || hash.length < 2) {
+      return null;
+    }
+    var id;
+    try {
+      id = decodeURIComponent(hash.slice(1));
+    } catch (e) {
+      return null;
+    }
+    // Footnotes (fn1, fnref1) and code-line anchors (cb1-3) are not sections.
+    if (/^(fn|fnref)\d+$/.test(id) || /^cb\d+-\d+$/.test(id)) {
+      return null;
+    }
+    var el = document.getElementById(id);
+    if (!el || !el.closest("main") || el.closest(".footnotes, #footnotes")) {
+      return null;
+    }
+    if (el.getClientRects().length === 0) {
+      return null; // hidden (e.g. in a closed tab or a collapsed callout)
+    }
+    return el;
+  }
+
+  function unmark() {
+    if (current) {
+      current.classList.remove("yr-link-target");
+      current = null;
+    }
+    clearTimeout(timer);
+  }
+
+  function mark(hash) {
+    var el = targetFor(hash);
+    if (!el) {
+      return;
+    }
+    unmark();
+    void el.offsetWidth; // restart the fade if the same target is marked again
+    el.classList.add("yr-link-target");
+    current = el;
+    var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    timer = setTimeout(unmark, still ? STILL_MS : FADE_MS + 100);
+  }
+
+  // The page opened with #id (also when Back / Forward reloads it or brings
+  // it back from the browser's cache).
+  document.addEventListener("DOMContentLoaded", function () {
+    mark(location.hash);
+  });
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+      mark(location.hash);
+    }
+  });
+
+  // A link on the same page, or Back / Forward between two #ids.
+  window.addEventListener("hashchange", function () {
+    mark(location.hash);
+  });
+
+  // A link to the #id that is already in the address: no hashchange happens,
+  // but the browser scrolls to it again, so mark it again.
+  document.addEventListener("click", function (event) {
+    var a = event.target.closest && event.target.closest("a[href*='#']");
+    if (!a || a.target === "_blank" || event.defaultPrevented) {
+      return;
+    }
+    var url;
+    try {
+      url = new URL(a.href);
+    } catch (e) {
+      return;
+    }
+    if (url.origin + url.pathname === location.origin + location.pathname &&
+        url.hash && url.hash === location.hash) {
+      mark(url.hash);
+    }
+  });
+})();
+</script>
+<script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025-2026 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>

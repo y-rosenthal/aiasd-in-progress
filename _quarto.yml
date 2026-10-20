@@ -13,18 +13,23 @@
 #   yrstuff-v001.js
 #   yrStyles-main-v001.css
 #   yrStyles-f26-v001.css        (Fall 2026: practice questions, "As of" badges)
-#   yrAnswerToggles-v001.html    (Fall 2026: Show/Hide all answers buttons)
+#   yrAnswerToggles-v001.html    (Fall 2026: Show/Hide all answers bars; no longer included, yrCollapsibles replaced them)
+#   yrCollapsibles-v003.html     (Fall 2026: .yr-explain boxes; Expand/Collapse (filled), Expand All, Collapse All buttons on every collapsible callout)
+#   yrNewTabLinks-v001.html      (Fall 2026: links to other pages open in a new tab)
+#   yrWaysTabs-v002.html         (Fall 2026: .yr-ways tabsets for several ways to do one thing; Show all after the last tab, Show as tabs in each way)
+#   yrLinkTargetHighlight-v001.html (Fall 2026: the target of a link to a section (page#id) gets an amber background that fades out)
 
 project:
   type: book
   output-dir: _book
   pre-render: copy_quartoYml_to_bookFolder-v001.R
   resources:
-    - _quarto.yml
+    - /_quarto.yml   # leading "/": only the top-level file, not _yr/*/_quarto.yml
     - yrNocacheHeaders-v001.html
     - yrstuff-v001.js
     - .nojekyll
     - taskApp-setupWorksheet-v001.xlsx   # download on the Class 10 page
+    - taskApp-setupScreenshots-v001.docx # download on the Class 10 page (screenshot log template)
 
 book:
   title: "AI Assisted Software Development"
@@ -59,96 +64,103 @@ book:
         - 010100-whatAiCanDoToday-v001.qmd # yrChapterNumber 7
         - 010200-howLlmsWork-v001.qmd # yrChapterNumber 8
         - 010300-limitsRisksAndResponsibleUse-v001.qmd # yrChapterNumber 9
-        - 010400-aiAssistedDevelopment-v001.qmd # yrChapterNumber 10
-        - 010500-aiCodingToolsLandscape-v001.qmd # yrChapterNumber 11
+        - 010350-legalAndEthicalQuestions-v001.qmd # yrChapterNumber 10
+        - 010400-aiAssistedDevelopment-v001.qmd # yrChapterNumber 11
+        - 010500-aiCodingToolsLandscape-v001.qmd # yrChapterNumber 12
     - part: "The Command Line (Bash)"
       chapters:
-        - 020100-whatIsTheCommandLine-v001.qmd # yrChapterNumber 12
-        - 020200-installingAndOpeningBash-v001.qmd # yrChapterNumber 13
-        - 020300-filesFoldersAndPaths-v001.qmd # yrChapterNumber 14
-        - 020400-navigatingPwdLsCd-v001.qmd # yrChapterNumber 15
-        - 020500-creatingAndDeleting-v001.qmd # yrChapterNumber 16
-        - 020600-echoRedirectionAndViewing-v001.qmd # yrChapterNumber 17
-        - 020700-environmentVariables-v001.qmd # yrChapterNumber 18
-        - 020800-singleVsDoubleQuotes-v001.qmd # yrChapterNumber 19
-        - 020900-gettingHelpAndShortcuts-v001.qmd # yrChapterNumber 20
-        - 021000-wildcardsPipesAndSearching-v001.qmd # yrChapterNumber 21
-        - 021100-bashScriptsAndAi-v001.qmd # yrChapterNumber 22
+        - 020100-whatIsTheCommandLine-v001.qmd # yrChapterNumber 13
+        - 020200-installingAndOpeningBash-v001.qmd # yrChapterNumber 14
+        - 020300-filesFoldersAndPaths-v001.qmd # yrChapterNumber 15
+        - 020400-navigatingPwdLsCd-v001.qmd # yrChapterNumber 16
+        - 020500-creatingAndDeleting-v001.qmd # yrChapterNumber 17
+        - 020600-echoRedirectionAndViewing-v001.qmd # yrChapterNumber 18
+        - 020700-environmentVariables-v001.qmd # yrChapterNumber 19
+        - 020800-singleVsDoubleQuotes-v001.qmd # yrChapterNumber 20
+        - 020900-gettingHelpAndShortcuts-v001.qmd # yrChapterNumber 21
+        - 021000-wildcardsPipesAndSearching-v001.qmd # yrChapterNumber 22
+        - 021020-searchingCountingAndSorting-v001.qmd # yrChapterNumber 23
+        - 021050-comparingFilesWithDiff-v001.qmd # yrChapterNumber 24
+        - 021100-bashScriptsAndAi-v001.qmd # yrChapterNumber 25
     - part: "Git and GitHub: Working on Your Own"
       chapters:
-        - 030100-whatIsVersionControl-v001.qmd # yrChapterNumber 23
-        - 030200-installingAndConfiguringGit-v001.qmd # yrChapterNumber 24
-        - 030300-yourFirstRepository-v001.qmd # yrChapterNumber 25
-        - 030400-historyAndUndo-v001.qmd # yrChapterNumber 26
-        - 030500-gitignoreAndSecrets-v001.qmd # yrChapterNumber 27
-        - 030600-githubRemotes-v001.qmd # yrChapterNumber 28
-        - 030700-cloneAndPull-v001.qmd # yrChapterNumber 29
+        - 030100-whatIsVersionControl-v001.qmd # yrChapterNumber 26
+        - 030200-installingAndConfiguringGit-v001.qmd # yrChapterNumber 27
+        - 030300-yourFirstRepository-v001.qmd # yrChapterNumber 28
+        - 030400-historyAndUndo-v001.qmd # yrChapterNumber 29
+        - 030500-gitignoreAndSecrets-v001.qmd # yrChapterNumber 30
+        - 030600-githubRemotes-v001.qmd # yrChapterNumber 31
+        - 030700-cloneAndPull-v001.qmd # yrChapterNumber 32
     - part: "How the Web Works"
       chapters:
-        - 040100-browsersAndWebServers-v001.qmd # yrChapterNumber 30
-        - 040200-urlsDomainNamesAndIpAddresses-v001.qmd # yrChapterNumber 31
-        - 040300-htmlCssJavascriptAndDevTools-v001.qmd # yrChapterNumber 32
-        - 040400-whatHappensOnTheServer-v001.qmd # yrChapterNumber 33
-        - 040500-webFrameworks-v001.qmd # yrChapterNumber 34
-        - 040600-apisKeysAndThirdPartyServices-v001.qmd # yrChapterNumber 35
-        - 040700-hostingAndDeployment-v001.qmd # yrChapterNumber 36
-        - 040800-architectingWithAi-v001.qmd # yrChapterNumber 37
+        - 040100-browsersAndWebServers-v001.qmd # yrChapterNumber 33
+        - 040200-urlsDomainNamesAndIpAddresses-v001.qmd # yrChapterNumber 34
+        - 040300-htmlCssJavascriptAndDevTools-v001.qmd # yrChapterNumber 35
+        - 040400-whatHappensOnTheServer-v001.qmd # yrChapterNumber 36
+        - 040500-webFrameworks-v001.qmd # yrChapterNumber 37
+        - 040600-apisKeysAndThirdPartyServices-v001.qmd # yrChapterNumber 38
+        - 040700-hostingAndDeployment-v001.qmd # yrChapterNumber 39
+        - 040800-architectingWithAi-v001.qmd # yrChapterNumber 40
     - part: "Claude: The Big Picture"
       chapters:
-        - 050100-claudeProductFamily-v001.qmd # yrChapterNumber 38
-        - 050200-claudeModelsPlansAndUsage-v001.qmd # yrChapterNumber 39
-        - 050300-navigatingClaudeDocs-v001.qmd # yrChapterNumber 40
+        - 050100-claudeProductFamily-v001.qmd # yrChapterNumber 41
+        - 050200-claudeModelsPlansAndUsage-v001.qmd # yrChapterNumber 42
+        - 050300-navigatingClaudeDocs-v001.qmd # yrChapterNumber 43
     - part: "Claude Code Essentials"
       chapters:
-        - 060100-installingClaudeCode-v001.qmd # yrChapterNumber 41
-        - 060200-firstSession-v001.qmd # yrChapterNumber 42
-        - 060300-howClaudeCodeWorks-v001.qmd # yrChapterNumber 43
-        - 060400-slashCommands-v001.qmd # yrChapterNumber 44
-        - 060500-permissionsModesAndSafety-v001.qmd # yrChapterNumber 45
-        - 060600-claudeMdAndMemory-v001.qmd # yrChapterNumber 46
-        - 060700-dotClaudeFoldersAndSettings-v001.qmd # yrChapterNumber 47
-        - 060800-contextModelsEffortAndUsage-v001.qmd # yrChapterNumber 48
-        - 060900-workingEffectively-v001.qmd # yrChapterNumber 49
-        - 061000-claudeCodeBeyondTheTerminal-v001.qmd # yrChapterNumber 50
+        - 060100-installingClaudeCode-v001.qmd # yrChapterNumber 44
+        - 060200-firstSession-v001.qmd # yrChapterNumber 45
+        - 060300-howClaudeCodeWorks-v001.qmd # yrChapterNumber 46
+        - 060400-slashCommands-v001.qmd # yrChapterNumber 47
+        - 060500-permissionsModesAndSafety-v001.qmd # yrChapterNumber 48
+        - 060600-claudeMdAndMemory-v001.qmd # yrChapterNumber 49
+        - 060700-dotClaudeFoldersAndSettings-v001.qmd # yrChapterNumber 50
+        - 060800-contextModelsEffortAndUsage-v001.qmd # yrChapterNumber 51
+        - 060900-workingEffectively-v001.qmd # yrChapterNumber 52
+        - 061000-claudeCodeBeyondTheTerminal-v001.qmd # yrChapterNumber 53
     - part: "Extending Claude Code"
       chapters:
-        - 070100-extendingOverview-v001.qmd # yrChapterNumber 51
-        - 070200-skills-v001.qmd # yrChapterNumber 52
-        - 070300-mcpServers-v001.qmd # yrChapterNumber 53
-        - 070400-browserAutomationMcp-v001.qmd # yrChapterNumber 54
-        - 070500-supabaseMcp-v001.qmd # yrChapterNumber 55
-        - 070600-hooks-v001.qmd # yrChapterNumber 56
-        - 070700-subagents-v001.qmd # yrChapterNumber 57
-        - 070800-plugins-v001.qmd # yrChapterNumber 58
-        - 070900-mods-v001.qmd # yrChapterNumber 59
+        - 070100-extendingOverview-v001.qmd # yrChapterNumber 54
+        - 070200-skills-v001.qmd # yrChapterNumber 55
+        - 070300-mcpServers-v001.qmd # yrChapterNumber 56
+        - 070400-browserAutomationMcp-v001.qmd # yrChapterNumber 57
+        - 070500-supabaseMcp-v001.qmd # yrChapterNumber 58
+        - 070600-hooks-v001.qmd # yrChapterNumber 59
+        - 070700-subagents-v001.qmd # yrChapterNumber 60
+        - 070800-plugins-v001.qmd # yrChapterNumber 61
+        - 070900-mods-v001.qmd # yrChapterNumber 62
     - part: "Git and GitHub: Working with Others"
       chapters:
-        - 080100-branchesAndMerging-v001.qmd # yrChapterNumber 60
-        - 080200-mergeConflicts-v001.qmd # yrChapterNumber 61
-        - 080300-sharedRepositoriesAndForks-v001.qmd # yrChapterNumber 62
-        - 080400-pullRequestsAndCodeReview-v001.qmd # yrChapterNumber 63
-        - 080500-worktreesAndParallelAgents-v001.qmd # yrChapterNumber 64
+        - 080100-branchesAndMerging-v001.qmd # yrChapterNumber 63
+        - 080200-mergeConflicts-v001.qmd # yrChapterNumber 64
+        - 080300-sharedRepositoriesAndForks-v001.qmd # yrChapterNumber 65
+        - 080400-pullRequestsAndCodeReview-v001.qmd # yrChapterNumber 66
+        - 080450-aiInThePullRequestWorkflow-v001.qmd # yrChapterNumber 67
+        - 080500-worktreesAndParallelAgents-v001.qmd # yrChapterNumber 68
     - part: "Building a 'full-stack' web application"
       chapters:
-        - 001000-tutorial-supabase-nextjs-v001.qmd # yrChapterNumber 65
-        - 001007-tutorial-supabase-projectArchitecture-v001.qmd # yrChapterNumber 66
-        - 001100-tutorial-installNodeNpm-v001.qmd # yrChapterNumber 67
-        - 001110-tutorial-cloneRepo-v001.qmd # yrChapterNumber 68
-        - 001120-tutorial-installThePackages-v001.qmd # yrChapterNumber 69
-        - 001130-tutorial-envFiles-v001.qmd # yrChapterNumber 70
-        - 001140-tutorial-previewFrontEnd-v001.qmd # yrChapterNumber 71
-        - 001150-tutorial-createSupabaseProject-v001.qmd # yrChapterNumber 72
-        - 001155-tutorial-supabaseCli-v001.qmd  # yrChapterNumber 73
-        - 001160-tutorial-googleOauth-v001.qmd # yrChapterNumber 74
-        - 001170-tutorial-openAiApi-v001.qmd # yrChapterNumber 75
-        - 001180-tutorial-setupStripe-v001.qmd # yrChapterNumber 76
-        - 001190-tutorial-setupSupabaseDatabase-v001.qmd # yrChapterNumber 77
-        - 001200-tutorial-setupSupabaseStorage-v001.qmd # yrChapterNumber 78
-        - 001210-tutorial-deploySupabaseEdgeFunctions-v001.qmd # yrChapterNumber 79
-        - 001220-tutorial-runTheApplication-v001.qmd # yrChapterNumber 80
-        - 001230-tutorial-deployToProduction-v001.qmd # yrChapterNumber 81
-        - 001240-tutorial-extendTheFunctionality-v001.qmd # yrChapterNumber 82
-        - 001250-tutorial-automatedTestingAndTroubleshooting-v001.qmd # yrChapterNumber 83
+        - 001000-tutorial-supabase-nextjs-v001.qmd # yrChapterNumber 69
+        - 001007-tutorial-supabase-projectArchitecture-v001.qmd # yrChapterNumber 70
+        - 001008-tutorial-withClaudeCode-v001.qmd # yrChapterNumber 71
+        - 001100-tutorial-installNodeNpm-v001.qmd # yrChapterNumber 72
+        - 001110-tutorial-cloneRepo-v001.qmd # yrChapterNumber 73
+        - 001120-tutorial-installThePackages-v001.qmd # yrChapterNumber 74
+        - 001130-tutorial-envFiles-v001.qmd # yrChapterNumber 75
+        - 001140-tutorial-previewFrontEnd-v001.qmd # yrChapterNumber 76
+        - 001150-tutorial-createSupabaseProject-v001.qmd # yrChapterNumber 77
+        - 001155-tutorial-supabaseCli-v001.qmd  # yrChapterNumber 78
+        - 001160-tutorial-googleOauth-v001.qmd # yrChapterNumber 79
+        - 001170-tutorial-openAiApi-v001.qmd # yrChapterNumber 80
+        - 001180-tutorial-setupStripe-v001.qmd # yrChapterNumber 81
+        - 001190-tutorial-setupSupabaseDatabase-v001.qmd # yrChapterNumber 82
+        - 001200-tutorial-setupSupabaseStorage-v001.qmd # yrChapterNumber 83
+        - 001210-tutorial-deploySupabaseEdgeFunctions-v001.qmd # yrChapterNumber 84
+        - 001220-tutorial-runTheApplication-v001.qmd # yrChapterNumber 85
+        - 001230-tutorial-deployToProduction-v001.qmd # yrChapterNumber 86
+        - 001240-tutorial-extendTheFunctionality-v001.qmd # yrChapterNumber 87
+        - 001250-tutorial-automatedTestingAndTroubleshooting-v001.qmd # yrChapterNumber 88
+        - 001300-assignment-changeTheDatabase-v001.qmd # yrChapterNumber 89
+        - 001310-assignment-buildYourOwnApp-v001.qmd # yrChapterNumber 90
         # REMOVED: - 009999-tutorial-restOfTheSteps-v001.qmd # yrChapterNumber xx
     # Fall 2026: every chapter now ends with its own practice questions, so this
     # placeholder part (someFile.qmd listed 3 times) is commented out.
@@ -159,12 +171,12 @@ book:
     #    - someFile.qmd
     - part: "Ignore this - in progress work"
       chapters:
-        - 000010-topics-v001.qmd # yrChapterNumber 84
-        - 000500-htmlCssJavascript-v001.qmd # yrChapterNumber 85
-        - 099999-llmsForDataAnalytics.qmd # yrChapterNumber 86
-        - 900010-codeMetrics-v001.qmd # yrChapterNumber 87
+        - 000010-topics-v001.qmd # yrChapterNumber 91
+        - 000500-htmlCssJavascript-v001.qmd # yrChapterNumber 92
+        - 099999-llmsForDataAnalytics.qmd # yrChapterNumber 93
+        - 900010-codeMetrics-v001.qmd # yrChapterNumber 94
     # Fall 2025 chapters that were replaced by the Fall 2026 chapters above
-    # (the files are still in this folder):
+    # (moved to oldFiles/fall2025-chapters/ on 2026-10-16, pending item #14):
     #   000020-introToAi-v001.qmd, 000030-introToAiasd-v001.qmd,
     #   000100-howToInstallCursor-v002.qmd, 000210-introToBashAndCli-v001.qmd,
     #   000240-v2-introToGit-v001.qmd, 000230-v1-introToGit-v001.qmd,
@@ -196,12 +208,15 @@ format:
           <script src="yrstuff-v001.js"></script>
 
     include-after-body:
-      - file: yrAnswerToggles-v001.html
+      - file: yrCollapsibles-v003.html
+      - file: yrNewTabLinks-v001.html
+      - file: yrWaysTabs-v002.html
+      - file: yrLinkTargetHighlight-v001.html
       - text: |
           <script src="_extensions/screenshot-controls/screenshot-controls.js"></script>
       - text: |
           <div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
-            <p>© 2025 Y. Rosenthal. All rights reserved.</p>
+            <p>© 2025-2026 Y. Rosenthal. All rights reserved.</p>
           </div>
           <script>
           const titles = document.querySelectorAll('.title');
