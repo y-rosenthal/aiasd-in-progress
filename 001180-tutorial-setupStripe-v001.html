@@ -165,8 +165,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./f26-class10-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Class 10: Starting the Full-Stack Web Application</span></a>
+  <a href="./f26-class10to12-00-startHere-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12: The Task App, Start Here</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-a-installTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (A): Install the tools</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-b-getTheCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (B): Get the code onto your computer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-c-supabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (C): Supabase project and the front end</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-d-googleSignIn-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (D): Sign in with Google</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-e-openAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (E): OpenAI API key, with a $5 limit</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-f-stripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (F): Stripe, in test mode</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-g-database-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (G): Create the database</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-h-edgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (H): Deploy the Edge Functions and the Stripe webhook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-i-tryTheApp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (I): Try the app</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-j-saveToGithub-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (J): Save your work to GitHub</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-k-vercel-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (K): Put the app online with Vercel</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-l-optionalTestsAndDocker-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (L): Optional: automated tests, and Docker</span></a>
   </div>
 </li>
       </ul>
@@ -924,7 +996,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Stripe will handle subscriptions and billing: the app’s monthly “Premium” plan. While you develop, you work in a Stripe <strong>sandbox</strong> (Stripe’s test environment; older pages call it “test mode”). Stripe is free to use in a sandbox.</p>
-<p>As you go, copy each value into the <a href="taskApp-setupWorksheet-v001.xlsx" download="">Task App Setup Worksheet</a> (see <a href="./f26-class10-v001.html">Class 10</a>). Its <em>Commands</em> sheet builds the exact lines you paste in this chapter, with your own keys in them.</p>
+<p>As you go, copy each value into the <a href="taskApp-setupWorksheet-v001.xlsx" download="">Task App Setup Worksheet</a> (see <a href="./f26-class10to12-00-startHere-v001.html">Classes 10–12: Start here</a>). Its <em>Commands</em> sheet builds the exact lines you paste in this chapter, with your own keys in them.</p>
 <section id="create-stripe-account" class="level2" data-number="81.1">
 <h2 data-number="81.1" class="anchored" data-anchor-id="create-stripe-account"><span class="header-section-number">81.1</span> Create Stripe Account</h2>
 <ol type="1">
@@ -986,7 +1058,7 @@ Not in <code>.env.local</code>
 <p>You’ll use a <strong>webhook</strong> to let Stripe notify your app about subscription changes. A webhook is a web address that Stripe calls to tell your app that something happened, such as “this customer paid”. Stripe calls the setup an <strong>event destination</strong>.</p>
 <p>The address is your <code>stripe-webhook</code> Edge Function. The worksheet builds it for you from your Supabase project ref (the row “Stripe webhook URL”):</p>
 <pre><code>https://YOUR-PROJECT-REF.supabase.co/functions/v1/stripe-webhook</code></pre>
-<p>You deploy that function in <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html">Step 11</a>. You can create the webhook now, with the real address, or wait until the function is deployed, as <a href="./f26-class10-v001.html">Class 10</a> does (its Step H). If you create it now, Stripe can’t deliver events to it until the function is deployed; that’s fine, because you don’t try a payment until <a href="./001220-tutorial-runTheApplication-v001.html">Step 12</a>.</p>
+<p>You deploy that function in <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html">Step 11</a>. You can create the webhook now, with the real address, or wait until the function is deployed, as Classes 10–12 do (<a href="./f26-class10to12-h-edgeFunctions-v001.html">(H) Deploy the Edge Functions and the Stripe webhook</a>). If you create it now, Stripe can’t deliver events to it until the function is deployed; that’s fine, because you don’t try a payment until <a href="./001220-tutorial-runTheApplication-v001.html">Step 12</a>.</p>
 <ol type="1">
 <li><p>Open the <a href="https://dashboard.stripe.com/webhooks">Webhooks</a> tab in Stripe’s <strong>Workbench</strong> (in the same sandbox) and click <strong>Create an event destination</strong>.</p></li>
 <li><p>Choose:</p>
