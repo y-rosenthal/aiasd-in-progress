@@ -2463,6 +2463,95 @@ section.yr-link-target {
   });
 })();
 </script>
+<!-- yrUpdateCheck-v001.html (Fall 2026): show students the newest version of a page without a manual reload.
+     GitHub Pages lets browsers reuse a page for 10 minutes (Cache-Control: max-age=600), and a tab that is already
+     open never changes by itself. This script asks the server for the page's Last-Modified date, bypassing the
+     cache, and compares it with the copy on screen. If the server's copy is newer:
+     - right after the page opened (a stale copy from the cache): reload once, at once;
+     - while the student is reading: show a bar with "Reload now", and reload when they next return to the tab;
+     - while the tab is in the background: reload when they return to it.
+     Checks: 2 s after load, every 5 minutes while the tab is visible, and when the student returns to the tab.
+     Keeps the scroll position across the reload. A guard allows at most one automatic reload per page every
+     2 minutes (then only the bar), so a server that briefly answers with mixed dates can't cause a reload loop. -->
+<style>
+#yr-update-bar { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 2000;
+  display: flex; align-items: center; gap: .75rem; max-width: calc(100% - 2rem);
+  padding: .6rem 1rem; border-radius: .5rem; background: #1f4e79; color: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25); font-size: .95rem; }
+#yr-update-bar button { border: 0; border-radius: .35rem; padding: .3rem .8rem; font-weight: 600; cursor: pointer; }
+#yr-update-bar .yr-update-reload { background: #fff; color: #1f4e79; }
+#yr-update-bar .yr-update-close { background: transparent; color: #fff; font-size: 1.2rem; padding: 0 .3rem; }
+</style>
+<script>
+(function () {
+  if (location.protocol !== "http:" && location.protocol !== "https:") return;
+  var path = location.pathname;
+  var KEY_SCROLL = "yrUpdateScroll:" + path, KEY_RELOADED = "yrUpdateReloaded:" + path;
+  var loadedAt = Date.now(), lastCheck = 0, updateFound = false;
+  var pageTime = Date.parse(document.lastModified);  // the Last-Modified date of the copy on screen
+
+  function store(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
+  function fetchStored(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+  function forget(k) { try { sessionStorage.removeItem(k); } catch (e) {} }
+
+  // After a reload made by this script, go back to where the student was.
+  var savedY = fetchStored(KEY_SCROLL);
+  if (savedY !== null) {
+    forget(KEY_SCROLL);
+    window.addEventListener("load", function () { setTimeout(function () { window.scrollTo(0, +savedY); }, 50); });
+  }
+
+  function canAutoReload() {
+    var t = +(fetchStored(KEY_RELOADED) || 0);
+    return Date.now() - t > 2 * 60 * 1000;
+  }
+  function reload() {
+    store(KEY_SCROLL, String(window.scrollY));
+    store(KEY_RELOADED, String(Date.now()));
+    location.reload();
+  }
+  function showBar() {
+    if (document.getElementById("yr-update-bar")) return;
+    var bar = document.createElement("div");
+    bar.id = "yr-update-bar";
+    bar.setAttribute("role", "status");
+    bar.innerHTML = '<span>This page has been updated since you opened it.</span>' +
+      '<button type="button" class="yr-update-reload">Reload now</button>' +
+      '<button type="button" class="yr-update-close" aria-label="Close">&times;</button>';
+    bar.querySelector(".yr-update-reload").addEventListener("click", reload);
+    bar.querySelector(".yr-update-close").addEventListener("click", function () { bar.remove(); });
+    document.body.appendChild(bar);
+  }
+  function onUpdate() {
+    updateFound = true;
+    var justOpened = Date.now() - loadedAt < 15000;
+    if ((justOpened || document.visibilityState === "hidden") && canAutoReload()) {
+      if (document.visibilityState === "hidden") return;  // reload when the student comes back (below)
+      reload();
+    } else {
+      showBar();
+    }
+  }
+  function check() {
+    if (isNaN(pageTime) || updateFound) return;
+    lastCheck = Date.now();
+    fetch(path + location.search, { method: "HEAD", cache: "no-store" })
+      .then(function (r) {
+        var lm = r.ok && r.headers.get("last-modified");
+        if (lm && Date.parse(lm) > pageTime + 1000) onUpdate();
+      })
+      .catch(function () {});
+  }
+
+  setTimeout(check, 2000);
+  setInterval(function () { if (document.visibilityState === "visible") check(); }, 5 * 60 * 1000);
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState !== "visible") return;
+    if (updateFound && canAutoReload()) { reload(); return; }
+    if (Date.now() - lastCheck > 60 * 1000) check();
+  });
+})();
+</script>
 <script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
 <div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
   <p>© 2025-2026 Y. Rosenthal. All rights reserved.</p>
