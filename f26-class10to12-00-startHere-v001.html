@@ -1315,7 +1315,7 @@ The worksheet holds secret keys
 <p>What the pieces mean (more in <a href="#reading-a-command">Reading a command</a>):</p>
 <ul>
 <li><code>mkdir -p ~/projects/full-stack-demo-app</code>: <code>mkdir</code> (“make directory”) makes a folder. <code>-p</code> also makes the missing folder <code>projects</code> on the way, and doesn’t complain if the folders already exist. The last part is the path of the folder to make.</li>
-<li><code>cd ~/projects/full-stack-demo-app</code>: <code>cd</code> (“change directory”) goes into that folder, so the next commands run there. Your prompt now shows <code>full-stack-demo-app</code>.</li>
+<li><code>cd ~/projects/full-stack-demo-app</code>: <code>cd</code> (“change directory”) goes into that folder, so the next commands run there. (To check, type <code>pwd</code>: it prints a path that ends in <code>full-stack-demo-app</code>.)</li>
 </ul></li>
 <li><p><strong>Start Claude Code</strong> in that folder:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> manual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1325,14 +1325,14 @@ The worksheet holds secret keys
 </ul>
 <p>See <a href="#when-claude-asks-permission">When Claude asks permission</a> below for which answer to choose.</p></li>
 <li><p>In Claude’s chat box, type <code>/model sonnet</code> and press <code>Enter</code>.</p></li>
-<li><p><strong>Paste the prompt</strong> for your computer into Claude’s chat box and press <code>Enter</code>:</p></li>
+<li><p><strong>Paste the prompt</strong> for your computer into Claude’s chat box and press <code>Enter</code>. The <strong>Copy prompt</strong> button above the prompt copies all of it:</p></li>
 </ol>
 <!-- The prompt is repeated in each tab; change all copies together. -->
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Windows (Git Bash)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Linux</a></li></ul>
 <div class="tab-content" data-group="os">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<pre class="text"><code>I'm on a Mac.
+<pre class="text yr-copy-prompt"><code>I'm on a Mac.
 
 I'm a business student with no programming background, starting my course's
 full-stack web app project. We're in the folder ~/projects/full-stack-demo-app,
@@ -1388,7 +1388,7 @@ How to work with me:
 - Keep checklist.md up to date as we go, not just at the end.</code></pre>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<pre class="text"><code>I'm on Windows, and I use Git Bash.
+<pre class="text yr-copy-prompt"><code>I'm on Windows, and I use Git Bash.
 
 I'm a business student with no programming background, starting my course's
 full-stack web app project. We're in the folder ~/projects/full-stack-demo-app,
@@ -1444,7 +1444,7 @@ How to work with me:
 - Keep checklist.md up to date as we go, not just at the end.</code></pre>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
-<pre class="text"><code>I'm on Linux.
+<pre class="text yr-copy-prompt"><code>I'm on Linux.
 
 I'm a business student with no programming background, starting my course's
 full-stack web app project. We're in the folder ~/projects/full-stack-demo-app,
@@ -1557,7 +1557,7 @@ How to work with me:
 <li><strong>In VS Code:</strong> open the <code>full-stack-demo-app</code> folder, click the Claude icon, and check the mode indicator at the bottom of Claude’s prompt box. If it doesn’t say <strong>Manual</strong>, click it and choose <strong>Manual</strong>. VS Code remembers that choice for your next conversations.</li>
 </ul>
 <p>The prompt:</p>
-<pre class="text"><code>We're continuing my full-stack task app project. Read checklist.md and my
+<pre class="text yr-copy-prompt"><code>We're continuing my full-stack task app project. Read checklist.md and my
 course notes at https://y-rosenthal.github.io/aiasd-in-progress/f26-class10to12-00-startHere-v001.html,
 check that the finished steps still work, and continue with the next unchecked
 step.</code></pre>
@@ -1585,6 +1585,41 @@ step.</code></pre>
 <section id="if-you-dont-finish-today" class="level2">
 <h2 class="anchored" data-anchor-id="if-you-dont-finish-today">If you don’t finish today</h2>
 <p>That’s expected. Continue at home, or in our next class if I say so. Start a new Claude session with the “Next time” prompt above. If you run out of Claude usage, <code>/usage</code> shows when your limit resets.</p>
+<!-- Copy buttons for the prompts (code blocks with the class yr-copy-prompt). -->
+<style>
+.yr-copy-btn { display: inline-flex; align-items: center; gap: .35em; margin: .2em 0 .35em;
+  padding: .25em .8em; font-size: .9em; font-weight: 600; cursor: pointer;
+  color: #fff; background: #2c6fbb; border: 1px solid #2c6fbb; border-radius: .35em; }
+.yr-copy-btn:hover { background: #245c9c; }
+.yr-copy-btn.yr-copied { background: #2e7d32; border-color: #2e7d32; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("pre.yr-copy-prompt, .yr-copy-prompt pre").forEach(function (pre) {
+    var block = pre.closest("div.sourceCode") || pre;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "yr-copy-btn";
+    btn.textContent = "📋 Copy prompt";
+    btn.addEventListener("click", function () {
+      var text = pre.innerText.replace(/\n$/, "");
+      var done = function () {
+        btn.textContent = "✓ Copied! Now paste it into Claude";
+        btn.classList.add("yr-copied");
+        setTimeout(function () { btn.textContent = "📋 Copy prompt"; btn.classList.remove("yr-copied"); }, 2500);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done);
+      } else {
+        var ta = document.createElement("textarea");
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand("copy"); document.body.removeChild(ta); done();
+      }
+    });
+    block.parentNode.insertBefore(btn, block);
+  });
+});
+</script>
 
 
 </section>
