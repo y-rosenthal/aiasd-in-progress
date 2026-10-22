@@ -971,7 +971,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#keep-your-keys-in-the-worksheet" id="toc-keep-your-keys-in-the-worksheet" class="nav-link" data-scroll-target="#keep-your-keys-in-the-worksheet"><span class="header-section-number">72.2</span> Keep your keys in the worksheet</a></li>
   <li><a href="#screenshot-log" id="toc-screenshot-log" class="nav-link" data-scroll-target="#screenshot-log"><span class="header-section-number">72.3</span> Keep a screenshot log (required)</a></li>
   <li><a href="#taking-screenshots" id="toc-taking-screenshots" class="nav-link" data-scroll-target="#taking-screenshots"><span class="header-section-number">72.4</span> Taking screenshots</a></li>
-  <li><a href="#when-youre-stuck-ask-claude" id="toc-when-youre-stuck-ask-claude" class="nav-link" data-scroll-target="#when-youre-stuck-ask-claude"><span class="header-section-number">72.5</span> When you’re stuck: ask Claude</a></li>
+  <li><a href="#when-youre-stuck-ask-claude" id="toc-when-youre-stuck-ask-claude" class="nav-link" data-scroll-target="#when-youre-stuck-ask-claude"><span class="header-section-number">72.5</span> When you’re stuck: ask Claude</a>
+  <ul class="collapse">
+  <li><a href="#keys-and-claude" id="toc-keys-and-claude" class="nav-link" data-scroll-target="#keys-and-claude"><span class="header-section-number">72.5.1</span> Keys and Claude</a></li>
+  </ul></li>
   <li><a href="#dont-run-out-of-usage" id="toc-dont-run-out-of-usage" class="nav-link" data-scroll-target="#dont-run-out-of-usage"><span class="header-section-number">72.6</span> Don’t run out of usage</a></li>
   <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
   <ul class="collapse">
@@ -1029,7 +1032,7 @@ The worksheet holds secret keys
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Keep it in the project folder (<code>~/projects/full-stack-demo-app</code>), next to the <code>task-app</code> code folder and <strong>not inside it</strong>, so Git can never upload it to GitHub. Don’t email it, post it, or show it while sharing your screen. And tell Claude never to open it (the prompt below does).</p>
+<p>Keep it in the project folder (<code>~/projects/full-stack-demo-app</code>), next to the <code>task-app</code> code folder and <strong>not inside it</strong>, so Git can never upload it to GitHub. Don’t email it, post it, or show it while sharing your screen. Claude may read it when you ask for help: in this course that’s fine (see “Keys and Claude” below).</p>
 </div>
 </div>
 </section>
@@ -1054,7 +1057,7 @@ The screenshot log can show secret keys too
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Some screens show a secret key or password. Keep the log as safe as the worksheet: same folder, not posted or shared except when you hand it in the way your instructor tells you, and Claude must not open it.</p>
+<p>Some screens show a secret key or password. Keep the log as safe as the worksheet: same folder, not posted or shared except when you hand it in the way your instructor tells you. Claude may read it when you ask for help.</p>
 </div>
 </div>
 </section>
@@ -1091,7 +1094,7 @@ The screenshot log can show secret keys too
 </div>
 </div>
 </div>
-<p>To <strong>show a screenshot to Claude</strong>, paste it into Claude’s prompt box (<code>Ctrl+V</code>; on Windows <code>Alt+V</code>), drag the picture file in, or type the file’s path (<a href="https://code.claude.com/docs/en/common-workflows#work-with-images">Work with images</a>). Claude reads small print well, so you can zoom the page out (<code>Ctrl</code> and <code>-</code>, on a Mac <code>Cmd</code> and <code>-</code>) to fit a whole page into one screenshot. Don’t send Claude a screenshot that shows a secret key.</p>
+<p>To <strong>show a screenshot to Claude</strong>, paste it into Claude’s prompt box (<code>Ctrl+V</code>; on Windows <code>Alt+V</code>), drag the picture file in, or type the file’s path (<a href="https://code.claude.com/docs/en/common-workflows#work-with-images">Work with images</a>). Claude reads small print well, so you can zoom the page out (<code>Ctrl</code> and <code>-</code>, on a Mac <code>Cmd</code> and <code>-</code>) to fit a whole page into one screenshot.</p>
 </section>
 <section id="when-youre-stuck-ask-claude" class="level2" data-number="72.5">
 <h2 data-number="72.5" class="anchored" data-anchor-id="when-youre-stuck-ask-claude"><span class="header-section-number">72.5</span> When you’re stuck: ask Claude</h2>
@@ -1102,10 +1105,15 @@ The screenshot log can show secret keys too
 <ul>
 <li>what the project is, where its code is (your fork of the course’s repository, <code>y-rosenthal/yr-2026-full-stack-demo</code>), and where the course notes are;</li>
 <li>that you do every step yourself: Claude doesn’t run commands or change files; it reads the step you’re on, explains what went wrong, and tells you what to type or click;</li>
-<li>never to ask for a secret key, and never to open the files that hold your keys (<code>.env.local</code>, the worksheet, the screenshot log).</li>
+<li>that it may read your worksheet and screenshot log, to see which steps you’ve done and what you entered;</li>
+<li>to explain things for someone with your background: how to do each thing (take a screenshot, copy text from the terminal, find a menu), not just what to do.</li>
 </ul>
-<p>Then ask your question. Say <strong>which step</strong> you’re on; paste the <strong>command you typed and everything it printed</strong>, as text (select it in the terminal, copy, paste); for a website, paste a <strong>screenshot</strong>; and say what you expected. Before you paste, check that no secret key is in the text or the picture.</p>
-<p>If Claude asks permission to run a command or change a file, choose <strong>No</strong> and ask it to tell you what to type instead. See <a href="./060500-permissionsModesAndSafety-v001.html">Permissions, Modes, and Safety</a>.</p>
+<p>Then ask your question. Say <strong>which step</strong> you’re on; paste the <strong>command you typed and everything it printed</strong>, as text (select it in the terminal, copy, paste); for a website, paste a <strong>screenshot</strong>; and say what you expected. If an answer goes too fast, say “explain more”; if it explains something you already know, say “I already know how to do that”. Claude adjusts.</p>
+<p>If Claude asks permission to run a command, choose <strong>Yes</strong> only if the command just <em>looks</em> at something (for example, reads your worksheet). If it would do one of your steps or change anything, choose <strong>No</strong> and ask it to tell you what to type instead. See <a href="./060500-permissionsModesAndSafety-v001.html">Permissions, Modes, and Safety</a>.</p>
+<section id="keys-and-claude" class="level3" data-number="72.5.1">
+<h3 data-number="72.5.1" class="anchored" data-anchor-id="keys-and-claude"><span class="header-section-number">72.5.1</span> Keys and Claude</h3>
+<p>In this course it’s fine for Claude to see your keys, in your worksheet or in what you paste: they belong to a practice app, with test-mode payments and a $5 limit on OpenAI. In a real project, keep secret keys out of AI chats and anything else you share (<a href="./040650-publishableAndSecretKeys-v001.html">Publishable and Secret Keys</a>).</p>
+</section>
 </section>
 <section id="dont-run-out-of-usage" class="level2" data-number="72.6">
 <h2 data-number="72.6" class="anchored" data-anchor-id="dont-run-out-of-usage"><span class="header-section-number">72.6</span> Don’t run out of usage</h2>
@@ -1147,7 +1155,7 @@ Suggested answer
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>b.</strong> You do every step yourself; Claude only helps. In Manual mode, Claude stops and asks before any command or file change, and you answer <strong>No</strong>. It doesn’t save usage (a), Claude still reads files, which it needs to explain errors (c), and the model is chosen separately with <code>/model</code> (d).</p>
+<p><strong>b.</strong> You do every step yourself; Claude only helps. In Manual mode, Claude stops and asks before any command or file change, and you answer <strong>No</strong> unless the command only looks at something. It doesn’t save usage (a), Claude still reads files, which it needs to explain errors (c), and the model is chosen separately with <code>/model</code> (d).</p>
 </div>
 </div>
 </div>
@@ -1167,7 +1175,7 @@ Suggested answer
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Which step you’re on, the command you typed, everything it printed, and what you expected. Paste the command and its output as <strong>text</strong> (select, copy, paste): Claude then reads every character exactly, while a screenshot can be misread (<code>l</code> or <code>I</code>, <code>0</code> or <code>O</code>). Check first that the text has no secret key in it.</p>
+<p>Which step you’re on, the command you typed, everything it printed, and what you expected. Paste the command and its output as <strong>text</strong> (select, copy, paste): Claude then reads every character exactly, while a screenshot can be misread (<code>l</code> or <code>I</code>, <code>0</code> or <code>O</code>).</p>
 </div>
 </div>
 </div>
@@ -1235,7 +1243,7 @@ Suggested answer
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> manual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Type <code>/model sonnet</code>, and paste the help prompt from the Start here page.</p></li>
-<li><p>Tell Claude she’s on step G, paste the command and its whole output as text (after checking it has no key in it), and say what she expected.</p></li>
+<li><p>Tell Claude she’s on step G, paste the command and its whole output as text, and say what she expected.</p></li>
 <li><p>Type the fix herself, as Claude explains it.</p></li>
 </ol>
 </div>
@@ -1257,7 +1265,7 @@ Suggested answer
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Any three of: don’t run commands or create or change files, because you do every step yourself; read the step you’re on in the course notes first; explain in plain English what went wrong and tell you exactly what to type or click, one thing at a time; ask you to run something and paste the result when it needs more information; never ask for a key or a password, and never open <code>.env.local</code>, the worksheet or the screenshot log; don’t change the app’s code, but explain if the code seems wrong.</p>
+<p>Any three of: don’t run commands that change anything, and don’t create or change files, because you do every step yourself; it may read the app’s code, the course notes, your worksheet and your screenshot log, and must ask before running a command just to read something; read the step you’re on first; explain in plain English what went wrong and tell you exactly what to type or click, one thing at a time; explain <em>how</em> to do things for someone with your background, and give more or less detail when you say so; don’t change the app’s code, but explain if the code seems wrong.</p>
 </div>
 </div>
 </div>
@@ -1313,7 +1321,7 @@ Suggested answer
 </section>
 <section id="question-9-long-answer" class="level4 unnumbered unlisted">
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-long-answer">Question 9 · Long answer</h4>
-<p>Why does the prompt tell Claude never to ask you to paste a key into the chat, and never to open the worksheet, even though Claude is helping you set the keys up?</p>
+<p>In this course, Claude may read your worksheet, which holds your secret keys. Why is that acceptable here, and what would you do differently in a real project?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1326,14 +1334,14 @@ Suggested answer
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Anything you paste into the chat, or any file Claude opens, becomes part of the conversation, which is sent to Anthropic’s servers and may be saved in the session history. A secret key there is out of your control. Claude can help without ever seeing the keys: it explains where a key goes, and you paste it yourself into <code>.env.local</code>, the terminal or the website. For the same reason, check terminal text and screenshots for keys before you paste them into the chat.</p>
+<p>Anything Claude reads becomes part of the conversation, which is sent to Anthropic’s servers and may be saved in the session history, so the keys are no longer only in your hands. Here the risk is small: the app is for practice, payments are in Stripe’s test mode, and OpenAI can’t spend more than the $5 limit. In exchange, Claude can see exactly what you entered and spot a wrong value quickly. In a real project, with real customers and money, you’d keep secret keys out of AI chats: show Claude the error messages and settings without the keys, and paste the keys yourself where they belong.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="question-10-scenario" class="level4 unnumbered unlisted">
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-scenario">Question 10 · Scenario</h4>
-<p>Sam’s <code>npx supabase secrets set STRIPE_SECRET_KEY=sk_test_...</code> command printed an error. He’s about to paste the whole terminal into Claude’s chat. What should he check first, and what should he do if a key already got into the chat?</p>
+<p>Sam asks Claude why his Edge Function fails, and Claude’s answer is a long list of technical steps he doesn’t understand. Another time, Claude spends three paragraphs explaining how to take a screenshot, which he already knows. What should he say in each case?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1346,7 +1354,7 @@ Suggested answer
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>That command has his Stripe secret key in it, so the text he pastes would put the key into the conversation. He should paste only the error lines, or replace the key with <code>sk_test_...</code> before sending. If the key is already in the chat, he should treat it as leaked: create a new secret key in Stripe, delete the old one, and update it everywhere he used it (the worksheet’s lines, Supabase’s secrets and Vault). Claude can explain the error from the message alone; it never needs the key.</p>
+<p>In the first case: “Explain more, one step at a time” (or ask what a specific word or command means). In the second: “I already know how to do that.” The help prompt tells Claude to adjust its level of detail when he says so, for the rest of the conversation.</p>
 </div>
 </div>
 </div>
