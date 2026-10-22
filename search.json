@@ -184,6 +184,61 @@
     ]
   },
   {
+    "objectID": "f26-class10to12-updates-v001.html",
+    "href": "f26-class10to12-updates-v001.html",
+    "title": "Classes 10–12: Get the course’s latest changes",
+    "section": "",
+    "text": "1. Check that your own work is saved\nYour task-app is a fork of the course’s copy of the app, y-rosenthal/yr-2026-full-stack-demo: a copy of it as it was on the day you forked it. When I fix or improve the course’s copy, your fork doesn’t change by itself. When I announce a change, do the steps on this page to bring it into your fork and onto your computer, then do whatever else the announcement says.\nTime: about 5 minutes, plus whatever the announcement asks for.\nAs of Oct 22, 2026 · Official docs: GitHub: Syncing a fork · git pull · Vercel: Deploying from Git\nThere are three copies of the code, and the change has to reach the last two:\nIn VS Code’s terminal, first go into the app’s folder (harmless if you’re already there; this just makes sure):\nThen type:\nIf it says nothing to commit, working tree clean, go on to step 2. (Your .env.local file doesn’t count: Git ignores it, so it never shows up here, and the update never touches it.)\nIf it lists changed files, you changed the app’s code yourself. Save that work first with a commit, as in (J) Save your work to GitHub. If you don’t know why a file changed, ask Claude (When you’re stuck) before you go on: paste what git status printed.",
+    "crumbs": [
+      "Class Meetings",
+      "Classes 10–12: Get the course's latest changes"
+    ]
+  },
+  {
+    "objectID": "f26-class10to12-updates-v001.html#check-that-your-own-work-is-saved",
+    "href": "f26-class10to12-updates-v001.html#check-that-your-own-work-is-saved",
+    "title": "Classes 10–12: Get the course’s latest changes",
+    "section": "",
+    "text": "cd ~/projects/full-stack-demo-app/task-app\n\ngit status",
+    "crumbs": [
+      "Class Meetings",
+      "Classes 10–12: Get the course's latest changes"
+    ]
+  },
+  {
+    "objectID": "f26-class10to12-updates-v001.html#update-your-fork-on-github",
+    "href": "f26-class10to12-updates-v001.html#update-your-fork-on-github",
+    "title": "Classes 10–12: Get the course’s latest changes",
+    "section": "2. Update your fork on GitHub",
+    "text": "2. Update your fork on GitHub\n\nOpen your fork, https://github.com/YOUR-USERNAME/task-app (with your own GitHub username).\nAbove the list of files, GitHub says whether your fork is behind the course’s copy, for example “This branch is 2 commits behind y-rosenthal/yr-2026-full-stack-demo:main”.\nClick Sync fork, then Update branch.\n\nIf it says your branch is up to date, there’s nothing to sync. If GitHub offers to Discard your commits, don’t click that: your fork has changes of its own that conflict with mine. Take a screenshot and ask Claude or me for help.",
+    "crumbs": [
+      "Class Meetings",
+      "Classes 10–12: Get the course's latest changes"
+    ]
+  },
+  {
+    "objectID": "f26-class10to12-updates-v001.html#bring-the-changes-onto-your-computer",
+    "href": "f26-class10to12-updates-v001.html#bring-the-changes-onto-your-computer",
+    "title": "Classes 10–12: Get the course’s latest changes",
+    "section": "3. Bring the changes onto your computer",
+    "text": "3. Bring the changes onto your computer\nIn the same terminal, in the task-app folder, type:\ngit pull\ngit pull downloads the new commits from your fork on GitHub and adds them to your copy. It lists the files that changed, for example supabase/migrations/1_init_tasks.sql. If it says Already up to date., your fork wasn’t synced yet: go back to step 2.\nIf it refuses, with a message such as “Your local changes to the following files would be overwritten by merge”, go back to step 1: a file you changed is also changed by the update.",
+    "crumbs": [
+      "Class Meetings",
+      "Classes 10–12: Get the course's latest changes"
+    ]
+  },
+  {
+    "objectID": "f26-class10to12-updates-v001.html#do-what-the-announcement-says",
+    "href": "f26-class10to12-updates-v001.html#do-what-the-announcement-says",
+    "title": "Classes 10–12: Get the course’s latest changes",
+    "section": "4. Do what the announcement says",
+    "text": "4. Do what the announcement says\nGetting the new code onto your computer doesn’t change your Supabase project or your website by itself. The announcement says which of these to do, in the task-app folder:\n\n\n\nIf the change is in\nThen type\nWhat it does\n\n\n\n\nsupabase/migrations (the database)\nnpx supabase db push\nApplies the new or fixed migrations to your Supabase project, as in (G)\n\n\nsupabase/functions (an Edge Function)\nthe npx supabase functions deploy ... line for that function\nUploads the new version of the function, as in (H)\n\n\npackage.json (the list of packages)\nnpm install\nInstalls the new packages, as in (B)\n\n\nthe web pages (app, components, hooks)\nnothing, if npm run dev is running\nThe development server reloads the pages by itself\n\n\n\nIf your app is already online (Step K), Vercel notices the new commits in your fork on GitHub and puts the new version online by itself.\n\n\n\n\n\n\nMore details: the same thing with Git commands only\n\n\n\n\n\nSync fork merges the course’s new commits into your fork on GitHub. Instead of the button, you can do it from your terminal: tell your copy where the course’s copy is (once), fetch its new commits, merge them, and push them to your fork.\ngit remote add upstream https://github.com/y-rosenthal/yr-2026-full-stack-demo.git\ngit fetch upstream\ngit merge upstream/main\ngit push\nupstream is the usual name for the original repository of a fork, as origin is for your own. Forks, upstream and fetch are explained in Sharing a Repository: Collaborators and Forks.",
+    "crumbs": [
+      "Class Meetings",
+      "Classes 10–12: Get the course's latest changes"
+    ]
+  },
+  {
     "objectID": "f26-class10to12-a-installTools-v001.html",
     "href": "f26-class10to12-a-installTools-v001.html",
     "title": "Classes 10–12 (A): Install the tools",
@@ -324,61 +379,6 @@
     "crumbs": [
       "Class Meetings",
       "Classes 10–12 (L): Optional: automated tests, and Docker"
-    ]
-  },
-  {
-    "objectID": "f26-class10to12-updates-v001.html",
-    "href": "f26-class10to12-updates-v001.html",
-    "title": "Classes 10–12: Get the course’s latest changes",
-    "section": "",
-    "text": "1. Check that your own work is saved\nYour task-app is a fork of the course’s copy of the app, y-rosenthal/yr-2026-full-stack-demo: a copy of it as it was on the day you forked it. When I fix or improve the course’s copy, your fork doesn’t change by itself. When I announce a change, do the steps on this page to bring it into your fork and onto your computer, then do whatever else the announcement says.\nTime: about 5 minutes, plus whatever the announcement asks for.\nAs of Oct 22, 2026 · Official docs: GitHub: Syncing a fork · git pull · Vercel: Deploying from Git\nThere are three copies of the code, and the change has to reach the last two:\nIn VS Code’s terminal, first go into the app’s folder (harmless if you’re already there; this just makes sure):\nThen type:\nIf it says nothing to commit, working tree clean, go on to step 2. (Your .env.local file doesn’t count: Git ignores it, so it never shows up here, and the update never touches it.)\nIf it lists changed files, you changed the app’s code yourself. Save that work first with a commit, as in (J) Save your work to GitHub. If you don’t know why a file changed, ask Claude (When you’re stuck) before you go on: paste what git status printed.",
-    "crumbs": [
-      "Class Meetings",
-      "Classes 10–12: Get the course's latest changes"
-    ]
-  },
-  {
-    "objectID": "f26-class10to12-updates-v001.html#check-that-your-own-work-is-saved",
-    "href": "f26-class10to12-updates-v001.html#check-that-your-own-work-is-saved",
-    "title": "Classes 10–12: Get the course’s latest changes",
-    "section": "",
-    "text": "cd ~/projects/full-stack-demo-app/task-app\n\ngit status",
-    "crumbs": [
-      "Class Meetings",
-      "Classes 10–12: Get the course's latest changes"
-    ]
-  },
-  {
-    "objectID": "f26-class10to12-updates-v001.html#update-your-fork-on-github",
-    "href": "f26-class10to12-updates-v001.html#update-your-fork-on-github",
-    "title": "Classes 10–12: Get the course’s latest changes",
-    "section": "2. Update your fork on GitHub",
-    "text": "2. Update your fork on GitHub\n\nOpen your fork, https://github.com/YOUR-USERNAME/task-app (with your own GitHub username).\nAbove the list of files, GitHub says whether your fork is behind the course’s copy, for example “This branch is 2 commits behind y-rosenthal/yr-2026-full-stack-demo:main”.\nClick Sync fork, then Update branch.\n\nIf it says your branch is up to date, there’s nothing to sync. If GitHub offers to Discard your commits, don’t click that: your fork has changes of its own that conflict with mine. Take a screenshot and ask Claude or me for help.",
-    "crumbs": [
-      "Class Meetings",
-      "Classes 10–12: Get the course's latest changes"
-    ]
-  },
-  {
-    "objectID": "f26-class10to12-updates-v001.html#bring-the-changes-onto-your-computer",
-    "href": "f26-class10to12-updates-v001.html#bring-the-changes-onto-your-computer",
-    "title": "Classes 10–12: Get the course’s latest changes",
-    "section": "3. Bring the changes onto your computer",
-    "text": "3. Bring the changes onto your computer\nIn the same terminal, in the task-app folder, type:\ngit pull\ngit pull downloads the new commits from your fork on GitHub and adds them to your copy. It lists the files that changed, for example supabase/migrations/1_init_tasks.sql. If it says Already up to date., your fork wasn’t synced yet: go back to step 2.\nIf it refuses, with a message such as “Your local changes to the following files would be overwritten by merge”, go back to step 1: a file you changed is also changed by the update.",
-    "crumbs": [
-      "Class Meetings",
-      "Classes 10–12: Get the course's latest changes"
-    ]
-  },
-  {
-    "objectID": "f26-class10to12-updates-v001.html#do-what-the-announcement-says",
-    "href": "f26-class10to12-updates-v001.html#do-what-the-announcement-says",
-    "title": "Classes 10–12: Get the course’s latest changes",
-    "section": "4. Do what the announcement says",
-    "text": "4. Do what the announcement says\nGetting the new code onto your computer doesn’t change your Supabase project or your website by itself. The announcement says which of these to do, in the task-app folder:\n\n\n\nIf the change is in\nThen type\nWhat it does\n\n\n\n\nsupabase/migrations (the database)\nnpx supabase db push\nApplies the new or fixed migrations to your Supabase project, as in (G)\n\n\nsupabase/functions (an Edge Function)\nthe npx supabase functions deploy ... line for that function\nUploads the new version of the function, as in (H)\n\n\npackage.json (the list of packages)\nnpm install\nInstalls the new packages, as in (B)\n\n\nthe web pages (app, components, hooks)\nnothing, if npm run dev is running\nThe development server reloads the pages by itself\n\n\n\nIf your app is already online (Step K), Vercel notices the new commits in your fork on GitHub and puts the new version online by itself.\n\n\n\n\n\n\nMore details: the same thing with Git commands only\n\n\n\n\n\nSync fork merges the course’s new commits into your fork on GitHub. Instead of the button, you can do it from your terminal: tell your copy where the course’s copy is (once), fetch its new commits, merge them, and push them to your fork.\ngit remote add upstream https://github.com/y-rosenthal/yr-2026-full-stack-demo.git\ngit fetch upstream\ngit merge upstream/main\ngit push\nupstream is the usual name for the original repository of a fork, as origin is for your own. Forks, upstream and fetch are explained in Sharing a Repository: Collaborators and Forks.",
-    "crumbs": [
-      "Class Meetings",
-      "Classes 10–12: Get the course's latest changes"
     ]
   },
   {
