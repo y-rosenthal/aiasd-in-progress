@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -204,6 +239,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./f26-class10to12-l-optionalTestsAndDocker-v001.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Classes 10–12 (L): Optional: automated tests, and Docker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-updates-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12: Get the course’s latest changes</span></a>
   </div>
 </li>
       </ul>
@@ -745,7 +786,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001008-tutorial-withClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Following the Tutorial with Claude Code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Following the Tutorial, with Claude Code for Help</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -949,10 +990,14 @@ ul.task-list li input[type="checkbox"] {
 <div class="yr-stepnav">
 <p>← <a href="./f26-class10to12-h-edgeFunctions-v001.html" target="_self">(H) Deploy the Edge Functions and the Stripe webhook</a> · <a href="./f26-class10to12-00-startHere-v001.html#the-steps" target="_self">All steps</a> · <a href="./f26-class10to12-j-saveToGithub-v001.html" target="_self">(J) Save your work to GitHub</a> →</p>
 </div>
-<p>Part of the task-app setup for Classes 10–12. Work through the parts in order, with Claude Code as your guide; <a href="./f26-class10to12-00-startHere-v001.html">Start here</a> has the worksheet, the screenshot log, the prompt for Claude, and the list of all parts.</p>
+<p>Part of the task-app setup for Classes 10–12. Work through the parts in order, doing every step yourself; <a href="./f26-class10to12-00-startHere-v001.html">Start here</a> has the worksheet, the screenshot log, how to <a href="./f26-class10to12-00-startHere-v001.html#when-stuck" target="_blank">ask Claude when you’re stuck</a>, and the list of all parts.</p>
 <p><strong>Time:</strong> about 10–15 minutes.</p>
 <p><span class="yr-asof">As of Oct 22, 2026 · Official docs: <a href="https://nextjs.org/docs" target="_blank">Next.js</a> · <a href="https://docs.stripe.com/testing" target="_blank">Stripe: Testing (test cards)</a> · <a href="https://supabase.com/docs/guides/functions/logging" target="_blank">Supabase: Edge Function logs</a></span></p>
-<p>Claude starts the app by running <code>npm run dev</code> in the terminal. (To start it yourself, type <code>cd ~/projects/full-stack-demo-app/task-app</code> in VS Code’s terminal and press <code>Enter</code>, just to make sure you’re in the app’s folder, then type <code>npm run dev</code> and press <code>Enter</code>; stop it with <code>Ctrl+C</code>.) <code>npm run</code> runs a script listed in <code>package.json</code>, and <code>dev</code> is the script that starts Next.js’s development server: a web server on your own computer, at the address <code>localhost:3000</code> (<code>localhost</code> means “this computer”, and 3000 is the <strong>port</strong>, a numbered door on your computer that the server listens at). It keeps running, and updates the page when the code changes, until you stop it. At <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>:</p>
+<p>Start the app. In VS Code’s terminal, first go into the app’s folder (harmless if you’re already there; this just makes sure):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app/task-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then type:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(Stop it later with <code>Ctrl+C</code>.) <code>npm run</code> runs a script listed in <code>package.json</code>, and <code>dev</code> is the script that starts Next.js’s development server: a web server on your own computer, at the address <code>localhost:3000</code> (<code>localhost</code> means “this computer”, and 3000 is the <strong>port</strong>, a numbered door on your computer that the server listens at). It keeps running, and updates the page when the code changes, until you stop it. At <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>:</p>
 <ol type="1">
 <li>Sign up with an email and password, or sign in with Google.</li>
 <li>Create a task. After a moment, an AI label appears.</li>
@@ -960,7 +1005,7 @@ ul.task-list li input[type="checkbox"] {
 <li>On your profile page, upgrade to Premium. Pay with the test card <code>4242 4242 4242 4242</code>, any future expiration date (such as 12/34), and any three-digit CVC. Your plan changes to Premium.</li>
 <li>Click the button to manage your subscription, and look at Stripe’s customer portal.</li>
 </ol>
-<p>If something fails, tell Claude exactly what you clicked and what you saw. Claude can read the server output in the terminal, and the Edge Function logs are in the Supabase dashboard under <strong>Edge Functions</strong>. See <a href="./001220-tutorial-runTheApplication-v001.html" target="_blank">Step 12: Run the Application</a>.</p>
+<p>If something fails, ask Claude (<a href="./f26-class10to12-00-startHere-v001.html#when-stuck" target="_blank">When you’re stuck</a>): tell it exactly what you clicked and what you saw, and paste the last lines that <code>npm run dev</code> printed in the terminal. The Edge Function logs are in the Supabase dashboard under <strong>Edge Functions</strong>. See <a href="./001220-tutorial-runTheApplication-v001.html" target="_blank">Step 12: Run the Application</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -971,7 +1016,7 @@ If the AI label or the upgrade fails
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If creating a task or upgrading fails, open the function’s logs in the Supabase dashboard (<strong>Edge Functions</strong>) and show Claude what they say. One known fix, which Claude can make with you: for an “Invalid JWT” (401) error, turn off <strong>Verify JWT with legacy secret</strong> for that function (<strong>Edge Functions &gt;</strong> the function <strong>&gt; Details</strong>). This is safe here: the functions check the user’s login themselves.</p>
+<p>If creating a task or upgrading fails, open the function’s logs in the Supabase dashboard (<strong>Edge Functions</strong>) and show Claude what they say. One known fix, which Claude can explain: for an “Invalid JWT” (401) error, turn off <strong>Verify JWT with legacy secret</strong> for that function (<strong>Edge Functions &gt;</strong> the function <strong>&gt; Details</strong>). This is safe here: the functions check the user’s login themselves.</p>
 </div>
 </div>
 

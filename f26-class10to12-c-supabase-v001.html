@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -207,6 +242,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./f26-class10to12-l-optionalTestsAndDocker-v001.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Classes 10–12 (L): Optional: automated tests, and Docker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-updates-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12: Get the course’s latest changes</span></a>
   </div>
 </li>
       </ul>
@@ -748,7 +789,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001008-tutorial-withClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Following the Tutorial with Claude Code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Following the Tutorial, with Claude Code for Help</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -952,12 +993,18 @@ ul.task-list li input[type="checkbox"] {
 <div class="yr-stepnav">
 <p>← <a href="./f26-class10to12-b-getTheCode-v001.html" target="_self">(B) Get the code onto your computer</a> · <a href="./f26-class10to12-00-startHere-v001.html#the-steps" target="_self">All steps</a> · <a href="./f26-class10to12-d-googleSignIn-v001.html" target="_self">(D) Sign in with Google</a> →</p>
 </div>
-<p>Part of the task-app setup for Classes 10–12. Work through the parts in order, with Claude Code as your guide; <a href="./f26-class10to12-00-startHere-v001.html">Start here</a> has the worksheet, the screenshot log, the prompt for Claude, and the list of all parts.</p>
+<p>Part of the task-app setup for Classes 10–12. Work through the parts in order, doing every step yourself; <a href="./f26-class10to12-00-startHere-v001.html">Start here</a> has the worksheet, the screenshot log, how to <a href="./f26-class10to12-00-startHere-v001.html#when-stuck" target="_blank">ask Claude when you’re stuck</a>, and the list of all parts.</p>
 <p><strong>Time:</strong> about 15–25 minutes.</p>
 <p><span class="yr-asof">As of Oct 22, 2026 · Official docs: <a href="https://supabase.com/docs" target="_blank">Supabase</a> · <a href="https://supabase.com/docs/guides/local-development/cli/getting-started" target="_blank">Supabase CLI</a> · <a href="https://nextjs.org/docs" target="_blank">Next.js</a></span></p>
 <p><strong>Supabase</strong> gives the app a PostgreSQL database, user logins, file storage and Edge Functions (small programs that run on Supabase’s servers; see <a href="./001007-tutorial-supabase-projectArchitecture-v001.html#edge-functions" target="_blank">Edge Functions</a>).</p>
 <ol type="1">
-<li><p><strong>Preview the front end.</strong> Claude creates your <code>.env.local</code> file from <code>.env.example</code> and runs <code>npm run dev</code>. Open <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> to see the home page. Login doesn’t work yet. Then stop the server: click in VS Code’s terminal and press <code>Ctrl+C</code> (<code>Ctrl</code>, not <code>Cmd</code>, also on a Mac). (See <a href="./001140-tutorial-previewFrontEnd-v001.html" target="_blank">Step 4 - Optional: Preview the Frontend</a>.)</p>
+<li><p><strong>Preview the front end.</strong> In VS Code’s terminal, first go into the app’s folder (harmless if you’re already there; this just makes sure):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app/task-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Make your settings file, <code>.env.local</code>, as a copy of the example file that comes with the code:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> .env.example .env.local</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>cp</code> (“copy”) copies a file: first the file to copy, then the name of the copy. The example’s settings are placeholders; you fill in real ones in step 4. Then start the app:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Open <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> to see the home page. Login doesn’t work yet. Then stop the server: click in VS Code’s terminal and press <code>Ctrl+C</code> (<code>Ctrl</code>, not <code>Cmd</code>, also on a Mac). (See <a href="./001140-tutorial-previewFrontEnd-v001.html" target="_blank">Step 4 - Optional: Preview the Frontend</a>.)</p>
 <div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1215,8 +1262,8 @@ So <code>npx supabase</code> must run in the <code>task-app</code> folder. Anywh
 </div>
 </div>
 <ul>
-<li><strong>Log in (you type this one).</strong> The login asks you questions, which Claude can’t answer, so type it yourself in VS Code’s terminal, in the <code>task-app</code> folder: <code>npx supabase login</code>. It says “Press Enter to open browser”. Press <code>Enter</code>. If no browser opens, hold <code>Ctrl</code> (<code>Cmd</code> on a Mac) and click the login link it prints. The browser page shows a verification code: click <strong>Copy code</strong>, paste it into the terminal, and press <code>Enter</code>. The terminal says “You are now logged in.”</li>
-<li><strong>Link the folder (Claude can run this one).</strong> <code>npx supabase link --project-ref YOUR-PROJECT-REF</code>. If it asks for the database password, type the command yourself and paste the password from your worksheet.</li>
+<li><strong>Log in.</strong> In VS Code’s terminal, in the <code>task-app</code> folder, type <code>npx supabase login</code>. It says “Press Enter to open browser”. Press <code>Enter</code>. If no browser opens, hold <code>Ctrl</code> (<code>Cmd</code> on a Mac) and click the login link it prints. The browser page shows a verification code: click <strong>Copy code</strong>, paste it into the terminal, and press <code>Enter</code>. The terminal says “You are now logged in.”</li>
+<li><strong>Link the folder.</strong> Copy the <code>npx supabase link --project-ref ...</code> line from the worksheet’s <em>Commands</em> sheet (it has your project ref in it), paste it into the terminal, and press <code>Enter</code>. If it asks for the database password, paste it from your worksheet.</li>
 </ul>
 <p>Skip the README’s <code>supabase init</code>: the project already has its <code>supabase/config.toml</code> file, so <code>init</code> fails. Don’t run <code>npx supabase start</code>: that runs Supabase locally and needs Docker (see the deeper dive at the end). See <a href="./001155-tutorial-supabaseCli-v001.html" target="_blank">Step 5a: Supabase CLI command</a>.</p>
 <div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">

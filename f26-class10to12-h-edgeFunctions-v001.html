@@ -241,6 +241,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Classes 10–12 (L): Optional: automated tests, and Docker</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-updates-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12: Get the course’s latest changes</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -780,7 +786,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./001008-tutorial-withClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Following the Tutorial with Claude Code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Following the Tutorial, with Claude Code for Help</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -984,14 +990,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="yr-stepnav">
 <p>← <a href="./f26-class10to12-g-database-v001.html" target="_self">(G) Create the database</a> · <a href="./f26-class10to12-00-startHere-v001.html#the-steps" target="_self">All steps</a> · <a href="./f26-class10to12-i-tryTheApp-v001.html" target="_self">(I) Try the app</a> →</p>
 </div>
-<p>Part of the task-app setup for Classes 10–12. Work through the parts in order, with Claude Code as your guide; <a href="./f26-class10to12-00-startHere-v001.html">Start here</a> has the worksheet, the screenshot log, the prompt for Claude, and the list of all parts.</p>
+<p>Part of the task-app setup for Classes 10–12. Work through the parts in order, doing every step yourself; <a href="./f26-class10to12-00-startHere-v001.html">Start here</a> has the worksheet, the screenshot log, how to <a href="./f26-class10to12-00-startHere-v001.html#when-stuck" target="_blank">ask Claude when you’re stuck</a>, and the list of all parts.</p>
 <p><strong>Time:</strong> about 10–15 minutes.</p>
 <p><span class="yr-asof">As of Oct 22, 2026 · Official docs: <a href="https://supabase.com/docs/guides/functions" target="_blank">Supabase Edge Functions</a> · <a href="https://supabase.com/docs/guides/functions/secrets" target="_blank">Supabase: Edge Function secrets</a> · <a href="https://docs.stripe.com/webhooks" target="_blank">Stripe webhooks</a></span></p>
 <ol type="1">
-<li><p>Claude deploys the three functions by running these commands in the terminal for you (you don’t type them). The folder names use hyphens (the older chapter, <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" target="_blank">Step 11</a>, gets them wrong):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-task-with-ai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-stripe-session</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<li><p><strong>Deploy the three functions.</strong> In VS Code’s terminal, first go into the app’s folder (harmless if you’re already there; this just makes sure):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app/task-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then type these three commands, one at a time (they’re also on the worksheet’s <em>Commands</em> sheet). The folder names use hyphens (the older chapter, <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" target="_blank">Step 11</a>, gets them wrong):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-task-with-ai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-stripe-session</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In each command, <code>functions deploy</code> uploads one Edge Function, named by the argument after it (the name of its folder in <code>supabase/functions</code>), to Supabase’s servers, where it runs. The option <code>--no-verify-jwt</code> on the last one lets Stripe call the webhook function without a Supabase login. (The function checks Stripe’s signature instead.) In the dashboard, this is the switch <strong>Verify JWT with legacy secret</strong> under <strong>Edge Functions &gt; stripe-webhook &gt; Details</strong>; it should be off.</p></li>
 <li><p><strong>Create the webhook in Stripe.</strong> A <strong>webhook</strong> is a web address that Stripe calls to tell your app that something happened, such as “this customer paid”. Open <a href="https://dashboard.stripe.com/webhooks" target="_blank">dashboard.stripe.com/webhooks</a> and click <strong>Create an event destination</strong>:</p>
 <ul>
@@ -1002,7 +1010,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Endpoint URL: your Stripe webhook URL from the worksheet (<code>https://YOUR-PROJECT-REF.supabase.co/functions/v1/stripe-webhook</code>).</li>
 </ul></li>
 <li><p>On the destination’s page, click <strong>Reveal</strong> next to the <strong>signing secret</strong> (<code>whsec_...</code>) and copy it into the worksheet. Then copy the worksheet’s <code>STRIPE_WEBHOOK_SECRET</code> line. In VS Code’s terminal, first go into the app’s folder (harmless if you’re already there; this just makes sure):</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app/task-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app/task-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then paste the line into the terminal and press <code>Enter</code>.</p></li>
 </ol>
 <p>Stripe may show an event as delivered even when the app rejected it (the function always answers “OK”). If an upgrade doesn’t show up in the app, look at the <code>stripe-webhook</code> logs in the Supabase dashboard under <strong>Edge Functions</strong>.</p>
