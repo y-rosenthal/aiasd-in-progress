@@ -41,7 +41,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a4b04e96f7d48bf9a9096057ca7b2c31.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -150,6 +150,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./f26-midterm-practice-hms-v001.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Midterm Practice Questions: How Modern Software Is Built in 2026</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-practice-taskApp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm Practice Questions: The Task App</span></a>
   </div>
 </li>
       </ul>
@@ -999,6 +1005,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#ai-security-issues" id="toc-ai-security-issues" class="nav-link" data-scroll-target="#ai-security-issues">AI Security issues</a></li>
   <li><a href="#overview-of-coding-tools" id="toc-overview-of-coding-tools" class="nav-link" data-scroll-target="#overview-of-coding-tools">overview of coding tools</a></li>
   <li><a href="#architecture-of-more-complex-websites" id="toc-architecture-of-more-complex-websites" class="nav-link" data-scroll-target="#architecture-of-more-complex-websites">architecture of more complex websites</a></li>
+  <li><a href="#the-task-app-project-classes-1012-the-architecture" id="toc-the-task-app-project-classes-1012-the-architecture" class="nav-link" data-scroll-target="#the-task-app-project-classes-1012-the-architecture">the task-app project (Classes 10–12): the architecture</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1031,6 +1038,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p>see below</p></li>
 <li><p><a href="./f26-midterm-practice-v001.html">Practice questions on this material</a></p></li>
+<li><p><a href="./f26-midterm-practice-taskApp-v001.html">Practice questions on the task-app project</a> (the section at the end of this page)</p></li>
 </ul>
 <p><a href="https://y-rosenthal.github.io/how-modern-software-is-built/" class="uri">https://y-rosenthal.github.io/how-modern-software-is-built/</a></p>
 <ul>
@@ -2300,8 +2308,352 @@ Read it in the book
 </div>
 </div></li>
 </ul>
+</section>
+<section id="the-task-app-project-classes-1012-the-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="the-task-app-project-classes-1012-the-architecture">the task-app project (Classes 10–12): the architecture</h3>
+<ul>
+<li>see <a href="./f26-class10to12-00-startHere-v001.html">Classes 10–12: The Task App, Start Here</a> and <a href="./001007-tutorial-supabase-projectArchitecture-v001.html">Project Architecture</a></li>
+<li><a href="./f26-midterm-practice-taskApp-v001.html">Practice questions on this material</a></li>
+<li>the midterm covers the <strong>architecture</strong> of the task app: what the pieces are, what each one is responsible for, where each one runs, and how they talk to each other</li>
+<li>the midterm does <strong>not</strong> cover the specific commands you typed, or the menus, forms and settings on the websites, during the setup steps</li>
+</ul>
+<section id="what-the-app-does-and-what-we-did" class="level4">
+<h4 class="anchored" data-anchor-id="what-the-app-does-and-what-we-did">what the app does, and what we did</h4>
+<ul>
+<li><p>a “task app” (a to-do list app). What a user can do in it:</p>
+<ul>
+<li><strong>sign up and sign in</strong> with an email and password, or with <strong>Sign in with Google</strong>; <strong>sign out</strong> from the profile page. Pages such as the dashboard are protected: signed out, you’re sent back to the login page</li>
+<li><strong>create and edit tasks</strong> (a title and a description) on the dashboard, and see your own tasks (never anyone else’s)</li>
+<li><strong>AI label</strong>: a moment after a task is created, a label appears on it. There are five standard labels (work, personal, priority, shopping, home); the AI picks one of them, or one the user already uses, or suggests a new one when none fits</li>
+<li><strong>attach an image</strong> to a task; only image files (JPEG, PNG, GIF, WebP), up to 1 MB. The app shows the image</li>
+<li><strong>profile page</strong>: shows the user’s plan and how many tasks they created this month out of their limit</li>
+<li><strong>plans</strong>: every user starts on the <strong>free</strong> plan, 100 tasks a month; the <strong>Premium</strong> plan ($10 a month, “TaskMaster Premium”) allows 10,000. The limit is enforced by the database itself: the 101st task of the month on the free plan is refused</li>
+<li><strong>Manage Subscription</strong> on the profile page: for a free user it opens Stripe’s checkout page to upgrade (test card numbers, no real money); for a Premium user it opens Stripe’s customer portal, where they can cancel. A cancelled subscription puts the user back on the free plan</li>
+</ul></li>
+<li><p>every new user automatically gets a Stripe customer record, which is why signing up before Stripe was set up failed</p></li>
+<li><p>the code was already written (it comes from a tutorial video); our job was to set up the services the app depends on, run the app on our own computers, and put it online</p></li>
+<li><p>most of the setup work is creating accounts and projects on several websites and copying “configuration information” (web addresses, IDs and keys) from one place to another; that’s why the course gave you a worksheet to keep it all in one place</p></li>
+<li><p>the worksheet holds secret keys, so treat it like your passwords: don’t share it, and keep it outside the code folder so that Git can never upload it</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-48" class="callout-48-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./f26-class10to12-00-startHere-v001.html#where-this-fits">Classes 10–12: The Task App, Start Here › Where this fits</a></li>
+<li><a href="./f26-class10to12-00-startHere-v001.html#what-you-need-accounts-and-costs">Classes 10–12: The Task App, Start Here › What you need: accounts and costs</a></li>
+<li><a href="./001007-tutorial-supabase-projectArchitecture-v001.html#keeping-notes---setup-checklist">Ch. 71 Project Architecture › Keeping notes - Setup checklist</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="the-tech-stack-the-pieces-and-where-each-one-runs" class="level4">
+<h4 class="anchored" data-anchor-id="the-tech-stack-the-pieces-and-where-each-one-runs">the tech stack: the pieces and where each one runs</h4>
+<ul>
+<li><p>a <strong>tech stack</strong> is the set of technologies an app is built from, together with where each part runs</p></li>
+<li><p><strong>Next.js</strong>: the framework the app is written in; it produces code for two places: the part that runs in the browser (the front end) and a part that runs on the web server</p></li>
+<li><p><strong>Supabase</strong>: a ready-made back end (“back end as a service”) on Supabase’s computers; it gives the app</p>
+<ul>
+<li>a <strong>PostgreSQL database</strong> for the app’s data (users’ profiles, tasks, …)</li>
+<li><strong>authentication</strong>: sign-up and login, including “Sign in with Google”</li>
+<li><strong>storage</strong> for uploaded image files (similar to Amazon S3)</li>
+<li><strong>Edge Functions</strong>: small programs of our own that run on Supabase’s servers</li>
+</ul></li>
+<li><p><strong>third-party services</strong>, each run by its own company:</p>
+<ul>
+<li><strong>Google</strong> (Google Cloud): “Sign in with Google”</li>
+<li><strong>OpenAI API</strong>: picks a label for each new task</li>
+<li><strong>Stripe</strong>: subscription payments</li>
+</ul></li>
+<li><p><strong>Vercel</strong>: hosts the website online (the web server), once the app works on your computer</p></li>
+<li><p><strong>GitHub</strong>: stores the code; your copy is a <strong>fork</strong> of the course’s repository</p></li>
+<li><p>one app, many companies’ computers: each company specializes in one hard job (logins, payments, AI), so instead of building those yourself you use their service and connect to it with web addresses and keys; the trade-off is that there are many accounts, keys and settings to manage</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-49-contents" aria-controls="callout-49" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-49" class="callout-49-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./001007-tutorial-supabase-projectArchitecture-v001.html#project-architecture">Ch. 71 Project Architecture › Project Architecture</a></li>
+<li><a href="./040400-whatHappensOnTheServer-v001.html#the-typical-stack">Ch. 36 What Happens on the Server: Back Ends, Databases, and APIs › The typical “stack”</a></li>
+<li><a href="./040600-apisKeysAndThirdPartyServices-v001.html#why-apps-use-third-party-services">Ch. 38 APIs, API Keys, and Third-Party Services › Why apps use third-party services</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="front-end-and-back-end" class="level4">
+<h4 class="anchored" data-anchor-id="front-end-and-back-end">front end and back end</h4>
+<ul>
+<li><p>the <strong>front end</strong> is the part of the app that runs in the user’s browser: the pages, buttons and forms (HTML, CSS and JavaScript produced by Next.js), plus the Supabase <strong>client library</strong>, which the pages use to talk to Supabase</p></li>
+<li><p>the <strong>back end</strong> is everything that runs on servers: Vercel runs the server-side part of Next.js; Supabase runs the database, logins, storage and Edge Functions; Google, OpenAI and Stripe run their own services</p></li>
+<li><p>the browser is a <strong>client</strong>: it sends requests and gets answers. Supabase is a server to the browser, and the Edge Functions are in turn clients of OpenAI and Stripe</p></li>
+<li><p>while you develop, the web server is a <strong>development server</strong> on your own computer: the address <code>localhost:3000</code> means “the program on this computer that listens on port 3000”; nobody else can open it. Once deployed, the same app runs on Vercel at a public address. In both cases the back end (the database, logins, …) is the same Supabase project</p></li>
+<li><p>the app can’t do anything useful before the back end exists: the front end alone shows the pages, but login and data come from Supabase</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-50-contents" aria-controls="callout-50" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-50" class="callout-50-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./040100-browsersAndWebServers-v001.html#front-end-and-back-end">Ch. 33 Browsers, Web Servers, and HTTP › Front end and back end</a></li>
+<li><a href="./040100-browsersAndWebServers-v001.html#localhost-a-server-on-your-own-computer">Ch. 33 Browsers, Web Servers, and HTTP › localhost: a server on your own computer</a></li>
+<li><a href="./040700-hostingAndDeployment-v001.html#development-vs.-production">Ch. 40 Hosting and Deployment: Getting Your App Online › Development vs.&nbsp;production</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="the-database-the-data-api-and-row-level-security" class="level4">
+<h4 class="anchored" data-anchor-id="the-database-the-data-api-and-row-level-security">the database, the Data API, and Row Level Security</h4>
+<ul>
+<li><p>the app’s data lives in a <strong>PostgreSQL</strong> database on Supabase, in tables (for example profiles and tasks). Images go in a storage <strong>bucket</strong>, not in the database</p></li>
+<li><p><strong>migrations</strong> are files in the project that describe the database’s structure (the tables, their security rules, the storage bucket). Running them on your Supabase project creates all of that; the migrations are part of the code, so every student’s database has the same structure</p></li>
+<li><p>the browser doesn’t connect to the database directly: Supabase creates a <strong>Data API</strong> for the database, and the app’s pages read and change tables by sending web requests to the project’s address</p></li>
+<li><p>the Data API is open to anyone who has the project’s publishable key, and that key is inside the app’s web pages. So the database itself must enforce who may see what: <strong>Row Level Security (RLS)</strong> is a set of rules stored in the database about which <strong>rows</strong> each user may see or change, for example “a user sees only their own tasks”. RLS is what keeps one user out of another user’s data</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-51" class="callout-51-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./040400-whatHappensOnTheServer-v001.html#databases">Ch. 36 What Happens on the Server: Back Ends, Databases, and APIs › Databases</a></li>
+<li><a href="./040400-whatHappensOnTheServer-v001.html#why-the-browser-doesnt-talk-to-the-database-directly-usually">Ch. 36 What Happens on the Server: Back Ends, Databases, and APIs › Why the browser doesn’t talk to the database directly (usually)</a></li>
+<li><a href="./f26-class10to12-c-supabase-v001.html">Classes 10–12 (C): Supabase project and the front end › Why? The three Security settings</a></li>
+<li><a href="./f26-class10to12-g-database-v001.html">Classes 10–12 (G): Create the database</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="logging-in-authentication-and-sign-in-with-google-oauth" class="level4">
+<h4 class="anchored" data-anchor-id="logging-in-authentication-and-sign-in-with-google-oauth">logging in: authentication, and “Sign in with Google” (OAuth)</h4>
+<ul>
+<li><p><strong>authentication</strong> means checking who a user is. Supabase handles it: a user signs up with an email and password, or signs in with an account they already have (Google)</p></li>
+<li><p><strong>OAuth</strong> is a standard way for one website to let you sign in with your account at another website (here Google) without ever seeing your password</p></li>
+<li><p>the trip: the user clicks <strong>Sign in with Google</strong> in the app → the browser goes to Supabase, then to Google’s sign-in page → the user signs in at Google and agrees to share their name and email → Google sends the browser to Supabase’s <strong>callback</strong> address with a one-time code → Supabase trades the code (plus the app’s <strong>client secret</strong>) for the user’s name and email, creates or updates the user, and sends the browser back to the app</p></li>
+<li><p>the app is registered with Google as an <strong>OAuth client</strong>: the <strong>Client ID</strong> says which app is asking (it’s public), and the <strong>Client secret</strong> proves to Google that the request really comes from your app (it’s secret, and lives in Supabase’s settings, not in the app’s pages)</p></li>
+<li><p><strong>redirect URLs</strong>: Google only sends the user on to addresses on the client’s list, and Supabase only sends them back to addresses on <em>its</em> list. That way nobody can trick either one into sending a freshly signed-in user, with their login, to a different website. When the app moved from your computer to Vercel, its new address had to be added to those lists</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-52-contents" aria-controls="callout-52" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-52" class="callout-52-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./040400-whatHappensOnTheServer-v001.html#logging-in-authentication-and-authorization">Ch. 36 What Happens on the Server: Back Ends, Databases, and APIs › Logging in: authentication and authorization</a></li>
+<li><a href="./040600-apisKeysAndThirdPartyServices-v001.html#oauth">Ch. 38 APIs, API Keys, and Third-Party Services › OAuth: “Log in with Google”</a></li>
+<li><a href="./f26-class10to12-d-googleSignIn-v001.html">Classes 10–12 (D): Sign in with Google › Why? What happens when someone signs in with Google</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="edge-functions-and-secrets" class="level4">
+<h4 class="anchored" data-anchor-id="edge-functions-and-secrets">Edge Functions and secrets</h4>
+<ul>
+<li><p>an <strong>Edge Function</strong> is a small program that runs on Supabase’s servers, not in the browser. It waits until something calls it (by visiting its web address), does one job, sends back an answer, and stops. You don’t rent or manage a server for it (<strong>serverless</strong>); you upload the code, and Supabase runs it when it’s called</p></li>
+<li><p><strong>why the app needs them:</strong> some jobs need a <strong>secret key</strong>, and anything that runs in the browser can be read by anyone who opens the page. So the browser asks an Edge Function, and the function uses the key on the server, where nobody can see it</p></li>
+<li><p>the app’s three Edge Functions:</p>
+<ul>
+<li><strong>create-task-with-ai</strong>: saves a new task and asks OpenAI for its label (uses the OpenAI API key)</li>
+<li><strong>create-stripe-session</strong>: asks Stripe for a checkout page or the customer portal for this user (uses the Stripe secret key and the price ID)</li>
+<li><strong>stripe-webhook</strong>: receives Stripe’s message that a payment went through, and upgrades the user (uses the Stripe secret key and the webhook signing secret)</li>
+</ul></li>
+<li><p>the keys reach the functions as <strong>secrets</strong>: named values that you store on Supabase; the function’s code reads each one by its name. They never appear in the code or on GitHub</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-53-contents" aria-controls="callout-53" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-53" class="callout-53-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./001007-tutorial-supabase-projectArchitecture-v001.html#edge-functions">Ch. 71 Project Architecture › Edge Functions</a></li>
+<li><a href="./040700-hostingAndDeployment-v001.html">Ch. 40 Hosting and Deployment: Getting Your App Online › Deeper dive: Virtual servers, containers, and serverless (a collapsed box near the end)</a></li>
+<li><a href="./f26-class10to12-h-edgeFunctions-v001.html">Classes 10–12 (H): Deploy the Edge Functions and the Stripe webhook</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="keys-publishable-vs.-secret-and-where-each-one-lives" class="level4">
+<h4 class="anchored" data-anchor-id="keys-publishable-vs.-secret-and-where-each-one-lives">keys: publishable vs.&nbsp;secret, and where each one lives</h4>
+<ul>
+<li><p>an <strong>API key</strong> tells a service which project a request belongs to and how much it may do</p></li>
+<li><p>a <strong>publishable key</strong> may appear in web pages, where anyone can read it; it only allows what the service’s rules allow (for Supabase: what the RLS rules allow)</p></li>
+<li><p>a <strong>secret key</strong> can do anything in the account (for Supabase: it skips all RLS rules), so it must never leave the server side: never in the app’s pages, never on GitHub, never in an AI chat</p></li>
+<li><p>where the task app’s keys live:</p>
+<ul>
+<li>in the browser: the Supabase <strong>URL</strong> and <strong>publishable key</strong> (the app’s pages need them to reach the project)</li>
+<li>as Supabase <strong>secrets</strong>, read by the Edge Functions: the OpenAI API key, the Stripe secret key, the Stripe price ID, the Stripe webhook signing secret</li>
+<li>in Supabase’s Google sign-in settings: the Google Client ID and Client secret</li>
+</ul></li>
+<li><p><strong>the settings file</strong>: the Supabase URL and publishable key differ for every student, so they can’t be written into the code that everyone shares. The app reads them when it starts from a settings file on your computer (environment variables); the project’s <code>.gitignore</code> keeps that file out of Git. On Vercel you enter the same two values in the website’s settings instead</p></li>
+<li><p>if a key leaks, you delete it on the service’s website and make a new one; a key that <strong>expires</strong> or has a <strong>spending limit</strong> limits the damage</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-54-contents" aria-controls="callout-54" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-54" class="callout-54-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./040650-publishableAndSecretKeys-v001.html#publishable-vs-secret">Ch. 39 Publishable and Secret Keys › Two kinds of keys</a></li>
+<li><a href="./040650-publishableAndSecretKeys-v001.html#why-the-server">Ch. 39 Publishable and Secret Keys › Why the server holds the secret keys</a></li>
+<li><a href="./040650-publishableAndSecretKeys-v001.html#task-app-keys">Ch. 39 Publishable and Secret Keys › The keys in the course’s task app</a></li>
+<li><a href="./040600-apisKeysAndThirdPartyServices-v001.html#where-keys-live">Ch. 38 APIs, API Keys, and Third-Party Services › Where keys live</a></li>
+<li><a href="./030500-gitignoreAndSecrets-v001.html#keeping-a-.env-file-out-of-git">Ch. 30 .gitignore and Keeping Secrets Out of Git › Keeping a .env file out of Git</a></li>
+<li><a href="./040700-hostingAndDeployment-v001.html#environment-variables-on-the-host">Ch. 40 Hosting and Deployment: Getting Your App Online › Environment variables on the host</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="payments-with-stripe" class="level4">
+<h4 class="anchored" data-anchor-id="payments-with-stripe">payments with Stripe</h4>
+<ul>
+<li><p>everything we did in Stripe is in <strong>test mode</strong> (a <strong>sandbox</strong>): pretend money and test card numbers; the <strong>live</strong> account, for real customers, was never used</p></li>
+<li><p>a <strong>product</strong> is what you sell (the Premium plan); a <strong>price</strong> says how much and how often (monthly). The app asks Stripe for a subscription to one price, by the price’s ID</p></li>
+<li><p><strong>the browser never talks to Stripe itself.</strong> When a user clicks <strong>Upgrade</strong>, the browser asks the Edge Function, which checks who the user is and asks Stripe, with the secret key, for a <strong>checkout page</strong> for that user at your price; the user pays on Stripe’s page. Only a server may make that request: anything in the browser can be changed by its user, who could otherwise pick their own price</p></li>
+<li><p>a <strong>webhook</strong> is a web address that Stripe calls to tell your app that something happened (“this customer paid”). The app’s webhook is the Edge Function <code>stripe-webhook</code>; Stripe <strong>signs</strong> every message with a signing secret, and the function checks the signature, so a fake “payment succeeded” message from anyone else is rejected</p></li>
+<li><p>the <strong>customer portal</strong> is a Stripe page where subscribers manage or cancel their subscription; the app’s <strong>Manage Subscription</strong> button opens it</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-55" class="callout-55-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./040650-publishableAndSecretKeys-v001.html#stripe-publishable">Ch. 39 Publishable and Secret Keys › Why Stripe still has a publishable key</a></li>
+<li><a href="./f26-class10to12-f-stripe-v001.html">Classes 10–12 (F): Stripe, in test mode</a></li>
+<li><a href="./f26-class10to12-h-edgeFunctions-v001.html">Classes 10–12 (H): Deploy the Edge Functions and the Stripe webhook</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="the-ai-label-openai" class="level4">
+<h4 class="anchored" data-anchor-id="the-ai-label-openai">the AI label (OpenAI)</h4>
+<ul>
+<li><p>when a user creates a task, the Edge Function sends the task’s title and description, plus the labels already in use, to the <strong>OpenAI API</strong>, and gets back one label (an existing one, or a new one if none fits)</p></li>
+<li><p>the <strong>API platform</strong> is separate from a ChatGPT subscription: you pay per request (<strong>pay as you go</strong>), from prepaid credit; a cheap, small model is enough for this job, so one label costs a tiny fraction of a cent</p></li>
+<li><p>two locks on spending: prepaid credit with auto-reload off (when it runs out, requests stop), and a <strong>hard spend limit</strong> on the project</p></li>
+<li><p>when a service refuses a request, the answer’s <strong>status code</strong> says why: <code>200</code> is OK, <code>404</code> is “not found”, and <code>429</code> is “too many requests” (for example, the spend limit was reached)</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-56-contents" aria-controls="callout-56" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-56" class="callout-56-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./040600-apisKeysAndThirdPartyServices-v001.html#costs-and-spending-limits">Ch. 38 APIs, API Keys, and Third-Party Services › Costs and spending limits</a></li>
+<li><a href="./040100-browsersAndWebServers-v001.html#status-codes">Ch. 33 Browsers, Web Servers, and HTTP › Status codes</a></li>
+<li><a href="./f26-class10to12-e-openAi-v001.html">Classes 10–12 (E): OpenAI API key, with a $5 limit</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="from-the-code-on-github-to-the-app-online" class="level4">
+<h4 class="anchored" data-anchor-id="from-the-code-on-github-to-the-app-online">from the code on GitHub to the app online</h4>
+<ul>
+<li><p>a <strong>fork</strong> is your own copy of someone else’s GitHub repository, in your GitHub account; you can change it freely and the original stays untouched. <strong>Cloning</strong> downloads a copy of a repository (with its whole history) to your computer, and the copy remembers where it came from, so your later changes can be pushed back up</p></li>
+<li><p>the project lists the <strong>packages</strong> (libraries) it needs in a file; installing them downloads every package, and the packages they need, into the project folder. The <strong>development server</strong> then runs the app on your computer</p></li>
+<li><p>saving your work means committing your changes and pushing them to your fork; the settings file with your keys is ignored by Git, so it is never uploaded</p></li>
+<li><p><strong>deploying</strong>: Vercel imports the repository from GitHub, builds the app, and hosts it at a public address. You give Vercel only the Supabase URL and publishable key (no secret keys: the secrets stay on Supabase). From then on, every push to your fork makes Vercel deploy the new version automatically</p></li>
+<li><p><strong>Docker</strong> is not needed for this project: every part of the back end runs on someone else’s computers. It would be needed to run a complete copy of Supabase on your own laptop</p>
+<div class="yr-explain callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read it in the book
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-57" class="callout-57-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="./080300-sharedRepositoriesAndForks-v001.html#forks">Ch. 66 Sharing a Repository: Collaborators and Forks › Forks</a></li>
+<li><a href="./030700-cloneAndPull-v001.html">Ch. 32 Cloning and Pulling (Working from Two Computers)</a></li>
+<li><a href="./040700-hostingAndDeployment-v001.html#deploying-from-github">Ch. 40 Hosting and Deployment: Getting Your App Online › Deploying from GitHub</a></li>
+<li><a href="./001007-tutorial-supabase-projectArchitecture-v001.html#where-docker-fits">Ch. 71 Project Architecture › Where Docker fits</a></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
 
 
+</section>
 </section>
 </section>
 
@@ -3413,6 +3765,14 @@ section.yr-link-target {
   });
 })();
 </script>
+<!-- Installed by yrProject v0.7.2 (https://github.com/y-rosenthal/yrProject): the templates
+     and the tool that give a project one base for AI-assisted work (rules for AI agents, skills, hooks, GitHub
+     issues for work to do later, project docs). This file belongs to the tool: do not edit it by hand, and do
+     not change it without the tool. "yrProject.sh update" replaces it with each new version (if you change it,
+     update leaves it alone, and it gets no newer versions); "yrProject.sh remove" removes it.
+     .yrProject/README.md lists every file that yrProject installed, and tells who changes each one.
+     Its content is the subjexts platform's (yrS4, book-files/); only the package name is this book's. -->
+
 <!-- subjexts-v001.html: the subjexts teaching overlay (yrS4). One line; remove it to revert the book completely.
      The script holds no key, fails silently, and does nothing if the package is disabled on the platform. -->
 <script src="https://subjexts.github.io/overlay/v1/yrS4.js" data-package="y-rosenthal/aiasd" defer=""></script>
