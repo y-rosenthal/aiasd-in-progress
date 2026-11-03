@@ -1067,7 +1067,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 +------------------------------------------------------------+</code></pre>
 <p>Current models have large windows (1 million tokens for Opus 5.5, Sonnet 5.5, Haiku 5.5, and Fable 5.1), but how full yours is still matters:</p>
 <ul>
-<li><strong>Quality drops as it fills.</strong> With lots of old, unrelated material, Claude may “forget” earlier instructions or make more mistakes.</li>
+<li><strong>Quality drops as it fills (“context rot”).</strong> The fuller the window, the worse the model gets at using what is in it: Claude may “forget” earlier instructions or make more mistakes. Research has also found that models tend to miss information in the <em>middle</em> of a long context more often than at its beginning or end (<a href="https://arxiv.org/abs/2307.03172">Liu et al., “Lost in the Middle”</a>). So keep the used part of the window small: <code>/clear</code>, <code>/compact</code>, and <code>/rewind</code> (below) are the main ways.</li>
 <li><strong>Every message sends the whole conversation again.</strong> A one-line question at the end of an all-day session still counts the entire history against your usage.</li>
 </ul>
 <p>Run <strong><code>/context</code></strong> at any time to see a colored grid of what is using space, with suggestions for freeing some.</p>
@@ -1119,7 +1119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td><code>/rewind</code> (or <code>Esc</code> twice on an empty prompt)</td>
 <td>Goes back to an earlier point; can also summarize from there</td>
-<td>A path went wrong</td>
+<td>A path went wrong; dropping the detour also avoids context rot and saves tokens on every later message</td>
 </tr>
 </tbody>
 </table>
@@ -1266,7 +1266,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Run <strong><code>/usage</code></strong> (also available as <code>/cost</code> and <code>/stats</code>) to see:</p>
 <ul>
 <li><strong>Session:</strong> tokens used in this session and an <em>estimated</em> cost. The dollar figure matters for API users; subscribers already have usage included.</li>
-<li><strong>Plan usage bars</strong> (subscribers): how much of your limits you have used.</li>
+<li><strong>Plan usage bars</strong> (subscribers): how much of your limits you have used: the current 5-hour session, the week, and a model’s own limit where your plan has one (on Max, for example, Fable may use at most half of the weekly limit; see <a href="./050200-claudeModelsPlansAndUsage-v001.html">Claude Models, Plans, and Usage Limits</a>). If you turned on usage credits, a row also shows this month’s spend.</li>
 <li><strong>A breakdown</strong> (subscribers) of what used your limits recently, such as skills, subagents, MCP servers, and <code>/loop</code> tasks. Press <code>d</code> or <code>w</code> to switch between the last 24 hours and the last 7 days.</li>
 </ul>
 <p><code>/insights</code> writes a report about <em>how</em> you work (where things go wrong, features to try), not just how many tokens you used.</p>
@@ -1302,6 +1302,7 @@ Deeper dive: prompt caching (why some actions cost more)
 <p>Some actions break the cache, so the next reply re-reads the whole conversation at the full price. The main ones are switching models and turning on fast mode for the first time in a conversation. Changing effort mid-session breaks it on most models too, but not on Opus 5.5, Sonnet 5.5, or Fable 5.1 when you use a Claude subscription or an API key. That is why the official advice is to choose your model and effort at the start, and to save <code>/compact</code> for natural breaks between tasks.</p>
 <p>The cache also expires while you are away: after an hour on a subscription (five minutes once you are drawing on usage credits), and after five minutes by default with an API key. Your first message after a long break is slower and uses more.</p>
 <p>Editing CLAUDE.md doesn’t break the cache, but the edit doesn’t reach the running session either. It loads after <code>/clear</code>, <code>/compact</code>, or a restart.</p>
+<p>Two commands are cache-friendly. <code>/rewind</code> goes back to a point the cache already holds, so the next reply reads it from the cache (<code>/compact</code>, by contrast, builds a new summary that must be processed again). And <code>/clear</code> drops the conversation but not the start of each request: Claude Code’s instructions and tool definitions, and your CLAUDE.md if it hasn’t changed, can still be read from the cache when you start the new conversation within the cache lifetime.</p>
 </div>
 </div>
 </div>
@@ -1505,12 +1506,15 @@ Suggested answer
 </div>
 </div>
 </section>
-</section>
-<section id="medium" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="medium">Medium</h3>
-<section id="question-7-write-the-command" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-write-the-command">Question 7 · Write the command</h4>
-<p>Write the command that starts a Claude Code session on Sonnet for that session only, without changing your saved default.</p>
+<section id="question-7-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-multiple-choice">Question 7 · Multiple choice</h4>
+<p>What is <strong>context rot</strong>?</p>
+<ol type="a">
+<li>Old sessions that <code>/resume</code> can no longer open</li>
+<li>The model getting worse at using its context as the context window fills up</li>
+<li>The prompt cache expiring after an hour</li>
+<li>A CLAUDE.md file that is out of date</li>
+</ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1523,15 +1527,17 @@ Suggested answer
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--model</span> sonnet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>--model</code> flag applies only to the session it starts. (Inside a session, opening the <code>/model</code> picker and pressing <code>s</code> on the Sonnet row also switches for that session only.)</p>
+<p><strong>b.</strong> As the window fills, the model may forget earlier instructions and make more mistakes, and it tends to miss things in the middle of a long context more than at its start or end. Keeping the used part of the window small (<code>/clear</code>, <code>/compact</code>, <code>/rewind</code>) helps.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-8-scenario" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-scenario">Question 8 · Scenario</h4>
-<p>Maria just finished fixing a bug in the login page. Next she wants Claude to write a README section about a completely different feature. What should she run first, and why?</p>
+</section>
+<section id="medium" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="medium">Medium</h3>
+<section id="question-8-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-write-the-command">Question 8 · Write the command</h4>
+<p>Write the command that starts a Claude Code session on Sonnet for that session only, without changing your saved default.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1544,14 +1550,15 @@ Suggested answer
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><code>/clear</code>. The bug-fixing conversation (files read, failed attempts, test output) has nothing to do with the README task. Keeping it would crowd the context window, can distract Claude, and makes every message cost more. <code>/clear</code> starts fresh for free, and CLAUDE.md still loads. If she might return to the bug session, she can <code>/rename</code> it first and later <code>/resume</code> it.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--model</span> sonnet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>--model</code> flag applies only to the session it starts. (Inside a session, opening the <code>/model</code> picker and pressing <code>s</code> on the Sonnet row also switches for that session only.)</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-9-write-the-command" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-write-the-command">Question 9 · Write the command</h4>
-<p>Your session is long, and the next step is to finish the database migration. Write a command that frees up context while making sure the summary keeps the details of the migration.</p>
+<section id="question-9-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-scenario">Question 9 · Scenario</h4>
+<p>Maria just finished fixing a bug in the login page. Next she wants Claude to write a README section about a completely different feature. What should she run first, and why?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1564,20 +1571,14 @@ Suggested answer
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="text"><code>/compact focus on the database migration: which files changed and what is left to do</code></pre>
-<p>Any <code>/compact</code> followed by focus instructions about the migration is correct.</p>
+<p><code>/clear</code>. The bug-fixing conversation (files read, failed attempts, test output) has nothing to do with the README task. Keeping it would crowd the context window, can distract Claude, and makes every message cost more. <code>/clear</code> starts fresh for free, and CLAUDE.md still loads. If she might return to the bug session, she can <code>/rename</code> it first and later <code>/resume</code> it.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-10-predict" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-predict">Question 10 · Predict</h4>
-<p>A long session is automatically compacted. Which of these will Claude still “know” afterward?</p>
-<ol type="1">
-<li>Rules in the project’s top-level CLAUDE.md</li>
-<li>“Please always use single quotes in JavaScript”, typed in the chat two hours earlier</li>
-<li>Auto memory notes</li>
-</ol>
+<section id="question-10-write-the-command" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-write-the-command">Question 10 · Write the command</h4>
+<p>Your session is long, and the next step is to finish the database migration. Write a command that frees up context while making sure the summary keeps the details of the migration.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1590,14 +1591,20 @@ Suggested answer
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>1 and 3 for sure: the project’s CLAUDE.md and auto memory are reloaded from disk after compaction. Item 2 <em>might</em> survive in the summary, but it can be lost, because it was only given in the conversation. To make it last, add it to CLAUDE.md.</p>
+<pre class="text"><code>/compact focus on the database migration: which files changed and what is left to do</code></pre>
+<p>Any <code>/compact</code> followed by focus instructions about the migration is correct.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-11-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-short-answer">Question 11 · Short answer</h4>
-<p>What does including the word <strong>ultrathink</strong> in a prompt do? Does “think hard” do the same?</p>
+<section id="question-11-predict" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-predict">Question 11 · Predict</h4>
+<p>A long session is automatically compacted. Which of these will Claude still “know” afterward?</p>
+<ol type="1">
+<li>Rules in the project’s top-level CLAUDE.md</li>
+<li>“Please always use single quotes in JavaScript”, typed in the chat two hours earlier</li>
+<li>Auto memory notes</li>
+</ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1610,20 +1617,14 @@ Suggested answer
 </div>
 <div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><code>ultrathink</code> asks for deeper reasoning on that one turn, without changing your session’s effort setting. “Think hard” is not a special keyword: Claude Code passes it along as ordinary text.</p>
+<p>1 and 3 for sure: the project’s CLAUDE.md and auto memory are reloaded from disk after compaction. Item 2 <em>might</em> survive in the summary, but it can be lost, because it was only given in the conversation. To make it last, add it to CLAUDE.md.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-12-multiple-choice" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-multiple-choice">Question 12 · Multiple choice</h4>
-<p>Sam has a Pro subscription and turns on fast mode. How is his fast-mode work paid for?</p>
-<ol type="a">
-<li>From his plan’s included usage, like everything else</li>
-<li>Only from usage credits (extra pay-as-you-go money)</li>
-<li>It is free during the research preview</li>
-<li>Per token, through a separate Claude Console API account</li>
-</ol>
+<section id="question-12-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-short-answer">Question 12 · Short answer</h4>
+<p>What does including the word <strong>ultrathink</strong> in a prompt do? Does “think hard” do the same?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1636,14 +1637,20 @@ Suggested answer
 </div>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>b.</strong> On subscription plans, fast mode is available only through usage credits and is not included in the plan’s usage, even if Sam has plan usage left. It is not part of included usage (a) and not free (c). Console (API) organizations pay for fast mode per token (d), but Sam is signed in with his Pro subscription.</p>
+<p><code>ultrathink</code> asks for deeper reasoning on that one turn, without changing your session’s effort setting. “Think hard” is not a special keyword: Claude Code passes it along as ordinary text.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-13-short-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-13-short-answer">Question 13 · Short answer</h4>
-<p>Why does switching models in the middle of a long conversation make the next reply slower and more expensive?</p>
+<section id="question-13-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-13-multiple-choice">Question 13 · Multiple choice</h4>
+<p>Sam has a Pro subscription and turns on fast mode. How is his fast-mode work paid for?</p>
+<ol type="a">
+<li>From his plan’s included usage, like everything else</li>
+<li>Only from usage credits (extra pay-as-you-go money)</li>
+<li>It is free during the research preview</li>
+<li>Per token, through a separate Claude Console API account</li>
+</ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1656,18 +1663,14 @@ Suggested answer
 </div>
 <div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Each message re-sends the whole conversation, and the prompt cache lets the server reuse what it already processed. Each model has its own cache, so after a switch the new model must process the entire conversation from scratch: one slow, full-price turn. That is why it’s best to pick the model at the start of a task.</p>
+<p><strong>b.</strong> On subscription plans, fast mode is available only through usage credits and is not included in the plan’s usage, even if Sam has plan usage left. It is not part of included usage (a) and not free (c). Console (API) organizations pay for fast mode per token (d), but Sam is signed in with his Pro subscription.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-14-scenario" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-14-scenario">Question 14 · Scenario</h4>
-<p>For each task, suggest a model alias and an effort level, and explain briefly:</p>
-<ol type="1">
-<li>Renaming a variable in three files.</li>
-<li>Tracking down a tricky bug that only happens after a user’s session times out.</li>
-</ol>
+<section id="question-14-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-14-short-answer">Question 14 · Short answer</h4>
+<p>Why does switching models in the middle of a long conversation make the next reply slower and more expensive?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1680,21 +1683,18 @@ Suggested answer
 </div>
 <div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ol type="1">
-<li><code>sonnet</code> or <code>haiku</code> at <code>low</code> effort: a small, clear change you will review yourself; deep reasoning would waste time and tokens.</li>
-<li><code>opus</code> at <code>high</code> (or <code>xhigh</code>) effort: a bug fix where edge cases matter benefits from more reasoning and verification.</li>
-</ol>
-<p>Other sensible combinations are fine if the reasoning matches the task’s difficulty.</p>
+<p>Each message re-sends the whole conversation, and the prompt cache lets the server reuse what it already processed. Each model has its own cache, so after a switch the new model must process the entire conversation from scratch: one slow, full-price turn. That is why it’s best to pick the model at the start of a task.</p>
 </div>
 </div>
 </div>
 </section>
-</section>
-<section id="hard" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
 <section id="question-15-scenario" class="level4 unnumbered unlisted">
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-15-scenario">Question 15 · Scenario</h4>
-<p>Sam keeps one Claude Code session open all day. He has used it for five different tasks, and Claude has read dozens of files. Now even short questions use a surprising share of his plan, and Claude seems to mix up details from earlier tasks. Explain both problems and give him three fixes.</p>
+<p>For each task, suggest a model alias and an effort level, and explain briefly:</p>
+<ol type="1">
+<li>Renaming a variable in three files.</li>
+<li>Tracking down a tricky bug that only happens after a user’s session times out.</li>
+</ol>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1706,6 +1706,53 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><code>sonnet</code> or <code>haiku</code> at <code>low</code> effort: a small, clear change you will review yourself; deep reasoning would waste time and tokens.</li>
+<li><code>opus</code> at <code>high</code> (or <code>xhigh</code>) effort: a bug fix where edge cases matter benefits from more reasoning and verification.</li>
+</ol>
+<p>Other sensible combinations are fine if the reasoning matches the task’s difficulty.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-16-explain-why" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-16-explain-why">Question 16 · Explain why</h4>
+<p>You spent twenty minutes on an approach that didn’t work. Why is <code>/rewind</code> back to the point before it often better than <code>/compact</code>?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>/rewind</code> removes the failed detour completely, so it no longer takes up the context window (less context rot) or costs tokens on every later message, and the conversation goes back to a point the prompt cache already holds, so the next reply is cheap. <code>/compact</code> keeps a summary of the detour and builds a new, shorter conversation that has to be processed again.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
+<section id="question-17-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-17-scenario">Question 17 · Scenario</h4>
+<p>Sam keeps one Claude Code session open all day. He has used it for five different tasks, and Claude has read dozens of files. Now even short questions use a surprising share of his plan, and Claude seems to mix up details from earlier tasks. Explain both problems and give him three fixes.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Every message sends the <em>whole</em> conversation again, so a huge context makes even a one-line question expensive. A context full of unrelated material also lowers quality: Claude can confuse or forget instructions from earlier tasks (the “kitchen sink” session).</p>
 <p>Fixes (any three):</p>
@@ -1720,54 +1767,9 @@ Suggested answer
 </div>
 </div>
 </section>
-<section id="question-16-compare" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-16-compare">Question 16 · Compare</h4>
+<section id="question-18-compare" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-18-compare">Question 18 · Compare</h4>
 <p>Maria wants faster answers while she makes many small edits. Compare three options: turning on fast mode, lowering effort to <code>low</code>, and switching to Haiku.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>Fast mode:</strong> same Opus quality, up to 2.5 times faster, but a higher price per token, and on a subscription it is paid only from usage credits.</li>
-<li><strong>Lower effort:</strong> less thinking, so faster and cheaper; fine for simple edits, but quality can drop on hard tasks. Costs no extra money.</li>
-<li><strong>Haiku:</strong> the fastest and cheapest model, good for simple tasks, but less capable, with a smaller (200,000-token) context window and no effort setting.</li>
-</ul>
-<p>For many small, simple edits on a student budget, lower effort (or Sonnet at low effort) is usually the best first choice; fast mode only if speed is worth extra money.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-17-scenario" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-17-scenario">Question 17 · Scenario</h4>
-<p>Maria is on a Pro plan. <code>/usage</code> shows “Total cost: $4.20” for her session. Does she owe Anthropic $4.20? Explain.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-19" class="callout-19-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>No.&nbsp;The session cost is an <em>estimate</em> that Claude Code computes from token counts at API list prices; it matters for API (pay-per-token) users. Her Pro usage is included in the subscription and counts against her plan limits, shown in the usage bars. She would pay extra only for things billed to usage credits (such as fast mode, or usage beyond her limits if she turned usage credits on).</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-18-long-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-18-long-answer">Question 18 · Long answer</h4>
-<p>Describe a cost-conscious way to build a medium-sized feature with Claude Code, from planning to finishing. Mention at least four techniques from this page.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1779,6 +1781,51 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Fast mode:</strong> same Opus quality, up to 2.5 times faster, but a higher price per token, and on a subscription it is paid only from usage credits.</li>
+<li><strong>Lower effort:</strong> less thinking, so faster and cheaper; fine for simple edits, but quality can drop on hard tasks. Costs no extra money.</li>
+<li><strong>Haiku:</strong> the fastest and cheapest model, good for simple tasks, but less capable, with a smaller (200,000-token) context window and no effort setting.</li>
+</ul>
+<p>For many small, simple edits on a student budget, lower effort (or Sonnet at low effort) is usually the best first choice; fast mode only if speed is worth extra money.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-19-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-19-scenario">Question 19 · Scenario</h4>
+<p>Maria is on a Pro plan. <code>/usage</code> shows “Total cost: $4.20” for her session. Does she owe Anthropic $4.20? Explain.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>No.&nbsp;The session cost is an <em>estimate</em> that Claude Code computes from token counts at API list prices; it matters for API (pay-per-token) users. Her Pro usage is included in the subscription and counts against her plan limits, shown in the usage bars. She would pay extra only for things billed to usage credits (such as fast mode, or usage beyond her limits if she turned usage credits on).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-20-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-20-long-answer">Question 20 · Long answer</h4>
+<p>Describe a cost-conscious way to build a medium-sized feature with Claude Code, from planning to finishing. Mention at least four techniques from this page.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A model answer:</p>
 <ol type="1">
@@ -1795,63 +1842,9 @@ Suggested answer
 </div>
 </div>
 </section>
-<section id="question-19-scenario" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-19-scenario">Question 19 · Scenario</h4>
+<section id="question-21-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-21-scenario">Question 21 · Scenario</h4>
 <p><code>/context</code> for Sam’s session shows that before he typed anything, a large part of the window was already used: his CLAUDE.md is 900 lines long and six MCP servers he never uses are connected. What should he change, and why does it matter?</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>Trim CLAUDE.md</strong> to the essentials (aim for under about 200 lines); move occasional instructions into skills or path-scoped rules. All of CLAUDE.md is loaded into every session.</li>
-<li><strong>Disable the unused MCP servers</strong> with <code>/mcp</code> (and prefer CLI tools such as <code>gh</code> where possible). Their tool names and instructions take space in every session.</li>
-</ul>
-<p>It matters because this start-up material is sent with every request: it costs usage on every message, leaves less room for real work, and a crowded context makes Claude follow instructions less reliably.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-20-true-or-false" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-20-true-or-false">Question 20 · True or false</h4>
-<p>If you edit your project’s CLAUDE.md in the middle of a session, Claude uses the new version from your very next message.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-22" class="callout-22-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>False.</strong> Claude Code reads CLAUDE.md when the session starts. The edit takes effect after <code>/clear</code>, <code>/compact</code>, or a restart. (The edit also doesn’t break the prompt cache, for the same reason: the running session isn’t using it yet.)</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="challenge" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="challenge">Challenge</h3>
-<section id="question-21-hands-on" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-21-hands-on">Question 21 · Hands-on</h4>
-<p>In a practice project:</p>
-<ol type="1">
-<li>Start Claude Code and run <code>/context</code> before typing anything. Note how much is already used and by what.</li>
-<li>Ask Claude to read and explain three files, then run <code>/context</code> again.</li>
-<li>Run <code>/compact</code> and check <code>/context</code> a third time.</li>
-<li>Run <code>/usage</code> (and press <code>d</code> and <code>w</code> if you are on a subscription).</li>
-</ol>
-<p>Write three sentences on what you learned about what fills the context window.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1863,6 +1856,60 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Trim CLAUDE.md</strong> to the essentials (aim for under about 200 lines); move occasional instructions into skills or path-scoped rules. All of CLAUDE.md is loaded into every session.</li>
+<li><strong>Disable the unused MCP servers</strong> with <code>/mcp</code> (and prefer CLI tools such as <code>gh</code> where possible). Their tool names and instructions take space in every session.</li>
+</ul>
+<p>It matters because this start-up material is sent with every request: it costs usage on every message, leaves less room for real work, and a crowded context makes Claude follow instructions less reliably.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-22-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-22-true-or-false">Question 22 · True or false</h4>
+<p>If you edit your project’s CLAUDE.md in the middle of a session, Claude uses the new version from your very next message.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>False.</strong> Claude Code reads CLAUDE.md when the session starts. The edit takes effect after <code>/clear</code>, <code>/compact</code>, or a restart. (The edit also doesn’t break the prompt cache, for the same reason: the running session isn’t using it yet.)</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="challenge" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="challenge">Challenge</h3>
+<section id="question-23-hands-on" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-23-hands-on">Question 23 · Hands-on</h4>
+<p>In a practice project:</p>
+<ol type="1">
+<li>Start Claude Code and run <code>/context</code> before typing anything. Note how much is already used and by what.</li>
+<li>Ask Claude to read and explain three files, then run <code>/context</code> again.</li>
+<li>Run <code>/compact</code> and check <code>/context</code> a third time.</li>
+<li>Run <code>/usage</code> (and press <code>d</code> and <code>w</code> if you are on a subscription).</li>
+</ol>
+<p>Write three sentences on what you learned about what fills the context window.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Your numbers will differ. Typically you will see that some space is used before you type anything (Claude Code’s instructions, tools, CLAUDE.md), that file reads grow the context quickly, and that <code>/compact</code> shrinks the conversation part while the start-up material remains. A good write-up connects this to habits: specific prompts, <code>/clear</code> between tasks, and subagents for heavy reading.</p>
 </div>
