@@ -996,6 +996,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">fall 2026</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-version-A-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm, Version A</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-version-B-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm, Version B</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-version-C-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm, Version C</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
       </ul>
   </li>
     </ul>
@@ -2573,6 +2602,112 @@ section.yr-link-target {
     if (document.visibilityState !== "visible") return;
     if (updateFound && canAutoReload()) { reload(); return; }
     if (Date.now() - lastCheck > 60 * 1000) check();
+  });
+})();
+</script>
+<!--
+yrHiddenParts-v001.html (Fall 2026). Included with include-after-body.
+
+Hides whole parts of the book unless the page address has ?more=KEY.
+  - PARTS below maps a part's title (as in _quarto.yml) to its KEY.
+  - Without the KEY: the part is removed from the sidebar, prev/next links to its pages are hidden, and its pages
+    show only "This page is not available."
+  - With the KEY (for example ?more=fall2026; quotes and several keys, ?more=fall2026,other, also work): the
+    part is shown, and every link to one of its pages gets the same ?more= added, so moving between its pages
+    keeps them visible. Nothing is saved in the browser: a page opened without ?more= hides the part again.
+  - Quarto cannot put a part after the appendices, so the part is listed in _quarto.yml as the last entry of
+    appendices:. This script moves it in the sidebar to the top level, after "Appendices".
+The pages of a hidden part should also have "search: false" (not in the search index) and start with
+<style class="yr-hidden-part-page">#quarto-document-content{visibility:hidden}</style>, so their text is not
+shown before this script runs. The text is still in the page's HTML: this hides it, it does not protect it.
+-->
+<script>
+(function () {
+  var PARTS = { "fall 2026": "fall2026" };
+
+  var params = new URLSearchParams(window.location.search);
+  var asked = (params.get("more") || "").toLowerCase().replace(/["']/g, "").split(",").map(function (s) {
+    return s.trim();
+  });
+
+  function pageName(href) {
+    try {
+      var p = new URL(href, window.location.href).pathname;
+      return p.substring(p.lastIndexOf("/") + 1) || "index.html";
+    } catch (e) { return ""; }
+  }
+  var here = pageName(window.location.href);
+
+  var sidebarSections = document.querySelectorAll("#quarto-sidebar li.sidebar-item-section");
+  Object.keys(PARTS).forEach(function (title) {
+    var key = PARTS[title];
+    var show = asked.indexOf(key) >= 0;
+
+    // the part's sidebar section, and the pages in it
+    var li = null;
+    sidebarSections.forEach(function (s) {
+      var t = s.querySelector(":scope > .sidebar-item-container .menu-text");
+      if (t && t.textContent.trim().toLowerCase() === title.toLowerCase()) { li = s; }
+    });
+    if (!li) { return; }
+    var pages = {};
+    li.querySelectorAll("a.sidebar-link[href]").forEach(function (a) {
+      pages[pageName(a.getAttribute("href"))] = true;
+    });
+
+    // move the part out of "Appendices" to the top level, right after it
+    var appendices = li.parentElement ? li.parentElement.closest("li.sidebar-item-section") : null;
+    if (appendices && appendices.parentElement) {
+      appendices.parentElement.insertBefore(li, appendices.nextSibling);
+      li.querySelectorAll("ul.sidebar-section.depth2").forEach(function (u) {
+        u.classList.remove("depth2");
+        u.classList.add("depth1");
+      });
+    }
+
+    var onPartPage = !!pages[here];
+    if (onPartPage) {   // the breadcrumb says "Appendices > fall 2026 > ..."; the part is not an appendix
+      document.querySelectorAll(".quarto-page-breadcrumbs .breadcrumb-item").forEach(function (b) {
+        if (b.textContent.trim().toLowerCase() === "appendices") { b.remove(); }
+      });
+    }
+    if (show) {
+      // keep ?more= on every link to a page of the part
+      document.querySelectorAll("a[href]").forEach(function (a) {
+        var h = a.getAttribute("href");
+        if (!h || h.charAt(0) === "#" || /^[a-z]+:/i.test(h) && h.indexOf(window.location.origin) !== 0) { return; }
+        if (!pages[pageName(h)]) { return; }
+        var u = new URL(h, window.location.href);
+        u.searchParams.set("more", params.get("more").replace(/["']/g, ""));
+        a.setAttribute("href", u.pathname.substring(u.pathname.lastIndexOf("/") + 1) + u.search + u.hash);
+      });
+      if (onPartPage) {
+        var c = document.getElementById("quarto-document-content");
+        if (c) { c.style.visibility = "visible"; }
+      }
+      return;
+    }
+
+    // hidden: remove the part from the sidebar, hide prev/next links to its pages, block its pages
+    li.style.display = "none";
+    document.querySelectorAll(".page-navigation a[href]").forEach(function (a) {
+      if (pages[pageName(a.getAttribute("href"))]) {
+        var box = a.closest(".nav-page") || a;
+        box.style.visibility = "hidden";
+      }
+    });
+    if (onPartPage) {
+      var main = document.getElementById("quarto-document-content");
+      if (main) {
+        main.innerHTML = "<p style=\"margin-top:3em\">This page is not available.</p>";
+        main.style.visibility = "visible";
+      }
+      ["TOC", "quarto-margin-sidebar"].forEach(function (id) {
+        var e = document.getElementById(id);
+        if (e) { e.style.display = "none"; }
+      });
+      document.title = "Not available";
+    }
   });
 })();
 </script>

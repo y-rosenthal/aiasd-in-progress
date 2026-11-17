@@ -19,6 +19,7 @@
 #   yrWaysTabs-v002.html         (Fall 2026: .yr-ways tabsets for several ways to do one thing; Show all after the last tab, Show as tabs in each way)
 #   yrLinkTargetHighlight-v001.html (Fall 2026: the target of a link to a section (page#id) gets an amber background that fades out)
 #   yrUpdateCheck-v001.html     (Fall 2026: when the published page is newer than the copy on screen, reload or show a Reload bar)
+#   yrHiddenParts-v001.html     (Fall 2026: hides a part, such as "fall 2026", unless the address has ?more=KEY; moves it after the appendices)
 
 project:
   type: book
@@ -31,6 +32,7 @@ project:
     - .nojekyll
     - taskApp-setupWorksheet-v001.xlsx   # download on the Class 10 page
     - taskApp-setupScreenshots-v001.docx # download on the Class 10 page (screenshot log template)
+    - f26/midterm/*   # the Fall 2026 midterm as given, and its answer keys (the "fall 2026" part)
 
 book:
   title: "AI Assisted Software Development"
@@ -211,6 +213,14 @@ book:
     #   000980-supabaseMcpServer-v001.qmd
   appendices:
     - 990010-references-v001.qmd 
+    # "fall 2026": hidden unless the address has ?more=fall2026 (yrHiddenParts-v001.html), which also shows it
+    # after "Appendices" in the sidebar (Quarto cannot put a part after the appendices). The pages are made by
+    # _yr/f26-midterm-exam-build/make_midterm_pages.py; they are unnumbered and not in the search index.
+    - part: "fall 2026"
+      chapters:
+        - f26-midterm-version-A-v001.qmd
+        - f26-midterm-version-B-v001.qmd
+        - f26-midterm-version-C-v001.qmd
 execute:
   error: true
   warning: true
@@ -237,6 +247,7 @@ format:
       - file: yrWaysTabs-v002.html
       - file: yrLinkTargetHighlight-v001.html
       - file: yrUpdateCheck-v001.html
+      - file: yrHiddenParts-v001.html
       # subjexts (yrS4) teaching overlay: coverage marks, notes and the panel on every page of the published
       # book. ONE LINE: uncomment the next line to turn it on, comment it out again to remove it completely.
       # The script comes from https://subjexts.github.io/, holds no key, fails silently, and does nothing if the
