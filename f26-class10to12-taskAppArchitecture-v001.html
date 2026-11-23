@@ -1,0 +1,2905 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Classes 10–12: Task App Architecture — Why Each Piece Is There – AI Assisted Software Development</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./f26/yudkowskyBook-v001.html" rel="next">
+<link href="./f26-class10to12-l-optionalTestsAndDocker-v001.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcbfc57d77cecfb36a223989b6e6cd2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="yrstuff-v001.js"></script>
+
+
+<link rel="stylesheet" href="yrStyles-main-v001.css">
+<link rel="stylesheet" href="yrStyles-f26-v001.css">
+<link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./f26-class10to12-00-startHere-v001.html">Class Meetings</a></li><li class="breadcrumb-item"><a href="./f26-class10to12-taskAppArchitecture-v001.html">Classes 10–12: Task App Architecture — Why Each Piece Is There</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">AI Assisted Software Development</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Website</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./subjexts-labels-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Table of contents by label</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Material for Midterm</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-material-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Material for Midterm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-practice-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm Practice Questions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-practice-hms-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm Practice Questions: How Modern Software Is Built in 2026</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-practice-taskApp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm Practice Questions: The Task App</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Class Meetings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-00-startHere-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12: The Task App, Start Here</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-updates-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12: Get the course’s latest changes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-a-installTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (A): Install the tools</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-b-getTheCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (B): Get the code onto your computer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-c-supabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (C): Supabase project and the front end</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-d-googleSignIn-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (D): Sign in with Google</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-e-openAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (E): OpenAI API key, with a $5 limit</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-f-stripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (F): Stripe, in test mode</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-g-database-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (G): Create the database</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-h-edgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (H): Deploy the Edge Functions and the Stripe webhook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-i-tryTheApp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (I): Try the app</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-j-saveToGithub-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (J): Save your work to GitHub</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-k-vercel-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (K): Put the app online with Vercel</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-l-optionalTestsAndDocker-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classes 10–12 (L): Optional: automated tests, and Docker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-class10to12-taskAppArchitecture-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Classes 10–12: Task App Architecture — Why Each Piece Is There</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26/yudkowskyBook-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005100-whatIsAiSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><yrchapternumber>2. </yrchapternumber> What Is AI Safety? Risks, Vocabulary, and Viewpoints</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005200-aiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><yrchapternumber>3. </yrchapternumber> AI Security Incidents in the News (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005250-moreAiSecurityIncidents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><yrchapternumber>4. </yrchapternumber> More AI Security Incidents: Hijacked Tools, Leaks, and Deepfakes (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005300-aiSafetyDebate-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><yrchapternumber>5. </yrchapternumber> Governments, Companies, and the AI Safety Debate (2026)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./005350-aiSafetyBeyondWashington-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><yrchapternumber>6. </yrchapternumber> The AI Safety Debate Beyond Washington (2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Today</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010100-whatAiCanDoToday-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><yrchapternumber>7. </yrchapternumber> What AI Can Do Today</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010200-howLlmsWork-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><yrchapternumber>8. </yrchapternumber> How Large Language Models Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010300-limitsRisksAndResponsibleUse-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><yrchapternumber>9. </yrchapternumber> Limits, Risks, and Responsible Use</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010350-legalAndEthicalQuestions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><yrchapternumber>10. </yrchapternumber> Legal and Ethical Questions About AI</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010400-aiAssistedDevelopment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><yrchapternumber>11. </yrchapternumber> AI-Assisted Development: From Chatbots to Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./010500-aiCodingToolsLandscape-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title"><yrchapternumber>12. </yrchapternumber> The AI Coding Tool Landscape (Fall 2026)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Command Line (Bash)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020100-whatIsTheCommandLine-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><yrchapternumber>13. </yrchapternumber> What Is the Command Line?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020200-installingAndOpeningBash-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><yrchapternumber>14. </yrchapternumber> Getting Bash on Your Computer (Mac and Windows)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020300-filesFoldersAndPaths-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><yrchapternumber>15. </yrchapternumber> Files, Folders, and Paths</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020400-navigatingPwdLsCd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title"><yrchapternumber>16. </yrchapternumber> Moving Around: pwd, ls, and cd</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020500-creatingAndDeleting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title"><yrchapternumber>17. </yrchapternumber> Creating, Copying, Moving, and Deleting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020600-echoRedirectionAndViewing-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title"><yrchapternumber>18. </yrchapternumber> Writing to Files: echo, &gt;, &gt;&gt;, and cat</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020700-environmentVariables-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title"><yrchapternumber>19. </yrchapternumber> Environment Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020800-singleVsDoubleQuotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title"><yrchapternumber>20. </yrchapternumber> Single Quotes vs. Double Quotes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./020900-gettingHelpAndShortcuts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title"><yrchapternumber>21. </yrchapternumber> Getting Help and Working Faster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021000-wildcardsPipesAndSearching-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title"><yrchapternumber>22. </yrchapternumber> Wildcards and Pipes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021020-searchingCountingAndSorting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title"><yrchapternumber>23. </yrchapternumber> Searching, Counting, and Sorting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021050-comparingFilesWithDiff-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title"><yrchapternumber>24. </yrchapternumber> Comparing Files with diff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./021100-bashScriptsAndAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title"><yrchapternumber>25. </yrchapternumber> Bash Scripts (and Using AI at the Command Line)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working on Your Own</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030100-whatIsVersionControl-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title"><yrchapternumber>26. </yrchapternumber> What Is Version Control? (Git vs. GitHub)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030200-installingAndConfiguringGit-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title"><yrchapternumber>27. </yrchapternumber> Installing and Configuring Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030300-yourFirstRepository-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><yrchapternumber>28. </yrchapternumber> Your First Repository: init, status, add, commit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030400-historyAndUndo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><yrchapternumber>29. </yrchapternumber> Viewing History and Undoing Changes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030500-gitignoreAndSecrets-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><yrchapternumber>30. </yrchapternumber> .gitignore and Keeping Secrets Out of Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030600-githubRemotes-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title"><yrchapternumber>31. </yrchapternumber> Putting Your Repository on GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./030700-cloneAndPull-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title"><yrchapternumber>32. </yrchapternumber> Cloning and Pulling (Working from Two Computers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">How the Web Works</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040100-browsersAndWebServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title"><yrchapternumber>33. </yrchapternumber> Browsers, Web Servers, and HTTP</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040200-urlsDomainNamesAndIpAddresses-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><yrchapternumber>34. </yrchapternumber> URLs, Domain Names, IP Addresses, and DNS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040300-htmlCssJavascriptAndDevTools-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><yrchapternumber>35. </yrchapternumber> HTML, CSS, JavaScript, and Browser Developer Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040400-whatHappensOnTheServer-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><yrchapternumber>36. </yrchapternumber> What Happens on the Server: Back Ends, Databases, and APIs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040500-webFrameworks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title"><yrchapternumber>37. </yrchapternumber> Web Frameworks and Meta-Frameworks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040600-apisKeysAndThirdPartyServices-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title"><yrchapternumber>38. </yrchapternumber> APIs, API Keys, and Third-Party Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040650-publishableAndSecretKeys-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><yrchapternumber>39. </yrchapternumber> Publishable and Secret Keys</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040675-publicKeyCryptography-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><yrchapternumber>40. </yrchapternumber> Public-Key Cryptography: How Key Pairs Work</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040700-hostingAndDeployment-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><yrchapternumber>41. </yrchapternumber> Hosting and Deployment: Getting Your App Online</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./040800-architectingWithAi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title"><yrchapternumber>42. </yrchapternumber> Putting It Together: Architecting a Web App with AI</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude: The Big Picture</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050100-claudeProductFamily-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title"><yrchapternumber>43. </yrchapternumber> The Claude Product Family</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050200-claudeModelsPlansAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title"><yrchapternumber>44. </yrchapternumber> Claude Models, Plans, and Usage Limits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./050300-navigatingClaudeDocs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title"><yrchapternumber>45. </yrchapternumber> Navigating the Claude Documentation (and Keeping Up)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Claude Code Essentials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060100-installingClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title"><yrchapternumber>46. </yrchapternumber> Installing Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060200-firstSession-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title"><yrchapternumber>47. </yrchapternumber> Your First Claude Code Session</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060300-howClaudeCodeWorks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title"><yrchapternumber>48. </yrchapternumber> How Claude Code Works: The Agentic Loop and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060400-slashCommands-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title"><yrchapternumber>49. </yrchapternumber> Essential Slash Commands</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060500-permissionsModesAndSafety-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><yrchapternumber>50. </yrchapternumber> Permissions, Modes, and Safety</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060550-sandbox-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><yrchapternumber>51. </yrchapternumber> The Sandbox: Limiting What Shell Commands Can Reach</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060600-claudeMdAndMemory-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><yrchapternumber>52. </yrchapternumber> CLAUDE.md and Memory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060700-dotClaudeFoldersAndSettings-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><yrchapternumber>53. </yrchapternumber> The .claude Folders and Settings Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060800-contextModelsEffortAndUsage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title"><yrchapternumber>54. </yrchapternumber> Context, Models, Effort, and Usage in Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./060900-workingEffectively-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title"><yrchapternumber>55. </yrchapternumber> Working Effectively with Claude Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./061000-claudeCodeBeyondTheTerminal-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title"><yrchapternumber>56. </yrchapternumber> Claude Code Beyond the Terminal</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Extending Claude Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070100-extendingOverview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title"><yrchapternumber>57. </yrchapternumber> Extending Claude Code: The Big Picture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070200-skills-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title"><yrchapternumber>58. </yrchapternumber> Skills</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070300-mcpServers-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title"><yrchapternumber>59. </yrchapternumber> MCP Servers: Connecting Claude to Other Tools and Services</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070400-browserAutomationMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title"><yrchapternumber>60. </yrchapternumber> Hands-On: Letting Claude Use a Browser (Playwright MCP and Chrome)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070500-supabaseMcp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title"><yrchapternumber>61. </yrchapternumber> Hands-On: The Supabase MCP Server</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070600-hooks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title"><yrchapternumber>62. </yrchapternumber> Hooks: Running Your Own Commands Automatically</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070700-subagents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title"><yrchapternumber>63. </yrchapternumber> Subagents (and Running Agents in Parallel)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070800-plugins-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title"><yrchapternumber>64. </yrchapternumber> Plugins and Marketplaces</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./070900-mods-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title"><yrchapternumber>65. </yrchapternumber> Mods: Customizing Claude Code Itself</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub: Working with Others</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080100-branchesAndMerging-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title"><yrchapternumber>66. </yrchapternumber> Branches and Merging</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080200-mergeConflicts-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title"><yrchapternumber>67. </yrchapternumber> Merge Conflicts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080300-sharedRepositoriesAndForks-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title"><yrchapternumber>68. </yrchapternumber> Sharing a Repository: Collaborators and Forks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080400-pullRequestsAndCodeReview-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title"><yrchapternumber>69. </yrchapternumber> Pull Requests and Code Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080450-aiInThePullRequestWorkflow-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title"><yrchapternumber>70. </yrchapternumber> AI in the Pull Request Workflow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./080500-worktreesAndParallelAgents-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title"><yrchapternumber>71. </yrchapternumber> Git Worktrees and Parallel AI Agents</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Building a ‘full-stack’ web application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001000-tutorial-supabase-nextjs-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title"><yrchapternumber>72. </yrchapternumber> Tutorial - intro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001007-tutorial-supabase-projectArchitecture-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><yrchapternumber>73. </yrchapternumber> Project Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001008-tutorial-withClaudeCode-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">74</span>&nbsp; <span class="chapter-title"><yrchapternumber>74. </yrchapternumber> Following the Tutorial, with Claude Code for Help</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001100-tutorial-installNodeNpm-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">75</span>&nbsp; <span class="chapter-title"><yrchapternumber>75. </yrchapternumber> Step 0: Install Node.js and npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001110-tutorial-cloneRepo-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">76</span>&nbsp; <span class="chapter-title"><yrchapternumber>76. </yrchapternumber> Step 1: Fork the repo and clone it</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001120-tutorial-installThePackages-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">77</span>&nbsp; <span class="chapter-title"><yrchapternumber>77. </yrchapternumber> Step 2: Installing the Node.js packages with npm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001130-tutorial-envFiles-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">78</span>&nbsp; <span class="chapter-title"><yrchapternumber>78. </yrchapternumber> Step 3: Storing your private info (env files, etc)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001140-tutorial-previewFrontEnd-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">79</span>&nbsp; <span class="chapter-title"><yrchapternumber>79. </yrchapternumber> Step 4 - Optional: Preview the Frontend</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001150-tutorial-createSupabaseProject-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">80</span>&nbsp; <span class="chapter-title"><yrchapternumber>80. </yrchapternumber> Step 5: Setup Supabase</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001155-tutorial-supabaseCli-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">81</span>&nbsp; <span class="chapter-title"><yrchapternumber>81. </yrchapternumber> Step 5a: Supabase CLI command</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001160-tutorial-googleOauth-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">82</span>&nbsp; <span class="chapter-title"><yrchapternumber>82. </yrchapternumber> Step 6: setup authentication (Google OAuth)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001170-tutorial-openAiApi-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">83</span>&nbsp; <span class="chapter-title"><yrchapternumber>83. </yrchapternumber> Step 7: Set Up OpenAI API</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001180-tutorial-setupStripe-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">84</span>&nbsp; <span class="chapter-title"><yrchapternumber>84. </yrchapternumber> Step 8: Set Up Stripe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001190-tutorial-setupSupabaseDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">85</span>&nbsp; <span class="chapter-title"><yrchapternumber>85. </yrchapternumber> Step 9: Set Up Supabase Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001200-tutorial-setupSupabaseStorage-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">86</span>&nbsp; <span class="chapter-title"><yrchapternumber>86. </yrchapternumber> Step 10: Set Up Supabase Storage Bucket</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001210-tutorial-deploySupabaseEdgeFunctions-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">87</span>&nbsp; <span class="chapter-title"><yrchapternumber>87. </yrchapternumber> Step 11: Deploy Supabase Edge Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001220-tutorial-runTheApplication-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">88</span>&nbsp; <span class="chapter-title"><yrchapternumber>88. </yrchapternumber> Step 12: Run the Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001230-tutorial-deployToProduction-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">89</span>&nbsp; <span class="chapter-title"><yrchapternumber>89. </yrchapternumber> Step 13: Deploy to Production</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001240-tutorial-extendTheFunctionality-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">90</span>&nbsp; <span class="chapter-title"><yrchapternumber>90. </yrchapternumber> Step 14: Extending the functionality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001250-tutorial-automatedTestingAndTroubleshooting-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">91</span>&nbsp; <span class="chapter-title"><yrchapternumber>91. </yrchapternumber> Step 15: Automated Testing and Troubleshooting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001300-assignment-changeTheDatabase-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">92</span>&nbsp; <span class="chapter-title"><yrchapternumber>92. </yrchapternumber> Project 2: Change the Task App's Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001310-assignment-buildYourOwnApp-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">93</span>&nbsp; <span class="chapter-title"><yrchapternumber>93. </yrchapternumber> Project 3: Build Your Own App</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ignore this - in progress work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000010-topics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">94</span>&nbsp; <span class="chapter-title"><yrchapternumber>94. </yrchapternumber> TOPICS (ignore this section - it is just for me to develop the book)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./000500-htmlCssJavascript-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">95</span>&nbsp; <span class="chapter-title"><yrchapternumber>95. </yrchapternumber> Overview of HTML, CSS, JavaScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./099999-llmsForDataAnalytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">96</span>&nbsp; <span class="chapter-title"><yrchapternumber>96. </yrchapternumber> Using LLMs to Help With Data Analytics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./900010-codeMetrics-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">97</span>&nbsp; <span class="chapter-title"><yrchapternumber>97. </yrchapternumber> Measures of well designed programs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./990010-references-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title"><yrchapternumber>A. </yrchapternumber> references</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">fall 2026</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-version-A-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm, Version A</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-version-B-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm, Version B</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./f26-midterm-version-C-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm, Version C</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#whole-app" id="toc-whole-app" class="nav-link active" data-scroll-target="#whole-app">The whole app in one picture</a></li>
+  <li><a href="#worksheet-rows" id="toc-worksheet-rows" class="nav-link" data-scroll-target="#worksheet-rows">The worksheet, row by row</a>
+  <ul class="collapse">
+  <li><a href="#your-computer" id="toc-your-computer" class="nav-link" data-scroll-target="#your-computer">Your computer</a></li>
+  <li><a href="#github" id="toc-github" class="nav-link" data-scroll-target="#github">GitHub</a></li>
+  <li><a href="#supabase-database-login-file-storage-edge-functions" id="toc-supabase-database-login-file-storage-edge-functions" class="nav-link" data-scroll-target="#supabase-database-login-file-storage-edge-functions">Supabase (database, login, file storage, Edge Functions)</a></li>
+  <li><a href="#google-sign-in-with-google-i.e.-oauth" id="toc-google-sign-in-with-google-i.e.-oauth" class="nav-link" data-scroll-target="#google-sign-in-with-google-i.e.-oauth">Google (“Sign in with Google”, i.e.&nbsp;OAuth)</a></li>
+  <li><a href="#openai-ai-task-labels-about-5-of-prepaid-credit" id="toc-openai-ai-task-labels-about-5-of-prepaid-credit" class="nav-link" data-scroll-target="#openai-ai-task-labels-about-5-of-prepaid-credit">OpenAI (AI task labels; about $5 of prepaid credit)</a></li>
+  <li><a href="#stripe-payments-test-mode-only-no-real-money" id="toc-stripe-payments-test-mode-only-no-real-money" class="nav-link" data-scroll-target="#stripe-payments-test-mode-only-no-real-money">Stripe (payments, test mode only: no real money)</a></li>
+  <li><a href="#vercel-putting-the-app-online-at-the-end" id="toc-vercel-putting-the-app-online-at-the-end" class="nav-link" data-scroll-target="#vercel-putting-the-app-online-at-the-end">Vercel (putting the app online, at the end)</a></li>
+  </ul></li>
+  <li><a href="#commands" id="toc-commands" class="nav-link" data-scroll-target="#commands">The commands, in worksheet order</a>
+  <ul class="collapse">
+  <li><a href="#copy-your-fork-to-your-computer" id="toc-copy-your-fork-to-your-computer" class="nav-link" data-scroll-target="#copy-your-fork-to-your-computer">1. Copy your fork to your computer</a></li>
+  <li><a href="#the-file-task-app.env.local" id="toc-the-file-task-app.env.local" class="nav-link" data-scroll-target="#the-file-task-app.env.local">2. The file task-app/.env.local</a></li>
+  <li><a href="#terminal-commands-for-the-app" id="toc-terminal-commands-for-the-app" class="nav-link" data-scroll-target="#terminal-commands-for-the-app">3. Terminal commands for the app</a></li>
+  <li><a href="#one-sql-line-in-the-supabase-sql-editor" id="toc-one-sql-line-in-the-supabase-sql-editor" class="nav-link" data-scroll-target="#one-sql-line-in-the-supabase-sql-editor">4. One SQL line, in the Supabase SQL Editor</a></li>
+  <li><a href="#addresses-you-paste-into-websites" id="toc-addresses-you-paste-into-websites" class="nav-link" data-scroll-target="#addresses-you-paste-into-websites">5. Addresses you paste into websites</a></li>
+  <li><a href="#after-you-deploy-to-vercel" id="toc-after-you-deploy-to-vercel" class="nav-link" data-scroll-target="#after-you-deploy-to-vercel">6. After you deploy to Vercel</a></li>
+  <li><a href="#optional-task-app.env.test.local-for-the-automated-tests" id="toc-optional-task-app.env.test.local-for-the-automated-tests" class="nav-link" data-scroll-target="#optional-task-app.env.test.local-for-the-automated-tests">7. Optional: task-app/.env.test.local for the automated tests</a></li>
+  <li><a href="#other-commands-from-the-step-pages-not-on-the-worksheet" id="toc-other-commands-from-the-step-pages-not-on-the-worksheet" class="nav-link" data-scroll-target="#other-commands-from-the-step-pages-not-on-the-worksheet">Other commands from the step pages (not on the worksheet)</a></li>
+  </ul></li>
+  <li><a href="#two-keys" id="toc-two-keys" class="nav-link" data-scroll-target="#two-keys">Why every service gives you two keys</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
+  <li><a href="#practice-questions" id="toc-practice-questions" class="nav-link" data-scroll-target="#practice-questions">Practice Questions</a>
+  <ul class="collapse">
+  <li><a href="#easy" id="toc-easy" class="nav-link" data-scroll-target="#easy">Easy</a></li>
+  <li><a href="#medium" id="toc-medium" class="nav-link" data-scroll-target="#medium">Medium</a></li>
+  <li><a href="#hard" id="toc-hard" class="nav-link" data-scroll-target="#hard">Hard</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./f26-class10to12-00-startHere-v001.html">Class Meetings</a></li><li class="breadcrumb-item"><a href="./f26-class10to12-taskAppArchitecture-v001.html">Classes 10–12: Task App Architecture — Why Each Piece Is There</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Classes 10–12: Task App Architecture — Why Each Piece Is There</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="yr-stepnav">
+<p><a href="./f26-class10to12-00-startHere-v001.html#the-steps" target="_self">All steps</a> · <a href="./f26-class10to12-00-startHere-v001.html" target="_self">Start here</a></p>
+</div>
+<p>This page explains <strong>why</strong> the task app is set up the way it is. It walks through every entry on the setup worksheet and every command you run, in worksheet order, and says what each one is for. It does not repeat the setup steps: for what to click and type, follow the step pages, starting at <a href="./f26-class10to12-00-startHere-v001.html">Start here</a>.</p>
+<p>Created November 17, 2026. The Supabase, Stripe, Google, and OpenAI facts on this page were checked against each service’s official documentation on that date.</p>
+<p><a href="taskApp-setupWorksheet-v001.xlsx" download="">Download the Task App Setup Worksheet (Excel)</a></p>
+<section id="whole-app" class="level2">
+<h2 class="anchored" data-anchor-id="whole-app">The whole app in one picture</h2>
+<p>The app has four homes. The <strong>browser</strong> shows the pages. <strong>Vercel</strong> serves those pages once the app is online (on your computer, <code>npm run dev</code> serves them instead). <strong>Supabase</strong> holds the database, the logins, the image storage, and the Edge Functions. <strong>Google, OpenAI, and Stripe</strong> each do one job: sign-in, AI labels, and payments. Nothing runs on your computer except the pages while you develop them.</p>
+<pre><code>BROWSER — the pages you see (the Next.js app)
+   │  1. tasks, sign-in, images
+   ▼
+SUPABASE (your project) — database · Auth · Storage · Edge Functions
+   │  2. Edge Functions call OpenAI (labels) and Stripe (checkout)
+   ▼
+OPENAI · STRIPE · GOOGLE (sign-in)
+   │
+   │  3. Stripe calls the stripe-webhook function back
+   ▼
+SUPABASE (stripe-webhook) — the database marks the user Premium, or not</code></pre>
+<p>Three kinds of requests travel through this picture:</p>
+<ol type="1">
+<li><strong>The browser talks to Supabase directly</strong> for everyday data: reading and changing tasks, signing in, and storing attached images. It sends the <strong>publishable key</strong> and the user’s login token, and the database’s <strong>Row Level Security</strong> rules decide which rows that user may touch. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</li>
+<li><strong>The browser asks an Edge Function</strong> for any job that needs a secret key: the AI label and the Upgrade checkout. The function checks the login, then uses its secret key on Supabase’s servers, where nobody can see it. See <a href="./001007-tutorial-supabase-projectArchitecture-v001.html#edge-functions">Project Architecture</a>.</li>
+<li><strong>Stripe calls the app back.</strong> When a payment succeeds or a subscription ends, Stripe sends a message to the <code>stripe-webhook</code> function, which checks Stripe’s signature and updates the user. See <a href="./f26-class10to12-h-edgeFunctions-v001.html">Step H</a>.</li>
+</ol>
+<p>One rule explains most of the setup: <strong>a secret key must never reach the browser</strong>, because anything in a web page can be read — and changed — by whoever opens it. So every secret lives on a server (Supabase), and the only keys in the browser are the ones made to be public. The full reasoning is in <a href="./040650-publishableAndSecretKeys-v001.html">Publishable and Secret Keys</a>. This app has no Next.js API routes of its own: the three Edge Functions are the only server-side jobs the app needs beyond serving its pages.</p>
+</section>
+<section id="worksheet-rows" class="level2">
+<h2 class="anchored" data-anchor-id="worksheet-rows">The worksheet, row by row</h2>
+<p>The worksheet’s <strong>My Info</strong> sheet has one row for each thing you record, in the order below. Yellow cells are values you type. Gray cells are filled in for you by formulas. Rows marked SECRET hold values that must never be shared, posted, or committed to Git. Each group links to the step page that tells you how to fill it in.</p>
+<section id="your-computer" class="level3">
+<h3 class="anchored" data-anchor-id="your-computer">Your computer</h3>
+<p><strong>Your computer: Mac, Windows or Linux.</strong> The step pages show three tabs for anything that differs by computer. This row tells you which tab to follow. See <a href="./f26-class10to12-00-startHere-v001.html">Start here</a>.</p>
+<p><strong>The app’s code folder (task-app) on your computer.</strong> Every <code>npx</code> and <code>npm</code> command must run from inside this folder, because that is where the app’s code and its installed tools live. The row records the folder so you always know where to <code>cd</code> first. See <a href="./f26-class10to12-b-getTheCode-v001.html">Step B</a>.</p>
+</section>
+<section id="github" class="level3">
+<h3 class="anchored" data-anchor-id="github">GitHub</h3>
+<p><strong>GitHub username.</strong> Your username is part of your fork’s web address, so the worksheet builds the address from it. See <a href="./f26-class10to12-b-getTheCode-v001.html">Step B</a>.</p>
+<p><strong>Your fork’s address (filled in for you).</strong> A <strong>fork</strong> is your own copy of the course’s code, in your GitHub account. The address is built as <code>https://github.com/&lt;your username&gt;/task-app</code>, which is why your fork must be named <code>task-app</code>: any other name would make this built address wrong. The <code>git clone</code> command copies the fork onto your computer. See <a href="./f26-class10to12-b-getTheCode-v001.html">Step B</a>.</p>
+</section>
+<section id="supabase-database-login-file-storage-edge-functions" class="level3">
+<h3 class="anchored" data-anchor-id="supabase-database-login-file-storage-edge-functions">Supabase (database, login, file storage, Edge Functions)</h3>
+<p><strong>Email you use to sign in to Supabase.</strong> This only records which account owns the project, so you sign in with the right one later. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</p>
+<p><strong>Supabase project name.</strong> A <strong>project</strong> is one complete back end for one app: its own database, users, keys, and web address. The name is only a label, so you can find the project in the dashboard. You reuse the same name for the Google and OpenAI projects, so the three stay visibly connected. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</p>
+<p><strong>Database password (SECRET).</strong> This is the password of the PostgreSQL database itself. The app never uses it: the app talks to Supabase with API keys. Only tools that connect to the database directly may ask for it — the Supabase CLI, when you link the project or push the database changes. Anyone who has it can read and change all of your data. It is shown only when you create the project, so the worksheet is the one place you keep it. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</p>
+<p><strong>Project ref (Project ID).</strong> The ref is the project’s unique ID: 20 letters, and the first part of the project URL. The CLI uses it to know which project a folder belongs to, and the worksheet builds four addresses from it. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</p>
+<p><strong>Project URL (filled in for you).</strong> This is the web address of your back end: <code>https://&lt;ref&gt;.supabase.co</code>. The app sends its data requests there, so the address goes in <code>.env.local</code> and, later, in Vercel. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</p>
+<p><strong>Publishable key.</strong> This key identifies your project to Supabase and may appear in web pages: on its own it can only do what the Row Level Security rules allow, so one user cannot reach another user’s tasks with it. It goes in <code>.env.local</code> and in Vercel, because the browser code needs it. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a> and <a href="./040650-publishableAndSecretKeys-v001.html#publishable-vs-secret">Publishable and Secret Keys</a>.</p>
+<p><strong>Secret key. Only for the optional tests. (SECRET)</strong> This key skips all Row Level Security rules, so it must never leave the server side and must never go in <code>.env.local</code> or Vercel. Supabase hands it to the Edge Functions by itself — you never enter it for them. Its only manual use is <code>.env.test.local</code>, where the automated tests need it to set up and check test data without the security rules getting in the way. See <a href="./f26-class10to12-l-optionalTestsAndDocker-v001.html">Step L</a> and <a href="./040650-publishableAndSecretKeys-v001.html#task-app-keys">Publishable and Secret Keys</a>.</p>
+<p><strong>Google sign-in (OAuth) callback URL (filled in for you).</strong> When Google finishes signing a user in, it sends the browser back to this address — a Supabase page that receives Google’s answer. The worksheet builds it from the Project URL; Supabase shows the same address on the Google provider page. You paste it into Google as an authorized redirect URI. See <a href="./f26-class10to12-d-googleSignIn-v001.html">Step D</a>.</p>
+<p><strong>Stripe webhook URL (filled in for you).</strong> This is the web address of the <code>stripe-webhook</code> Edge Function. You paste it into Stripe so Stripe knows where to send payment messages. It belongs to your Supabase project, not to the app’s address, so deploying the app to Vercel never moves it. See <a href="./f26-class10to12-h-edgeFunctions-v001.html">Step H</a>.</p>
+<p><strong>Your project’s dashboard (filled in for you).</strong> The dashboard address, built from the project ref. It is only a bookmark: the place you return to for settings, logs, and the SQL editor.</p>
+</section>
+<section id="google-sign-in-with-google-i.e.-oauth" class="level3">
+<h3 class="anchored" data-anchor-id="google-sign-in-with-google-i.e.-oauth">Google (“Sign in with Google”, i.e.&nbsp;OAuth)</h3>
+<p><strong>Google account you use for Google Cloud.</strong> This only records which account owns the Google Cloud project, so you sign in with the right one. See <a href="./f26-class10to12-d-googleSignIn-v001.html">Step D</a>.</p>
+<p><strong>Google Cloud project name.</strong> Google groups its settings into projects, just as Supabase does. The name is only a label. The app never uses the name or Google’s Project ID. See <a href="./f26-class10to12-d-googleSignIn-v001.html">Step D</a>.</p>
+<p><strong>OAuth Client ID.</strong> This identifies your app to Google: when Supabase sends a user to Google’s sign-in page, the Client ID says which app is asking. It travels in the sign-in page’s address, so it is not a secret — but it lives in Supabase’s settings, not in <code>.env.local</code>, because Supabase (not the browser) is the one that presents it to Google. See <a href="./f26-class10to12-d-googleSignIn-v001.html">Step D</a>.</p>
+<p><strong>OAuth Client secret (SECRET).</strong> This proves to Google that a request really comes from your app: when Supabase exchanges Google’s one-time code for the user’s name and email, it presents this secret. It is shown in full only when you create the client, so copy it at once. It lives in Supabase’s Google settings, never in the browser. See <a href="./f26-class10to12-d-googleSignIn-v001.html">Step D</a>.</p>
+</section>
+<section id="openai-ai-task-labels-about-5-of-prepaid-credit" class="level3">
+<h3 class="anchored" data-anchor-id="openai-ai-task-labels-about-5-of-prepaid-credit">OpenAI (AI task labels; about $5 of prepaid credit)</h3>
+<p><strong>Email you use to sign in to OpenAI.</strong> This only records which account owns the API key and the credit. Note that the OpenAI API platform is separate from a ChatGPT subscription: paying for ChatGPT does not buy API credit. See <a href="./f26-class10to12-e-openAi-v001.html">Step E</a>.</p>
+<p><strong>Credit you bought ($).</strong> The API is prepaid: you buy credit first, and the balance falls as the app uses it. The row records your budget. Keep auto-reload OFF, so OpenAI never charges your card again on its own. See <a href="./f26-class10to12-e-openAi-v001.html">Step E</a>.</p>
+<p><strong>OpenAI project name.</strong> A project keeps one app’s key and spending separate from anything else on the account. If the key ever leaks, the project name tells you which key to delete. See <a href="./f26-class10to12-e-openAi-v001.html">Step E</a>.</p>
+<p><strong>Monthly spend limit you set for the project ($).</strong> A second lock, for this project only: with <strong>Enforce a hard limit</strong> on, OpenAI refuses requests once the project reaches the limit, instead of only sending a warning email. The $5 of credit already caps spending; this limit still protects you if you ever buy more credit or turn auto-reload on by mistake. See <a href="./f26-class10to12-e-openAi-v001.html">Step E</a>.</p>
+<p><strong>OpenAI API key (SECRET).</strong> This key is the password the <code>create-task-with-ai</code> function presents to OpenAI when it asks for a label. It is shown only once, at creation. It goes to Supabase as a secret — never in <code>.env.local</code>, never in browser code — because anyone holding it can spend your credit. See <a href="./f26-class10to12-e-openAi-v001.html">Step E</a>.</p>
+</section>
+<section id="stripe-payments-test-mode-only-no-real-money" class="level3">
+<h3 class="anchored" data-anchor-id="stripe-payments-test-mode-only-no-real-money">Stripe (payments, test mode only: no real money)</h3>
+<p><strong>Email you use to sign in to Stripe.</strong> This only records which account owns the test-mode store. See <a href="./f26-class10to12-f-stripe-v001.html">Step F</a>.</p>
+<p><strong>Publishable key (test mode).</strong> Stripe’s publishable key is made to be seen in web pages: it identifies your account to Stripe’s card form. This app does not use it anywhere, because it sends users to Stripe’s own checkout page instead of showing a card form itself. Record it anyway: it belongs with the account’s keys, and you would need it if the app ever showed the payment form inside its own pages. See <a href="./f26-class10to12-f-stripe-v001.html">Step F</a> and <a href="./040650-publishableAndSecretKeys-v001.html#stripe-publishable">Publishable and Secret Keys</a>.</p>
+<p><strong>Secret key (test mode) (SECRET).</strong> This key can do anything in your Stripe account, so it only ever goes to servers. In this app it lives in two server places: as a Supabase secret, where the Edge Functions read it to create checkout pages and open the customer portal; and in Supabase Vault, where the database reads it to create a Stripe customer record for each new user. The automated tests read it from <code>.env.test.local</code>. See <a href="./f26-class10to12-f-stripe-v001.html">Step F</a> and <a href="./040650-publishableAndSecretKeys-v001.html#task-app-keys">Publishable and Secret Keys</a>.</p>
+<p><strong>Product name.</strong> A <strong>product</strong> is what you sell — here, the Premium subscription. The name shows on the checkout page, so the buyer sees what they are paying for. See <a href="./f26-class10to12-f-stripe-v001.html">Step F</a>.</p>
+<p><strong>Price ID of the monthly price.</strong> A <strong>price</strong> says how much and how often: one product can have several prices. When a user upgrades, the app asks Stripe for a subscription to one price, by its ID — which is why the app needs the price ID, not the product’s ID. A price ID is not secret, but it stays on the server as a Supabase secret so that nobody in the browser can change which price is charged. See <a href="./f26-class10to12-f-stripe-v001.html">Step F</a>.</p>
+<p><strong>Webhook signing secret (SECRET).</strong> Stripe signs every webhook message with this secret, and the <code>stripe-webhook</code> function checks the signature before believing the message. Without that check, anyone could send a fake “payment succeeded” message and get Premium for nothing. The secret belongs to one webhook endpoint, so it is created when you create the endpoint, and it goes to Supabase as a secret. See <a href="./f26-class10to12-h-edgeFunctions-v001.html">Step H</a>.</p>
+</section>
+<section id="vercel-putting-the-app-online-at-the-end" class="level3">
+<h3 class="anchored" data-anchor-id="vercel-putting-the-app-online-at-the-end">Vercel (putting the app online, at the end)</h3>
+<p><strong>How you sign in to Vercel.</strong> Signing in with GitHub connects Vercel to your repositories, so Vercel can import the <code>task-app</code> repo and deploy a new version every time you push. See <a href="./f26-class10to12-k-vercel-v001.html">Step K</a>.</p>
+<p><strong>Your app’s address on Vercel.</strong> The public address of the deployed app, given by Vercel after the first deployment. Supabase and Google must both learn it: Supabase’s Site URL and redirect list, and Google’s authorized origins, only send users back to addresses they list. See <a href="./f26-class10to12-k-vercel-v001.html">Step K</a>.</p>
+</section>
+</section>
+<section id="commands" class="level2">
+<h2 class="anchored" data-anchor-id="commands">The commands, in worksheet order</h2>
+<p>The worksheet’s <strong>Commands</strong> sheet builds the exact lines you copy: the settings-file lines, the terminal commands, one SQL line, and the addresses you paste into websites. A line shows “(fill in … first)” until the values it needs are on My Info. Below, <code>...</code> stands for your value: copy the real line from the worksheet, never from this page. Every terminal command runs from inside the <code>task-app</code> folder — start with the <code>cd</code> line — because <code>npx</code> runs the Supabase CLI from that folder’s installed packages. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</p>
+<section id="copy-your-fork-to-your-computer" class="level3">
+<h3 class="anchored" data-anchor-id="copy-your-fork-to-your-computer">1. Copy your fork to your computer</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YOUR-USERNAME/task-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Clone</strong> means: download a copy of the repository, including its history, and remember where it came from — so later <code>git push</code> knows where to upload. The copy lands in a new <code>task-app</code> folder. See <a href="./f26-class10to12-b-getTheCode-v001.html">Step B</a>.</p>
+</section>
+<section id="the-file-task-app.env.local" class="level3">
+<h3 class="anchored" data-anchor-id="the-file-task-app.env.local">2. The file task-app/.env.local</h3>
+<p><code>.env.local</code> is a settings file on your computer. Settings differ for every student, so they cannot be written into the shared code. The app reads them when it starts, and Git never uploads the file: the project’s <code>.gitignore</code> excludes it. You create it by copying the template <code>.env.example</code> (which holds only fake values, safe to share), then replace the two lines with the worksheet’s lines. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a> and <a href="./001130-tutorial-envFiles-v001.html">Step 3: Storing your private info (env files, etc)</a>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_URL</span><span class="op">=</span><span class="st">"..."</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</span><span class="op">=</span><span class="st">"..."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Line 1 tells the app where its back end lives. Line 2 is the key the browser code presents with its requests. Both names start with <code>NEXT_PUBLIC_</code>, which tells Next.js to build the values into the web pages every visitor’s browser downloads. That is right for these two values — the address and the publishable key are meant to be public — and it is why a secret key must never get a <code>NEXT_PUBLIC_</code> name. See <a href="./040600-apisKeysAndThirdPartyServices-v001.html">APIs, API Keys, and Third-Party Services</a>.</p>
+</section>
+<section id="terminal-commands-for-the-app" class="level3">
+<h3 class="anchored" data-anchor-id="terminal-commands-for-the-app">3. Terminal commands for the app</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/full-stack-demo-app/task-app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each new terminal starts in <code>full-stack-demo-app</code>, one folder above the code. This line moves into <code>task-app</code> first, so the commands that follow find the project. It is harmless if you are already there; it just makes sure.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase login</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This proves to Supabase who you are: it opens your browser, you sign in, and the CLI keeps a login token on your computer, so the commands that follow act on your account without asking again. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase link <span class="at">--project-ref</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This records which Supabase project this folder belongs to. Later commands — pushing the database, setting secrets, deploying functions — then go to your project without you naming it each time. Supabase may ask for the database password here, because linking connects to the project itself. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase db push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This applies the project’s <strong>migrations</strong>: the files in <code>supabase/migrations</code> that create the tables (profiles, tasks, usage tracking), the security rules, the <code>task-attachments</code> storage bucket for images, and the Stripe connection. “Push” means upload: the files describe the database, and this command makes the hosted database match them. See <a href="./f26-class10to12-g-database-v001.html">Step G</a>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set OPENAI_API_KEY=...</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set STRIPE_SECRET_KEY=...</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set STRIPE_PRICE_ID=...</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase secrets set STRIPE_WEBHOOK_SECRET=...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each line stores one named <strong>secret</strong> on Supabase’s servers. The Edge Functions read secrets by name when they run; the values never appear in the code or on GitHub. There is one line per value the functions need: the OpenAI key for labels, the Stripe secret key and price ID for checkout, and the webhook signing secret for checking Stripe’s messages. Note that the Supabase secret key has no line here: Supabase hands it to the functions by itself. A secret you set is available to the deployed functions without redeploying them. See <a href="./f26-class10to12-e-openAi-v001.html">Step E</a>, <a href="./f26-class10to12-f-stripe-v001.html">Step F</a>, and <a href="./f26-class10to12-h-edgeFunctions-v001.html">Step H</a>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-task-with-ai</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy create-stripe-session</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> supabase functions deploy stripe-webhook <span class="at">--no-verify-jwt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each line uploads one <strong>Edge Function</strong> — a small program that runs on Supabase’s servers, waits to be called, does one job, and stops — named by its folder in <code>supabase/functions</code>. <code>create-task-with-ai</code> saves a new task and asks OpenAI for its label. <code>create-stripe-session</code> checks the user’s login and asks Stripe for a checkout page at your price. <code>stripe-webhook</code> receives Stripe’s payment messages. The last line carries <code>--no-verify-jwt</code>: normally Supabase checks every call for a valid user login token before the function runs, but Stripe has no login token, so the check is turned off for this function — and the function checks Stripe’s signature instead. See <a href="./f26-class10to12-h-edgeFunctions-v001.html">Step H</a> and <a href="./001007-tutorial-supabase-projectArchitecture-v001.html#edge-functions">Project Architecture</a>.</p>
+</section>
+<section id="one-sql-line-in-the-supabase-sql-editor" class="level3">
+<h3 class="anchored" data-anchor-id="one-sql-line-in-the-supabase-sql-editor">4. One SQL line, in the Supabase SQL Editor</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">select</span> vault<span class="ex">.create_secret</span><span class="er">(</span><span class="st">'...'</span><span class="ex">,</span> <span class="st">'stripe'</span><span class="kw">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This stores the Stripe secret key a second time, in <strong>Supabase Vault</strong>: an encrypted store for secrets inside your database. The Edge Functions read the key from their secrets; the database reads it from Vault to create a Stripe customer record for each new user. That is also why Step C says not to sign in to the app before Step F is finished: creating a user triggers the Stripe-customer step, which needs the Vault key. After running the line, discard the editor text, so the line with your key is not kept in Supabase’s list of saved queries. See <a href="./f26-class10to12-f-stripe-v001.html">Step F</a>.</p>
+</section>
+<section id="addresses-you-paste-into-websites" class="level3">
+<h3 class="anchored" data-anchor-id="addresses-you-paste-into-websites">5. Addresses you paste into websites</h3>
+<p>These five paste-ins are all <strong>allow lists</strong>: each service only sends users (or messages) to addresses it has been told in advance, so nobody can redirect a freshly signed-in user — with their login token — to a different website.</p>
+<ul>
+<li><strong>Google Cloud, Authorized JavaScript origins (local):</strong> <code>http://localhost:3000</code>. The web address your app runs at while you develop it. Google lists the origins that may start a sign-in. See <a href="./f26-class10to12-d-googleSignIn-v001.html">Step D</a>.</li>
+<li><strong>Google Cloud, Authorized redirect URIs:</strong> the Google callback URL from the worksheet. After Google signs the user in, it sends the browser here — to Supabase, not to your app — with a one-time code. Google refuses any redirect URI that is not listed, exactly. See <a href="./f26-class10to12-d-googleSignIn-v001.html">Step D</a>.</li>
+<li><strong>Supabase, Site URL (while you work locally):</strong> <code>http://localhost:3000</code>. The default address Supabase sends the user back to after sign-in. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</li>
+<li><strong>Supabase, Redirect URLs (local):</strong> <code>http://localhost:3000/**</code>. The allow list of return addresses. The app returns to addresses under the home page (such as <code>/dashboard</code>), so the entry ends in <code>**</code>, which matches any characters including <code>/</code>. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</li>
+<li><strong>Stripe, webhook endpoint URL:</strong> the Stripe webhook URL from the worksheet. This tells Stripe where to send payment messages. See <a href="./f26-class10to12-h-edgeFunctions-v001.html">Step H</a>.</li>
+</ul>
+</section>
+<section id="after-you-deploy-to-vercel" class="level3">
+<h3 class="anchored" data-anchor-id="after-you-deploy-to-vercel">6. After you deploy to Vercel</h3>
+<p>Vercel builds the app from your GitHub fork and serves it at a public address. Two things must follow the move: the app’s settings, and the allow lists.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_URL</span><span class="op">=</span>...</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</span><span class="op">=</span>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These are the same two values as in <code>.env.local</code>, entered as Vercel <strong>environment variables</strong>. <code>.env.local</code> is never uploaded to GitHub, so Vercel cannot see it: the values must be entered again on Vercel. Only these two go here — the secret keys live on Supabase, not in Vercel. Without the URL, the build fails: the pages are built with these values baked in, and with no back-end address there is nothing to build against. If you add or change a variable later, redeploy: a change applies only to new deployments, because the values are baked in at build time. See <a href="./f26-class10to12-k-vercel-v001.html">Step K</a>.</p>
+<p>Then update the three allow lists with the Vercel address, keeping the localhost entries for local work: Supabase Site URL becomes the Vercel address; add a redirect URL for the Vercel address ending in <code>/**</code>; add the Vercel address to Google’s authorized JavaScript origins. The redirect URI stays the Supabase callback URL, and Stripe needs no changes, because the webhook address belongs to your Supabase project and does not move. Every <code>git push</code> to your fork makes Vercel deploy the new version automatically. See <a href="./f26-class10to12-k-vercel-v001.html">Step K</a>.</p>
+</section>
+<section id="optional-task-app.env.test.local-for-the-automated-tests" class="level3">
+<h3 class="anchored" data-anchor-id="optional-task-app.env.test.local-for-the-automated-tests">7. Optional: task-app/.env.test.local for the automated tests</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_URL</span><span class="op">=</span><span class="st">"..."</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</span><span class="op">=</span><span class="st">"..."</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="va">SUPABASE_SECRET_KEY</span><span class="op">=</span><span class="st">"..."</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="va">STRIPE_SECRET_KEY</span><span class="op">=</span><span class="st">"..."</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="va">STRIPE_PRICE_ID</span><span class="op">=</span><span class="st">"..."</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="va">STRIPE_WEBHOOK_SECRET</span><span class="op">=</span><span class="st">"..."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The automated tests are programs that sign up test users, create tasks, and check the subscription logic against your real Supabase project. They need the same values the app and the functions use, plus the Supabase secret key — under the name <code>SUPABASE_SECRET_KEY</code>, without <code>NEXT_PUBLIC_</code> — so they can set up and check test data with the security rules out of the way. Like <code>.env.local</code>, this file is ignored by Git and must never be committed. See <a href="./f26-class10to12-l-optionalTestsAndDocker-v001.html">Step L</a>.</p>
+</section>
+<section id="other-commands-from-the-step-pages-not-on-the-worksheet" class="level3">
+<h3 class="anchored" data-anchor-id="other-commands-from-the-step-pages-not-on-the-worksheet">Other commands from the step pages (not on the worksheet)</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> .env.example .env.local</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Copies the settings template, with fake values, to the real settings file. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Reads <code>package.json</code>, the app’s list of the packages it needs, and downloads them into <code>node_modules</code>. Run it once after cloning, and again whenever <code>package.json</code> changes. See <a href="./f26-class10to12-b-getTheCode-v001.html">Step B</a>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Starts the development server: a web server on your own computer, at <code>http://localhost:3000</code>, that hands the app’s pages to your browser and reloads them when the code changes. Stop it with <code>Ctrl+C</code>. See <a href="./f26-class10to12-c-supabase-v001.html">Step C</a> and <a href="./f26-class10to12-i-tryTheApp-v001.html">Step I</a>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Set up the task app"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>git status</code> lists what changed and changes nothing — check that <code>.env.local</code> is not in the list. <code>git add -A</code> stages every change. <code>git commit</code> saves a snapshot in the project’s history. <code>git push</code> uploads the new commits to your fork, which also makes Vercel deploy the new version. See <a href="./f26-class10to12-j-saveToGithub-v001.html">Step J</a>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Runs the automated tests with the testing tool Jest. See <a href="./f26-class10to12-l-optionalTestsAndDocker-v001.html">Step L</a>.</p>
+</section>
+</section>
+<section id="two-keys" class="level2">
+<h2 class="anchored" data-anchor-id="two-keys">Why every service gives you two keys</h2>
+<p>The same shape repeats at Supabase, Stripe, and Google: one value that may be seen, and one that must stay secret. The public value identifies your app or project and unlocks only safe, limited powers — reading through the security rules, showing a card form, starting a sign-in. The secret value proves your app’s identity to the service and unlocks the real powers — bypassing the security rules, charging cards, finishing a sign-in. Two values with different powers let the browser carry the safe one while the servers keep the powerful one.</p>
+<p>That is why each worksheet row says which side the value belongs to. Whenever you are unsure where a value goes, ask one question: <strong>would an attacker gain anything by reading it in a web page?</strong> If yes, it belongs on a server — as a Supabase secret, in the Vault, or in Supabase’s dashboard settings — and never in <code>.env.local</code> under a <code>NEXT_PUBLIC_</code> name, never in Vercel, and never in Git. If a key ever leaks, delete it and make a new one: deleting a leaked key from a file does not undo the leak, because anyone who copied it still has it. See <a href="./040650-publishableAndSecretKeys-v001.html">Publishable and Secret Keys</a> and <a href="./040600-apisKeysAndThirdPartyServices-v001.html">APIs, API Keys, and Third-Party Services</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deeper dive: public keys, private keys, and the keys on this page
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A real <strong>public/private key pair</strong> is two mathematically linked halves. What the private half signs, only the public half can verify — and the public half can never be used to work out the private half. One way to picture it is a padlock: anyone can snap a padlock shut, but only the person with the key can open it. The public half is the padlock; the private half is the key.</p>
+<p>The publishable and secret keys on this page are <strong>not</strong> such a pair. They are two independent passwords with different powers: each is a random string the service looks up in its own records, and either can be replaced without touching the other. Do not call them a key pair.</p>
+<p>One real key pair does work behind the scenes here: Supabase signs each user’s login token with a private signing key, and publishes the matching public key so any service can check the signature and trust the token — without ever being able to make a token of its own.</p>
+<p>The webhook signing secret is a third kind: a <strong>shared secret</strong>. Stripe and your app both hold the same secret. Stripe uses it to sign each message; your function uses it to check the signature and know the message really came from Stripe. See <a href="./040650-publishableAndSecretKeys-v001.html#why-the-server">Publishable and Secret Keys</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key takeaways</h2>
+<ul>
+<li>The browser shows pages; Vercel serves them; Supabase holds the data, the logins, the storage, and the Edge Functions; Google, OpenAI, and Stripe each do one job.</li>
+<li>Everyday data goes browser to Supabase directly, under Row Level Security. Jobs that need a secret key go through an Edge Function. Stripe calls the webhook function back with payment news.</li>
+<li>Every worksheet value has exactly one home: a file, a dashboard, a secret store, or the Vault. A secret that ends up in the wrong home is either useless there or dangerous there.</li>
+<li>The setup order is also a dependency order: the project and its keys come before the functions that use them, and the Vault key comes before the first user signs up.</li>
+</ul>
+</section>
+<section id="practice-questions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="practice-questions">Practice Questions</h2>
+<section id="easy" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="easy">Easy</h3>
+<section id="question-1-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-1-multiple-choice">Question 1 · Multiple choice</h4>
+<p>A signed-in user opens the app and sees their own tasks. Which path did that request take?</p>
+<ol type="a">
+<li>The browser asked Stripe, and Stripe returned the tasks.</li>
+<li>The browser asked the Supabase Data API, with the publishable key and the user’s login token.</li>
+<li>The browser asked an Edge Function, which read the tasks with the secret key.</li>
+<li>The browser asked Vercel’s build server, which returned the tasks from GitHub.</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol start="2" type="a">
+<li>The browser asked the Supabase Data API, with the publishable key and the user’s login token. Everyday data reads and writes go directly from the browser to Supabase, and the Row Level Security rules decide which rows that user may see. Edge Functions are only for jobs that need a secret key; Stripe and Vercel hold no task data.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-2-short-answer">Question 2 · Short answer</h4>
+<p>What two values go in <code>.env.local</code>, and why do their variable names start with <code>NEXT_PUBLIC_</code>?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Project URL (<code>NEXT_PUBLIC_SUPABASE_URL</code>) and the publishable key (<code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code>). The <code>NEXT_PUBLIC_</code> prefix tells Next.js to build the values into the web pages that every visitor’s browser downloads. That is right for these two values, because the back end’s address and the publishable key are meant to be public.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-true-or-false" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-3-true-or-false">Question 3 · True or false</h4>
+<p>The Stripe secret key may go in <code>.env.local</code>, because the app uses Stripe in test mode and no real money is involved.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>False. The Stripe secret key can do anything in the Stripe account, even in test mode, and it must only ever go to servers: as a Supabase secret for the Edge Functions, and in Supabase Vault for the database. Test mode protects real money; it does not make a secret key safe to put in a file or a web page.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-4-short-answer">Question 4 · Short answer</h4>
+<p>What do Row Level Security (RLS) rules decide?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Which rows each user may see and change. The rules run in the database itself, so even a request that skips the app’s pages — a direct API call with the publishable key — only reaches the rows the rules allow for that user.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-5-short-answer">Question 5 · Short answer</h4>
+<p>What is the project ref, and name two addresses the worksheet builds from it.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The project ref is the project’s unique ID: 20 letters. The worksheet builds four addresses from it, any two of which answer the question: the Project URL (<code>https://&lt;ref&gt;.supabase.co</code>), the Google callback URL, the Stripe webhook URL, and the project dashboard URL.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="medium" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="medium">Medium</h3>
+<section id="question-6-ordering" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-6-ordering">Question 6 · Ordering</h4>
+<p>Put these steps of a Google sign-in in order, from first to last.</p>
+<ol type="a">
+<li>Google sends the browser back to Supabase’s callback address with a one-time code.</li>
+<li>The user signs in on Google’s page.</li>
+<li>Supabase sends the user to Google’s sign-in page.</li>
+<li>Supabase exchanges the code for the user’s name and email, presenting the Client secret.</li>
+<li>Supabase sends the browser back to the app.</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The order is c, b, a, d, e. Supabase sends the user to Google’s sign-in page (c); the user signs in on Google’s page (b); Google sends the browser back to Supabase’s callback address with a one-time code (a); Supabase exchanges the code for the user’s name and email, presenting the Client secret (d); Supabase sends the browser back to the app (e).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-7-scenario">Question 7 · Scenario</h4>
+<p>Maria adds <code>STRIPE_SECRET_KEY</code> to her <code>.env.local</code>, but never runs <code>npx supabase secrets set</code>. She clicks Upgrade in the app. What goes wrong, and why?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The checkout fails. The Edge Function <code>create-stripe-session</code> runs on Supabase’s servers and reads its secrets by name from Supabase — it does not read <code>.env.local</code>, which only exists on Maria’s computer. With no secret set, the function has no Stripe key to ask Stripe for a checkout page. The fix is to run the <code>secrets set</code> line with the key, and to remove the key from <code>.env.local</code>, where it does no good.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-multiple-choice" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-8-multiple-choice">Question 8 · Multiple choice</h4>
+<p>Why is <code>stripe-webhook</code> deployed with <code>--no-verify-jwt</code>?</p>
+<ol type="a">
+<li>Webhook functions run faster without the login check.</li>
+<li>Stripe calls the function without a Supabase login token, so the login check would reject every message; the function checks Stripe’s signature instead.</li>
+<li>The webhook function has no login to check, because it never touches the database.</li>
+<li>The flag tells Supabase to skip checking the webhook signing secret.</li>
+</ol>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol start="2" type="a">
+<li>Stripe calls the function without a Supabase login token, so the login check would reject every message; the function checks Stripe’s signature instead. Normally Supabase checks every Edge Function call for a valid user login token before the function runs. The webhook turns that check off and replaces it with the signature check, using the webhook signing secret.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="question-9-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-9-short-answer">Question 9 · Short answer</h4>
+<p>The app’s code never uses the Stripe publishable key. Why does the worksheet still have a row for it?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The row keeps the account’s keys recorded together, and the key would be needed if the app ever showed Stripe’s payment form inside its own pages. This app sends users to Stripe’s own checkout page instead, so the browser never needs the publishable key. The key is safe to record because it is made to be seen.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-10-matching" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-10-matching">Question 10 · Matching</h4>
+<p>Match each secret to where it lives in this project.</p>
+<p>Secrets: (1) OpenAI API key, (2) Stripe secret key, (3) webhook signing secret, (4) Supabase secret key, (5) Google OAuth Client secret.</p>
+<p>Homes: (a) a Supabase secret, read by the Edge Functions, (b) Supabase Vault and a Supabase secret, (c) <code>.env.test.local</code> only, for the automated tests, (d) Supabase’s Google provider settings.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>→ (a): the OpenAI API key is a Supabase secret, read by <code>create-task-with-ai</code>. (2) → (b): the Stripe secret key lives in Supabase Vault for the database and as a Supabase secret for the Edge Functions. (3) → (a): the webhook signing secret is a Supabase secret, read by <code>stripe-webhook</code>. (4) → (c): the Supabase secret key’s only manual home is <code>.env.test.local</code>; Supabase hands it to the Edge Functions by itself. (5) → (d): the Google Client secret lives in Supabase’s Google provider settings.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="hard">Hard</h3>
+<section id="question-11-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-11-scenario">Question 11 · Scenario</h4>
+<p>Sam clicks Upgrade, pays with the test card, and sees the payment in his Stripe dashboard — but the app still shows the free plan. Name two places to look, and say what each would tell you.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>First, the <code>stripe-webhook</code> function’s logs in the Supabase dashboard: they show whether the function received Stripe’s message and what it did with it — for example, a signature check that failed. Second, the webhook endpoint in the Stripe dashboard: it shows whether Stripe sent the event and whether the endpoint answered. The webhook function always answers OK even when it rejects a message, so a “delivered” event in Stripe does not prove the user was upgraded — the function logs are what show the rejection.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-12-compare" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-12-compare">Question 12 · Compare</h4>
+<p>Supabase gives you a publishable key and a secret key. Explain why these are NOT a public/private key pair, and name one place in this stack where a real key pair IS used.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A real key pair is two mathematically linked halves: what the private half signs, only the public half can verify, and the public half can never reveal the private half. Supabase’s publishable and secret keys are two independent random strings, each looked up in Supabase’s own records, with different powers — either can be replaced without touching the other. A real key pair IS used behind the scenes for login tokens: Supabase signs each token with a private signing key and publishes the matching public key so services can verify the token without being able to make one.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-13-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-13-scenario">Question 13 · Scenario</h4>
+<p>The class moves the app from localhost to Vercel. List everything that must change for the deployed app to work, and say why each change is needed. Also name two things that do NOT change, and why.</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>What must change: (1) The two <code>NEXT_PUBLIC_</code> values must be entered as Vercel environment variables, because <code>.env.local</code> is never uploaded to GitHub and Vercel cannot see it; without the URL, the build fails. (2) Supabase’s Site URL must become the Vercel address, so users are sent back to the deployed app after sign-in. (3) A redirect URL for the Vercel address must be added, so Supabase allows the return address. (4) The Vercel address must be added to Google’s authorized JavaScript origins, so Google allows sign-ins that start from it. What does not change: the Google redirect URI stays the Supabase callback URL, because Google always answers to Supabase; and the Stripe webhook endpoint stays as it is, because its address belongs to the Supabase project and does not move when the front end moves.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-14-scenario" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-14-scenario">Question 14 · Scenario</h4>
+<p>A student commits <code>.env.test.local</code> to GitHub by accident. What must they do, in order, and why is deleting the commit not enough?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>First, treat every value in the file as leaked: revoke the Supabase secret key and the Stripe secret key, delete the webhook endpoint’s signing secret, and make new ones — then update the worksheet, the Supabase secrets, the Vault, and <code>.env.test.local</code> with the new values. Second, remove the file from Git and check that <code>.gitignore</code> still excludes it. Deleting the commit is not enough because the file may already have been copied — automated scanners watch public repositories for keys — and a deleted commit stays in the repository’s history and in any copy anyone took. Only new keys make the leaked ones useless.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-15-short-answer" class="level4 unnumbered unlisted">
+<h4 class="unnumbered unlisted anchored" data-anchor-id="question-15-short-answer">Question 15 · Short answer</h4>
+<p>A price ID is not secret: Stripe shows it in the dashboard. Why does it still live on the server as a Supabase secret, instead of in the browser code?</p>
+<div class="yr-answer callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Suggested answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Because the server, not the browser, must decide what is sold at what price. If the price ID lived in the browser code, a user could change it and ask Stripe for a different price — for example, a cheaper one. Keeping it as a secret means only the Edge Function chooses the price, and the browser only asks to upgrade.</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./f26-class10to12-l-optionalTestsAndDocker-v001.html" class="pagination-link" aria-label="Classes 10–12 (L): Optional: automated tests, and Docker">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Classes 10–12 (L): Optional: automated tests, and Docker</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./f26/yudkowskyBook-v001.html" class="pagination-link" aria-label="<yrChapterNumber>1. </yrChapterNumber> The AI book that’s freaking out national security advisors">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><yrchapternumber>1. </yrchapternumber> The AI book that’s freaking out national security advisors</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<style>
+/* yrCollapsibles-v003: styles for collapsible callouts and their
+ * Expand/Collapse, Expand All and Collapse All buttons. See the comment in the
+ * script below. (Replaces yrCollapsibles-v002.html, whose Expand/Collapse
+ * button looked like the other two.) */
+
+/* ---------- explanation boxes (.yr-explain) ---------- */
+.callout.yr-explain {
+  margin-top: 0.4rem;
+  margin-bottom: 0.9rem;
+  border-left-color: #b7791f !important;
+  background: #fffaf0;
+}
+.callout.yr-explain .callout-header {
+  background: #fdf0d5 !important;
+}
+.callout.yr-explain .callout-title-container {
+  font-weight: 600;
+  color: #7b4a12;
+}
+.callout.yr-explain .callout-title-container::before {
+  content: "\1F4A1\00a0"; /* light bulb + non-breaking space */
+}
+.callout.yr-explain .callout-body-container {
+  font-size: 0.95em;
+}
+
+/* ---------- every collapsible callout ---------- */
+.yr-collapse-buttons {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-left: 0.6rem;
+  vertical-align: middle;
+}
+.yr-collapse-btn {
+  font-size: 0.75rem;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.3;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid #adb5bd;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #495057;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.yr-collapse-btn:hover {
+  background: #e9ecef;
+}
+.callout.yr-explain .yr-collapse-btn {
+  border-color: #b7791f;
+  color: #7b4a12;
+}
+.callout.yr-explain .yr-collapse-btn:hover {
+  background: #fdf0d5;
+}
+
+/* Expand/Collapse is the main button: filled with a darker shade of the
+ * callout's own color (dark enough for white text), so it stands out from
+ * Expand All / Collapse All. */
+.callout { --yr-collapse-accent: #495057; }
+.callout.callout-note { --yr-collapse-accent: #1a6bc4; }
+.callout.callout-tip { --yr-collapse-accent: #2c7a12; }
+.callout.callout-warning { --yr-collapse-accent: #c04a00; }
+.callout.callout-caution { --yr-collapse-accent: #9a6400; }
+.callout.callout-important { --yr-collapse-accent: #d0002e; }
+.callout.yr-explain { --yr-collapse-accent: #99620f; }
+.callout .yr-collapse-btn.yr-collapse-btn-main {
+  background: var(--yr-collapse-accent);
+  border-color: var(--yr-collapse-accent);
+  color: #ffffff;
+  font-weight: 600;
+}
+.callout .yr-collapse-btn.yr-collapse-btn-main:hover {
+  background: var(--yr-collapse-accent);
+  filter: brightness(0.85);
+}
+</style>
+<script>
+/* yrCollapsibles-v003
+ *
+ * Makes every collapsible callout on every page easy to recognize and to
+ * open, whatever its kind (explanations, screenshots, deeper dives, practice
+ * question answers, ...). A callout is collapsible when it has collapse="true"
+ * or collapse="false":
+ *
+ *     ::: {.callout-note collapse="true"}
+ *     ## Deeper dive: ...
+ *     ...
+ *     :::
+ *
+ * For each such callout, three buttons go at the end of the clickable
+ * heading's text:
+ *   - "Expand/Collapse" opens or closes this callout, like clicking the
+ *     heading itself (which still works). It is filled with the callout's
+ *     color, so it stands out from the other two;
+ *   - "Expand All" / "Collapse All" open or close every collapsible callout on
+ *     the page, and keep the clicked heading where it was on the screen.
+ * So don't write "click here" in a callout's title: the buttons show that it
+ * opens.
+ *
+ * It also styles the explanation boxes (.yr-explain): collapsed callouts for
+ * the "why" behind a step, with their own colors and a light bulb:
+ *
+ *     ::: {.callout-note .yr-explain collapse="true" icon="false"}
+ *     ## Why? What is an organization?
+ *     ...
+ *     :::
+ *
+ * Included inline (include-after-body: file: ...) so it works for pages in
+ * subfolders too. Pages without collapsible callouts are not affected.
+ * The practice-question toolbar (Show all answers / Hide all answers,
+ * yrAnswerToggles-v001.html) is separate and still works.
+ */
+(function () {
+  function collapsibleCallouts() {
+    var main = document.querySelector("main") || document.body;
+    return Array.prototype.filter.call(main.querySelectorAll(".callout"), function (callout) {
+      return callout.querySelector(":scope > .callout-collapse") &&
+             callout.querySelector(":scope > .callout-header");
+    });
+  }
+
+  // Without Bootstrap's animation, so the page height changes at once and the
+  // clicked heading can be kept in place. Bootstrap reads the state from the
+  // "show" class, so clicking a heading afterwards still works.
+  function setCalloutExpanded(callout, expanded) {
+    var content = callout.querySelector(":scope > .callout-collapse");
+    var header = callout.querySelector(":scope > .callout-header");
+    content.classList.remove("collapsing");
+    content.style.height = "";
+    content.classList.toggle("show", expanded);
+    header.setAttribute("aria-expanded", expanded ? "true" : "false");
+    header.classList.toggle("collapsed", !expanded);
+  }
+
+  // expand: "toggle" (this callout), "true" or "false" (every callout).
+  function makeButton(text, expand) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = expand === "toggle" ? "yr-collapse-btn yr-collapse-btn-main" : "yr-collapse-btn";
+    btn.setAttribute("data-yr-expand", expand);
+    btn.textContent = text;
+    return btn;
+  }
+
+  // The buttons are inside the clickable heading, and Bootstrap handles
+  // heading clicks on the document in the capture phase, before a button's
+  // own listener. So the clicks are handled here, on the window (which comes
+  // first). Expand/Collapse is let through, so Bootstrap toggles the callout
+  // exactly as for a click on the heading; the other buttons are stopped
+  // before they reach Bootstrap.
+  window.addEventListener("click", function (event) {
+    var btn = event.target.closest && event.target.closest(".yr-collapse-btn");
+    if (!btn || btn.getAttribute("data-yr-expand") === "toggle") {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    var expanded = btn.getAttribute("data-yr-expand") === "true";
+    var header = btn.closest(".callout-header");
+    var before = header.getBoundingClientRect().top;
+    collapsibleCallouts().forEach(function (callout) {
+      setCalloutExpanded(callout, expanded);
+    });
+    window.scrollBy(0, header.getBoundingClientRect().top - before);
+  }, true);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    collapsibleCallouts().forEach(function (callout) {
+      var header = callout.querySelector(":scope > .callout-header");
+      var title = header.querySelector(".callout-title-container");
+      if (!title || title.querySelector(".yr-collapse-buttons")) {
+        return;
+      }
+
+      var buttons = document.createElement("span");
+      buttons.className = "yr-collapse-buttons";
+      buttons.appendChild(makeButton("Expand/Collapse", "toggle"));
+      buttons.appendChild(makeButton("Expand All", "true"));
+      buttons.appendChild(makeButton("Collapse All", "false"));
+      title.appendChild(buttons);
+    });
+  });
+})();
+</script>
+<!--
+  yrNewTabLinks-v001.html (Fall 2026)
+  Included via include-after-body in _quarto.yml.
+  In the page's main content, links that go to another page (another chapter or
+  another website) open in a new browser tab, so students keep their place.
+  Not changed: links to a section of the same page, image lightboxes, download
+  links, and Quarto's own navigation (sidebar, table of contents, previous/next).
+-->
+<script>
+(function () {
+  function yrNewTabLinks() {
+    var here = location.origin + location.pathname;
+    document.querySelectorAll('main a[href]').forEach(function (a) {
+      if (a.closest('nav, .sidebar, #TOC, .page-navigation')) return;
+      if (a.classList.contains('lightbox') || a.classList.contains('anchorjs-link')) return;
+      if (a.hasAttribute('download') || a.hasAttribute('target')) return;
+      var href = a.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || /^(javascript|mailto|tel):/i.test(href)) return;
+      var url;
+      try { url = new URL(a.href); } catch (e) { return; }
+      if (url.origin + url.pathname === here) return; // a section of this page
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', ((a.getAttribute('rel') || '') + ' noopener').trim());
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', yrNewTabLinks);
+  } else {
+    yrNewTabLinks();
+  }
+})();
+</script>
+<style>
+/* yrWaysTabs-v002: styles for "ways" tabsets (.panel-tabset .yr-ways) and
+ * their Show all / Show as tabs buttons. See the comment in the script below.
+ * The buttons look like the Expand/Collapse button of yrCollapsibles-v003.html.
+ * (The book has no dark theme, so there are no dark-mode colors.)
+ * (Replaces yrWaysTabs-v001.html, whose single button sat at the far right
+ * of the tab bar and read "Show as tabs" above all the ways.) */
+
+/* ---------- tabs mode: "Show all" right after the last tab ---------- */
+/* The script places the button's bar right after the last tab, on that tab's
+ * row; the tab bar keeps room for it at the right, so it always fits. Without
+ * the script's measurements, it sits at the right end of the first row. */
+.panel-tabset.yr-ways {
+  position: relative;
+  scroll-margin-top: 4rem; /* room above it when the page scrolls back to it */
+}
+.panel-tabset.yr-ways > .nav-tabs {
+  padding-right: 6.5rem;
+}
+.yr-ways-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2.8rem; /* the height of a tab, so the button is centered on it */
+  display: flex;
+  align-items: center;
+}
+.yr-ways-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.3;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--yr-ways-accent, #1a6bc4);
+  border-radius: 4px;
+  background: var(--yr-ways-accent, #1a6bc4);
+  color: #ffffff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.yr-ways-btn:hover {
+  filter: brightness(0.85);
+}
+.yr-ways-title,
+.yr-ways-pane-bar {
+  display: none;
+}
+
+/* ---------- Show all mode: every tab's content, one after another ---------- */
+/* !important because Quarto's Bootstrap sets both displays with !important
+ * (.nav:not(.nav-hidden) and .tab-content > .tab-pane:not(.active)). */
+.panel-tabset.yr-ways.yr-ways-all > .nav-tabs,
+.panel-tabset.yr-ways.yr-ways-all > .yr-ways-bar {
+  display: none !important;
+}
+/* No border or padding around the whole set: only each way has a box. */
+.panel-tabset.yr-ways.yr-ways-all > .tab-content {
+  border: none;
+  padding: 0;
+}
+.panel-tabset.yr-ways.yr-ways-all > .tab-content > .tab-pane {
+  display: block !important;
+  background: var(--yr-ways-bg);
+  border-left: 4px solid var(--yr-ways-accent);
+  border-radius: 4px;
+  padding: 0.5rem 0.9rem 0.1rem;
+  margin-bottom: 0.6rem;
+}
+.panel-tabset.yr-ways.yr-ways-all > .tab-content > .tab-pane > .yr-ways-title {
+  display: block;
+  font-weight: 600;
+  color: var(--yr-ways-accent);
+}
+.panel-tabset.yr-ways.yr-ways-all > .tab-content > .tab-pane > .yr-ways-pane-bar {
+  display: block;
+  margin: 0.2rem 0 0.5rem;
+}
+
+/* Each way gets its own light background, with a darker shade of the same
+ * color for its left edge, title and button (6 colors, then they repeat). */
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+1) { --yr-ways-bg: #e8f1fb; --yr-ways-accent: #1a6bc4; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+2) { --yr-ways-bg: #eaf5e4; --yr-ways-accent: #2c7a12; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+3) { --yr-ways-bg: #fdf3e1; --yr-ways-accent: #99620f; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+4) { --yr-ways-bg: #f1ebfa; --yr-ways-accent: #6f42c1; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+5) { --yr-ways-bg: #e3f4f4; --yr-ways-accent: #0f6f6f; }
+.panel-tabset.yr-ways > .tab-content > .tab-pane:nth-child(6n+6) { --yr-ways-bg: #fbe9ec; --yr-ways-accent: #b0283f; }
+</style>
+<script>
+/* yrWaysTabs-v002
+ *
+ * Tabsets for several ways to do the same thing. Mark the tabset with the
+ * extra class .yr-ways, and name each tab by what the student clicks:
+ *
+ *     ::: {.panel-tabset .yr-ways}
+ *     ## From the Overview page
+ *     ...
+ *     ## From the Clients menu
+ *     ...
+ *     :::
+ *
+ * The tabset starts as normal tabs (the first one open). A "Show all" button
+ * right after the last tab shows every tab's content one after another
+ * instead, each in its own light color with its tab's name as a title, so
+ * students can see all the ways at once. Under each title is a "Show as
+ * tabs" button: it switches back to tabs, with that way's tab open, and
+ * scrolls back to the tabset if it is no longer on the screen.
+ *
+ * The choice is not remembered: every page load starts as tabs. Only .yr-ways
+ * tabsets get the buttons; the Mac / Windows / Linux tabsets (group="os") are
+ * not affected, and Quarto itself remembers their choice across pages.
+ *
+ * Included inline (include-after-body: file: ...) so it works for pages in
+ * subfolders too. Pages without .yr-ways tabsets are not affected.
+ */
+(function () {
+  function makeButton(text, title) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "yr-ways-btn";
+    btn.textContent = text;
+    btn.title = title;
+    return btn;
+  }
+
+  // Show all. Focus moves to the first way's "Show as tabs" button, because
+  // the clicked button is hidden now.
+  function showAll(tabset) {
+    tabset.classList.add("yr-ways-all");
+    var first = tabset.querySelector(":scope > .tab-content > .tab-pane > .yr-ways-pane-bar > .yr-ways-btn");
+    if (first) {
+      first.focus({ preventScroll: true });
+    }
+  }
+
+  // Puts the "Show all" bar right after the last tab, on that tab's row,
+  // with a gap (1.2rem) so it isn't taken for another tab. Run again whenever
+  // the tab bar changes size (window width, fonts, back from Show all).
+  function placeShowAll(tabset, tabs, bar) {
+    var items = tabs.querySelectorAll(":scope > .nav-item");
+    if (!items.length || tabset.classList.contains("yr-ways-all")) {
+      return;
+    }
+    var last = items[items.length - 1].getBoundingClientRect();
+    var box = tabset.getBoundingClientRect();
+    var gap = 1.2 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    bar.style.right = "auto";
+    bar.style.left = (last.right - box.left + gap) + "px";
+    bar.style.top = (last.top - box.top) + "px";
+    bar.style.height = last.height + "px";
+  }
+
+  // Back to tabs, with this way's tab open (clicking the tab lets Bootstrap
+  // and Quarto do their usual work). If the tabset's top is then off the
+  // screen, the page scrolls back to it, so the student isn't left below it.
+  function showTabs(tabset, tab) {
+    tabset.classList.remove("yr-ways-all");
+    tab.click();
+    // Quarto's tabs can't always take the focus; then the Show all button does.
+    tab.focus({ preventScroll: true });
+    if (document.activeElement !== tab) {
+      tabset.querySelector(":scope > .yr-ways-bar > .yr-ways-btn").focus({ preventScroll: true });
+    }
+    var top = tabset.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight - 80) {
+      tabset.scrollIntoView({ block: "start" });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var main = document.querySelector("main") || document.body;
+    main.querySelectorAll(".panel-tabset.yr-ways").forEach(function (tabset) {
+      var tabs = tabset.querySelector(":scope > .nav-tabs");
+      var content = tabset.querySelector(":scope > .tab-content");
+      if (!tabs || !content || tabset.querySelector(":scope > .yr-ways-bar")) {
+        return;
+      }
+
+      // For each way, a title (the tab's own text, so they always match) and
+      // a "Show as tabs" button under it, both shown only in Show all mode.
+      tabs.querySelectorAll("a.nav-link").forEach(function (tab) {
+        var pane = document.getElementById(tab.getAttribute("aria-controls"));
+        if (!pane) {
+          return;
+        }
+        var title = document.createElement("div");
+        title.className = "yr-ways-title";
+        title.textContent = tab.textContent;
+        var paneBar = document.createElement("div");
+        paneBar.className = "yr-ways-pane-bar";
+        var back = makeButton("Show as tabs", "Show these ways as tabs again, with this one open");
+        back.addEventListener("click", function () {
+          showTabs(tabset, tab);
+        });
+        paneBar.appendChild(back);
+        pane.insertBefore(paneBar, pane.firstChild);
+        pane.insertBefore(title, paneBar);
+      });
+
+      // "Show all" goes after the tab bar (so it comes after the tabs when
+      // tabbing with the keyboard, and stays out of Bootstrap's tab list);
+      // placeShowAll puts it on the screen right after the last tab.
+      var bar = document.createElement("div");
+      bar.className = "yr-ways-bar";
+      var btn = makeButton("Show all", "Show all the ways at once");
+      btn.addEventListener("click", function () {
+        showAll(tabset);
+      });
+      bar.appendChild(btn);
+      tabset.insertBefore(bar, content);
+      var place = function () { placeShowAll(tabset, tabs, bar); };
+      place();
+      if (window.ResizeObserver) {
+        new ResizeObserver(place).observe(tabs);
+      }
+      window.addEventListener("load", place);
+    });
+  });
+})();
+</script>
+<style>
+/* yrLinkTargetHighlight-v001: the soft amber background that briefly marks
+ * the target of a link to a section (page.html#id). See the comment in the
+ * script below. */
+
+/* The animated amount of amber, from 1 down to 0. Registering it lets the
+ * browser fade it smoothly (browsers without @property simply switch it off
+ * half-way through). */
+@property --yr-target-alpha {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@keyframes yr-target-fade {
+  0%, 25% { --yr-target-alpha: 1; }
+  100% { --yr-target-alpha: 0; }
+}
+
+/* The amber is solid for the first part of the target (its heading and the
+ * first screenful or so) and then fades downward, so a long section isn't
+ * painted all the way down. Only the background changes, so nothing on the
+ * page moves. */
+.yr-link-target {
+  --yr-target-alpha: 0;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255 210 80 / calc(0.45 * var(--yr-target-alpha))) 0,
+    rgb(255 210 80 / calc(0.45 * var(--yr-target-alpha))) 50vh,
+    rgb(255 210 80 / 0) 80vh
+  );
+  border-radius: 4px;
+  animation: yr-target-fade 3.5s ease-out forwards;
+}
+/* A section has no box of its own, so it also gets a little amber at the
+ * sides; the negative side margins cancel the padding, so its text stays put.
+ * (Callouts and figures keep their own borders where they are.) */
+section.yr-link-target {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Reduced motion: no fade; the amber is shown as it is, and the script
+ * removes it after a short while. */
+@media (prefers-reduced-motion: reduce) {
+  .yr-link-target {
+    animation: none;
+    --yr-target-alpha: 1;
+  }
+}
+</style>
+<script>
+/* yrLinkTargetHighlight-v001
+ *
+ * When a student follows a link to a section of a page, for example
+ *
+ *     [Origins, and URI vs URL](040200-urlsDomainNamesAndIpAddresses-v001.qmd#url-origin)
+ *
+ * the target first appears with a soft amber background that fades out over
+ * about 3.5 seconds, so the eye goes to the right part of the page. This
+ * happens when a page opens with #id in its address, when a link on the same
+ * page is clicked (also the table of contents, or the same link again), and
+ * on Back / Forward to a #id.
+ *
+ * The target is the element with that id. For a heading, Quarto puts the id
+ * on the <section> that holds the heading and its text, so the whole section
+ * is marked (solid at the top, fading out after the first screenful). An id
+ * on a callout, figure or span marks just that element.
+ *
+ * Not marked: footnotes and their back links, code-line anchors, hidden
+ * elements, and anything that is not a link to an id (tabs, collapsible
+ * callouts, the table of contents following the scrolling).
+ * Scrolling is left to the browser and Quarto, which keep the heading clear
+ * of the fixed header. With "reduce motion" turned on in the computer's
+ * settings, the amber is shown without a fade for 2 seconds.
+ *
+ * Included inline (include-after-body: file: ...) so it works for pages in
+ * subfolders too.
+ */
+(function () {
+  var FADE_MS = 3500;
+  var STILL_MS = 2000; // with reduced motion
+  var current = null;
+  var timer = null;
+
+  function targetFor(hash) {
+    if (!hash || hash.length < 2) {
+      return null;
+    }
+    var id;
+    try {
+      id = decodeURIComponent(hash.slice(1));
+    } catch (e) {
+      return null;
+    }
+    // Footnotes (fn1, fnref1) and code-line anchors (cb1-3) are not sections.
+    if (/^(fn|fnref)\d+$/.test(id) || /^cb\d+-\d+$/.test(id)) {
+      return null;
+    }
+    var el = document.getElementById(id);
+    if (!el || !el.closest("main") || el.closest(".footnotes, #footnotes")) {
+      return null;
+    }
+    if (el.getClientRects().length === 0) {
+      return null; // hidden (e.g. in a closed tab or a collapsed callout)
+    }
+    return el;
+  }
+
+  function unmark() {
+    if (current) {
+      current.classList.remove("yr-link-target");
+      current = null;
+    }
+    clearTimeout(timer);
+  }
+
+  function mark(hash) {
+    var el = targetFor(hash);
+    if (!el) {
+      return;
+    }
+    unmark();
+    void el.offsetWidth; // restart the fade if the same target is marked again
+    el.classList.add("yr-link-target");
+    current = el;
+    var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    timer = setTimeout(unmark, still ? STILL_MS : FADE_MS + 100);
+  }
+
+  // The page opened with #id (also when Back / Forward reloads it or brings
+  // it back from the browser's cache).
+  document.addEventListener("DOMContentLoaded", function () {
+    mark(location.hash);
+  });
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+      mark(location.hash);
+    }
+  });
+
+  // A link on the same page, or Back / Forward between two #ids.
+  window.addEventListener("hashchange", function () {
+    mark(location.hash);
+  });
+
+  // A link to the #id that is already in the address: no hashchange happens,
+  // but the browser scrolls to it again, so mark it again.
+  document.addEventListener("click", function (event) {
+    var a = event.target.closest && event.target.closest("a[href*='#']");
+    if (!a || a.target === "_blank" || event.defaultPrevented) {
+      return;
+    }
+    var url;
+    try {
+      url = new URL(a.href);
+    } catch (e) {
+      return;
+    }
+    if (url.origin + url.pathname === location.origin + location.pathname &&
+        url.hash && url.hash === location.hash) {
+      mark(url.hash);
+    }
+  });
+})();
+</script>
+<!-- yrUpdateCheck-v001.html (Fall 2026): show students the newest version of a page without a manual reload.
+     GitHub Pages lets browsers reuse a page for 10 minutes (Cache-Control: max-age=600), and a tab that is already
+     open never changes by itself. This script asks the server for the page's Last-Modified date, bypassing the
+     cache, and compares it with the copy on screen. If the server's copy is newer:
+     - right after the page opened (a stale copy from the cache): reload once, at once;
+     - while the student is reading: show a bar with "Reload now", and reload when they next return to the tab;
+     - while the tab is in the background: reload when they return to it.
+     Checks: 2 s after load, every 5 minutes while the tab is visible, and when the student returns to the tab.
+     Keeps the scroll position across the reload. A guard allows at most one automatic reload per page every
+     2 minutes (then only the bar), so a server that briefly answers with mixed dates can't cause a reload loop. -->
+<style>
+#yr-update-bar { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 2000;
+  display: flex; align-items: center; gap: .75rem; max-width: calc(100% - 2rem);
+  padding: .6rem 1rem; border-radius: .5rem; background: #1f4e79; color: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25); font-size: .95rem; }
+#yr-update-bar button { border: 0; border-radius: .35rem; padding: .3rem .8rem; font-weight: 600; cursor: pointer; }
+#yr-update-bar .yr-update-reload { background: #fff; color: #1f4e79; }
+#yr-update-bar .yr-update-close { background: transparent; color: #fff; font-size: 1.2rem; padding: 0 .3rem; }
+</style>
+<script>
+(function () {
+  if (location.protocol !== "http:" && location.protocol !== "https:") return;
+  var path = location.pathname;
+  var KEY_SCROLL = "yrUpdateScroll:" + path, KEY_RELOADED = "yrUpdateReloaded:" + path;
+  var loadedAt = Date.now(), lastCheck = 0, updateFound = false;
+  var pageTime = Date.parse(document.lastModified);  // the Last-Modified date of the copy on screen
+
+  function store(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
+  function fetchStored(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+  function forget(k) { try { sessionStorage.removeItem(k); } catch (e) {} }
+
+  // After a reload made by this script, go back to where the student was.
+  var savedY = fetchStored(KEY_SCROLL);
+  if (savedY !== null) {
+    forget(KEY_SCROLL);
+    window.addEventListener("load", function () { setTimeout(function () { window.scrollTo(0, +savedY); }, 50); });
+  }
+
+  function canAutoReload() {
+    var t = +(fetchStored(KEY_RELOADED) || 0);
+    return Date.now() - t > 2 * 60 * 1000;
+  }
+  function reload() {
+    store(KEY_SCROLL, String(window.scrollY));
+    store(KEY_RELOADED, String(Date.now()));
+    location.reload();
+  }
+  function showBar() {
+    if (document.getElementById("yr-update-bar")) return;
+    var bar = document.createElement("div");
+    bar.id = "yr-update-bar";
+    bar.setAttribute("role", "status");
+    bar.innerHTML = '<span>This page has been updated since you opened it.</span>' +
+      '<button type="button" class="yr-update-reload">Reload now</button>' +
+      '<button type="button" class="yr-update-close" aria-label="Close">&times;</button>';
+    bar.querySelector(".yr-update-reload").addEventListener("click", reload);
+    bar.querySelector(".yr-update-close").addEventListener("click", function () { bar.remove(); });
+    document.body.appendChild(bar);
+  }
+  function onUpdate() {
+    updateFound = true;
+    var justOpened = Date.now() - loadedAt < 15000;
+    if ((justOpened || document.visibilityState === "hidden") && canAutoReload()) {
+      if (document.visibilityState === "hidden") return;  // reload when the student comes back (below)
+      reload();
+    } else {
+      showBar();
+    }
+  }
+  function check() {
+    if (isNaN(pageTime) || updateFound) return;
+    lastCheck = Date.now();
+    fetch(path + location.search, { method: "HEAD", cache: "no-store" })
+      .then(function (r) {
+        var lm = r.ok && r.headers.get("last-modified");
+        if (lm && Date.parse(lm) > pageTime + 1000) onUpdate();
+      })
+      .catch(function () {});
+  }
+
+  setTimeout(check, 2000);
+  setInterval(function () { if (document.visibilityState === "visible") check(); }, 5 * 60 * 1000);
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState !== "visible") return;
+    if (updateFound && canAutoReload()) { reload(); return; }
+    if (Date.now() - lastCheck > 60 * 1000) check();
+  });
+})();
+</script>
+<!--
+yrHiddenParts-v001.html (Fall 2026). Included with include-after-body.
+
+Hides whole parts of the book unless the page address has ?more=KEY.
+  - PARTS below maps a part's title (as in _quarto.yml) to its KEY.
+  - Without the KEY: the part is removed from the sidebar, prev/next links to its pages are hidden, and its pages
+    show only "This page is not available."
+  - With the KEY (for example ?more=fall2026; quotes and several keys, ?more=fall2026,other, also work): the
+    part is shown, and every link to one of its pages gets the same ?more= added, so moving between its pages
+    keeps them visible. Nothing is saved in the browser: a page opened without ?more= hides the part again.
+  - Quarto cannot put a part after the appendices, so the part is listed in _quarto.yml as the last entry of
+    appendices:. This script moves it in the sidebar to the top level, after "Appendices".
+The pages of a hidden part should also have "search: false" (not in the search index) and start with
+<style class="yr-hidden-part-page">#quarto-document-content{visibility:hidden}</style>, so their text is not
+shown before this script runs. The text is still in the page's HTML: this hides it, it does not protect it.
+-->
+<script>
+(function () {
+  var PARTS = { "fall 2026": "fall2026" };
+
+  var params = new URLSearchParams(window.location.search);
+  var asked = (params.get("more") || "").toLowerCase().replace(/["']/g, "").split(",").map(function (s) {
+    return s.trim();
+  });
+
+  function pageName(href) {
+    try {
+      var p = new URL(href, window.location.href).pathname;
+      return p.substring(p.lastIndexOf("/") + 1) || "index.html";
+    } catch (e) { return ""; }
+  }
+  var here = pageName(window.location.href);
+
+  var sidebarSections = document.querySelectorAll("#quarto-sidebar li.sidebar-item-section");
+  Object.keys(PARTS).forEach(function (title) {
+    var key = PARTS[title];
+    var show = asked.indexOf(key) >= 0;
+
+    // the part's sidebar section, and the pages in it
+    var li = null;
+    sidebarSections.forEach(function (s) {
+      var t = s.querySelector(":scope > .sidebar-item-container .menu-text");
+      if (t && t.textContent.trim().toLowerCase() === title.toLowerCase()) { li = s; }
+    });
+    if (!li) { return; }
+    var pages = {};
+    li.querySelectorAll("a.sidebar-link[href]").forEach(function (a) {
+      pages[pageName(a.getAttribute("href"))] = true;
+    });
+
+    // move the part out of "Appendices" to the top level, right after it
+    var appendices = li.parentElement ? li.parentElement.closest("li.sidebar-item-section") : null;
+    if (appendices && appendices.parentElement) {
+      appendices.parentElement.insertBefore(li, appendices.nextSibling);
+      li.querySelectorAll("ul.sidebar-section.depth2").forEach(function (u) {
+        u.classList.remove("depth2");
+        u.classList.add("depth1");
+      });
+    }
+
+    var onPartPage = !!pages[here];
+    if (onPartPage) {   // the breadcrumb says "Appendices > fall 2026 > ..."; the part is not an appendix
+      document.querySelectorAll(".quarto-page-breadcrumbs .breadcrumb-item").forEach(function (b) {
+        if (b.textContent.trim().toLowerCase() === "appendices") { b.remove(); }
+      });
+    }
+    if (show) {
+      // keep ?more= on every link to a page of the part
+      document.querySelectorAll("a[href]").forEach(function (a) {
+        var h = a.getAttribute("href");
+        if (!h || h.charAt(0) === "#" || /^[a-z]+:/i.test(h) && h.indexOf(window.location.origin) !== 0) { return; }
+        if (!pages[pageName(h)]) { return; }
+        var u = new URL(h, window.location.href);
+        u.searchParams.set("more", params.get("more").replace(/["']/g, ""));
+        a.setAttribute("href", u.pathname.substring(u.pathname.lastIndexOf("/") + 1) + u.search + u.hash);
+      });
+      if (onPartPage) {
+        var c = document.getElementById("quarto-document-content");
+        if (c) { c.style.visibility = "visible"; }
+      }
+      return;
+    }
+
+    // hidden: remove the part from the sidebar, hide prev/next links to its pages, block its pages
+    li.style.display = "none";
+    document.querySelectorAll(".page-navigation a[href]").forEach(function (a) {
+      if (pages[pageName(a.getAttribute("href"))]) {
+        var box = a.closest(".nav-page") || a;
+        box.style.visibility = "hidden";
+      }
+    });
+    if (onPartPage) {
+      var main = document.getElementById("quarto-document-content");
+      if (main) {
+        main.innerHTML = "<p style=\"margin-top:3em\">This page is not available.</p>";
+        main.style.visibility = "visible";
+      }
+      ["TOC", "quarto-margin-sidebar"].forEach(function (id) {
+        var e = document.getElementById(id);
+        if (e) { e.style.display = "none"; }
+      });
+      document.title = "Not available";
+    }
+  });
+})();
+</script>
+<!-- Installed by yrProject v0.9.2 (https://github.com/y-rosenthal/yrProject): the templates
+     and the tool that give a project one base for AI-assisted work (rules for AI agents, skills, hooks, GitHub
+     issues for work to do later, project docs). This file belongs to the tool: do not edit it by hand, and do
+     not change it without the tool. "yrProject.sh update" replaces it with each new version (if you change it,
+     update leaves it alone, and it gets no newer versions); "yrProject.sh remove" removes it.
+     This repository uses yrProject. What yrProject is, which files come from it and which belong to this repository:
+     .yrProject/README.md. The yrProject version and the installed parts, with bash and git only:
+       bash .claude/skills/yrProject/scripts/yrProject-notice.sh facts
+     Its content is the subjexts platform's (yrS4, book-files/); only the package name is this book's. -->
+
+<!-- subjexts-v001.html: the subjexts teaching overlay (yrS4). One line; remove it to revert the book completely.
+     The script holds no key, fails silently, and does nothing if the package is disabled on the platform. -->
+<script src="https://subjexts.github.io/overlay/v1/yrS4.js" data-package="y-rosenthal/aiasd" defer=""></script>
+<script src="site_libs/quarto-contrib/quarto-project/screenshot-controls/screenshot-controls.js"></script>
+<div style="text-align: center; margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd;">
+  <p>© 2025-2026 Y. Rosenthal. All rights reserved.</p>
+</div>
+<script>
+const titles = document.querySelectorAll('.title');
+
+titles.forEach(title => {
+  if (title.textContent.trim().startsWith('Appendix')) {
+    const chapterNumber = title.querySelector('yrChapterNumber');
+    if (chapterNumber) {
+      chapterNumber.classList.add('yrAppendixChapterNumber');
+    }
+  }
+});
+</script>
+
+
+
+
+</body></html>
